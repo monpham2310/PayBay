@@ -1,0 +1,179 @@
+﻿<Page x:Class="PayBay.View.StartGroup.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:converters="using:PayBay.Utilities.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:model="using:PayBay.Model"
+      DataContext="{Binding Source={StaticResource Locator},
+                            Path=StartVm}"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:PageToNameConverter x:Key="PageToNameConverter" />
+        <DataTemplate x:Key="MenuListItemDataTemplate" x:DataType="model:MenuListItem">
+            <Grid HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Background="Transparent"
+                  Tag="{Binding}"
+                  Tapped="MenuListItem_OnTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0"
+                      Width="44"
+                      Height="44">
+                    <Path Width="30"
+                          Height="30"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="{x:Bind Icon, Mode=OneWay}"
+                          Fill="{StaticResource Brush2}"
+                          Stretch="Uniform" />
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <TextBlock Margin="6,0,0,0"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="{StaticResource Brush2}"
+                               Text="{x:Bind Name, Mode=OneWay}" />
+                </Grid>
+
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Padding" Value="0,0,12,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                               CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                               CheckMode="Inline"
+                                               ContentMargin="{TemplateBinding Padding}"
+                                               ContentTransitions="{TemplateBinding ContentTransitions}"
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                               FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+                                               FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                                               PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}"
+                                               PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
+                                               PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
+                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                               SelectedBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
+                                               SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
+                                               SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
+                                               SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
+                                               SelectionCheckMarkVisualEnabled="True" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Height="48">
+
+            <Grid.Background>
+                <SolidColorBrush Color="{StaticResource Color1}" />
+            </Grid.Background>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="HamburgerButton"
+                    Grid.Column="0"
+                    Width="48"
+                    Height="48"
+                    Background="{StaticResource Brush1}"
+                    Click="HamburgerButton_Click"
+                    Content="&#xE700;"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="30"
+                    Foreground="{StaticResource Brush2}" />
+
+            <Grid x:Name="TitleGrid" Grid.Column="1">
+                <Grid.Background>Transparent</Grid.Background>
+                <TextBlock Margin="12,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="24"
+                           Foreground="{StaticResource Brush2}"
+                           Padding="0,0,0,4"
+                           Text="{Binding Content,
+                                          Converter={StaticResource PageToNameConverter},
+                                          ElementName=MainFrame}" />
+            </Grid>
+
+        </Grid>
+
+        <SplitView x:Name="MainSplitView"
+                   Grid.Row="1"
+                   CompactPaneLength="48"
+                   DisplayMode="CompactOverlay"
+                   IsPaneOpen="False"
+                   PaneBackground="{StaticResource Brush2}">
+
+            <SplitView.Pane>
+                <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="{StaticResource Color1}" />
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <ListView x:Name="FunctionsListView"
+                                  VerticalAlignment="Center"
+                                  ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                                  ItemTemplate="{StaticResource MenuListItemDataTemplate}"
+                                  ItemsSource="{x:Bind Vm.FunctionItemList, Mode=OneWay}"
+                                  SelectionChanged="FunctionsListView_OnSelectionChanged"
+                                  SelectionMode="Single" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <Rectangle Height="1" Fill="{StaticResource Brush2}" />
+                        <ListView x:Name="BottomListView"
+                                  VerticalAlignment="Center"
+                                  ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                                  ItemTemplate="{StaticResource MenuListItemDataTemplate}"
+                                  ItemsSource="{x:Bind Vm.BottomFunctionItemList, Mode=OneWay}"
+                                  SelectionChanged="BottomListView_OnSelectionChanged"
+                                  SelectionMode="Single" />
+                    </StackPanel>
+                </Grid>
+            </SplitView.Pane>
+
+			<SplitView.Content>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="300" />
+					</Grid.ColumnDefinitions>
+
+					<Frame x:Name="MainFrame" Grid.Column="0" />
+
+				</Grid>
+			</SplitView.Content>
+
+		</SplitView>
+    </Grid>
+</Page>

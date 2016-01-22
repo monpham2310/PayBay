@@ -4,6 +4,7 @@ namespace PayBay.Model
 {
     public enum MenuFunc
     {
+		HomePage,
         Func1,
         Func2,
         Settings,

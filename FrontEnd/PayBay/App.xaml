@@ -8,13 +8,15 @@
 
             <viewModel:ViewModelLocator x:Key="Locator" />
 
-            <Color x:Key="Color1">#FF000033</Color>
-            <Color x:Key="Color2">White</Color>
+			<Color x:Key="Color1">#FF006666</Color>
+			<Color x:Key="Color2">White</Color>
+			<Color x:Key="Color3">Black</Color>
 
             <SolidColorBrush x:Key="Brush1" Color="{StaticResource Color1}" />
             <SolidColorBrush x:Key="Brush2" Color="{StaticResource Color2}" />
+			<SolidColorBrush x:Key="Brush3" Color="{StaticResource Color3}" />
 
-        </ResourceDictionary>
+		</ResourceDictionary>
 
     </Application.Resources>
 

@@ -9,49 +9,55 @@
                             Path=StartVm}"
       mc:Ignorable="d">
 
-    <Page.Resources>
-        <converters:PageToNameConverter x:Key="PageToNameConverter" />
-        <DataTemplate x:Key="MenuListItemDataTemplate" x:DataType="model:MenuListItem">
-            <Grid HorizontalAlignment="Stretch"
+	<Page.Resources>
+		<converters:PageToNameConverter x:Key="PageToNameConverter" />
+		<DataTemplate x:Key="MenuListItemDataTemplate" x:DataType="model:MenuListItem">
+			<Grid HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Background="Transparent"
                   Tag="{Binding}"
                   Tapped="MenuListItem_OnTapped">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0"
+				<Grid Grid.Column="0"
                       Width="44"
                       Height="44">
-                    <Path Width="30"
+					<Image Width="30" 
+						   Height="30"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Stretch="Uniform"
+						   Source="{x:Bind Icon, Mode=OneWay}" />
+					<!--<Path Width="30"
                           Height="30"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
                           Data="{x:Bind Icon, Mode=OneWay}"
                           Fill="{StaticResource Brush2}"
-                          Stretch="Uniform" />
-                </Grid>
+                          Stretch="Uniform" />-->
+				</Grid>
 
-                <Grid Grid.Column="1">
-                    <TextBlock Margin="6,0,0,0"
+				<Grid Grid.Column="1">
+					<TextBlock Margin="6,0,0,0"
                                VerticalAlignment="Center"
                                FontSize="18"
                                Foreground="{StaticResource Brush2}"
                                Text="{x:Bind Name, Mode=OneWay}" />
-                </Grid>
+				</Grid>
 
-            </Grid>
-        </DataTemplate>
-        <Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
-            <Setter Property="Padding" Value="0,0,12,0" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ListViewItemPresenter HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+			</Grid>
+		</DataTemplate>
+		<Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
+			<Setter Property="Padding" Value="0,0,12,0" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListViewItem">
+						<ListViewItemPresenter HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
                                                CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
@@ -74,99 +80,143 @@
                                                SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
                                                SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
                                                SelectionCheckMarkVisualEnabled="True" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+		<Style x:Key="ButtonStyle" TargetType="Button">
+			<Setter Property="Foreground" Value="{StaticResource Brush2}" />
+			<!--<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>-->
+		</Style>
 
-        <Grid Grid.Row="0" Height="48">
+	</Page.Resources>
 
-            <Grid.Background>
-                <SolidColorBrush Color="{StaticResource Color1}" />
-            </Grid.Background>
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+		<Grid Grid.Row="0" Height="48">
 
-            <Button x:Name="HamburgerButton"
+			<Grid.Background>
+				<SolidColorBrush Color="{StaticResource Color1}" />
+			</Grid.Background>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<Button x:Name="HamburgerButton" 
                     Grid.Column="0"
                     Width="48"
                     Height="48"
-                    Background="{StaticResource Brush1}"
+					Foreground="{StaticResource Brush2}"
+					Background="{StaticResource Brush1}"
                     Click="HamburgerButton_Click"
                     Content="&#xE700;"
                     FontFamily="Segoe MDL2 Assets"
                     FontSize="30"
-                    Foreground="{StaticResource Brush2}" />
+					Style="{StaticResource ButtonStyle}"/>
 
-            <Grid x:Name="TitleGrid" Grid.Column="1">
-                <Grid.Background>Transparent</Grid.Background>
-                <TextBlock Margin="12,0,0,0"
+			<Grid x:Name="TitleGrid" Grid.Column="1">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="48" />
+				</Grid.ColumnDefinitions>
+
+				<AutoSuggestBox x:Name="MarketSearch" 
+								Grid.Column="0" 
+								Width="Auto"
+								Height="30"
+								VerticalAlignment="Center"
+								Foreground="{StaticResource Brush3}" 
+								Background="{StaticResource Brush2}">
+					<AutoSuggestBox.QueryIcon>
+						<FontIcon Glyph="&#xE11A;" 
+								  FontSize="20" 
+								  FontWeight="Bold"
+								  Foreground="{StaticResource Brush3}"/>
+					</AutoSuggestBox.QueryIcon>
+				</AutoSuggestBox>
+
+				<Button x:Name="AccountButton"
+						Grid.Column="1"
+						VerticalAlignment="Stretch" 
+						HorizontalAlignment="Stretch"
+						Content="&#xE77B;"
+						FontFamily="Segoe MDL2 Assets"
+						FontSize="28"
+						Foreground="{StaticResource Brush2}" 
+						Background="{StaticResource Brush1}" />
+
+
+				<!--<TextBlock Margin="12,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="24"
                            Foreground="{StaticResource Brush2}"
                            Padding="0,0,0,4"
                            Text="{Binding Content,
                                           Converter={StaticResource PageToNameConverter},
-                                          ElementName=MainFrame}" />
-            </Grid>
+                                          ElementName=MainFrame}" />-->
+			</Grid>
 
-        </Grid>
+		</Grid>
 
-        <SplitView x:Name="MainSplitView"
+		<SplitView x:Name="MainSplitView"
                    Grid.Row="1"
                    CompactPaneLength="48"
                    DisplayMode="CompactOverlay"
                    IsPaneOpen="False"
                    PaneBackground="{StaticResource Brush2}">
 
-            <SplitView.Pane>
-                <Grid>
-                    <Grid.Background>
-                        <SolidColorBrush Color="{StaticResource Color1}" />
-                    </Grid.Background>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+			<SplitView.Pane>
+				<Grid>
+					<Grid.Background>
+						<SolidColorBrush Color="{StaticResource Color1}" />
+					</Grid.Background>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0">
-                        <ListView x:Name="FunctionsListView"
+					<StackPanel Grid.Row="0">
+						<ListView x:Name="FunctionsListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
                                   ItemTemplate="{StaticResource MenuListItemDataTemplate}"
                                   ItemsSource="{x:Bind Vm.FunctionItemList, Mode=OneWay}"
                                   SelectionChanged="FunctionsListView_OnSelectionChanged"
                                   SelectionMode="Single" />
-                    </StackPanel>
+					</StackPanel>
 
-                    <StackPanel Grid.Row="1">
-                        <Rectangle Height="1" Fill="{StaticResource Brush2}" />
-                        <ListView x:Name="BottomListView"
+					<StackPanel Grid.Row="1">
+						<Rectangle Height="1" Fill="{StaticResource Brush2}" />
+						<ListView x:Name="BottomListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
                                   ItemTemplate="{StaticResource MenuListItemDataTemplate}"
                                   ItemsSource="{x:Bind Vm.BottomFunctionItemList, Mode=OneWay}"
                                   SelectionChanged="BottomListView_OnSelectionChanged"
                                   SelectionMode="Single" />
-                    </StackPanel>
-                </Grid>
-            </SplitView.Pane>
+					</StackPanel>
+				</Grid>
+			</SplitView.Pane>
 
 			<SplitView.Content>
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="300" />
+						<!--<ColumnDefinition Width="300" />-->
 					</Grid.ColumnDefinitions>
 
 					<Frame x:Name="MainFrame" Grid.Column="0" />
@@ -175,5 +225,5 @@
 			</SplitView.Content>
 
 		</SplitView>
-    </Grid>
+	</Grid>
 </Page>

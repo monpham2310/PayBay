@@ -16,20 +16,20 @@ namespace PayBay.View.StartGroup
         {
             InitializeComponent();
 
-            //TODO: comment out 3 line of code below to return to defaul view: TitleBar is a white bar, do nothing
-            //Set title bar
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(TitleGrid);
+			//TODO: comment out 3 line of code below to return to defaul view: TitleBar is a white bar, do nothing
+			//Set title bar
+			//CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+			//coreTitleBar.ExtendViewIntoTitleBar = true;
+			//Window.Current.SetTitleBar(TitleGrid);
 
-            Loaded += StartPage_Loaded;
+			Loaded += StartPage_Loaded;
         }
 
         private void StartPage_Loaded(object sender, RoutedEventArgs e)
         {
             //Default page when open app
             FunctionsListView.SelectedIndex = 0;
-            Vm.NavigateToFunction(MainFrame, MenuFunc.Func1);
+            Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
         }
 
         /// <summary>

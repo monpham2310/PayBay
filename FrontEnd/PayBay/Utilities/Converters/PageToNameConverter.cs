@@ -13,12 +13,17 @@ namespace PayBay.Utilities.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            string defaultName = "Splitview Sample with MVVM";
+            string defaultName = "PayBay";
 
             if (value is StartPage)
             {
                 return defaultName;
             }
+
+			if (value is HomePage)
+			{
+				return "HomePage";
+			}
 
             if (value is Function1Page)
             {
@@ -29,6 +34,7 @@ namespace PayBay.Utilities.Converters
             {
                 return "Function 2";
             }
+
             if (value is SettingPage)
             {
                 return "Settings";

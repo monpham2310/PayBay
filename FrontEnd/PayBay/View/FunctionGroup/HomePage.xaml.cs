@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PayBay.ViewModel.HomePageGroup;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,6 +23,8 @@ namespace PayBay.View.FunctionGroup
 	/// </summary>
 	public sealed partial class HomePage : Page
 	{
+		public AdvertiseViewModel AdVm => (AdvertiseViewModel)DataContext;
+
 		public HomePage()
 		{
 			this.InitializeComponent();

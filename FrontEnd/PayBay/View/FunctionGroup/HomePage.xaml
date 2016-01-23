@@ -5,9 +5,121 @@
     xmlns:local="using:PayBay.View.FunctionGroup"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:model="using:PayBay.Model"
+	DataContext="{Binding Source={StaticResource Locator},
+						  Path=AdvertiseVm}"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Page.Resources>
+		<Style TargetType="ListView">
+			<Setter Property="ItemsPanel">
+				<Setter.Value>
+					<ItemsPanelTemplate>
+						<ItemsStackPanel Orientation="Horizontal"
+										 VerticalAlignment="Center"
+										 HorizontalAlignment="Center"/>
+					</ItemsPanelTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 
-    </Grid>
+		<DataTemplate x:Key="ListViewItemTemplate" x:DataType="model:AdvertiseItem">
+			<StackPanel Width="150">
+				<Image Width="140"
+					   Height="140"
+					   Source="{x:Bind Image, Mode=OneWay}"/>
+				<TextBlock Text="{x:Bind Merchandise, Mode=OneWay}"
+						   HorizontalAlignment="Center"
+						   TextAlignment="Center"
+						   Foreground="{StaticResource Brush3}"
+						   FontSize="12" 
+						   MaxLines="1" 
+						   Width="140"
+						   TextWrapping="Wrap" 
+						   FontWeight="Bold" />
+				<TextBlock Text="{x:Bind Market, Mode=OneWay}"
+						   HorizontalAlignment="Center"
+						   TextAlignment="Center"
+						   Foreground="{StaticResource Brush3}"
+						   MaxLines="1"
+						   FontSize="12" 
+						   Width="140"
+						   TextWrapping="Wrap" 
+						   FontWeight="Bold" />
+			</StackPanel>
+		</DataTemplate>
+	</Page.Resources>
+
+	<ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
+		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50" />
+				<RowDefinition Height="200" />
+				<RowDefinition Height="50" />
+				<RowDefinition Height="200" />
+				<RowDefinition Height="50" />
+				<RowDefinition Height="200" />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0"
+				   HorizontalAlignment="Left" 
+				   Margin="10,10,0,0" 
+				   TextWrapping="Wrap" 
+				   Text="Hàng mới về" 
+				   Foreground="{StaticResource Brush4}"
+				   VerticalAlignment="Top" 
+				   FontSize="25" />
+
+			<ListView Grid.Row="1"
+				  Height="200"
+				  SelectionMode="Single"
+				  ScrollViewer.HorizontalScrollMode="Enabled"
+				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+				  ScrollViewer.IsScrollInertiaEnabled="True"
+				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+				  ScrollViewer.VerticalScrollMode="Disabled"
+				  ItemTemplate="{StaticResource ListViewItemTemplate}"
+				  ItemsSource="{x:Bind AdVm.NewMerchandiseItemList, Mode=OneWay}"/>
+
+			<TextBlock Grid.Row="2"
+				   HorizontalAlignment="Left" 
+				   Margin="10,10,0,0" 
+				   TextWrapping="Wrap" 
+				   Text="Hàng khuyến mãi" 
+				   Foreground="{StaticResource Brush4}"
+				   VerticalAlignment="Top" 
+				   FontSize="25" />
+
+			<ListView Grid.Row="3"
+				  Height="200"
+				  SelectionMode="Single"
+				  ScrollViewer.HorizontalScrollMode="Enabled"
+				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+				  ScrollViewer.IsScrollInertiaEnabled="True"
+				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+				  ScrollViewer.VerticalScrollMode="Disabled"
+				  ItemTemplate="{StaticResource ListViewItemTemplate}"
+				  ItemsSource="{x:Bind AdVm.SaleMerchandiseItemList, Mode=OneWay}"/>
+
+			<TextBlock Grid.Row="4"
+				   HorizontalAlignment="Left" 
+				   Margin="10,10,0,0" 
+				   TextWrapping="Wrap" 
+				   Text="Hàng bán chạy" 
+				   Foreground="{StaticResource Brush4}"
+				   VerticalAlignment="Top" 
+				   FontSize="25" />
+
+			<ListView Grid.Row="5"
+				  Height="200"
+				  SelectionMode="Single"
+				  ScrollViewer.HorizontalScrollMode="Enabled"
+				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+				  ScrollViewer.IsScrollInertiaEnabled="True"
+				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+				  ScrollViewer.VerticalScrollMode="Disabled"
+				  ItemTemplate="{StaticResource ListViewItemTemplate}"
+				  ItemsSource="{x:Bind AdVm.HotMerchandiseItemList, Mode=OneWay}"/>
+
+		</Grid>
+	</ScrollViewer>
 </Page>

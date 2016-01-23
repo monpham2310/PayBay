@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\AdvertiseItem.cs" />
     <Compile Include="Model\MenuListItem.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
     <Compile Include="Utilities\Helpers\StorageHelper.cs" />
+    <Compile Include="ViewModel\HomePageGroup\AdvertiseViewModel.cs" />
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -140,6 +142,7 @@
   <ItemGroup>
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\Hamburger.png" />
+    <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />

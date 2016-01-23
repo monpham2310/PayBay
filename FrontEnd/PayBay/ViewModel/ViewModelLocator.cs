@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using PayBay.ViewModel.StartGroup;
+using PayBay.ViewModel.HomePageGroup;
 
 namespace PayBay.ViewModel
 {
@@ -44,10 +45,12 @@ namespace PayBay.ViewModel
 
             //TODO: Resiger for a ViewModel here, syntax as below
             SimpleIoc.Default.Register<StartViewModel>();
+			SimpleIoc.Default.Register<AdvertiseViewModel>();
         }
 
         //TODO: Register to use ViewModel here, syntax as below
         public StartViewModel StartVm => ServiceLocator.Current.GetInstance<StartViewModel>();
+		public AdvertiseViewModel AdvertiseVm => ServiceLocator.Current.GetInstance<AdvertiseViewModel>();
 
         public static void Cleanup()
         {

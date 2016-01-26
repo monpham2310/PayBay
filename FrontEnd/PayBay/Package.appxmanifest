@@ -3,8 +3,8 @@
   <Identity Name="958480a4-97b2-4b60-bf05-4c1fb8f3c39e" Publisher="CN=tuant" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="958480a4-97b2-4b60-bf05-4c1fb8f3c39e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>SplitViewSampleWithMVVM</DisplayName>
-    <PublisherDisplayName>tuant</PublisherDisplayName>
+    <DisplayName>PayBay</DisplayName>
+    <PublisherDisplayName>GameLoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SplitViewSampleWithMVVM.App">
-      <uap:VisualElements DisplayName="SplitViewSampleWithMVVM" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="SplitViewSampleWithMVVM" BackgroundColor="transparent">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="PayBay.App">
+      <uap:VisualElements DisplayName="PayBay" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="PayBay" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Splitview with MVVM" Square310x310Logo="Assets\Square310x310Logo.png" Square71x71Logo="Assets\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PayBay.ViewModel.MarketGroup;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,6 +23,9 @@ namespace PayBay.View.FunctionGroup
     /// </summary>
     public sealed partial class Function1Page : Page
     {
+
+        public MarketViewModel MarketVm => (MarketViewModel)DataContext;
+
         public Function1Page()
         {
             this.InitializeComponent();

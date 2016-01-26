@@ -48,6 +48,17 @@
 						   FontWeight="Bold" />
 			</StackPanel>
 		</DataTemplate>
+
+		<Style TargetType="HyperlinkButton">
+			<Setter Property="ContentTemplate">
+				<Setter.Value>
+					<DataTemplate>
+						<TextBlock Text="{Binding}" />
+					</DataTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		
 	</Page.Resources>
 
 	<ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
@@ -62,12 +73,21 @@
 			</Grid.RowDefinitions>
 			<TextBlock Grid.Row="0"
 				   HorizontalAlignment="Left" 
-				   Margin="10,10,0,0" 
+				   Margin="10,0,0,0" 
 				   TextWrapping="Wrap" 
 				   Text="Hàng mới về" 
 				   Foreground="{StaticResource Brush4}"
-				   VerticalAlignment="Top" 
+				   VerticalAlignment="Center" 
 				   FontSize="25" />
+
+			<HyperlinkButton Grid.Row="0"
+							 Content="Show all" 
+							 Margin="0,0,20,0"
+							 FontSize="18"
+							 Foreground="{StaticResource Brush5}"
+							 HorizontalAlignment="Right" 
+							 VerticalAlignment="Center" 
+							 Click="HyperlinkButton_Click" />
 
 			<ListView Grid.Row="1"
 				  Height="200"
@@ -78,7 +98,7 @@
 				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
 				  ScrollViewer.VerticalScrollMode="Disabled"
 				  ItemTemplate="{StaticResource ListViewItemTemplate}"
-				  ItemsSource="{x:Bind AdVm.NewMerchandiseItemList, Mode=OneWay}"/>
+				  ItemsSource="{x:Bind AdVm.NewMerchandiseItemList, Mode=OneWay}" />
 
 			<TextBlock Grid.Row="2"
 				   HorizontalAlignment="Left" 
@@ -89,6 +109,15 @@
 				   VerticalAlignment="Top" 
 				   FontSize="25" />
 
+			<HyperlinkButton Grid.Row="2"
+							 Content="Show all" 
+							 Margin="0,0,20,0"
+							 FontSize="18"
+							 Foreground="{StaticResource Brush5}"
+							 HorizontalAlignment="Right" 
+							 VerticalAlignment="Center"
+							 Click="HyperlinkButton_Click" />
+
 			<ListView Grid.Row="3"
 				  Height="200"
 				  SelectionMode="Single"
@@ -98,7 +127,7 @@
 				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
 				  ScrollViewer.VerticalScrollMode="Disabled"
 				  ItemTemplate="{StaticResource ListViewItemTemplate}"
-				  ItemsSource="{x:Bind AdVm.SaleMerchandiseItemList, Mode=OneWay}"/>
+				  ItemsSource="{x:Bind AdVm.SaleMerchandiseItemList, Mode=OneWay}" />
 
 			<TextBlock Grid.Row="4"
 				   HorizontalAlignment="Left" 
@@ -108,6 +137,15 @@
 				   Foreground="{StaticResource Brush4}"
 				   VerticalAlignment="Top" 
 				   FontSize="25" />
+			
+			<HyperlinkButton Grid.Row="4"
+							 Content="Show all" 
+							 Margin="0,0,20,0"
+							 FontSize="18"
+							 Foreground="{StaticResource Brush5}"
+							 HorizontalAlignment="Right" 
+							 VerticalAlignment="Center"
+							 Click="HyperlinkButton_Click" />
 
 			<ListView Grid.Row="5"
 				  Height="200"
@@ -118,8 +156,8 @@
 				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
 				  ScrollViewer.VerticalScrollMode="Disabled"
 				  ItemTemplate="{StaticResource ListViewItemTemplate}"
-				  ItemsSource="{x:Bind AdVm.HotMerchandiseItemList, Mode=OneWay}"/>
-
+				  ItemsSource="{x:Bind AdVm.HotMerchandiseItemList, Mode=OneWay}" />
+	
 		</Grid>
 	</ScrollViewer>
 </Page>

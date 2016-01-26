@@ -4,12 +4,32 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:PayBay.View.FunctionGroup"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:model="using:PayBay.Model"
+	  DataContext="{Binding Source={StaticResource Locator},
+						  Path=MarketVm}"
       mc:Ignorable="d">
 
+    <Page.Resources>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="40"
-                   Text="Function 1 Page" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="130" />
+            <RowDefinition Height="270" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Canvas.ZIndex="0" Opacity="0.5" Source="{Binding NewMarket.Image}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill"/>
+        <TextBlock Grid.Row="0" Canvas.ZIndex="1" TextWrapping="Wrap"  Text="{Binding NewMarket.Name}" Margin="39,60,173,54.2" Width="220" FontSize="20" FontFamily="Calibri Light" Foreground="#FF120E0E" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" Canvas.ZIndex="1" TextWrapping="Wrap"  Text="{Binding NewMarket.Address}" Margin="39,90,173,12.2" FontSize="13.333" FontStyle="Italic" FontFamily="Calibri Light" Width="220" />
+
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="Mặt Hàng Kinh Doanh:" Margin="39,36,173,10" FontSize="20"/>
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding NewMarket.Itemtypes}" Margin="39,62,26,5" FontSize="16"/>
+
+        <Image Grid.Row="2" Source="{Binding NewMarket.Map}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+
+        <Border Grid.Row="3" Background="{StaticResource Brush4}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <TextBlock Grid.Row="3" TextWrapping="Wrap" Text="Đi chợ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="Bold" Foreground="White"/>
     </Grid>
 </Page>

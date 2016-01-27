@@ -7,7 +7,7 @@ using GoMarketService.DataObjects;
 
 namespace GoMarketService.Models
 {
-    public class GoMarketContext : DbContext
+    public partial class GoMarketContext : DbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 
@@ -20,16 +20,189 @@ namespace GoMarketService.Models
 
         public GoMarketContext() : base(connectionStringName)
         {
-        } 
+        }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<BILL> BILL { get; set; }
+        public DbSet<COMMENT> COMMENTS { get; set; }
+        public DbSet<DETAILBILL> DETAILBILL { get; set; }
+        public DbSet<MARKET> MARKETS { get; set; }
+        public DbSet<PRODUCT> PRODUCTS { get; set; }
+        public DbSet<PRODUCTSTATISTIC> PRODUCTSTATISTIC { get; set; }
+        public DbSet<REVENUESTATISTIC> REVENUESTATISTIC { get; set; }
+        public DbSet<SALESINFO> SALESINFO { get; set; }
+        public DbSet<STORE> STORES { get; set; }
+        public DbSet<USER> USERS { get; set; }
+        public DbSet<USERTYPE> USERTYPE { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Add(
                 new AttributeToColumnAnnotationConvention<TableColumnAttribute, string>(
                     "ServiceTableColumn", (property, attributes) => attributes.Single().ColumnType.ToString()));
+
+            modelBuilder.Entity<BILL>()
+                .Property(e => e.BillID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BILL>()
+                .Property(e => e.StoreID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BILL>()
+                .Property(e => e.UserID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BILL>()
+                .HasMany(e => e.DETAILBILLs)
+                .WithRequired(e => e.BILL)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BILL>()
+                .HasMany(e => e.PRODUCTSTATISTICs)
+                .WithRequired(e => e.BILL)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BILL>()
+                .HasMany(e => e.REVENUESTATISTICs)
+                .WithRequired(e => e.BILL)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<COMMENT>()
+                .Property(e => e.StoreID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DETAILBILL>()
+                .Property(e => e.BillID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DETAILBILL>()
+                .Property(e => e.ProductID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MARKET>()
+                .Property(e => e.MarketID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MARKET>()
+                .Property(e => e.Phone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MARKET>()
+                .HasMany(e => e.STORES)
+                .WithRequired(e => e.MARKET)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PRODUCT>()
+                .Property(e => e.ProductID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PRODUCT>()
+                .Property(e => e.StoreID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PRODUCT>()
+                .HasMany(e => e.DETAILBILLs)
+                .WithRequired(e => e.PRODUCT)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PRODUCT>()
+                .HasMany(e => e.PRODUCTSTATISTICs)
+                .WithRequired(e => e.PRODUCT)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PRODUCTSTATISTIC>()
+                .Property(e => e.BillID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PRODUCTSTATISTIC>()
+                .Property(e => e.ProductID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<REVENUESTATISTIC>()
+                .Property(e => e.StoreID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<REVENUESTATISTIC>()
+                .Property(e => e.BillID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SALESINFO>()
+                .Property(e => e.StoreID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<STORE>()
+                .Property(e => e.StoreID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<STORE>()
+                .Property(e => e.KiotNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<STORE>()
+                .Property(e => e.Phone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<STORE>()
+                .Property(e => e.MarketID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<STORE>()
+                .Property(e => e.OwnerID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<STORE>()
+                .HasMany(e => e.BILLs)
+                .WithRequired(e => e.STORE)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<STORE>()
+                .HasMany(e => e.COMMENTS)
+                .WithRequired(e => e.STORE)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<STORE>()
+                .HasMany(e => e.PRODUCTS)
+                .WithRequired(e => e.STORE)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<STORE>()
+                .HasMany(e => e.REVENUESTATISTICs)
+                .WithRequired(e => e.STORE)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<STORE>()
+                .HasMany(e => e.SALESINFOes)
+                .WithRequired(e => e.STORE)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<USER>()
+                .Property(e => e.UserID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<USER>()
+                .Property(e => e.Phone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<USER>()
+                .Property(e => e.Username)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<USER>()
+                .HasMany(e => e.STORES)
+                .WithRequired(e => e.USER)
+                .HasForeignKey(e => e.OwnerID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<USERTYPE>()
+                .Property(e => e.TypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<USERTYPE>()
+                .HasMany(e => e.USERS)
+                .WithRequired(e => e.USERTYPE)
+                .WillCascadeOnDelete(false);
         }
+                
     }
 
 }

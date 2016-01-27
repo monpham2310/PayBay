@@ -96,3 +96,5 @@ create table PRODUCTSTATISTIC (
 	SaleDate date,
 	primary key(BillID,ProductID)
 );
+
+select * from USERS

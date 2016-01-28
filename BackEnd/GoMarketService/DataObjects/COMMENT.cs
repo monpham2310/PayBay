@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 
 namespace GoMarketService.DataObjects
-{
+{    
     [Table("COMMENTS")]
     public partial class COMMENT : EntityData
     {
@@ -23,6 +23,11 @@ namespace GoMarketService.DataObjects
 
         public string Content { get; set; }
 
+        [StringLength(10)]
+        public string UserID { get; set; }
+
         public virtual STORE STORE { get; set; }
+
+        public virtual USERS USER { get; set; }
     }
 }

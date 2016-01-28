@@ -13,9 +13,9 @@ namespace GoMarketService.DataObjects
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BILL()
         {
-            DETAILBILLs = new HashSet<DETAILBILL>();
-            PRODUCTSTATISTICs = new HashSet<PRODUCTSTATISTIC>();
-            REVENUESTATISTICs = new HashSet<REVENUESTATISTIC>();
+            DETAILBILL = new HashSet<DETAILBILL>();
+            PRODUCTSTATISTIC = new HashSet<PRODUCTSTATISTIC>();
+            REVENUESTATISTIC = new HashSet<REVENUESTATISTIC>();
         }
 
         [StringLength(10)]
@@ -37,15 +37,15 @@ namespace GoMarketService.DataObjects
 
         public virtual STORE STORE { get; set; }
 
-        public virtual USER USER { get; set; }
+        public virtual USERS USER { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DETAILBILL> DETAILBILLs { get; set; }
+        public virtual ICollection<DETAILBILL> DETAILBILL { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUCTSTATISTIC> PRODUCTSTATISTICs { get; set; }
+        public virtual ICollection<PRODUCTSTATISTIC> PRODUCTSTATISTIC { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<REVENUESTATISTIC> REVENUESTATISTICs { get; set; }
+        public virtual ICollection<REVENUESTATISTIC> REVENUESTATISTIC { get; set; }
     }
 }

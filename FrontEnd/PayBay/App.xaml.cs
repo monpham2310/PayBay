@@ -72,6 +72,21 @@ namespace PayBay
             Window.Current.Activate();
         }
 
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            // Windows Phone 8.1 requires you to handle the respose from the WebAuthenticationBroker.
+#if WINDOWS_PHONE_APP
+    if (args.Kind == ActivationKind.WebAuthenticationBrokerContinuation)
+    {
+        // Completes the sign-in process started by LoginAsync.
+        // Change 'MobileService' to the name of your MobileServiceClient instance. 
+        App.MobileService.LoginComplete(args as WebAuthenticationBrokerContinuationEventArgs);
+    }
+#endif
+
+            base.OnActivated(args);
+        }
+
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>

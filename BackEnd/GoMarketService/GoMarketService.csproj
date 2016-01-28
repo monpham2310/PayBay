@@ -175,7 +175,7 @@
     <Compile Include="Controllers\REVENUESTATISTICController.cs" />
     <Compile Include="Controllers\SALESINFOController.cs" />
     <Compile Include="Controllers\STOREController.cs" />
-    <Compile Include="Controllers\USERController.cs" />
+    <Compile Include="Controllers\USERSController.cs" />
     <Compile Include="Controllers\USERTYPEController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataObjects\BILL.cs" />
@@ -187,7 +187,7 @@
     <Compile Include="DataObjects\REVENUESTATISTIC.cs" />
     <Compile Include="DataObjects\SALESINFO.cs" />
     <Compile Include="DataObjects\STORE.cs" />
-    <Compile Include="DataObjects\USER.cs" />
+    <Compile Include="DataObjects\USERS.cs" />
     <Compile Include="DataObjects\USERTYPE.cs" />
     <Compile Include="Models\GoMarketContext.cs" />
     <Compile Include="Startup.cs" />

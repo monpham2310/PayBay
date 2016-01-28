@@ -9,42 +9,42 @@ using GoMarketService.Models;
 
 namespace GoMarketService.Controllers
 {
-    public class USERController : TableController<USER>
+    public class USERSController : TableController<USERS>
     {
         protected override void Initialize(HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
             GoMarketContext context = new GoMarketContext();
-            DomainManager = new EntityDomainManager<USER>(context, Request);
+            DomainManager = new EntityDomainManager<USERS>(context, Request);
         }
 
-        // GET tables/USER
-        public IQueryable<USER> GetAllUSER()
+        // GET tables/USERS
+        public IQueryable<USERS> GetAllUSERS()
         {
             return Query(); 
         }
 
-        // GET tables/USER/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public SingleResult<USER> GetUSER(string id)
+        // GET tables/USERS/48D68C86-6EA6-4C25-AA33-223FC9A27959
+        public SingleResult<USERS> GetUSERS(string id)
         {
             return Lookup(id);
         }
 
-        // PATCH tables/USER/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public Task<USER> PatchUSER(string id, Delta<USER> patch)
+        // PATCH tables/USERS/48D68C86-6EA6-4C25-AA33-223FC9A27959
+        public Task<USERS> PatchUSERS(string id, Delta<USERS> patch)
         {
              return UpdateAsync(id, patch);
         }
 
-        // POST tables/USER
-        public async Task<IHttpActionResult> PostUSER(USER item)
+        // POST tables/USERS
+        public async Task<IHttpActionResult> PostUSERS(USERS item)
         {
-            USER current = await InsertAsync(item);
+            USERS current = await InsertAsync(item);
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
 
-        // DELETE tables/USER/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public Task DeleteUSER(string id)
+        // DELETE tables/USERS/48D68C86-6EA6-4C25-AA33-223FC9A27959
+        public Task DeleteUSERS(string id)
         {
              return DeleteAsync(id);
         }

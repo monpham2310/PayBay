@@ -6,18 +6,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 
 namespace GoMarketService.DataObjects
-{   
+{    
     [Table("STORES")]
     public partial class STORE : EntityData
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public STORE()
         {
-            BILLs = new HashSet<BILL>();
+            BILL = new HashSet<BILL>();
             COMMENTS = new HashSet<COMMENT>();
             PRODUCTS = new HashSet<PRODUCT>();
-            REVENUESTATISTICs = new HashSet<REVENUESTATISTIC>();
-            SALESINFOes = new HashSet<SALESINFO>();
+            REVENUESTATISTIC = new HashSet<REVENUESTATISTIC>();
+            SALESINFO = new HashSet<SALESINFO>();
         }
 
         [StringLength(10)]
@@ -44,7 +44,7 @@ namespace GoMarketService.DataObjects
         public string OwnerID { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BILL> BILLs { get; set; }
+        public virtual ICollection<BILL> BILL { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COMMENT> COMMENTS { get; set; }
@@ -55,11 +55,11 @@ namespace GoMarketService.DataObjects
         public virtual ICollection<PRODUCT> PRODUCTS { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<REVENUESTATISTIC> REVENUESTATISTICs { get; set; }
+        public virtual ICollection<REVENUESTATISTIC> REVENUESTATISTIC { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SALESINFO> SALESINFOes { get; set; }
+        public virtual ICollection<SALESINFO> SALESINFO { get; set; }
 
-        public virtual USER USER { get; set; }
+        public virtual USERS USER { get; set; }
     }
 }

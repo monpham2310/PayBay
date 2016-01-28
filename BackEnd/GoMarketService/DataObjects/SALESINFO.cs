@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 
 namespace GoMarketService.DataObjects
-{
+{    
     [Table("SALESINFO")]
     public partial class SALESINFO : EntityData
     {
@@ -30,6 +30,8 @@ namespace GoMarketService.DataObjects
         [Required]
         [StringLength(10)]
         public string StoreID { get; set; }
+
+        public bool isRequired { get; set; }
 
         public virtual STORE STORE { get; set; }
     }

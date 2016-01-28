@@ -6,14 +6,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 
 namespace GoMarketService.DataObjects
-{  
+{
     [Table("USERTYPE")]
     public partial class USERTYPE : EntityData
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USERTYPE()
         {
-            USERS = new HashSet<USER>();
+            USERS = new HashSet<USERS>();
         }
 
         [Key]
@@ -24,6 +24,6 @@ namespace GoMarketService.DataObjects
         public string TypeName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER> USERS { get; set; }
+        public virtual ICollection<USERS> USERS { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace GoMarketService.Models
         public DbSet<REVENUESTATISTIC> REVENUESTATISTIC { get; set; }
         public DbSet<SALESINFO> SALESINFO { get; set; }
         public DbSet<STORE> STORES { get; set; }
-        public DbSet<USER> USERS { get; set; }
+        public DbSet<USERS> USERS { get; set; }
         public DbSet<USERTYPE> USERTYPE { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -53,22 +53,26 @@ namespace GoMarketService.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<BILL>()
-                .HasMany(e => e.DETAILBILLs)
+                .HasMany(e => e.DETAILBILL)
                 .WithRequired(e => e.BILL)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<BILL>()
-                .HasMany(e => e.PRODUCTSTATISTICs)
+                .HasMany(e => e.PRODUCTSTATISTIC)
                 .WithRequired(e => e.BILL)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<BILL>()
-                .HasMany(e => e.REVENUESTATISTICs)
+                .HasMany(e => e.REVENUESTATISTIC)
                 .WithRequired(e => e.BILL)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<COMMENT>()
                 .Property(e => e.StoreID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<COMMENT>()
+                .Property(e => e.UserID)
                 .IsUnicode(false);
 
             modelBuilder.Entity<DETAILBILL>()
@@ -151,7 +155,7 @@ namespace GoMarketService.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<STORE>()
-                .HasMany(e => e.BILLs)
+                .HasMany(e => e.BILL)
                 .WithRequired(e => e.STORE)
                 .WillCascadeOnDelete(false);
 
@@ -166,28 +170,28 @@ namespace GoMarketService.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<STORE>()
-                .HasMany(e => e.REVENUESTATISTICs)
+                .HasMany(e => e.REVENUESTATISTIC)
                 .WithRequired(e => e.STORE)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<STORE>()
-                .HasMany(e => e.SALESINFOes)
+                .HasMany(e => e.SALESINFO)
                 .WithRequired(e => e.STORE)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<USER>()
+            modelBuilder.Entity<USERS>()
                 .Property(e => e.UserID)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<USER>()
+            modelBuilder.Entity<USERS>()
                 .Property(e => e.Phone)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<USER>()
+            modelBuilder.Entity<USERS>()
                 .Property(e => e.Username)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<USER>()
+            modelBuilder.Entity<USERS>()
                 .HasMany(e => e.STORES)
                 .WithRequired(e => e.USER)
                 .HasForeignKey(e => e.OwnerID)
@@ -201,6 +205,7 @@ namespace GoMarketService.Models
                 .HasMany(e => e.USERS)
                 .WithRequired(e => e.USERTYPE)
                 .WillCascadeOnDelete(false);
+
         }
                 
     }

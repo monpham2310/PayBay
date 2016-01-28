@@ -1,4 +1,4 @@
-create proc sp_AddUser
+alter proc sp_AddUser
 @UserID varchar(10),
 @Name nvarchar(100),
 @Birthday date,
@@ -11,7 +11,7 @@ create proc sp_AddUser
 @Pass nvarchar(50),
 @TypeID int
 as	
-	if not exists (select Username from USERS where Username=@Username)
+	if not exists (select 1 from USERS where Username=@Username and Email=@Email)
 	begin
 		begin tran insertUser
 			insert into USERS(UserID,Name,Birthday,Email,Phone,Gender,Address,Avatar,Username,Pass,TypeID)
@@ -26,7 +26,7 @@ as
 		commit
 	end
 	else
-		select 0 as ErrCode,'Username had already exists!Please try again!' as ErrMsg
+		select 0 as ErrCode,'Username and email had already registered!Please try again!' as ErrMsg
 	
 create proc sp_UpdateUser
 @UserID varchar(10),
@@ -52,7 +52,7 @@ as
 		end
 	commit
 
-create proc sp_DelUser
+alter proc sp_DelUser --spuer admin permission
 @UserID varchar(10)
 as
 	begin tran delUser
@@ -68,10 +68,11 @@ alter proc sp_AddComment
 @Date date,
 @Time time(7),
 @StoreID varchar(10),
-@Content nvarchar(max)
+@Content nvarchar(max),
+@UserID varchar(10)
 as
 	begin tran insertComment
-		insert into COMMENTS(CommentDate,CommentTime,StoreID,Content) values (@Date,@Time,@StoreID,@Content)
+		insert into COMMENTS(CommentDate,CommentTime,StoreID,Content,UserID) values (@Date,@Time,@StoreID,@Content,@UserID)
 		if(@@ERROR > 0)
 		begin
 			rollback tran
@@ -79,7 +80,7 @@ as
 		end
 	commit
 
-create proc sp_DelComment
+create proc sp_DelComment --permission Store Owner
 @ID int
 as
 	begin tran delComment
@@ -91,7 +92,7 @@ as
 		end
 	commit
 
-create proc sp_AddSaleInfo
+create proc sp_AddSaleInfo --permission store owner
 @SaleID varchar(10),
 @Title nvarchar(100),
 @Image nvarchar(200),
@@ -109,7 +110,7 @@ as
 		end
 	commit
 
-create proc sp_UpdateSaleInfo
+create proc sp_UpdateSaleInfo --permission store owner
 @SaleID varchar(10),
 @Title nvarchar(100),
 @Image nvarchar(200),
@@ -129,7 +130,7 @@ as
 		end
 	commit
 
-create proc sp_DelSaleInfo
+create proc sp_DelSaleInfo --permission store owner
 @SaleID varchar(10)
 as
 	begin tran delSale
@@ -141,15 +142,14 @@ as
 		end
 	commit
 
-create proc sp_AddBill
+ALTER proc [dbo].[sp_AddBill]
 @BillID varchar(10),
 @CreatedDate date,
 @StoreID varchar(10),
-@TotalPrice float,
-@ReducedPrice float
+@UserID varchar(10)
 as
 	begin tran addBill
-		insert into BILL(BillID,CreatedDate,StoreID,TotalPrice,ReducedPrice) values(@BillID,@CreatedDate,@StoreID,@TotalPrice,@ReducedPrice)
+		insert into BILL(BillID,CreatedDate,StoreID,UserID) values(@BillID,@CreatedDate,@StoreID,@UserID)
 		if(@@ERROR > 0)
 		begin 
 			rollback tran
@@ -157,6 +157,69 @@ as
 		end
 	commit
 
+ALTER proc [dbo].[sp_UpdateBill]
+@BillID varchar(10),
+@ReducedPrice float,
+@StoreID varchar(10),
+@UserID varchar(10)
+as
+	begin tran updatePrice
+		update BILL
+		set ReducedPrice=@ReducedPrice,TotalPrice-=@ReducedPrice
+		where BillID=@BillID and StoreID=@StoreID and UserID=@UserID
+		if(@@ERROR > 0)
+		begin
+			rollback tran
+			select 0 as ErrCode,'Update bill not successfull!' as ErrMsg
+		end
+	commit
 
+ALTER proc [dbo].[sp_DelBill]
+@BillID varchar(10),
+@StoreID varchar(10),
+@UserID varchar(10)
+as
+	begin tran delBill
+		delete from BILL where BillID=@BillID and StoreID=@StoreID and UserID=@UserID
+		if(@@ERROR > 0)
+		begin
+			rollback tran
+			select 0 as ErrCode,'Delete bill not successfull!' as ErrMsg
+		end
+	commit
 
-select * from BILL
+ALTER proc [dbo].[sp_InsertDetailBill] --permission user
+@BillID varchar(10),
+@ProductID varchar(10),
+@NumberOf int
+as
+	declare @UnitPrice float,@Unit nvarchar(20)
+	set @UnitPrice=(select UnitPrice from PRODUCTS where ProductID=@ProductID)
+	set @Unit=(select Unit from PRODUCTS where ProductID=@ProductID)
+	if exists (select 1 from BILL where BillID=@BillID)
+	begin
+		if not exists (select 1 from DETAILBILL where BillID=@BillID and ProductID=@ProductID)
+		begin
+			begin tran addDetail
+				insert into DETAILBILL(BillID,ProductID,NumberOf,UnitPrice,Unit) values (@BillID,@ProductID,@NumberOf,@UnitPrice,@Unit)
+				if(@@ERROR > 0)
+				begin
+					rollback tran
+					select 0 as ErrCode,'add detail bill not successfull!' as ErrMsg
+				end
+			commit
+		end
+		else
+		begin
+			begin tran updateDetail
+				update DETAILBILL
+				set NumberOf=@NumberOf
+				where BillID=@BillID and ProductID=@ProductID
+				if(@@ERROR > 0)
+				begin
+					rollback tran
+					select 0 as ErrCode,'Update bill not successfull!' as ErrMsg
+				end
+			commit
+		end	
+	end

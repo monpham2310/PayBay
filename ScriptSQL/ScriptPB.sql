@@ -97,4 +97,8 @@ create table PRODUCTSTATISTIC (
 	primary key(BillID,ProductID)
 );
 
+alter table COMMENTS add UserID varchar(10) foreign key references USERS
+
+alter table SALESINFO add isRequired bit not null default 0
+
 select * from USERS

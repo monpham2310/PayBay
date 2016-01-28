@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 
 namespace GoMarketService.DataObjects
-{ 
+{    
     [Table("MARKETS")]
     public partial class MARKET : EntityData
     {

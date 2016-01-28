@@ -8,12 +8,13 @@ using System.Data.Entity.Spatial;
 namespace GoMarketService.DataObjects
 {
     [Table("USERS")]
-    public partial class USER : EntityData
+    public partial class USERS : EntityData
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USER()
+        public USERS()
         {
-            BILLs = new HashSet<BILL>();
+            BILL = new HashSet<BILL>();
+            COMMENTS = new HashSet<COMMENT>();
             STORES = new HashSet<STORE>();
         }
 
@@ -48,7 +49,10 @@ namespace GoMarketService.DataObjects
         public int TypeID { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BILL> BILLs { get; set; }
+        public virtual ICollection<BILL> BILL { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COMMENT> COMMENTS { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<STORE> STORES { get; set; }

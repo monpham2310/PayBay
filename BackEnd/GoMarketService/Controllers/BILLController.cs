@@ -9,7 +9,6 @@ using GoMarketService.Models;
 
 namespace GoMarketService.Controllers
 {
-    [Authorize]
     public class BILLController : TableController<BILL>
     {
         protected override void Initialize(HttpControllerContext controllerContext)

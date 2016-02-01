@@ -383,3 +383,7 @@ as
 			end
 		commit
 	end
+
+insert into paybayservice.Users values('Pham Quang Huy','2016-10-23','monpham2310@gmail.com','01268673096',1,'Bien Hoa',NULL,'monadmin',pwdencrypt('monadmin'),1)
+insert into paybayservice.Users values('Do Thanh Nam','2016-10-23','monpham2310@gmail.com','01268673096',1,'Bien Hoa',NULL,'monadmin',pwdencrypt('monadmin'),1)
+insert into paybayservice.Users values('Pham Quang Huy','2016-10-23','monpham2310@gmail.com','01268673096',1,'Bien Hoa',NULL,'monadmin',pwdencrypt('monadmin'),1)

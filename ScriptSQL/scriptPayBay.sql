@@ -1,12 +1,157 @@
-alter proc sp_AddUser
-@UserID varchar(10),
+alter proc [paybayservice].[sp_DelMarket] --super admin
+@MarketId int
+as
+	begin tran delMarket
+		delete from paybayservice.Markets where MarketId=@MarketId
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode,'Can not delete market!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+select * from paybayservice.Markets
+
+create proc [paybayservice].[sp_UpdateMarket]
+@ID int,
+@Name nvarchar(100),
+@Address nvarchar(200),
+@Phone varchar(12),
+@Image varbinary(max)
+as
+	begin tran updateMarket
+		update paybayservice.MARKETS
+		set MarketName=@Name,Address=@Address,Phone=@Phone,Image=@Image
+		where MarketId=@ID
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode,'Can not update market!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc [paybayservice].[sp_AddMarket]
+@Name nvarchar(100),
+@Address nvarchar(200),
+@Phone varchar(12),
+@Image varbinary(max)
+as
+	begin tran addMarket		
+		insert into paybayservice.MARKETS values(@Name,@Address,@Phone,@Image)		
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode, 'Can not add market!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc [paybayservice].[sp_AddStore]
+@Name nvarchar(100),
+@KiotNo varchar(8),
+@Image varbinary(max),
+@Phone varchar(12),
+@MarketID int,
+@OwnerID int
+as
+	begin tran addStore		
+		insert into paybayservice.STORES values(@Name,@KiotNo,@Image,@Phone,@MarketID,@OwnerID)		
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode, 'Can not add store!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc [paybayservice].[sp_UpdateStore]
+@ID int,
+@Name nvarchar(100),
+@KiotNo varchar(8),
+@Image varbinary(max),
+@Phone varchar(12),
+@MarketID int,
+@OwnerID int
+as
+	begin tran updateStore
+		update paybayservice.STORES
+		set StoreName=@Name,KiotNo=@KiotNo,Image=@Image,Phone=@Phone,MarketID=@MarketID
+		where StoreId=@ID and OwnerID=@OwnerID
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode,'Can not update store!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc [paybayservice].[sp_DelStore] --Super Admin
+@ID int
+as
+	begin tran delStore
+		delete from paybayservice.STORES where StoreId=@ID
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode,'Can not delete store!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc [paybayservice].[sp_AddProduct]
+@Name nvarchar(100),
+@Image varbinary(max),
+@UnitPrice float,
+@NumberOf int,
+@Unit nvarchar(20),
+@StoreID int
+as
+	begin tran addProduct		
+		insert into paybayservice.PRODUCTS values(@Name,@Image,@UnitPrice,@NumberOf,@Unit,@StoreID)		
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode, 'Can not add product!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc [paybayservice].[sp_UpdateProduct]
+@ID int,
+@Name nvarchar(100),
+@Image varbinary(max),
+@UnitPrice float,
+@NumberOf int,
+@Unit nvarchar(20),
+@StoreID int
+as
+	begin tran updateProduct
+		update paybayservice.PRODUCTS
+		set ProductName=@Name,Image=@Image,UnitPrice=@UnitPrice,NumberOf=@NumberOf,Unit=@Unit
+		where ProductId=@ID and StoreID=@StoreID
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode,'Can not update product!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc [paybayservice].[sp_DelProduct]
+@ID int,
+@StoreID int
+as
+	begin tran delProduct
+		delete from paybayservice.PRODUCTS where ProductId=@ID and StoreID=@StoreID
+		if(@@ERROR > 0)
+		begin
+			select 0 as ErrCode,'Can not delete product!' as ErrMsg
+			rollback tran
+		end
+	commit
+
+create proc paybayservice.sp_AddUser
 @Name nvarchar(100),
 @Birthday date,
 @Email nvarchar(100),
 @Phone varchar(12),
 @Gender bit,
 @Address nvarchar(200),
-@Avatar nvarchar(max),
+@Avatar varbinary(max),
 @Username nvarchar(50),
 @Pass nvarchar(50),
 @TypeID int
@@ -14,8 +159,8 @@ as
 	if not exists (select 1 from USERS where Username=@Username and Email=@Email)
 	begin
 		begin tran insertUser
-			insert into USERS(UserID,Name,Birthday,Email,Phone,Gender,Address,Avatar,Username,Pass,TypeID)
-			values (@UserID,@Name,@Birthday,@Email,@Phone,@Gender,@Address,@Avatar,@Username,PWDENCRYPT(@Pass),@TypeID)
+			insert into paybayservice.USERS(Name,Birthday,Email,Phone,Gender,Address,Avatar,Username,Pass,TypeID)
+			values (@Name,@Birthday,@Email,@Phone,@Gender,@Address,@Avatar,@Username,PWDENCRYPT(@Pass),@TypeID)
 			if(@@ERROR > 0)
 			begin				
 				rollback tran
@@ -28,23 +173,23 @@ as
 	else
 		select 0 as ErrCode,'Username and email had already registered!Please try again!' as ErrMsg
 	
-create proc sp_UpdateUser
-@UserID varchar(10),
+create proc paybayservice.sp_UpdateUser
+@UserID int,
 @Name nvarchar(100),
 @Birthday date,
 @Email nvarchar(100),
 @Phone varchar(12),
 @Gender bit,
 @Address nvarchar(200),
-@Avatar nvarchar(max),
+@Avatar varbinary(max),
 @Username nvarchar(50),
 @Pass nvarchar(50),
 @TypeID int
 as
 	begin tran updateUser
-		update USERS
+		update paybayservice.USERS
 		set Name=@Name,Birthday=@Birthday,Email=@Email,Phone=@Phone,Gender=@Gender,Address=@Address,Avatar=@Avatar,Username=@Username,Pass=PWDENCRYPT(@Pass),TypeID=@TypeID
-		where UserID=@UserID
+		where UserId=@UserID
 		if(@@ERROR > 0)
 		begin
 			rollback tran
@@ -52,11 +197,11 @@ as
 		end
 	commit
 
-alter proc sp_DelUser --spuer admin permission
-@UserID varchar(10)
+create proc paybayservice.sp_DelUser --spuer admin permission
+@UserID int
 as
 	begin tran delUser
-		delete from USERS where UserID=@UserID
+		delete from paybayservice.USERS where UserId=@UserID
 		if(@@ERROR > 0)
 		begin
 			rollback tran
@@ -64,15 +209,15 @@ as
 		end
 	commit
 
-alter proc sp_AddComment
+create proc paybayservice.sp_AddComment
 @Date date,
 @Time time(7),
-@StoreID varchar(10),
+@StoreID int,
 @Content nvarchar(max),
-@UserID varchar(10)
+@UserID int
 as
 	begin tran insertComment
-		insert into COMMENTS(CommentDate,CommentTime,StoreID,Content,UserID) values (@Date,@Time,@StoreID,@Content,@UserID)
+		insert into paybayservice.COMMENTS(CommentDate,CommentTime,StoreID,Content,UserID) values (@Date,@Time,@StoreID,@Content,@UserID)
 		if(@@ERROR > 0)
 		begin
 			rollback tran
@@ -80,11 +225,11 @@ as
 		end
 	commit
 
-create proc sp_DelComment --permission Store Owner
+create proc paybayservice.sp_DelComment --permission Store Owner
 @ID int
 as
 	begin tran delComment
-		delete from COMMENTS where ID=@ID
+		delete from paybayservice.COMMENTS where Id=@ID
 		if(@@ERROR > 0)
 		begin 
 			rollback tran
@@ -92,17 +237,16 @@ as
 		end
 	commit
 
-create proc sp_AddSaleInfo --permission store owner
-@SaleID varchar(10),
+create proc paybayservice.sp_AddSaleInfo --permission store owner
 @Title nvarchar(100),
-@Image nvarchar(200),
+@Image varbinary(max),
 @Description nvarchar(max),
 @StartDate date,
 @EndDate date,
-@StoreID varchar(10)
+@StoreID int
 as
 	begin tran addSales
-		insert into SALES(SaleID,Title,Image,Description,StartDate,EndDate,StoreID) values (@SaleID,@Title,@Image,@Description,@StartDate,@EndDate,@StoreID)
+		insert into paybayservice.SALES(Title,Image,Describes,StartDate,EndDate,StoreID) values (@Title,@Image,@Description,@StartDate,@EndDate,@StoreID)
 		if(@@ERROR > 0)
 		begin
 			rollback tran 
@@ -110,19 +254,19 @@ as
 		end
 	commit
 
-create proc sp_UpdateSaleInfo --permission store owner
-@SaleID varchar(10),
+create proc paybayservice.sp_UpdateSaleInfo --permission store owner
+@SaleID int,
 @Title nvarchar(100),
-@Image nvarchar(200),
+@Image varbinary(200),
 @Description nvarchar(max),
 @StartDate date,
 @EndDate date,
-@StoreID varchar(10)
+@StoreID int
 as
 	begin tran updateSaleInfo
-		update SALES
-		set Title=@Title,Image=@Image,Description=@Description,StartDate=@StartDate,EndDate=@EndDate,StoreID=@StoreID
-		where SaleID=@SaleID
+		update paybayservice.SALES
+		set Title=@Title,Image=@Image,Description=@Description,StartDate=@StartDate,EndDate=@EndDate
+		where SaleId=@SaleID and StoreID=@StoreID
 		if(@@ERROR > 0)
 		begin 
 			rollback tran
@@ -130,11 +274,12 @@ as
 		end
 	commit
 
-create proc sp_DelSaleInfo --permission store owner
-@SaleID varchar(10)
+create proc paybayservice.sp_DelSaleInfo --permission store owner
+@SaleID int,
+@StoreID int
 as
 	begin tran delSale
-		delete from SALESINFO where SaleID=@SaleID
+		delete from paybayservice.SALESINFO where SaleId=@SaleID and StoreID=@StoreID
 		if(@@ERROR > 0)
 		begin 
 			rollback tran
@@ -142,14 +287,13 @@ as
 		end
 	commit
 
-ALTER proc [dbo].[sp_AddBill]
-@BillID varchar(10),
+create proc [paybayservice].[sp_AddBill]
 @CreatedDate date,
-@StoreID varchar(10),
-@UserID varchar(10)
+@StoreID int,
+@UserID int
 as
 	begin tran addBill
-		insert into BILL(BillID,CreatedDate,StoreID,UserID) values(@BillID,@CreatedDate,@StoreID,@UserID)
+		insert into paybayservice.BILLS(CreatedDate,StoreID,UserID) values(@CreatedDate,@StoreID,@UserID)
 		if(@@ERROR > 0)
 		begin 
 			rollback tran
@@ -157,16 +301,16 @@ as
 		end
 	commit
 
-ALTER proc [dbo].[sp_UpdateBill]
-@BillID varchar(10),
+create proc [paybayservice].[sp_UpdateBill]
+@BillID int,
 @ReducedPrice float,
-@StoreID varchar(10),
-@UserID varchar(10)
+@StoreID int,
+@UserID int
 as
 	begin tran updatePrice
-		update BILL
+		update paybayservice.BILLS
 		set ReducedPrice=@ReducedPrice,TotalPrice-=@ReducedPrice
-		where BillID=@BillID and StoreID=@StoreID and UserID=@UserID
+		where BillId=@BillID and StoreID=@StoreID and UserID=@UserID
 		if(@@ERROR > 0)
 		begin
 			rollback tran
@@ -174,13 +318,13 @@ as
 		end
 	commit
 
-ALTER proc [dbo].[sp_DelBill]
-@BillID varchar(10),
-@StoreID varchar(10),
-@UserID varchar(10)
+create proc [paybayservice].[sp_DelBill]
+@BillID int,
+@StoreID int,
+@UserID int
 as
 	begin tran delBill
-		delete from BILL where BillID=@BillID and StoreID=@StoreID and UserID=@UserID
+		delete from paybayservice.BILLS where BillId=@BillID and StoreID=@StoreID and UserID=@UserID
 		if(@@ERROR > 0)
 		begin
 			rollback tran
@@ -188,20 +332,20 @@ as
 		end
 	commit
 
-ALTER proc [dbo].[sp_InsertDetailBill] --permission user
-@BillID varchar(10),
-@ProductID varchar(10),
+create proc [paybayservice].[sp_InsertDetailBill] --permission user
+@BillID int,
+@ProductID int,
 @NumberOf int
 as
 	declare @UnitPrice float,@Unit nvarchar(20)
-	set @UnitPrice=(select UnitPrice from PRODUCTS where ProductID=@ProductID)
-	set @Unit=(select Unit from PRODUCTS where ProductID=@ProductID)
-	if exists (select 1 from BILL where BillID=@BillID)
+	set @UnitPrice=(select UnitPrice from PRODUCTS where ProductId=@ProductID)
+	set @Unit=(select Unit from PRODUCTS where ProductId=@ProductID)
+	if exists (select 1 from paybayservice.BILLS where BillId=@BillID)
 	begin
-		if not exists (select 1 from DETAILBILL where BillID=@BillID and ProductID=@ProductID)
+		if not exists (select 1 from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID)
 		begin
 			begin tran addDetail
-				insert into DETAILBILL(BillID,ProductID,NumberOf,UnitPrice,Unit) values (@BillID,@ProductID,@NumberOf,@UnitPrice,@Unit)
+				insert into paybayservice.DETAILBILL(BillID,ProductID,NumberOf,UnitPrice,Unit) values (@BillID,@ProductID,@NumberOf,@UnitPrice,@Unit)
 				if(@@ERROR > 0)
 				begin
 					rollback tran
@@ -212,7 +356,7 @@ as
 		else
 		begin
 			begin tran updateDetail
-				update DETAILBILL
+				update paybayservice.DETAILBILL
 				set NumberOf=@NumberOf
 				where BillID=@BillID and ProductID=@ProductID
 				if(@@ERROR > 0)
@@ -222,4 +366,20 @@ as
 				end
 			commit
 		end	
+	end
+
+create proc paybayservice.sp_DelDetailBill
+@BillID int,
+@ProductID int
+as
+	if exists (select 1 from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID)
+	begin
+		begin tran delDetailBill
+			delete from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID
+			if(@@ERROR > 0)
+			begin
+				rollback tran
+				select 1 as ErrCode,'Delete detail bill successful!' as ErrMsg
+			end
+		commit
 	end

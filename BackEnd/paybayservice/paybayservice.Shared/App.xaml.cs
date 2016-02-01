@@ -1,7 +1,4 @@
-﻿using System;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Microsoft.WindowsAzure.MobileServices;
+﻿using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,31 +15,41 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using PayBay.View.StartGroup;
 
-namespace PayBay
+namespace paybayservice
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
+
+        // This MobileServiceClient has been configured to communicate with your local
+        // test project for debugging purposes.
+        public static MobileServiceClient MobileService = new MobileServiceClient(
+            "http://localhost:58705"
+        );
+
+        // This MobileServiceClient has been configured to communicate with your Mobile Service's url
+        // and application key. You're all set to start working with your Mobile Service!
+        //public static MobileServiceClient MobileService = new MobileServiceClient(
+        //    "https://paybayservice.azure-mobile.net/",
+        //    "OilbMshzaPgvERqbTfFtLLLFwlEHFl47"
+        //);
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
-                Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
-                Microsoft.ApplicationInsights.WindowsCollectors.Session);
-            InitializeComponent();
-            Suspending += OnSuspending;
-        }
+            this.InitializeComponent();
+            this.Suspending += OnSuspending;
 
-        public static MobileServiceClient MobileService = new MobileServiceClient(
-            "http://gomarket.azurewebsites.net"
-        );
+#if !WINDOWS_PHONE_APP
+                RequestedTheme = ApplicationTheme.Light;    
+#endif
+        }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -50,14 +57,14 @@ namespace PayBay
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
-        {
-            //TODO: Disable these line of code to remove FrameRateCounter
-//#if DEBUG
-//            if (System.Diagnostics.Debugger.IsAttached)
-//            {
-//                this.DebugSettings.EnableFrameRateCounter = true;
-//            }
-//#endif
+        {            
+
+#if DEBUG
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                this.DebugSettings.EnableFrameRateCounter = true;
+            }
+#endif
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -67,6 +74,8 @@ namespace PayBay
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
+                // Set the default language
+                rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -84,16 +93,10 @@ namespace PayBay
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(StartPage), e.Arguments);
+                rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
             // Ensure the current window is active
             Window.Current.Activate();
-        }
-
-        protected override void OnActivated(IActivatedEventArgs args)
-        {
-            
-            base.OnActivated(args);
         }
 
         /// <summary>

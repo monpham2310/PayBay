@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +39,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/SaleInfoes/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutSaleInfo(int id, SaleInfo saleInfo)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutSaleInfo(SaleInfo saleInfo)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
-
-            if (id != saleInfo.SaleId)
-            {
-                return BadRequest();
-            }
-
+                        
             db.Entry(saleInfo).State = EntityState.Modified;
 
             try
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SaleInfoExists(id))
+                if (!SaleInfoExists(saleInfo.SaleId))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Sale Info isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Update sale info is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/SaleInfoes
-        [ResponseType(typeof(SaleInfo))]
-        public async Task<IHttpActionResult> PostSaleInfo(SaleInfo saleInfo)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostSaleInfo(SaleInfo saleInfo)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.SaleInfoes.Add(saleInfo);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = saleInfo.SaleId }, saleInfo);
+            result = Methods.CustomResponseMessage(1, "Add sale info is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/SaleInfoes/5
-        [ResponseType(typeof(SaleInfo))]
-        public async Task<IHttpActionResult> DeleteSaleInfo(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteSaleInfo(int id)
         {
+            JObject result = new JObject();
             SaleInfo saleInfo = await db.SaleInfoes.FindAsync(id);
             if (saleInfo == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Sale info isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.SaleInfoes.Remove(saleInfo);
             await db.SaveChangesAsync();
 
-            return Ok(saleInfo);
+            result = Methods.CustomResponseMessage(1, "Delete sale info is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

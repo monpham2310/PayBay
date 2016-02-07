@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +39,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/Stores/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStore(int id, Store store)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutStore(Store store)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            if (id != store.StoreId)
-            {
-                return BadRequest();
-            }
-
+                        
             db.Entry(store).State = EntityState.Modified;
 
             try
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StoreExists(id))
+                if (!StoreExists(store.StoreId))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Store isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Update store is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/Stores
-        [ResponseType(typeof(Store))]
-        public async Task<IHttpActionResult> PostStore(Store store)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostStore(Store store)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
             db.Stores.Add(store);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = store.StoreId }, store);
+            result = Methods.CustomResponseMessage(1, "Add store is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/Stores/5
-        [ResponseType(typeof(Store))]
-        public async Task<IHttpActionResult> DeleteStore(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteStore(int id)
         {
+            JObject result = new JObject();
             Store store = await db.Stores.FindAsync(id);
             if (store == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Store isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.Stores.Remove(store);
             await db.SaveChangesAsync();
 
-            return Ok(store);
+            result = Methods.CustomResponseMessage(1, "Delete store is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

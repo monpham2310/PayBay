@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +39,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/Markets/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutMarket(int id, Market market)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutMarket(Market market)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            if (id != market.MarketId)
-            {
-                return BadRequest();
-            }
-
+                        
             db.Entry(market).State = EntityState.Modified;
 
             try
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MarketExists(id))
+                if (!MarketExists(market.MarketId))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Market isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Update market is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/Markets
-        [ResponseType(typeof(Market))]
-        public async Task<IHttpActionResult> PostMarket(Market market)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostMarket(Market market)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.Markets.Add(market);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = market.MarketId }, market);
+            result = Methods.CustomResponseMessage(1, "Add market is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/Markets/5
-        [ResponseType(typeof(Market))]
-        public async Task<IHttpActionResult> DeleteMarket(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteMarket(int id)
         {
+            JObject result = new JObject();
             Market market = await db.Markets.FindAsync(id);
             if (market == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Market isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.Markets.Remove(market);
             await db.SaveChangesAsync();
 
-            return Ok(market);
+            result = Methods.CustomResponseMessage(1, "Delete market is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +39,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/ProductStatistics/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProductStatistic(int id, ProductStatistic productStatistic)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutProductStatistic(ProductStatistic productStatistic)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            if (id != productStatistic.Id)
-            {
-                return BadRequest();
-            }
-
+                        
             db.Entry(productStatistic).State = EntityState.Modified;
 
             try
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductStatisticExists(id))
+                if (!ProductStatisticExists(productStatistic.Id))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Request isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Put Request is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/ProductStatistics
-        [ResponseType(typeof(ProductStatistic))]
-        public async Task<IHttpActionResult> PostProductStatistic(ProductStatistic productStatistic)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostProductStatistic(ProductStatistic productStatistic)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.ProductStatistics.Add(productStatistic);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = productStatistic.Id }, productStatistic);
+            result = Methods.CustomResponseMessage(0, "Post Request is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/ProductStatistics/5
-        [ResponseType(typeof(ProductStatistic))]
-        public async Task<IHttpActionResult> DeleteProductStatistic(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteProductStatistic(int id)
         {
+            JObject result = new JObject();
             ProductStatistic productStatistic = await db.ProductStatistics.FindAsync(id);
             if (productStatistic == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Request isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.ProductStatistics.Remove(productStatistic);
             await db.SaveChangesAsync();
 
-            return Ok(productStatistic);
+            result = Methods.CustomResponseMessage(1, "Delete Request is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

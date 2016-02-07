@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,17 +39,13 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/Products/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProduct(int id, Product product)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutProduct(Product product)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != product.ProductId)
-            {
-                return BadRequest();
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.Entry(product).State = EntityState.Modified;
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!ProductExists(product.ProductId))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Product isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Update product is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/Products
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> PostProduct(Product product)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostProduct(Product product)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.Products.Add(product);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = product.ProductId }, product);
+            result = Methods.CustomResponseMessage(1, "Add product is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/Products/5
-        [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> DeleteProduct(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteProduct(int id)
         {
+            JObject result = new JObject();
             Product product = await db.Products.FindAsync(id);
             if (product == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Product isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.Products.Remove(product);
             await db.SaveChangesAsync();
 
-            return Ok(product);
+            result = Methods.CustomResponseMessage(1, "Delete product is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

@@ -20,7 +20,20 @@ namespace PayBayService
 
             // To display errors in the browser during development, uncomment the following
             // line. Comment it out again when you deploy your service for production use.
-            // config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+            // config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;          
+
+            config.Formatters.JsonFormatter.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Include;
+            config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Include;
+
+            //config.MapHttpAttributeRoutes();
+
+            config.Routes.IgnoreRoute("ignoreRoute","{resource}.axd/{*pathInfo}");
+
+            config.Routes.MapHttpRoute(
+                name: "Api",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
 
             //Database.SetInitializer(new MobileServiceInitializer());
         }

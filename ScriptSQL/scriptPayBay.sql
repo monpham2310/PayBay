@@ -173,28 +173,28 @@ as
 	else
 		select 0 as ErrCode,'Username and email had already registered!Please try again!' as ErrMsg
 	
-create proc paybayservice.sp_UpdateUser
+alter proc paybayservice.sp_UpdateUser
 @UserID int,
 @Name nvarchar(100),
 @Birthday date,
-@Email nvarchar(100),
 @Phone varchar(12),
 @Gender bit,
 @Address nvarchar(200),
 @Avatar varbinary(max),
-@Username nvarchar(50),
 @Pass nvarchar(50),
 @TypeID int
 as
 	begin tran updateUser
 		update paybayservice.USERS
-		set Name=@Name,Birthday=@Birthday,Email=@Email,Phone=@Phone,Gender=@Gender,Address=@Address,Avatar=@Avatar,Username=@Username,Pass=PWDENCRYPT(@Pass),TypeID=@TypeID
+		set Name=@Name,Birthday=@Birthday,Phone=@Phone,Gender=@Gender,Address=@Address,Avatar=@Avatar,Pass=PWDENCRYPT(@Pass),TypeID=@TypeID
 		where UserId=@UserID
 		if(@@ERROR > 0)
 		begin
 			rollback tran
-			select 0 as ErrCode,'Update user not successful!' as ErrMsg
+			select 0 as ErrCode,'Update user is not successful!' as ErrMsg
 		end
+		else
+			select 1 as ErrCode,'Update user is successful!' as ErrMsg
 	commit
 
 create proc paybayservice.sp_DelUser --spuer admin permission
@@ -387,3 +387,45 @@ as
 insert into paybayservice.Users values('Pham Quang Huy','2016-10-23','monpham2310@gmail.com','01268673096',1,'Bien Hoa',NULL,'monadmin',pwdencrypt('monadmin'),1)
 insert into paybayservice.Users values('Do Thanh Nam','2016-10-23','monpham2310@gmail.com','01268673096',1,'Bien Hoa',NULL,'monadmin',pwdencrypt('monadmin'),1)
 insert into paybayservice.Users values('Pham Quang Huy','2016-10-23','monpham2310@gmail.com','01268673096',1,'Bien Hoa',NULL,'monadmin',pwdencrypt('monadmin'),1)
+
+alter proc paybayservice.sp_AddUserType 'Mon'
+@typeName varchar(20)
+as
+	if not exists (select 1 from UserType where TypeName = @typeName)
+	begin
+		begin tran addType
+			insert into UserType values(@typeName)
+			if(@@error > 0)
+			begin
+				rollback tran
+				select 0 as ErrCode,'Add is not successful!' as ErrMsg
+			end
+			else
+				select 1 as ErrCode,'Add is successful!' as ErrMsg
+		commit
+	end
+	else
+		select 0 as ErrCode,'Name had already exists!' as ErrMsg
+
+create proc paybayservice.sp_UpdateUserType
+@typeId int,
+@typeName varchar(20)
+as
+	begin tran updateType
+		update UserType
+		set TypeName=@typeName
+		where TypeID=@typeId
+		if(@@error > 0)
+		begin
+			rollback tran
+			select 0 as ErrCode,'Update is not successful!' as ErrMsg
+		end
+		else
+			select 1 as ErrCode,'Update is successful!' as ErrMsg
+	commit
+
+create proc paybayservice.sp_GetAllSaleInfo
+as
+	select SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,isRequired
+	from paybayservice.SaleInfo a inner join paybayservice.Stores b on a.StoreID = b.StoreID 
+

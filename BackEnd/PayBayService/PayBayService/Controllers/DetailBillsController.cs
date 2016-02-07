@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +39,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/DetailBills/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutDetailBill(int id, DetailBill detailBill)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutDetailBill(DetailBill detailBill)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            if (id != detailBill.Id)
-            {
-                return BadRequest();
-            }
-
+                        
             db.Entry(detailBill).State = EntityState.Modified;
 
             try
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DetailBillExists(id))
+                if (!DetailBillExists(detailBill.Id))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Detail Bill isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Update Detail Bill is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/DetailBills
-        [ResponseType(typeof(DetailBill))]
-        public async Task<IHttpActionResult> PostDetailBill(DetailBill detailBill)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostDetailBill(DetailBill detailBill)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.DetailBills.Add(detailBill);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = detailBill.Id }, detailBill);
+            result = Methods.CustomResponseMessage(1, "Add Detail Bill is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/DetailBills/5
-        [ResponseType(typeof(DetailBill))]
-        public async Task<IHttpActionResult> DeleteDetailBill(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteDetailBill(int id)
         {
+            JObject result = new JObject();
             DetailBill detailBill = await db.DetailBills.FindAsync(id);
             if (detailBill == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Detail Bill isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.DetailBills.Remove(detailBill);
             await db.SaveChangesAsync();
 
-            return Ok(detailBill);
+            result = Methods.CustomResponseMessage(1, "Delete Detail Bill is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

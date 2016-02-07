@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +40,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/UserTypes/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUserType(int id, UserType userType)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutUserType(UserType userType)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            if (id != userType.TypeId)
-            {
-                return BadRequest();
-            }
-
+            
             db.Entry(userType).State = EntityState.Modified;
 
             try
@@ -58,9 +57,9 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserTypeExists(id))
+                if (!UserTypeExists(userType.TypeId))
                 {
-                    return NotFound();
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
                 else
                 {
@@ -68,38 +67,67 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Update user type successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/UserTypes
-        [ResponseType(typeof(UserType))]
-        public async Task<IHttpActionResult> PostUserType(UserType userType)
+        //[ResponseType(typeof(UserType))]
+        //public async Task<IHttpActionResult> PostUserType(UserType userType)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.UserTypes.Add(userType);
+
+        //    //var name = new SqlParameter("@typeName", userType.TypeName);
+        //    //db.UserTypes.SqlQuery("paybayservice.sp_AddUserType @typeName", name);
+
+        //    await db.SaveChangesAsync();
+
+        //    return CreatedAtRoute("Api", new { id = userType.TypeId }, userType);
+        //}
+
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostUserType(UserType userType)
         {
+            JObject result = new JObject();
+
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
-
+                        
             db.UserTypes.Add(userType);
+
+            //var name = new SqlParameter("@typeName", userType.TypeName);
+            //db.UserTypes.SqlQuery("paybayservice.sp_AddUserType @typeName", name);
+
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = userType.TypeId }, userType);
+            result = Methods.CustomResponseMessage(1, "Add user type successful!");
+            //return CreatedAtRoute("Api", new { id = userType.TypeId }, userType);
+            return Request.CreateResponse(HttpStatusCode.Created, result);
         }
 
         // DELETE: api/UserTypes/5
-        [ResponseType(typeof(UserType))]
-        public async Task<IHttpActionResult> DeleteUserType(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteUserType(int id)
         {
+            JObject message = new JObject();
             UserType userType = await db.UserTypes.FindAsync(id);
             if (userType == null)
             {
-                return NotFound();
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
             db.UserTypes.Remove(userType);
             await db.SaveChangesAsync();
 
-            return Ok(userType);
+            message = Methods.CustomResponseMessage(1, "Delete user type successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, message);
         }
 
         protected override void Dispose(bool disposing)
@@ -115,5 +143,6 @@ namespace PayBayService.Controllers
         {
             return db.UserTypes.Count(e => e.TypeId == id) > 0;
         }
+                
     }
 }

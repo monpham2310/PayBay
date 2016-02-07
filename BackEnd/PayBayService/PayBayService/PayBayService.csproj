@@ -226,10 +226,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\Methods.cs" />
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\DetailBillsController.cs" />
     <Compile Include="Controllers\MarketsController.cs" />
+    <Compile Include="Controllers\PaybayController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductStatisticsController.cs" />
     <Compile Include="Controllers\RevenueStatisticsController.cs" />
@@ -316,7 +318,9 @@
       <LastGenOutput>PaybayModel.cs</LastGenOutput>
     </Content>
     <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

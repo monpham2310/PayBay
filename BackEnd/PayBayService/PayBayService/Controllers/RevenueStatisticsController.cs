@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +39,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/RevenueStatistics/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutRevenueStatistic(int id, RevenueStatistic revenueStatistic)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutRevenueStatistic(RevenueStatistic revenueStatistic)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            if (id != revenueStatistic.Id)
-            {
-                return BadRequest();
-            }
-
+                        
             db.Entry(revenueStatistic).State = EntityState.Modified;
 
             try
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RevenueStatisticExists(id))
+                if (!RevenueStatisticExists(revenueStatistic.Id))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Request isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Put Request is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/RevenueStatistics
-        [ResponseType(typeof(RevenueStatistic))]
-        public async Task<IHttpActionResult> PostRevenueStatistic(RevenueStatistic revenueStatistic)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostRevenueStatistic(RevenueStatistic revenueStatistic)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.RevenueStatistics.Add(revenueStatistic);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = revenueStatistic.Id }, revenueStatistic);
+            result = Methods.CustomResponseMessage(1, "Post Request is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/RevenueStatistics/5
-        [ResponseType(typeof(RevenueStatistic))]
-        public async Task<IHttpActionResult> DeleteRevenueStatistic(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteRevenueStatistic(int id)
         {
             RevenueStatistic revenueStatistic = await db.RevenueStatistics.FindAsync(id);
+            JObject result = new JObject();
             if (revenueStatistic == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Request isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.RevenueStatistics.Remove(revenueStatistic);
             await db.SaveChangesAsync();
 
-            return Ok(revenueStatistic);
+            result = Methods.CustomResponseMessage(0, "Delete request is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

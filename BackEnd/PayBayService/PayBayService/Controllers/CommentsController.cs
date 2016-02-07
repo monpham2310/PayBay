@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using PayBayService.Common;
+using Newtonsoft.Json.Linq;
 
 namespace PayBayService.Controllers
 {
@@ -37,17 +39,13 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/Comments/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutComment(int id, Comment comment)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutComment(Comment comment)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != comment.Id)
-            {
-                return BadRequest();
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.Entry(comment).State = EntityState.Modified;
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CommentExists(id))
+                if (!CommentExists(comment.Id))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Comment isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(0, "Update Comment is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/Comments
-        [ResponseType(typeof(Comment))]
-        public async Task<IHttpActionResult> PostComment(Comment comment)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostComment(Comment comment)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.Comments.Add(comment);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = comment.Id }, comment);
+            result = Methods.CustomResponseMessage(1, "Add Comment is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/Comments/5
-        [ResponseType(typeof(Comment))]
-        public async Task<IHttpActionResult> DeleteComment(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteComment(int id)
         {
+            JObject result = new JObject();
             Comment comment = await db.Comments.FindAsync(id);
             if (comment == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Comment isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.Comments.Remove(comment);
             await db.SaveChangesAsync();
 
-            return Ok(comment);
+            result = Methods.CustomResponseMessage(1, "Delete comment is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

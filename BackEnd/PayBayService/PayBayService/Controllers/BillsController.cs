@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
+using Newtonsoft.Json.Linq;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {
@@ -37,19 +39,15 @@ namespace PayBayService.Controllers
         }
 
         // PUT: api/Bills/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutBill(int id, Bill bill)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PutBill(Bill bill)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-
-            if (id != bill.BillId)
-            {
-                return BadRequest();
-            }
-
+                        
             db.Entry(bill).State = EntityState.Modified;
 
             try
@@ -58,9 +56,10 @@ namespace PayBayService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BillExists(id))
+                if (!BillExists(bill.BillId))
                 {
-                    return NotFound();
+                    result = Methods.CustomResponseMessage(0, "Bill isn't exists!");
+                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
                 }
                 else
                 {
@@ -68,38 +67,44 @@ namespace PayBayService.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            result = Methods.CustomResponseMessage(1, "Update Bill is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/Bills
-        [ResponseType(typeof(Bill))]
-        public async Task<IHttpActionResult> PostBill(Bill bill)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> PostBill(Bill bill)
         {
+            JObject result = new JObject();
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
             db.Bills.Add(bill);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = bill.BillId }, bill);
+            result = Methods.CustomResponseMessage(0, "Add Bill is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/Bills/5
-        [ResponseType(typeof(Bill))]
-        public async Task<IHttpActionResult> DeleteBill(int id)
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> DeleteBill(int id)
         {
+            JObject result = new JObject();
             Bill bill = await db.Bills.FindAsync(id);
             if (bill == null)
             {
-                return NotFound();
+                result = Methods.CustomResponseMessage(0, "Bill isn't exists!");
+                return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
             db.Bills.Remove(bill);
             await db.SaveChangesAsync();
 
-            return Ok(bill);
+            result = Methods.CustomResponseMessage(1, "Delete Bill is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         protected override void Dispose(bool disposing)

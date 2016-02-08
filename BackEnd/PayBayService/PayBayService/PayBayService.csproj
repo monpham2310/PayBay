@@ -226,7 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Common\Methods.cs" />
+    <Compile Include="App_Code\Methods.cs" />
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\DetailBillsController.cs" />

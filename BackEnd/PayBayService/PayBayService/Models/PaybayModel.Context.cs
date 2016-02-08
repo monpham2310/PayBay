@@ -12,12 +12,15 @@ namespace PayBayService.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Data.SqlClient;
     public partial class PayBayDatabaseEntities : DbContext
     {
-        public PayBayDatabaseEntities()
-            : base("name=PayBayDatabaseEntities")
+        public static string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
+        //public static SqlConnection cnn = new SqlConnection(connectionString);
+
+        public PayBayDatabaseEntities() : base("name=PayBayDatabaseEntities")
         {
+
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

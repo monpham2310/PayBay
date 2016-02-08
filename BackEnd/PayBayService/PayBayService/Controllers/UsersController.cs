@@ -12,7 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
-using PayBayService.Common;
+using PayBayService.App_Code;
 
 namespace PayBayService.Controllers
 {

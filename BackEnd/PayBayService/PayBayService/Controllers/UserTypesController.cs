@@ -12,14 +12,14 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
-using PayBayService.Common;
+using PayBayService.App_Code;
 
 namespace PayBayService.Controllers
 {
     public class UserTypesController : ApiController
     {
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
-
+        
         // GET: api/UserTypes
         public IQueryable<UserType> GetUserTypes()
         {
@@ -99,17 +99,24 @@ namespace PayBayService.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
-                        
+
             db.UserTypes.Add(userType);
 
-            //var name = new SqlParameter("@typeName", userType.TypeName);
-            //db.UserTypes.SqlQuery("paybayservice.sp_AddUserType @typeName", name);
-
+            //try
+            //{
+            //    var name = new SqlParameter("@typeName", userType.TypeName);
+            //    result = Methods.ExecQueryWithResult("paybayservice.sp_AddUserType",CommandType.StoredProcedure,ref Methods.err, name);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
+           
             await db.SaveChangesAsync();
 
             result = Methods.CustomResponseMessage(1, "Add user type successful!");
             //return CreatedAtRoute("Api", new { id = userType.TypeId }, userType);
-            return Request.CreateResponse(HttpStatusCode.Created, result);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/UserTypes/5

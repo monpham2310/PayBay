@@ -332,7 +332,7 @@ as
 		end
 	commit
 
-create proc [paybayservice].[sp_InsertDetailBill] --permission user
+alter proc [paybayservice].[sp_InsertDetailBill] --permission user
 @BillID int,
 @ProductID int,
 @NumberOf int
@@ -350,7 +350,8 @@ as
 				begin
 					rollback tran
 					select 0 as ErrCode,'add detail bill not successfull!' as ErrMsg
-				end
+					return
+				end				
 			commit
 		end
 		else
@@ -363,9 +364,13 @@ as
 				begin
 					rollback tran
 					select 0 as ErrCode,'Update bill not successfull!' as ErrMsg
+					return
 				end
 			commit
-		end	
+		end		
+		select Id,BillID,ProductID,NumberOf,UnitPrice,Unit
+		from paybayservice.DetailBill
+		where BillID = @BillID	
 	end
 
 create proc paybayservice.sp_DelDetailBill
@@ -467,5 +472,63 @@ as
 	from paybayservice.Users
 	where Username = @Username and Pass = @Pass
 
-select StoreName from Stores where StoreId = 1
+create proc paybayservice.sp_GetDetailBill
+@BillID int
+as
+	select Id,BillID,ProductID,NumberOf,UnitPrice,Unit
+	from paybayservice.DetailBill
+	where BillID = @BillID
+
+create proc paybayservice.sp_GetBillOfStore
+@StoreID int
+as
+	select BillID,CreatedDate,StoreID,TotalPrice,ReducedPrice,UserID,isShiped
+	from Bills
+	where StoreID = @StoreID
+
+create proc paybayservice.sp_GetBillOfUser
+@UserID int
+as
+	select BillID,CreatedDate,StoreID,TotalPrice,ReducedPrice,UserID,isShiped
+	from Bills
+	where UserID = @UserID
+
+create proc paybayservice.sp_UpdateLike
+@StoreID int,
+@NumberOf int
+as
+	begin tran updateLike
+		update paybayservice.Stores
+		set NumOfLike = @NumberOf
+		where StoreID = @StoreID
+		if(@@error > 0)
+		begin 
+			rollback tran
+			select 0 as ErrCode,'Like is not successful!' as ErrMsg
+		end
+		else
+		begin
+			select 1 as ErrCode,'Like is successful!' as ErrMsg
+		end
+	commit
+
+create proc paybayservice.sp_AllowShowHomePage
+@saleId int,
+@isRequired bit
+as
+	begin tran updateRequired
+		update paybayservice.SaleInfo
+		set isRequired = @isRequired
+		where SaleId = @SaleId
+		if(@@error > 0)
+		begin 
+			rollback tran
+			select 0 as ErrCode,'Request is not successful!' as ErrMsg
+		end
+		else
+		begin
+			select 1 as ErrCode,'Request is successful!' as ErrMsg
+		end
+	commit
+
 

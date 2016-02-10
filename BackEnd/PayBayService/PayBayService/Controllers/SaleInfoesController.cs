@@ -102,6 +102,25 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        // PUT: api/SaleInfoes/isRequired
+        [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage PutHomePage(int saleId, bool isRequired)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var sale = new SqlParameter("@SaleId", saleId);
+                var required = new SqlParameter("@isRequired", isRequired);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_AllowShowHomePage", CommandType.StoredProcedure, ref Methods.err, sale, required);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // POST: api/SaleInfoes
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostSaleInfo(SaleInfo saleInfo)

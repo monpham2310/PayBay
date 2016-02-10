@@ -20,7 +20,6 @@ namespace PayBayService.Models
         public byte[] Image { get; set; }
         public string Phone { get; set; }
         public int MarketID { get; set; }
-        public int OwnerID { get; set; }
-        public Nullable<int> Rate { get; set; }
+        public int OwnerID { get; set; }        
     }
 }

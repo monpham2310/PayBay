@@ -108,6 +108,25 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        // POST: api/Stores
+        [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage UsersLike(int storeId, int number)
+        {
+            int result = 0;
+            try
+            {
+                var store = new SqlParameter("@StoreID", storeId);
+                var num = new SqlParameter("@NumberOf", number);
+                result = (int)Methods.GetValue("paybayservice.sp_UpdateLike", CommandType.StoredProcedure, ref Methods.err, store, num);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // DELETE: api/Stores/5
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> DeleteStore(int id)

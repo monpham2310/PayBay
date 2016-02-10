@@ -114,6 +114,7 @@ namespace PayBayService.Controllers
            
             await db.SaveChangesAsync();
 
+            //result = JObject.FromObject(userType);
             result = Methods.CustomResponseMessage(1, "Add user type successful!");
             //return CreatedAtRoute("Api", new { id = userType.TypeId }, userType);
             return Request.CreateResponse(HttpStatusCode.OK, result);

@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -25,17 +26,50 @@ namespace PayBayService.Controllers
             return db.Bills;
         }
 
-        // GET: api/Bills/5
+        // GET: api/Bills/StoreID
         [ResponseType(typeof(Bill))]
-        public async Task<IHttpActionResult> GetBill(int id)
+        public HttpResponseMessage GetBillOfStore(int storeId)
         {
-            Bill bill = await db.Bills.FindAsync(id);
-            if (bill == null)
+            JArray result = new JArray();
+            try
             {
-                return NotFound();
+                var store = new SqlParameter("@StoreID", storeId);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetBillOfStore", CommandType.StoredProcedure, ref Methods.err, store);
+                if (result == null)
+                {
+                    var error = Methods.CustomResponseMessage(0, "Data not found!");
+                    result.Add(error);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
-            return Ok(bill);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // GET: api/Bills/UserID
+        [ResponseType(typeof(Bill))]
+        public HttpResponseMessage GetBillOfUser(int userId)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var store = new SqlParameter("@UserID", userId);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetBillOfUser", CommandType.StoredProcedure, ref Methods.err, store);
+                if (result == null)
+                {
+                    var error = Methods.CustomResponseMessage(0, "Data not found!");
+                    result.Add(error);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/Bills/5
@@ -67,7 +101,7 @@ namespace PayBayService.Controllers
                 }
             }
 
-            result = Methods.CustomResponseMessage(1, "Update Bill is successful!");
+            result = JObject.FromObject(bill);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -84,7 +118,7 @@ namespace PayBayService.Controllers
             db.Bills.Add(bill);
             await db.SaveChangesAsync();
 
-            result = Methods.CustomResponseMessage(0, "Add Bill is successful!");
+            result = JObject.FromObject(bill);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

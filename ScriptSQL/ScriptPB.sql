@@ -44,7 +44,7 @@ create table paybayservice.Stores (
 	OwnerID int not null ,
 );
 
-alter table paybayservice.Stores add Rate int default 0
+alter table paybayservice.Stores add NumOfLike int default 0
 
 create table paybayservice.Products (
 	ProductId int identity(1,1) primary key not null,
@@ -70,6 +70,7 @@ create table paybayservice.Bills (
 );
 
 alter table paybayservice.Bills add isShiped bit
+alter table paybayservice.Bills add Note nvarchar(30)
 
 create table paybayservice.DetailBill (
 	Id int identity(1,1) not null primary key,

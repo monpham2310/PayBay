@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -24,18 +25,27 @@ namespace PayBayService.Controllers
         {
             return db.DetailBills;
         }
-
+                
         // GET: api/DetailBills/5
         [ResponseType(typeof(DetailBill))]
-        public async Task<IHttpActionResult> GetDetailBill(int id)
+        public HttpResponseMessage GetDetailBill(int billId)
         {
-            DetailBill detailBill = await db.DetailBills.FindAsync(id);
-            if (detailBill == null)
+            JArray result = new JArray();
+            try {
+                var bill = new SqlParameter("@BillId", billId);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetDetailBill", CommandType.StoredProcedure, ref Methods.err, bill);
+                if (result == null)
+                {
+                    var error = Methods.CustomResponseMessage(0, "Data not found!");
+                    result.Add(error);                    
+                }
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
-            return Ok(detailBill);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/DetailBills/5
@@ -71,20 +81,45 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        //// POST: api/DetailBills
+        //[ResponseType(typeof(HttpResponseMessage))]
+        //public async Task<HttpResponseMessage> PostDetailBill(DetailBill detailBill)
+        //{
+        //    JObject result = new JObject();
+        //    if (!ModelState.IsValid)
+        //    {                
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+        //    }
+
+        //    db.DetailBills.Add(detailBill);
+        //    await db.SaveChangesAsync();
+
+        //    result = Methods.CustomResponseMessage(1, "Add Detail Bill is successful!");
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
+
         // POST: api/DetailBills
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> PostDetailBill(DetailBill detailBill)
+        public HttpResponseMessage PostDetailBill(DetailBill detailBill)
         {
-            JObject result = new JObject();
+            JArray result = new JArray();
             if (!ModelState.IsValid)
-            {                
+            {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.DetailBills.Add(detailBill);
-            await db.SaveChangesAsync();
-
-            result = Methods.CustomResponseMessage(1, "Add Detail Bill is successful!");
+            try
+            {
+                var bill = new SqlParameter("@BillID", detailBill.BillID);
+                var product = new SqlParameter("@ProductID", detailBill.ProductID);
+                var numberof = new SqlParameter("@NumberOf", detailBill.NumberOf);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_InsertDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product, numberof);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

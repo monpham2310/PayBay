@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -30,12 +31,31 @@ namespace PayBayService.Controllers
         public async Task<IHttpActionResult> GetStore(int id)
         {
             Store store = await db.Stores.FindAsync(id);
+            
             if (store == null)
             {
                 return NotFound();
             }
 
             return Ok(store);
+        }
+
+        // GET: api/Stores/MarketID
+        [ResponseType(typeof(Store))]
+        public HttpResponseMessage GetStoreOfMarket(int marketId)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var market = new SqlParameter("@MarketID", marketId);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/Stores/5

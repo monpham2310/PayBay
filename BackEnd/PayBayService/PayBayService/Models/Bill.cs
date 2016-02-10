@@ -20,5 +20,6 @@ namespace PayBayService.Models
         public Nullable<double> TotalPrice { get; set; }
         public Nullable<double> ReducedPrice { get; set; }
         public int UserID { get; set; }
+        public Nullable<bool> isShiped { get; set; }
     }
 }

@@ -19,11 +19,20 @@ create table paybayservice.Users (
 	Phone varchar(12),
 	Gender bit default 0 not null,
 	Address nvarchar(200),
-	Avatar varbinary(max),
-	Username varchar(30),
-	Pass varbinary(max),
-	TypeID int not null,	
+	Avatar varbinary(max),	
+	TypeID int not null,
+	Username nvarchar(30),
+	Pass varbinary(max)	
 );
+
+drop table paybayservice.Accounts
+
+--create table paybayservice.Accounts (
+--	Id int identity(1,1) not null primary key,
+--	Username nvarchar(20),
+--	Password varbinary(max),
+--	UserID int
+--);
 
 create table paybayservice.Stores (
 	StoreId int identity(1,1) not null primary key,
@@ -35,6 +44,8 @@ create table paybayservice.Stores (
 	OwnerID int not null ,
 );
 
+alter table paybayservice.Stores add Rate int default 0
+
 create table paybayservice.Products (
 	ProductId int identity(1,1) primary key not null,
 	ProductName nvarchar(100) not null,
@@ -44,6 +55,8 @@ create table paybayservice.Products (
 	Unit nvarchar(20),
 	StoreID int not null,
 );
+
+alter table paybayservice.Products add SalePrice float
 
 create table paybayservice.Bills (
 	BillId int identity(1,1) primary key not null,
@@ -55,6 +68,8 @@ create table paybayservice.Bills (
 	UserID int not null,
 	--constraint FK_UserBill foreign key (UserID) references paybayservice.USERS 
 );
+
+alter table paybayservice.Bills add isShiped bit
 
 create table paybayservice.DetailBill (
 	Id int identity(1,1) not null primary key,
@@ -79,6 +94,8 @@ create table paybayservice.SaleInfo (
 	--constraint FK_S_S foreign key (StoreID) references paybayservice.STORES,
 	isRequired bit not null default 0
 );
+
+alter table paybayservice.SaleInfo drop column StoreName
 
 create table paybayservice.Comments (
 	Id int identity(1,1) primary key not null,

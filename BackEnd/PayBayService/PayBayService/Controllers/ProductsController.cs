@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -36,6 +37,24 @@ namespace PayBayService.Controllers
             }
 
             return Ok(product);
+        }
+
+        // GET: api/Products/5
+        [ResponseType(typeof(Product))]
+        public HttpResponseMessage GetProductOfStore(int storeId)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var store = new SqlParameter("@StoreID", storeId);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetProductOfStore", CommandType.StoredProcedure, ref Methods.err, store);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/Products/5

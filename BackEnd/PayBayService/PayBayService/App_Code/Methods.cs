@@ -118,6 +118,45 @@ namespace PayBayService.App_Code
             }
             return result;
         }
-               
+
+        /// <summary>
+        /// Get a value from specific column
+        /// </summary>
+        /// <param name="sql">query or procedure</param>
+        /// <param name="ct">Text or Store Procedure</param>
+        /// <param name="err">Storage error</param>
+        /// <param name="param">List parameters</param>
+        /// <returns></returns>
+        public static object GetValue(string sql, CommandType ct, ref string err, params SqlParameter[] param)
+        {
+            object result = null;
+            try
+            {
+                cnn.Open();
+                cmd = new SqlCommand(sql, cnn);
+                cmd.CommandType = ct;
+                cmd.CommandTimeout = 6000;
+                cmd.Parameters.Clear();
+                if (param != null)
+                {
+                    foreach (SqlParameter p in param)
+                    {
+                        cmd.Parameters.Add(p);
+                    }
+                }
+                result = cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                err = ex.Message;
+            }
+            finally
+            {
+                cnn.Close();
+            }
+            return result;
+
+        }
+
     }
 }

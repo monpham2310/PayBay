@@ -231,7 +231,6 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\DetailBillsController.cs" />
     <Compile Include="Controllers\MarketsController.cs" />
-    <Compile Include="Controllers\PaybayController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductStatisticsController.cs" />
     <Compile Include="Controllers\RevenueStatisticsController.cs" />
@@ -255,6 +254,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PaybayModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaybayModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PaybayModel.Designer.cs">
       <AutoGen>True</AutoGen>

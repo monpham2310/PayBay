@@ -22,5 +22,6 @@ namespace PayBayService.Models
         public Nullable<System.DateTime> EndDate { get; set; }
         public int StoreID { get; set; }
         public bool isRequired { get; set; }
+        public string StoreName { get; set; }
     }
 }

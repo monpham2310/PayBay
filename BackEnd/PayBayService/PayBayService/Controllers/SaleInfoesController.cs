@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -20,9 +21,18 @@ namespace PayBayService.Controllers
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
 
         // GET: api/SaleInfoes
-        public IQueryable<SaleInfo> GetSaleInfoes()
+        public HttpResponseMessage GetSaleInfoes()
         {
-            return db.SaleInfoes;
+            JArray result = new JArray();
+            try
+            {
+               result = Methods.ExecQueryWithResult("paybayservice.sp_GetAllSaleInfo", CommandType.StoredProcedure, ref Methods.err);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // GET: api/SaleInfoes/5
@@ -30,12 +40,33 @@ namespace PayBayService.Controllers
         public async Task<IHttpActionResult> GetSaleInfo(int id)
         {
             SaleInfo saleInfo = await db.SaleInfoes.FindAsync(id);
+            string storeName = (string)Methods.GetValue("select StoreName from paybayservice.Stores where StoreId = " + saleInfo.StoreID, CommandType.Text, ref Methods.err);
+            saleInfo.StoreName = storeName;
             if (saleInfo == null)
             {
                 return NotFound();
             }
 
             return Ok(saleInfo);
+        }
+                
+        // GET: api/SaleInfoes/KM
+        [ResponseType(typeof(SaleInfo))]
+        public HttpResponseMessage GetSaleInfo(int storeId,bool required)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var id = new SqlParameter("@StoreID", storeId);
+                var pRequired = new SqlParameter("@isRequired", required);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetSaleInfoOfStore", CommandType.StoredProcedure,ref Methods.err, id, pRequired);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/SaleInfoes/5

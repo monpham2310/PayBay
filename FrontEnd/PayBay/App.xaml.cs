@@ -1,7 +1,4 @@
-﻿using System;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Microsoft.WindowsAzure.MobileServices;
+﻿using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,8 +37,18 @@ namespace PayBay
             Suspending += OnSuspending;
         }
 
+        public static string UrlHost = "http://localhost:4591";
+        //public static string UrlHost = "https://paybayservice.azure-mobile.net/";
+        private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
+
+        //public static MobileServiceClient MobileService = new MobileServiceClient(
+        //    UrlHost
+        //);
+
+        // This MobileServiceClient has been configured to communicate with your Mobile Service's url
+        // and application key. You're all set to start working with your Mobile Service!
         public static MobileServiceClient MobileService = new MobileServiceClient(
-            "http://gomarket.azurewebsites.net"
+            UrlHost            
         );
 
         /// <summary>

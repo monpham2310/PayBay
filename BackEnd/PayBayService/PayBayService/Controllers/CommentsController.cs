@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using PayBayService.App_Code;
 using Newtonsoft.Json.Linq;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -30,12 +31,31 @@ namespace PayBayService.Controllers
         public async Task<IHttpActionResult> GetComment(int id)
         {
             Comment comment = await db.Comments.FindAsync(id);
+            
             if (comment == null)
             {
                 return NotFound();
             }
 
             return Ok(comment);
+        }
+
+        // GET: api/Comments/Store
+        [ResponseType(typeof(Comment))]
+        public HttpResponseMessage GetCommentOfStore(int storeId)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var id = new SqlParameter("@StoreID", storeId);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_ViewCommentOfStore", CommandType.StoredProcedure, ref Methods.err, id);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
+            }
+            
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/Comments/5

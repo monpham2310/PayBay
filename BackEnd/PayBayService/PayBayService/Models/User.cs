@@ -22,8 +22,8 @@ namespace PayBayService.Models
         public bool Gender { get; set; }
         public string Address { get; set; }
         public byte[] Avatar { get; set; }
+        public int TypeID { get; set; }
         public string Username { get; set; }
         public byte[] Pass { get; set; }
-        public int TypeID { get; set; }
     }
 }

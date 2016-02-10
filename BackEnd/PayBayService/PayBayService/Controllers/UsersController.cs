@@ -39,8 +39,26 @@ namespace PayBayService.Controllers
             return Ok(user);
         }
 
-        // PUT: api/Users/5
+        // POST: api/Accounts/
         [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage PostLogin(string username, byte[] password)
+        {
+            JArray result = new JArray();
+            if (!AccountExists(username, password))
+            {
+                var check = Methods.CustomResponseMessage(0, "Login isn't successful!");
+                result.Add(check);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
+            var uid = new SqlParameter("@Username", username);
+            var pwd = new SqlParameter("@Pass", password);
+            result = Methods.ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);         
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // PUT: api/Users/5
+        [ResponseType(typeof(User))]
         public async Task<HttpResponseMessage> PutUser(User user)
         {
             JObject result = new JObject();
@@ -50,20 +68,7 @@ namespace PayBayService.Controllers
             }
 
             db.Entry(user).State = EntityState.Modified;
-
-            //var id = new SqlParameter("@UserID", user.UserId);
-            //var name = new SqlParameter("@Name", user.Name);
-            //var birthday = new SqlParameter("@Birthday", user.Birthday);
-            //var phone = new SqlParameter("@Phone", user.Phone);
-            //var gender = new SqlParameter("@Gender", user.Gender);
-            //var address = new SqlParameter("@Address", user.Address);
-            //var avatar = new SqlParameter("@Avatar", user.Avatar);
-            //var pass = new SqlParameter("@Pass", user.Pass);
-            //var type = new SqlParameter("@TypeID", user.TypeID);
-
-            //db.Users.SqlQuery("paybayservice.sp_UpdateUser @UserID,@Name,@Birthday,@Phone,@Gender,@Address,@Avatar,@Pass,@TypeID",
-            //                    id,name,birthday,phone,gender,address,avatar,pass,type);
-
+                        
             try
             {
                 await db.SaveChangesAsync();
@@ -81,12 +86,12 @@ namespace PayBayService.Controllers
                 }
             }
 
-            result = Methods.CustomResponseMessage(1, "Update User is successful!");
+            result = JObject.FromObject(user);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // POST: api/Users
-        [ResponseType(typeof(HttpResponseMessage))]
+        [ResponseType(typeof(User))]
         public async Task<HttpResponseMessage> PostUser(User user)
         {
             JObject result = new JObject();     
@@ -95,31 +100,11 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            if (UsernameExists(user.Username, user.Email))
-            {
-                result = Methods.CustomResponseMessage(0, "Username had already exists!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest,result);
-            }
-
             db.Users.Add(user);
-
-            //var name = new SqlParameter("@Name", user.Name);
-            //var birthday = new SqlParameter("@Birthday", user.Birthday);
-            //var email = new SqlParameter("@Email", user.Email);
-            //var phone = new SqlParameter("@Phone", user.Phone);
-            //var gender = new SqlParameter("@Gender", user.Gender);
-            //var address = new SqlParameter("@Address", user.Address);
-            //var avatar = new SqlParameter("@Avatar", user.Avatar);
-            //var username = new SqlParameter("@Username", user.Username);
-            //var pass = new SqlParameter("@Pass", user.Pass);
-            //var type = new SqlParameter("@TypeID", user.TypeID);
-
-            //db.Users.SqlQuery("paybayservice.sp_AddUser @Name,@Birthday,@Email,@Phone,@Gender,@Address,@Avatar,@Username,@Pass,@TypeID",
-            //                    name,birthday,email,phone,gender,address,avatar,username,pass,type);
-
+                        
             await db.SaveChangesAsync();
 
-            result = Methods.CustomResponseMessage(1, "Add user is successful!");            
+            result = JObject.FromObject(user);        
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -155,12 +140,11 @@ namespace PayBayService.Controllers
         {
             return db.Users.Count(e => e.UserId == id) > 0;
         }
-
-        private bool UsernameExists(string username,string email)
+              
+        private bool AccountExists(string username, byte[] password)
         {
-            IQueryable<User> checkExists = db.Users.Where(e => e.Email == email && e.Username == username);
-            return checkExists.Count() > 0;
+            return db.Users.Count(e => e.Username == username && e.Pass == password) > 0;
         }
-
+          
     }
 }

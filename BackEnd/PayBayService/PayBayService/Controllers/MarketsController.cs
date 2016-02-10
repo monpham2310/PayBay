@@ -38,6 +38,19 @@ namespace PayBayService.Controllers
             return Ok(market);
         }
 
+        // GET: api/Markets/BenThanh
+        [ResponseType(typeof(Market))]
+        public async Task<IHttpActionResult> GetMarket(string name)
+        {
+            Market market = await db.Markets.FindAsync(name);
+            if (market == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(market);
+        }
+
         // PUT: api/Markets/5
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutMarket(Market market)

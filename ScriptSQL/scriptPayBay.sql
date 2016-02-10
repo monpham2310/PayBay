@@ -423,9 +423,49 @@ as
 		else
 			select 1 as ErrCode,'Update is successful!' as ErrMsg
 	commit
+	
+alter proc paybayservice.sp_ViewCommentOfStore
+@StoreID int
+as
+	select Id,CommentDate,CommentTime,StoreID,a.UserID,Name,Content
+	from paybayservice.Comments a inner join paybayservice.Users b on a.UserID=b.UserID
+	where StoreID=@StoreID
 
-create proc paybayservice.sp_GetAllSaleInfo
+alter proc paybayservice.sp_GetSaleInfoOfStore
+@StoreID int,
+@isRequired bit
 as
 	select SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,isRequired
-	from paybayservice.SaleInfo a inner join paybayservice.Stores b on a.StoreID = b.StoreID 
+	from paybayservice.SaleInfo a inner join paybayservice.Stores b on a.StoreID=b.StoreID
+	where a.StoreID=@StoreID and isRequired = @isRequired
+
+alter proc paybayservice.sp_GetStoreOfMarket 
+@MarketID int
+as
+	select StoreId,StoreName,KiotNo,Image,Phone,MarketID,OwnerID,Rate
+	from paybayservice.Stores
+	where MarketID=@MarketID
+
+alter proc paybayservice.sp_GetAllSaleInfo
+as
+	select SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,isRequired
+	from paybayservice.SaleInfo a inner join paybayservice.Stores b on a.StoreID=b.StoreID
+	where isRequired = 1
+
+create proc paybayservice.sp_GetProductOfStore
+@StoreID int
+as
+	select ProductId,ProductName,Image,UnitPrice,NumberOf,Unit,StoreID,SalePrice
+	from paybayservice.Products
+	where StoreID=@StoreID
+
+create proc paybayservice.sp_UserLogin
+@Username nvarchar(30),
+@Pass varbinary(max)
+as
+	select UserID,Name,Birthday,Email,Phone,Gender,Address,Avatar,TypeID,Username
+	from paybayservice.Users
+	where Username = @Username and Pass = @Pass
+
+select StoreName from Stores where StoreId = 1
 

@@ -13,6 +13,11 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel.HomePageGroup;
+using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure.MobileServices;
+using PayBay.Model;
+using System.Net.Http;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,5 +34,10 @@ namespace PayBay.View.FunctionGroup
 		{
 			this.InitializeComponent();
 		}
-	}
+                
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+    }
 }

@@ -20,7 +20,8 @@ namespace PayBayService.Models
         public double UnitPrice { get; set; }
         public int NumberOf { get; set; }
         public string Unit { get; set; }
-        public int StoreID { get; set; }
-        public Nullable<double> SalePrice { get; set; }
+        public int StoreID { get; set; }        
+        public DateTime ImportDate { get; set; }
+        public double SalePrice { get; set; }
     }
 }

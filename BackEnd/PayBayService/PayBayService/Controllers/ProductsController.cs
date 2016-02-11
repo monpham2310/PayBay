@@ -57,6 +57,28 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        // GET: api/Products/
+        [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage GetProductFollowType(int typeProduct)
+        {
+            JArray result = new JArray();
+            try
+            {
+                if(typeProduct == (int)Methods.TypeProduct.NEW)            
+                    result = Methods.ExecQueryWithResult("paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err);
+                else if(typeProduct == (int)Methods.TypeProduct.SALE)
+                    result = Methods.ExecQueryWithResult("paybayservice.sp_GetSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+                else
+                    result = Methods.ExecQueryWithResult("paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // PUT: api/Products/5
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutProduct(Product product)
@@ -87,6 +109,28 @@ namespace PayBayService.Controllers
             }
 
             result = Methods.CustomResponseMessage(1, "Update product is successful!");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // PUT: api/Products/NumberOf
+        [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage PutNumberOfProduct(int productid,int numberof)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var product = new SqlParameter("@ProductID", productid);
+                var number = new SqlParameter("@NumberOf", numberof);
+                var importdate = new SqlParameter("@ImportDate", DateTime.Now);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_UpdateNumOfProduct", CommandType.StoredProcedure, ref Methods.err, product, number, importdate);
+            }
+            catch (Exception ex)
+            {
+                var error = Methods.CustomResponseMessage(0, ex.Message.ToString());
+                result.Add(error);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

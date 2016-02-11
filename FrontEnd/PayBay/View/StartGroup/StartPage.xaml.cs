@@ -30,50 +30,7 @@ namespace PayBay.View.StartGroup
             FunctionsListView.SelectedIndex = 0;
             Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
         }
-
-        // Define a member variable for storing the signed-in user. 
-        //private MobileServiceUser user;
-
-        // Define a method that performs the authentication process
-        // using a Facebook sign-in. 
-        //private async System.Threading.Tasks.Task<bool> AuthenticateAsync()
-        //{
-        //    string message;
-        //    bool success = false;
-        //    try
-        //    {
-        //        // Change 'MobileService' to the name of your MobileServiceClient instance.
-        //        // Sign-in using Facebook authentication.
-        //        user = await App.MobileService
-        //            .LoginAsync(MobileServiceAuthenticationProvider.Facebook);
-        //        message =
-        //            string.Format("You are now signed in - {0}", user.UserId);
-
-        //        success = true;
-        //    }
-        //    catch (InvalidOperationException)
-        //    {
-        //        message = "You must log in. Login Required";
-        //    }
-
-        //    var dialog = new MessageDialog(message);
-        //    dialog.Commands.Add(new UICommand("OK"));
-        //    await dialog.ShowAsync();
-        //    return success;
-        //}
-
-        //private async void ButtonLogin_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Login the user and then load data from the mobile app.
-        //    //if (await AuthenticateAsync())
-        //    {
-        //        // Hide the login button and load items from the mobile app.
-        //        ButtonLogin.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        //        //await InitLocalStoreAsync(); //offline sync support.
-        //        //await RefreshTodoItems();
-        //    }
-        //}
-
+               
         /// <summary>
         /// Open and close the paneview of SplitView
         /// </summary>
@@ -121,6 +78,11 @@ namespace PayBay.View.StartGroup
             {
                 FunctionsListView.SelectedIndex = -1;
             }
+        }
+
+        private void AccountButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

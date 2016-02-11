@@ -135,6 +135,9 @@ namespace PayBayService.Controllers
             }
 
             db.Bills.Remove(bill);
+            var billId = new SqlParameter("@BillID", id);
+            var product = new SqlParameter("@ProductID", 0);
+            bool check = Methods.ExecNonQuery("paybayservice.sp_DelDetailBill", CommandType.StoredProcedure, ref Methods.err, billId, product);
             await db.SaveChangesAsync();
 
             result = Methods.CustomResponseMessage(1, "Delete Bill is successful!");

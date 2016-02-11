@@ -1,5 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using PayBay.Model;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Microsoft.WindowsAzure.MobileServices;
+using System.Collections.Generic;
+using System.Net.Http;
+using System;
+using Windows.UI.Popups;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
+using System.IO;
 
 namespace PayBay.ViewModel.HomePageGroup
 {
@@ -49,31 +59,93 @@ namespace PayBay.ViewModel.HomePageGroup
 		/// </summary>
 		public AdvertiseViewModel()
 		{
-			InitializeData();
-		}
+			InitializeData();            
+        }
+                
+        /// <summary>
+        /// Get data from service
+        /// </summary>
+        /// <returns></returns>
+        private async void InitializeData()
+        {
+            MobileServiceInvalidOperationException exception = null;
+            
+            NewMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
+            SaleMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
+            HotMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
+            
+            try
+            {
+                IDictionary<string, string> newMechandises = new Dictionary<string, string>
+                {
+                    { "typeProduct", "1"}
+                };
 
-		/// <summary>
-		/// Initialize function list in splitview control
-		/// </summary>
-		private void InitializeData()
-		{
-			NewMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
-			SaleMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
-			HotMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
+                IDictionary<string, string> saleMechandise = new Dictionary<string, string>
+                {
+                    { "typeProduct", "2"}
+                };
 
-			for (var i = 0; i < 10; i++)
-			{
-				var ad = new AdvertiseItem
-				{
-					Image = "/Assets/lol.jpg",
-					Merchandise = "Mèo nguyên chất - Giảm giá siêu khuyến mãi cực hot",
-					Market = "Chơ Phạm Văn Hai - K69"
-				};
+                IDictionary<string, string> hotMechandise = new Dictionary<string, string>
+                {
+                    { "typeProduct", "3"}
+                };
 
-				_newMerchandiseItemList.Add(ad);
-				_saleMerchandiseItemList.Add(ad);
-				_hotMerchandiseItemList.Add(ad);
-			}
-		}
-	}
+                await ImportData(newMechandises, 1);
+                await ImportData(saleMechandise, 2);
+                await ImportData(hotMechandise, 3);
+
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+                exception = e;
+            }
+            if (exception != null)
+            {
+                await new MessageDialog(exception.Message, "Error loading items").ShowAsync();
+            }
+        }
+
+        /// <summary>
+        /// Get data from database with Json
+        /// </summary>
+        /// <param name="argument">parameter will get</param>
+        /// <param name="type">type product will get : New,Sale,Best sale</param>
+        /// <returns></returns>
+        private async Task ImportData(IDictionary<string,string> argument,int type)
+        {
+            JToken _product = null;
+            _product = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, argument);
+
+            JArray results = JArray.Parse(_product.ToString());
+            foreach (var result in results)
+            {
+                AdvertiseItem temp = new AdvertiseItem();
+                temp.ProductID = (int)result["ProductId"];
+                temp.ProductName = (string)result["ProductName"];
+                temp.Image = (result["Image"] == null) ? (byte[])result["Image"] : new byte[64];
+                temp.UnitPrice = (float)result["UnitPrice"];
+                temp.Unit = (string)result["Unit"];
+                temp.StoreId = (int)result["StoreID"];
+                temp.StoreName = (string)result["StoreName"];
+                temp.MarketId = (int)result["MarketID"];
+                temp.MarketName = (string)result["MarketName"];
+                temp.SalePrice = (float)result["SalePrice"];
+                switch (type)
+                {
+                    case 1:
+                        _newMerchandiseItemList.Add(temp);
+                        break;
+                    case 2:
+                        _saleMerchandiseItemList.Add(temp);
+                        break;
+                    default:
+                        _hotMerchandiseItemList.Add(temp);
+                        break;
+                }
+                
+            }
+        }
+
+    }
 }

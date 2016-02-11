@@ -80,7 +80,7 @@ namespace PayBayService.Controllers
             result = Methods.CustomResponseMessage(1, "Update Detail Bill is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
+                
         //// POST: api/DetailBills
         //[ResponseType(typeof(HttpResponseMessage))]
         //public async Task<HttpResponseMessage> PostDetailBill(DetailBill detailBill)
@@ -124,24 +124,49 @@ namespace PayBayService.Controllers
         }
 
         // DELETE: api/DetailBills/5
+        //[ResponseType(typeof(HttpResponseMessage))]
+        //public async Task<HttpResponseMessage> DeleteDetailBill(int id)
+        //{
+        //    JObject result = new JObject();
+        //    DetailBill detailBill = await db.DetailBills.FindAsync(id);
+        //    if (detailBill == null)
+        //    {
+        //        result = Methods.CustomResponseMessage(0, "Detail Bill isn't exists!");
+        //        return Request.CreateResponse(HttpStatusCode.NotFound, result);
+        //    }
+
+        //    db.DetailBills.Remove(detailBill);
+        //    await db.SaveChangesAsync();
+
+        //    result = Methods.CustomResponseMessage(1, "Delete Detail Bill is successful!");
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
+
+        // DELETE: api/DetailBills/5
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> DeleteDetailBill(int id)
+        public HttpResponseMessage DeleteDetailBill(int billid, int productid)
         {
-            JObject result = new JObject();
-            DetailBill detailBill = await db.DetailBills.FindAsync(id);
-            if (detailBill == null)
-            {
-                result = Methods.CustomResponseMessage(0, "Detail Bill isn't exists!");
-                return Request.CreateResponse(HttpStatusCode.NotFound, result);
+            JArray result = new JArray();
+            try {
+                var bill = new SqlParameter("@BillID", billid);
+                var product = new SqlParameter("@ProductID", productid);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_DelDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product);
+                if (result == null)
+                {
+                    var notfound = Methods.CustomResponseMessage(0, "Detail Bill isn't exists!");
+                    result.Add(notfound);                    
+                }
             }
-
-            db.DetailBills.Remove(detailBill);
-            await db.SaveChangesAsync();
-
-            result = Methods.CustomResponseMessage(1, "Delete Detail Bill is successful!");
+            catch (Exception ex)
+            {
+                var error = Methods.CustomResponseMessage(0, ex.Message.ToString());
+                result.Add(error);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
+                                               
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
+                
         protected override void Dispose(bool disposing)
         {
             if (disposing)

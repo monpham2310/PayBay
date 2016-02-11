@@ -337,50 +337,73 @@ alter proc [paybayservice].[sp_InsertDetailBill] --permission user
 @ProductID int,
 @NumberOf int
 as
-	declare @UnitPrice float,@Unit nvarchar(20)
-	set @UnitPrice=(select UnitPrice from PRODUCTS where ProductId=@ProductID)
-	set @Unit=(select Unit from PRODUCTS where ProductId=@ProductID)
+	declare @UnitPrice float,@Unit nvarchar(20),@numOfPro int
+	set @UnitPrice=(select UnitPrice from paybayservice.PRODUCTS where ProductId=@ProductID)
+	set @Unit=(select Unit from paybayservice.PRODUCTS where ProductId=@ProductID)
+	set @numOfPro = (select NumberOf from paybayservice.Products where ProductID=@ProductID)
 	if exists (select 1 from paybayservice.BILLS where BillId=@BillID)
 	begin
-		if not exists (select 1 from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID)
+		if(@numOfPro >= @NumberOf)
 		begin
-			begin tran addDetail
-				insert into paybayservice.DETAILBILL(BillID,ProductID,NumberOf,UnitPrice,Unit) values (@BillID,@ProductID,@NumberOf,@UnitPrice,@Unit)
-				if(@@ERROR > 0)
-				begin
-					rollback tran
-					select 0 as ErrCode,'add detail bill not successfull!' as ErrMsg
-					return
-				end				
-			commit
+			if not exists (select 1 from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID)
+			begin
+				begin tran addDetail
+					insert into paybayservice.DETAILBILL(BillID,ProductID,NumberOf,UnitPrice,Unit) values (@BillID,@ProductID,@NumberOf,@UnitPrice,@Unit)
+
+					update paybayservice.Products
+					set NumberOf -= @NumberOf
+					where ProductID = @ProductID
+					if(@@ERROR > 0)
+					begin
+						rollback tran
+						select 0 as ErrCode,'add detail bill not successfull!' as ErrMsg
+						return
+					end				
+				commit						
+			end
+			else
+			begin
+				declare @numOld int
+				set @numOld = (select NumberOf from paybayservice.DetailBill where BillID=@BillID and ProductID=@ProductID)
+				begin tran updateDetail
+					update paybayservice.DETAILBILL
+					set NumberOf=@NumberOf
+					where BillID=@BillID and ProductID=@ProductID
+
+					update paybayservice.Products
+					set NumberOf = (NumberOf+@numOld)-@NumberOf
+					where ProductID = @ProductID
+					if(@@ERROR > 0)
+					begin
+						rollback tran
+						select 0 as ErrCode,'Update bill not successfull!' as ErrMsg
+						return
+					end
+				commit				
+			end			
 		end
 		else
 		begin
-			begin tran updateDetail
-				update paybayservice.DETAILBILL
-				set NumberOf=@NumberOf
-				where BillID=@BillID and ProductID=@ProductID
-				if(@@ERROR > 0)
-				begin
-					rollback tran
-					select 0 as ErrCode,'Update bill not successfull!' as ErrMsg
-					return
-				end
-			commit
-		end		
+			select 0 as ErrCode,'This product is out!' as ErrMsg
+			return
+		end	
 		select Id,BillID,ProductID,NumberOf,UnitPrice,Unit
 		from paybayservice.DetailBill
 		where BillID = @BillID	
 	end
 
-create proc paybayservice.sp_DelDetailBill
+ALTER proc [paybayservice].[sp_DelDetailBill]
 @BillID int,
 @ProductID int
 as
 	if exists (select 1 from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID)
 	begin
 		begin tran delDetailBill
-			delete from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID
+			if(@ProductID <> 0)
+				delete from paybayservice.DETAILBILL where BillID=@BillID and ProductID=@ProductID
+			else
+				delete from paybayservice.DETAILBILL where BillID=@BillID
+
 			if(@@ERROR > 0)
 			begin
 				rollback tran
@@ -531,4 +554,45 @@ as
 		end
 	commit
 
+create proc paybayservice.sp_UpdateNumOfProduct
+@ProductID int,
+@NumberOf int,
+@ImportDate date
+as
+	begin tran import
+		update paybayservice.Products
+		set NumberOf = @NumberOf, ImportDate = @ImportDate
+		where ProductID = @ProductID
+		if(@@error > 0)
+		begin
+			rollback tran
+		end
+		else
+		begin
+			select 1 as ErrCode, 'Update is successful!' as ErrMsg
+		end
+	commit
+
+create proc paybayservice.sp_GetNewProduct
+as
+	declare @justDate date
+	set @justDate = (select max(ImportDate) from paybayservice.Products)
+	select ProductId,ProductName,a.Image,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,b.MarketID,MarketName,SalePrice
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID left join paybayservice.Markets c on b.MarketID=c.MarketID
+	where ImportDate = @justDate
+
+create proc paybayservice.sp_GetSaleProduct
+as
+	select ProductId,ProductName,a.Image,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,b.MarketID,MarketName,SalePrice
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID left join paybayservice.Markets c on b.MarketID=c.MarketID
+	where SalePrice <> 0
+
+alter proc paybayservice.sp_GetBestSaleProduct
+as		
+	select top 10 a.ProductId,ProductName,b.Image,a.UnitPrice,b.NumberOf,a.Unit,b.StoreID,StoreName,c.MarketID,MarketName,SalePrice
+	from paybayservice.ProductStatistic a join paybayservice.Products b on a.ProductID=b.ProductID join paybayservice.Stores c
+		 on c.StoreID=b.StoreID join paybayservice.Markets d on c.MarketID=d.MarketID
+	group by a.ProductId,ProductName,b.Image,a.UnitPrice,b.NumberOf,a.Unit,b.StoreID,StoreName,c.MarketID,MarketName,SalePrice
+	order by sum(a.NumberOf) DESC
+	
 

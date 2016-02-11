@@ -157,19 +157,9 @@
 						FontFamily="Segoe MDL2 Assets"
 						FontSize="28"
 						Foreground="{StaticResource Brush2}" 
-						Background="{StaticResource Brush1}" />
-
-                <!--<Button x:Name="ButtonLogin"
-						Grid.Column="1"
-						VerticalAlignment="Stretch" 
-						HorizontalAlignment="Stretch"
-						Content="&#xE77B;"
-						FontFamily="Segoe MDL2 Assets"
-						FontSize="28"
-						Foreground="{StaticResource Brush2}" 
-						Background="{StaticResource Brush1}"
-                        Click="ButtonLogin_Click"/>-->
-
+						Background="{StaticResource Brush1}" 
+                        Click="AccountButton_Click" />
+                
 				<!--<TextBlock Margin="12,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="24"

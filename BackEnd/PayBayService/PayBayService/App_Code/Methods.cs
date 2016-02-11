@@ -18,6 +18,13 @@ namespace PayBayService.App_Code
         static SqlDataAdapter da;
         public static string err = ""; 
 
+        public enum TypeProduct
+        {
+            NEW = 1,
+            SALE = 2,
+            BESTSALE = 3
+        };
+
         /// <summary>
         /// Return a json object
         /// </summary>

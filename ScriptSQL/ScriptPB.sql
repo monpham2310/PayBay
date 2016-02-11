@@ -56,7 +56,8 @@ create table paybayservice.Products (
 	StoreID int not null,
 );
 
-alter table paybayservice.Products add SalePrice float
+alter table paybayservice.Products add SalePrice float not null default 0
+alter table paybayservice.Products add ImportDate date
 
 create table paybayservice.Bills (
 	BillId int identity(1,1) primary key not null,

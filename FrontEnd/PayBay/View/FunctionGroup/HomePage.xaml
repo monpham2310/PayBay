@@ -109,22 +109,18 @@
 				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
 				  ScrollViewer.VerticalScrollMode="Disabled"
 				  ItemTemplate="{StaticResource ListViewItemTemplate}"
-<<<<<<< HEAD
-				  ItemsSource="{x:Bind AdVm.NewMerchandiseItemList, Mode=OneWay}"/>
-            
-            <TextBlock Grid.Row="2"
-=======
-				  ItemsSource="{x:Bind AdVm.NewMerchandiseItemList, Mode=OneWay}" />
+				  ItemsSource="{x:Bind AdVm.NewMerchandiseItemList, Mode=OneWay}"
+                />
 
 			<TextBlock Grid.Row="2"
->>>>>>> origin/mon
 				   HorizontalAlignment="Left" 
 				   Margin="10,10,0,0" 
 				   TextWrapping="Wrap" 
 				   Text="Hàng khuyến mãi" 
 				   Foreground="{StaticResource Brush4}"
 				   VerticalAlignment="Top" 
-				   FontSize="25" />
+				   FontSize="25"                    
+                   />
 
 			<HyperlinkButton Grid.Row="2"
 							 Content="Show all" 

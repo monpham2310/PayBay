@@ -130,7 +130,7 @@ namespace PayBay.ViewModel.HomePageGroup
                 AdvertiseItem temp = new AdvertiseItem();
                 temp.ProductID = (int)result["ProductId"];
                 temp.ProductName = (string)result["ProductName"];
-                temp.Image = (result["Image"] == null) ? (byte[])result["Image"] : new byte[64];
+                temp.Image = (string)result["Image"];
                 temp.UnitPrice = (float)result["UnitPrice"];
                 temp.Unit = (string)result["Unit"];
                 temp.StoreId = (int)result["StoreID"];

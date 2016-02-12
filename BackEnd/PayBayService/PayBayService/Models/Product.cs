@@ -16,12 +16,11 @@ namespace PayBayService.Models
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public string Image { get; set; }
+        public byte[] Image { get; set; }
         public double UnitPrice { get; set; }
         public int NumberOf { get; set; }
         public string Unit { get; set; }
-        public int StoreID { get; set; }        
-        public DateTime ImportDate { get; set; }
-        public double SalePrice { get; set; }
+        public int StoreID { get; set; }
+        public Nullable<double> SalePrice { get; set; }
     }
 }

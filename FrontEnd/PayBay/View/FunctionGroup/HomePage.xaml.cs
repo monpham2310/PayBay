@@ -39,5 +39,10 @@ namespace PayBay.View.FunctionGroup
         {
             
         }
+		
+		private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(Function1Page));
+		}
     }
 }

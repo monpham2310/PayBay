@@ -6,7 +6,7 @@ namespace PayBay.Model
 	{
         private int _productID;
         private string _productName;
-        private byte[] _image;
+        private string _image;
         private float _unitPrice;
         private int _numberOf;
         private string _unit;
@@ -44,7 +44,7 @@ namespace PayBay.Model
             }
         }
 
-        public byte[] Image
+        public string Image
         {
             get
             {

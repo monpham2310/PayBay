@@ -19,6 +19,13 @@ namespace PayBay.ViewModel.HomePageGroup
 		private ObservableCollection<AdvertiseItem> _saleMerchandiseItemList;
 		private ObservableCollection<AdvertiseItem> _hotMerchandiseItemList;
 
+        private enum TypeMechandises
+        {
+            NEW = 1,
+            SALE = 2,
+            BESTSALE = 3
+        }
+
 		#region Property with calling to PropertyChanged
 		public ObservableCollection<AdvertiseItem> NewMerchandiseItemList
 		{
@@ -91,9 +98,9 @@ namespace PayBay.ViewModel.HomePageGroup
                     { "typeProduct", "3"}
                 };
 
-                await ImportData(newMechandises, 1);
-                await ImportData(saleMechandise, 2);
-                await ImportData(hotMechandise, 3);
+                await ImportData(newMechandises, TypeMechandises.NEW);
+                await ImportData(saleMechandise, TypeMechandises.SALE);
+                await ImportData(hotMechandise, TypeMechandises.BESTSALE);
 
             }
             catch (MobileServiceInvalidOperationException e)
@@ -112,7 +119,7 @@ namespace PayBay.ViewModel.HomePageGroup
         /// <param name="argument">parameter will get</param>
         /// <param name="type">type product will get : New,Sale,Best sale</param>
         /// <returns></returns>
-        private async Task ImportData(IDictionary<string,string> argument,int type)
+        private async Task ImportData(IDictionary<string,string> argument,TypeMechandises type)
         {
             JToken _product = null;
             _product = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, argument);
@@ -133,10 +140,10 @@ namespace PayBay.ViewModel.HomePageGroup
                 temp.SalePrice = (float)result["SalePrice"];
                 switch (type)
                 {
-                    case 1:
+                    case TypeMechandises.NEW:
                         _newMerchandiseItemList.Add(temp);
                         break;
-                    case 2:
+                    case TypeMechandises.SALE:
                         _saleMerchandiseItemList.Add(temp);
                         break;
                     default:

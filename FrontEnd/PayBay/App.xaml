@@ -13,6 +13,7 @@
 			<Color x:Key="Color3">Black</Color>
 			<Color x:Key="Color4">#FF339999</Color>
 			<Color x:Key="Color5">#FFFF0000</Color>
+			<Color x:Key="Color6">#FFFF0000</Color>
 
 			<SolidColorBrush x:Key="Brush1" Color="{StaticResource Color1}" />
             <SolidColorBrush x:Key="Brush2" Color="{StaticResource Color2}" />

@@ -125,7 +125,8 @@
                     Content="&#xE700;"
                     FontFamily="Segoe MDL2 Assets"
                     FontSize="30"
-					Style="{StaticResource ButtonStyle}"/>
+					Style="{StaticResource ButtonStyle}" 
+					BorderThickness="0"/>
 
 			<Grid x:Name="TitleGrid" Grid.Column="1">
 
@@ -138,18 +139,32 @@
 								Grid.Column="0" 
 								Width="Auto"
 								Height="30"
+								QueryIcon="Find"
 								VerticalAlignment="Center"
 								Foreground="{StaticResource Brush3}" 
 								Background="{StaticResource Brush2}">
-					<AutoSuggestBox.QueryIcon>
-						<FontIcon Glyph="&#xE11A;" 
-								  FontSize="20" 
-								  FontWeight="Bold"
-								  Foreground="{StaticResource Brush3}"/>
-					</AutoSuggestBox.QueryIcon>
+					
 				</AutoSuggestBox>
 
-				<Button x:Name="AccountButton"
+				<!--<AppBarButton x:Name="AccountButton"
+						Grid.Column="1"
+						VerticalAlignment="Stretch" 
+						HorizontalAlignment="Center"
+						VerticalContentAlignment="Stretch"
+						Foreground="{StaticResource Brush2}" 
+						Background="{StaticResource Brush1}" >
+					<AppBarButton.Flyout>
+						<MenuFlyout>
+							
+						</MenuFlyout>
+					</AppBarButton.Flyout>
+					<AppBarButton.Icon>
+						<FontIcon Glyph="&#xE77B;"
+								  FontWeight="Bold" />
+					</AppBarButton.Icon>
+				</AppBarButton>-->
+
+				<Button x:Name="AccountButto1n"
 						Grid.Column="1"
 						VerticalAlignment="Stretch" 
 						HorizontalAlignment="Stretch"
@@ -157,7 +172,17 @@
 						FontFamily="Segoe MDL2 Assets"
 						FontSize="28"
 						Foreground="{StaticResource Brush2}" 
-						Background="{StaticResource Brush1}" />
+						Background="{StaticResource Brush1}" 
+						BorderThickness="0">
+					<Button.Flyout>
+						<MenuFlyout>
+							<MenuFlyoutItem Text="Thog tin ca nhan"/>
+							<MenuFlyoutItem Text="Doi mat khau"/>
+							<MenuFlyoutItem Text="Dang xuat"/>
+
+						</MenuFlyout>
+					</Button.Flyout>
+				</Button>
 
 
 				<!--<TextBlock Margin="12,0,0,0"

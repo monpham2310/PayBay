@@ -1,4 +1,5 @@
 ﻿using PayBay.ViewModel;
+using System;
 
 namespace PayBay.Model
 {
@@ -11,10 +12,12 @@ namespace PayBay.Model
         private int _numberOf;
         private string _unit;
         private int _storeId;
+        private DateTime _importDate;
+        private float _salePrice;
+        private string _sasQuery;
         private string _storeName;
         private int _marketId;
         private string _marketName;
-        private float _salePrice;
 
         public int ProductID
         {
@@ -114,48 +117,6 @@ namespace PayBay.Model
             }
         }
 
-        public string StoreName
-        {
-            get
-            {
-                return _storeName;
-            }
-
-            set
-            {
-                _storeName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int MarketId
-        {
-            get
-            {
-                return _marketId;
-            }
-
-            set
-            {
-                _marketId = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string MarketName
-        {
-            get
-            {
-                return _marketName;
-            }
-
-            set
-            {
-                _marketName = value;
-                OnPropertyChanged();
-            }
-        }
-
         public float SalePrice
         {
             get
@@ -170,5 +131,69 @@ namespace PayBay.Model
             }
         }
 
+        public string SasQuery
+        {
+            get
+            {
+                return _sasQuery;
+            }
+
+            set
+            {
+                _sasQuery = value;
+            }
+        }
+
+        public DateTime ImportDate
+        {
+            get
+            {
+                return _importDate;
+            }
+
+            set
+            {
+                _importDate = value;
+            }
+        }
+
+        public string StoreName
+        {
+            get
+            {
+                return _storeName;
+            }
+
+            set
+            {
+                _storeName = value;
+            }
+        }
+
+        public int MarketId
+        {
+            get
+            {
+                return _marketId;
+            }
+
+            set
+            {
+                _marketId = value;
+            }
+        }
+
+        public string MarketName
+        {
+            get
+            {
+                return _marketName;
+            }
+
+            set
+            {
+                _marketName = value;
+            }
+        }
     }
 }

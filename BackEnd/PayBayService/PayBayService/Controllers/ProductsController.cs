@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,6 +14,10 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
 using System.Data.SqlClient;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage;
+using System.Configuration;
 
 namespace PayBayService.Controllers
 {
@@ -134,6 +139,61 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        private async Task<bool> GetSasAndImageUriFromBlob(Product product)
+        {
+            string storageAccountName = Methods.StorageAccoutName;
+            string storageAccountKey = Methods.StorageAccountKey;
+
+            // Try to get the Azure storage account token from app settings.  
+            if (string.IsNullOrEmpty(storageAccountName) || string.IsNullOrEmpty(storageAccountKey))
+            {
+                return false;
+            }
+
+            // Set the URI for the Blob Storage service.
+            Uri blobEndpoint = new Uri(string.Format("https://{0}.blob.core.windows.net", storageAccountName));
+
+            // Create the BLOB service client.
+            CloudBlobClient blobClient = new CloudBlobClient(blobEndpoint,
+                new StorageCredentials(storageAccountName, storageAccountKey));
+
+            if (product.ProductName != null)
+            {
+                // Set the BLOB store container name on the item, which must be lowercase.
+                string productName = product.ProductName.ToLower();
+                productName = (productName.IndexOf(" ") != -1) ? productName.Replace(" ", "") : productName;
+
+                // Create a container, if it doesn't already exist.
+                CloudBlobContainer container = blobClient.GetContainerReference("products");
+                await container.CreateIfNotExistsAsync();
+
+                // Create a shared access permission policy. 
+                BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+
+                // Enable anonymous read access to BLOBs.
+                containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+                container.SetPermissions(containerPermissions);
+
+                // Define a policy that gives write access to the container for 5 minutes.                                   
+                SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
+                {
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+                    Permissions = SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Read
+                };
+
+                // Get the SAS as a string.
+                product.SasQuery = container.GetSharedAccessSignature(sasPolicy);
+
+                // Set the URL used to store the image.
+                product.Image = string.Format("{0}{1}/{2}", blobEndpoint.ToString(),
+                    "products", productName + product.ProductId + ".jpg");
+
+                return true;
+            }
+
+            return false;
+        }
+
         // POST: api/Products
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostProduct(Product product)
@@ -144,65 +204,21 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.Products.Add(product);
-            await db.SaveChangesAsync();
+            bool check = await GetSasAndImageUriFromBlob(product);
 
-            result = Methods.CustomResponseMessage(1, "Add product is successful!");
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            if (check)
+            {
+                db.Products.Add(product);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                result = Methods.CustomResponseMessage(0, "Could not retrieve storage account settings.");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
-            string storageAccountName;
-            string storageAccountKey;
-
-            // Try to get the Azure storage account token from app settings.  
-            //if (!(Services.Settings.TryGetValue("STORAGE_ACCOUNT_NAME", out storageAccountName) |
-            //Services.Settings.TryGetValue("STORAGE_ACCOUNT_ACCESS_KEY", out storageAccountKey)))
-            //{
-            //    Services.Log.Error("Could not retrieve storage account settings.");
-            //}
-
-            //// Set the URI for the Blob Storage service.
-            //Uri blobEndpoint = new Uri(string.Format("https://{0}.blob.core.windows.net", storageAccountName));
-
-            //// Create the BLOB service client.
-            //CloudBlobClient blobClient = new CloudBlobClient(blobEndpoint,
-            //    new StorageCredentials(storageAccountName, storageAccountKey));
-
-            //if (item.containerName != null)
-            //{
-            //    // Set the BLOB store container name on the item, which must be lowercase.
-            //    item.containerName = item.containerName.ToLower();
-
-            //    // Create a container, if it doesn't already exist.
-            //    CloudBlobContainer container = blobClient.GetContainerReference(item.containerName);
-            //    await container.CreateIfNotExistsAsync();
-
-            //    // Create a shared access permission policy. 
-            //    BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
-
-            //    // Enable anonymous read access to BLOBs.
-            //    containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
-            //    container.SetPermissions(containerPermissions);
-
-            //    // Define a policy that gives write access to the container for 5 minutes.                                   
-            //    SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
-            //    {
-            //        SharedAccessStartTime = DateTime.UtcNow,
-            //        SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(5),
-            //        Permissions = SharedAccessBlobPermissions.Write
-            //    };
-
-            //    // Get the SAS as a string.
-            //    item.sasQueryString = container.GetSharedAccessSignature(sasPolicy);
-
-            //    // Set the URL used to store the image.
-            //    item.imageUri = string.Format("{0}{1}/{2}", blobEndpoint.ToString(),
-            //        item.containerName, item.resourceName);
-            //}
-
-            //// Complete the insert operation.
-            //TodoItem current = await InsertAsync(item);
-            //return CreatedAtRoute("Tables", new { id = current.Id }, current);
-
+            result = JObject.FromObject(product);            
+            return Request.CreateResponse(HttpStatusCode.OK, result);                      
         }
 
         // DELETE: api/Products/5

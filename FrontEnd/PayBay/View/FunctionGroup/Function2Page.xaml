@@ -6,10 +6,89 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="40"
-                   Text="Function 2 Page" />
+    <Grid Grid.Row="4" Name="captureGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Name="captureButtons" 
+                Orientation="Vertical">
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Product Name:" />
+            <TextBox Name="txtProName"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="Type name..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Unit Price:" />
+            <TextBox Name="txtUPrice"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Unit:" />
+            <TextBox Name="txtUnit"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Number Of:" />
+            <TextBox Name="txtNumber"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Store ID:" />
+            <TextBox Name="txtStoreid"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Sale Price:" />
+            <TextBox Name="txtSPrice"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Image:" />
+
+        </StackPanel>
+
+        <CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />
+
+        <Image Grid.Row="1" Name="imagePreview"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Height="160"
+                Width="160"
+                Visibility="Collapsed" />
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row ="3"  Orientation="Horizontal">
+            <AppBarButton Label="Photo" Icon="Camera" Name="ButtonCapture" 
+                  Click="ButtonCapture_Click" Height="78" Width="62" />
+            <AppBarButton Label="Upload" Icon="Upload" Name="ButtonSave" 
+                  Click="ButtonSave_Click"/>
+        </StackPanel>-->
+
     </Grid>
 </Page>

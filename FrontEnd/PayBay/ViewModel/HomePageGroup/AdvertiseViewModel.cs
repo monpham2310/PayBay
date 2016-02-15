@@ -13,11 +13,22 @@ using System.IO;
 
 namespace PayBay.ViewModel.HomePageGroup
 {
-	public class AdvertiseViewModel: BaseViewModel
+	public class AdvertiseViewModel : BaseViewModel
 	{
 		private ObservableCollection<AdvertiseItem> _newMerchandiseItemList;
 		private ObservableCollection<AdvertiseItem> _saleMerchandiseItemList;
 		private ObservableCollection<AdvertiseItem> _hotMerchandiseItemList;
+
+        private static AdvertiseViewModel m_Instance = null;
+
+        public static AdvertiseViewModel GetInstance()
+        {
+            if( m_Instance == null)
+            {
+                return new AdvertiseViewModel();
+            }
+            return m_Instance;
+        }
 
         private enum TypeMechandises
         {

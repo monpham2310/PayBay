@@ -141,6 +141,7 @@ namespace PayBay.Model
             set
             {
                 _sasQuery = value;
+                OnPropertyChanged();
             }
         }
 
@@ -154,6 +155,7 @@ namespace PayBay.Model
             set
             {
                 _importDate = value;
+                OnPropertyChanged();
             }
         }
 
@@ -161,12 +163,13 @@ namespace PayBay.Model
         {
             get
             {
-                return _storeName;
+                return _storeName;                
             }
 
             set
             {
                 _storeName = value;
+                OnPropertyChanged();
             }
         }
 
@@ -180,6 +183,7 @@ namespace PayBay.Model
             set
             {
                 _marketId = value;
+                OnPropertyChanged();
             }
         }
 
@@ -193,6 +197,7 @@ namespace PayBay.Model
             set
             {
                 _marketName = value;
+                OnPropertyChanged();
             }
         }
     }

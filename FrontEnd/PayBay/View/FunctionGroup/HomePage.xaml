@@ -29,7 +29,7 @@
 			<StackPanel Width="150">
                 <Image Width="140"
 					   Height="140"
-                Source="{x:Bind Image, Mode=OneWay}"/>
+                       Source="{x:Bind Image, Mode=OneWay}" />
 				<TextBlock Text="{x:Bind ProductName, Mode=OneWay}"
 						   HorizontalAlignment="Center"
 						   TextAlignment="Center"
@@ -48,7 +48,7 @@
 						   Width="140"
 						   TextWrapping="Wrap" 
 						   FontWeight="Bold" />
-                <TextBlock Text="{x:Bind MarketName, Mode=OneWay}"
+                <!--<TextBlock Text="{x:Bind MarketName, Mode=OneWay}"
 						   HorizontalAlignment="Center"
 						   TextAlignment="Center"
 						   Foreground="{StaticResource Brush3}"
@@ -56,7 +56,7 @@
 						   FontSize="12" 
 						   Width="140"
 						   TextWrapping="Wrap" 
-						   FontWeight="Bold" />
+						   FontWeight="Bold" />-->
 			</StackPanel>
 		</DataTemplate>
 

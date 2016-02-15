@@ -39,21 +39,15 @@ namespace PayBay.View.FunctionGroup
     {
         public Function2Page()
         {
-            this.InitializeComponent();
-            view = CoreApplication.GetCurrentView();
+            this.InitializeComponent();            
         }
 
         StorageFile media = null;
         MediaCapture cameraCapture;
-        bool IsCaptureInProgress;
-        CoreApplicationView view;
-        string ImagePath;
-        
-        AdvertiseViewModel viewModel = new AdvertiseViewModel();
-
+        bool IsCaptureInProgress;                
+                
         private async Task GetPhotoFromGallery()
-        {
-            ImagePath = string.Empty;
+        {            
             FileOpenPicker filePicker = new FileOpenPicker();
             filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
             filePicker.ViewMode = PickerViewMode.Thumbnail;
@@ -181,7 +175,7 @@ namespace PayBay.View.FunctionGroup
                     await ResetCaptureAsync();
                 }
 
-                viewModel.NewMerchandiseItemList.Add(product);
+                AdvertiseViewModel.GetInstance().NewMerchandiseItemList.Add(product);
             }
             catch (Exception ex)
             {

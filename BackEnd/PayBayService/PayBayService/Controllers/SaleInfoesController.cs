@@ -40,6 +40,8 @@ namespace PayBayService.Controllers
         public async Task<IHttpActionResult> GetSaleInfo(int id)
         {
             SaleInfo saleInfo = await db.SaleInfoes.FindAsync(id);
+            string storeName = (string)Methods.GetValue("select StoreName from paybayservice.Stores where StoreId = " + saleInfo.StoreID, CommandType.Text, ref Methods.err);
+            saleInfo.StoreName = storeName;
             if (saleInfo == null)
             {
                 return NotFound();

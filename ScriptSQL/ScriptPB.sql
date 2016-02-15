@@ -6,8 +6,6 @@ create table paybayservice.Markets (
 	Image nvarchar(max)
 );
 
-alter table paybayservice.Markets add SasQuery nvarchar(max)
-
 create table paybayservice.UserType (	
 	TypeId int identity(1,1) not null primary key,
 	TypeName varchar(20)
@@ -26,8 +24,6 @@ create table paybayservice.Users (
 	Username nvarchar(30),
 	Pass varbinary(max)	
 );
-
-alter table paybayservice.Users add SasQuery nvarchar(max)
 
 drop table paybayservice.Accounts
 
@@ -49,7 +45,6 @@ create table paybayservice.Stores (
 	NumOfLike int default 0
 );
 
-alter table paybayservice.Stores add SasQuery nvarchar(max)
 alter table paybayservice.Stores add NumOfLike int default 0
 
 create table paybayservice.Products (
@@ -61,11 +56,9 @@ create table paybayservice.Products (
 	Unit nvarchar(20),
 	StoreID int not null,
 	ImportDate date,
-	SalePrice float not null default 0,
-	SasQuery nvarchar(max)
+	SalePrice float not null default 0
 );
 
-alter table paybayservice.Products add SasQuery nvarchar(max)
 alter table paybayservice.Products add SalePrice float not null default 0
 alter table paybayservice.Products add ImportDate date
 
@@ -108,8 +101,6 @@ create table paybayservice.SaleInfo (
 	--constraint FK_S_S foreign key (StoreID) references paybayservice.STORES,
 	isRequired bit not null default 0
 );
-
-alter table paybayservice.SaleInfo add SasQuery nvarchar(max)
 
 create table paybayservice.Comments (
 	Id int identity(1,1) primary key not null,

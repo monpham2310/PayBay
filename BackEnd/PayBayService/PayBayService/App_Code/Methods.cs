@@ -3,29 +3,20 @@ using Newtonsoft.Json.Linq;
 using PayBayService.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace PayBayService.App_Code
 {
     public class Methods
-    {        
-        private static string connectionString = ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
-
-        static SqlConnection cnn = new SqlConnection(connectionString);
+    {
         static SqlCommand cmd;
+        static SqlConnection cnn = new SqlConnection(PayBayDatabaseEntities.connectionString);
         static SqlDataAdapter da;
-
-        public static string err = "";
-
-        public static string StorageAccoutName = ConfigurationManager.AppSettings["STORAGE_ACCOUNT_NAME"].ToString();
-        public static string StorageAccountKey = ConfigurationManager.AppSettings["STORAGE_ACCOUNT_ACCESS_KEY"].ToString();
+        public static string err = ""; 
 
         public enum TypeProduct
         {
@@ -174,30 +165,5 @@ namespace PayBayService.App_Code
 
         }
 
-        public static string GetImageFromByteArray (byte[] f, string fileName)
-        {
-            try
-            {
-                MemoryStream ms = new MemoryStream(f);
-
-                string path = System.Web.Hosting.HostingEnvironment.MapPath("~/StorageImage/") + fileName + ".png";
-
-                FileStream fs = new FileStream(path, FileMode.Create);
-
-                ms.WriteTo(fs);
-
-                ms.Close();
-                fs.Close();
-                fs.Dispose();
-
-                return path;
-            }
-            catch (Exception ex)
-            {
-                // return the error message if the operation fails
-                return ex.Message.ToString();
-            }            
-        }
-                
     }
 }

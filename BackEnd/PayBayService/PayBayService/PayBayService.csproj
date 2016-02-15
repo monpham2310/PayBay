@@ -361,9 +361,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PaybayModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Models\PaybayModel.edmx.diagram">
       <DependentUpon>PaybayModel.edmx</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Properties\PublishProfiles\paybayservice - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>

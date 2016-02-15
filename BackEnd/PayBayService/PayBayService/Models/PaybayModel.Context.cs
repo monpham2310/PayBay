@@ -15,6 +15,8 @@ namespace PayBayService.Models
     
     public partial class PayBayDatabaseEntities : DbContext
     {
+        public static string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
+
         public PayBayDatabaseEntities()
             : base("name=PayBayDatabaseEntities")
         {

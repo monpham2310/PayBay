@@ -16,7 +16,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.View.StartGroup;
-using PayBay.View.FunctionGroup;
 
 namespace PayBay
 {
@@ -41,10 +40,6 @@ namespace PayBay
         //public static string UrlHost = "http://localhost:4591";
         public static string UrlHost = "https://paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
-
-        //public static MobileServiceClient MobileService = new MobileServiceClient(
-        //    UrlHost
-        //);
 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
         // and application key. You're all set to start working with your Mobile Service!

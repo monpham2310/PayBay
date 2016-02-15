@@ -18,7 +18,6 @@ namespace PayBayService.Models
         public string MarketName { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public string Image { get; set; }
-        public string SasQuery { get; set; }
+        public byte[] Image { get; set; }
     }
 }

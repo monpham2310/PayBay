@@ -6,13 +6,104 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:model="using:PayBay.Model"
+	xmlns:converters="using:PayBay.Utilities.Converters"
+	xmlns:customControl="using:PayBay.CustomControls"
 	DataContext="{Binding Source={StaticResource Locator},
 						  Path=AdvertiseVm}"
     mc:Ignorable="d"
-    Loaded="Page_Loaded"
-    >
+    Loaded="Page_Loaded">
 
 	<Page.Resources>
+		<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+	</Page.Resources>
+	
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1.5*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="0.1*"/>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="0">
+			<FlipView ItemsSource="{Binding AdvertiseItemList}"
+					  SelectedItem="{Binding SelectedAd, Mode=TwoWay}">
+				<FlipView.ItemTemplate>
+					<DataTemplate>
+						<Image Source="{Binding Image}"
+							   Stretch="Fill"/>
+					</DataTemplate>
+				</FlipView.ItemTemplate>
+			</FlipView>
+			<ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
+						  HorizontalAlignment="Center" 
+						  VerticalAlignment="Bottom" 
+						  Margin="0,10">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Grid Height="15" Width="15" Margin="5,0">
+							<Ellipse Fill="{StaticResource LightGrayBrush}" />
+							<Ellipse Fill="{StaticResource OrangeBrush}"
+									 Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
+						</Grid>
+						
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			<!--<customControl:SlideShowPanel/>-->
+		</Grid>
+		
+		<Grid Grid.Row="1"
+			  BorderThickness="0,0,0,0.2"
+			  BorderBrush="{StaticResource GrayBrush}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0" 
+				  BorderThickness="0,0,0.2,0"
+				  BorderBrush="{StaticResource GrayBrush}"/>
+			<Grid Grid.Column="1" 
+				  BorderThickness="0,0,0.2,0"
+				  BorderBrush="{StaticResource GrayBrush}"/>
+			<Grid Grid.Column="2" 
+				  BorderThickness="0,0,0.2,0"
+				  BorderBrush="{StaticResource GrayBrush}"/>
+			<Grid Grid.Column="3" />
+		</Grid>
+
+		<Grid Grid.Row="3"
+			  BorderThickness="0,0.2"
+			  BorderBrush="{StaticResource GrayBrush}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0"
+				  BorderThickness="0,0,0.2,0"
+				  BorderBrush="{StaticResource GrayBrush}" />
+			<Grid Grid.Column="1" />
+		</Grid>
+
+		<Grid Grid.Row="4"
+			  Margin="0,2,0,0"
+			  Background="{StaticResource LightBlueBrush}"/>
+
+		<Grid Grid.Row="5"
+			  Margin="0,2,0,0"
+			  Background="{StaticResource LightGrayBrush}"/>
+	</Grid>
+
+	<!--<Page.Resources>
 		<Style TargetType="ListView">
 			<Setter Property="ItemsPanel">
 				<Setter.Value>
@@ -27,13 +118,16 @@
 
 		<DataTemplate x:Key="ListViewItemTemplate" x:DataType="model:AdvertiseItem">
 			<StackPanel Width="150">
+<<<<<<< HEAD
                 <Image Width="140"
 					   Height="140"
                        Source="{x:Bind Image, Mode=OneWay}" />
+=======
+>>>>>>> 1f97e250b7c2ef202370bdd815c71151200a925b
 				<TextBlock Text="{x:Bind ProductName, Mode=OneWay}"
 						   HorizontalAlignment="Center"
 						   TextAlignment="Center"
-						   Foreground="{StaticResource Brush3}"
+						   Foreground="{StaticResource BlackBrush}"
 						   FontSize="12" 
 						   MaxLines="1" 
 						   Width="140"
@@ -42,7 +136,7 @@
 				<TextBlock Text="{x:Bind StoreName, Mode=OneWay}"
 						   HorizontalAlignment="Center"
 						   TextAlignment="Center"
-						   Foreground="{StaticResource Brush3}"
+						   Foreground="{StaticResource BlackBrush}"
 						   MaxLines="1"
 						   FontSize="12" 
 						   Width="140"
@@ -51,7 +145,7 @@
                 <!--<TextBlock Text="{x:Bind MarketName, Mode=OneWay}"
 						   HorizontalAlignment="Center"
 						   TextAlignment="Center"
-						   Foreground="{StaticResource Brush3}"
+						   Foreground="{StaticResource BlackBrush}"
 						   MaxLines="1"
 						   FontSize="12" 
 						   Width="140"
@@ -87,7 +181,7 @@
 				   Margin="10,0,0,0" 
 				   TextWrapping="Wrap" 
 				   Text="Hàng mới về" 
-				   Foreground="{StaticResource Brush4}"
+				   Foreground="{StaticResource TealBrush}"
 				   VerticalAlignment="Center" 
 				   FontSize="25" />
 
@@ -117,7 +211,7 @@
 				   Margin="10,10,0,0" 
 				   TextWrapping="Wrap" 
 				   Text="Hàng khuyến mãi" 
-				   Foreground="{StaticResource Brush4}"
+				   Foreground="{StaticResource TealBrush}"
 				   VerticalAlignment="Top" 
 				   FontSize="25"                    
                    />
@@ -147,7 +241,7 @@
 				   Margin="10,10,0,0" 
 				   TextWrapping="Wrap" 
 				   Text="Hàng bán chạy" 
-				   Foreground="{StaticResource Brush4}"
+				   Foreground="{StaticResource TealBrush}"
 				   VerticalAlignment="Top" 
 				   FontSize="25" />
 			
@@ -172,5 +266,5 @@
 				  ItemsSource="{x:Bind AdVm.HotMerchandiseItemList, Mode=OneWay}" />
 	
 		</Grid>
-	</ScrollViewer>
+	</ScrollViewer>-->
 </Page>

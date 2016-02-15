@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,6 +14,11 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
 using System.Data.SqlClient;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage;
+using System.Configuration;
+using PayBayService.Models.BlobStorage;
 
 namespace PayBayService.Controllers
 {
@@ -58,26 +64,26 @@ namespace PayBayService.Controllers
         }
 
         // GET: api/Products/
-        [ResponseType(typeof(HttpResponseMessage))]
-        public HttpResponseMessage GetProductFollowType(int typeProduct)
-        {
-            JArray result = new JArray();
-            try
-            {
-                if(typeProduct == (int)Methods.TypeProduct.NEW)            
-                    result = Methods.ExecQueryWithResult("paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err);
-                else if(typeProduct == (int)Methods.TypeProduct.SALE)
-                    result = Methods.ExecQueryWithResult("paybayservice.sp_GetSaleProduct", CommandType.StoredProcedure, ref Methods.err);
-                else
-                    result = Methods.ExecQueryWithResult("paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
-            }
+        //[ResponseType(typeof(HttpResponseMessage))]
+        //public HttpResponseMessage GetProductFollowType(int typeProduct)
+        //{
+        //    JArray result = new JArray();
+        //    try
+        //    {
+        //        if (typeProduct == (int)Methods.TypeProduct.NEW)
+        //            result = Methods.ExecQueryWithResult("paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err);
+        //        else if (typeProduct == (int)Methods.TypeProduct.SALE)
+        //            result = Methods.ExecQueryWithResult("paybayservice.sp_GetSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+        //        else
+        //            result = Methods.ExecQueryWithResult("paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+        //    }
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
 
         // PUT: api/Products/5
         [ResponseType(typeof(HttpResponseMessage))]
@@ -114,7 +120,7 @@ namespace PayBayService.Controllers
 
         // PUT: api/Products/NumberOf
         [ResponseType(typeof(HttpResponseMessage))]
-        public HttpResponseMessage PutNumberOfProduct(int productid,int numberof)
+        public HttpResponseMessage PutNumberOfProduct(int productid, int numberof)
         {
             JArray result = new JArray();
             try
@@ -133,7 +139,7 @@ namespace PayBayService.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
+                
         // POST: api/Products
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostProduct(Product product)
@@ -144,65 +150,24 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.Products.Add(product);
-            await db.SaveChangesAsync();
+            int productId = (int)Methods.GetValue("paybayservice.sp_GetMaxProductId", CommandType.StoredProcedure, ref Methods.err);
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("products", product.ProductName, productId);
+                        
+            if (blob != null)
+            {
+                product.Image = blob.ImageUri;
+                product.SasQuery = blob.SasQuery;
+                db.Products.Add(product);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
-            result = Methods.CustomResponseMessage(1, "Add product is successful!");
+            result = JObject.FromObject(product);
             return Request.CreateResponse(HttpStatusCode.OK, result);
-
-            string storageAccountName;
-            string storageAccountKey;
-
-            // Try to get the Azure storage account token from app settings.  
-            //if (!(Services.Settings.TryGetValue("STORAGE_ACCOUNT_NAME", out storageAccountName) |
-            //Services.Settings.TryGetValue("STORAGE_ACCOUNT_ACCESS_KEY", out storageAccountKey)))
-            //{
-            //    Services.Log.Error("Could not retrieve storage account settings.");
-            //}
-
-            //// Set the URI for the Blob Storage service.
-            //Uri blobEndpoint = new Uri(string.Format("https://{0}.blob.core.windows.net", storageAccountName));
-
-            //// Create the BLOB service client.
-            //CloudBlobClient blobClient = new CloudBlobClient(blobEndpoint,
-            //    new StorageCredentials(storageAccountName, storageAccountKey));
-
-            //if (item.containerName != null)
-            //{
-            //    // Set the BLOB store container name on the item, which must be lowercase.
-            //    item.containerName = item.containerName.ToLower();
-
-            //    // Create a container, if it doesn't already exist.
-            //    CloudBlobContainer container = blobClient.GetContainerReference(item.containerName);
-            //    await container.CreateIfNotExistsAsync();
-
-            //    // Create a shared access permission policy. 
-            //    BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
-
-            //    // Enable anonymous read access to BLOBs.
-            //    containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
-            //    container.SetPermissions(containerPermissions);
-
-            //    // Define a policy that gives write access to the container for 5 minutes.                                   
-            //    SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
-            //    {
-            //        SharedAccessStartTime = DateTime.UtcNow,
-            //        SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(5),
-            //        Permissions = SharedAccessBlobPermissions.Write
-            //    };
-
-            //    // Get the SAS as a string.
-            //    item.sasQueryString = container.GetSharedAccessSignature(sasPolicy);
-
-            //    // Set the URL used to store the image.
-            //    item.imageUri = string.Format("{0}{1}/{2}", blobEndpoint.ToString(),
-            //        item.containerName, item.resourceName);
-            //}
-
-            //// Complete the insert operation.
-            //TodoItem current = await InsertAsync(item);
-            //return CreatedAtRoute("Tables", new { id = current.Id }, current);
-
         }
 
         // DELETE: api/Products/5

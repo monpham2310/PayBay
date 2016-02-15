@@ -15,12 +15,7 @@ using System.IO;
 namespace PayBay.ViewModel.HomePageGroup
 {
 	public class AdvertiseViewModel : BaseViewModel
-	{
-<<<<<<< HEAD
-		private ObservableCollection<AdvertiseItem> _newMerchandiseItemList;
-		private ObservableCollection<AdvertiseItem> _saleMerchandiseItemList;
-		private ObservableCollection<AdvertiseItem> _hotMerchandiseItemList;
-
+	{		
         private static AdvertiseViewModel m_Instance = null;
 
         public static AdvertiseViewModel GetInstance()
@@ -32,16 +27,8 @@ namespace PayBay.ViewModel.HomePageGroup
             return m_Instance;
         }
 
-        private enum TypeMechandises
-        {
-            NEW = 1,
-            SALE = 2,
-            BESTSALE = 3
-        }
-=======
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
 		private AdvertiseItem _selectedAd;
->>>>>>> 1f97e250b7c2ef202370bdd815c71151200a925b
 
 		#region Property with calling to PropertyChanged
 		public ObservableCollection<AdvertiseItem> AdvertiseItemList
@@ -88,8 +75,10 @@ namespace PayBay.ViewModel.HomePageGroup
 		/// </summary>
 		public AdvertiseViewModel()
 		{
-			InitializeData();
-		}
+			//InitializeData();
+            InitializeDataFromDB();
+
+        }
 
 		/// <summary>
 		/// Initialize market
@@ -110,144 +99,53 @@ namespace PayBay.ViewModel.HomePageGroup
 			_selectedAd.IsSelected = true;
 		}
 
-		//private ObservableCollection<AdvertiseItem> _newMerchandiseItemList;
-		//private ObservableCollection<AdvertiseItem> _saleMerchandiseItemList;
-		//private ObservableCollection<AdvertiseItem> _hotMerchandiseItemList;
+        /// <summary>
+        /// Get data from service
+        /// </summary>
+        /// <returns></returns>
+        private async void InitializeDataFromDB()
+        {
+            MobileServiceInvalidOperationException exception = null;
+                       
+            try
+            {
+                IDictionary<string, string> sale = new Dictionary<string, string>
+                {
+                    { "required", "true"}
+                };
+                
+                await ImportData(sale);                
 
-		//      private enum TypeMechandises
-		//      {
-		//          NEW = 1,
-		//          SALE = 2,
-		//          BESTSALE = 3
-		//      }
+            }
+            catch (MobileServiceInvalidOperationException e)
+            {
+                exception = e;
+            }
+            if (exception != null)
+            {
+                await new MessageDialog(exception.Message, "Error loading items").ShowAsync();
+            }
+        }
 
-		//#region Property with calling to PropertyChanged
-		//public ObservableCollection<AdvertiseItem> NewMerchandiseItemList
-		//{
-		//	get { return _newMerchandiseItemList; }
-		//	set
-		//	{
-		//		if (Equals(value, _newMerchandiseItemList)) return;
-		//		_newMerchandiseItemList = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        /// <summary>
+        /// Get data from database with Json
+        /// </summary>
+        /// <param name="argument">parameter will get</param>
+        /// <param name="type">type product will get : New,Sale,Best sale</param>
+        /// <returns></returns>
+        private async Task ImportData(IDictionary<string, string> argument)
+        {
+            _advertiseItemList = new ObservableCollection<AdvertiseItem>();
+            JToken _product = null;
 
-		//public ObservableCollection<AdvertiseItem> SaleMerchandiseItemList
-		//{
-		//	get { return _saleMerchandiseItemList; }
-		//	set
-		//	{
-		//		if (Equals(value, _saleMerchandiseItemList)) return;
-		//		_saleMerchandiseItemList = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+            _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
 
-		//public ObservableCollection<AdvertiseItem> HotMerchandiseItemList
-		//{
-		//	get { return _hotMerchandiseItemList; }
-		//	set
-		//	{
-		//		if (Equals(value, _hotMerchandiseItemList)) return;
-		//		_hotMerchandiseItemList = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
-		//#endregion
+            JArray results = JArray.Parse(_product.ToString());
 
-		///// <summary>
-		///// Constructor
-		///// </summary>
-		//public AdvertiseViewModel()
-		//{
-		//	InitializeData();
-		//}
+            _advertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
+            _selectedAd = _advertiseItemList[0];
+            _selectedAd.IsSelected = true;
+        }
 
-		///// <summary>
-		///// Get data from service
-		///// </summary>
-		///// <returns></returns>
-		//private async void InitializeData()
-		//{
-		//	MobileServiceInvalidOperationException exception = null;
-
-		//	NewMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
-		//	SaleMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
-		//	HotMerchandiseItemList = new ObservableCollection<AdvertiseItem>();
-
-		//	try
-		//	{
-		//		IDictionary<string, string> newMechandises = new Dictionary<string, string>
-		//			  {
-		//				  { "typeProduct", "1"}
-		//			  };
-
-		//		IDictionary<string, string> saleMechandise = new Dictionary<string, string>
-		//			  {
-		//				  { "typeProduct", "2"}
-		//			  };
-
-		//		IDictionary<string, string> hotMechandise = new Dictionary<string, string>
-		//			  {
-		//				  { "typeProduct", "3"}
-		//			  };
-
-		//		await ImportData(newMechandises, TypeMechandises.NEW);
-		//		await ImportData(saleMechandise, TypeMechandises.SALE);
-		//		await ImportData(hotMechandise, TypeMechandises.BESTSALE);
-
-		//	}
-		//	catch (MobileServiceInvalidOperationException e)
-		//	{
-		//		exception = e;
-		//	}
-		//	if (exception != null)
-		//	{
-		//		await new MessageDialog(exception.Message, "Error loading items").ShowAsync();
-		//	}
-		//}
-
-		///// <summary>
-		///// Get data from database with Json
-		///// </summary>
-		///// <param name="argument">parameter will get</param>
-		///// <param name="type">type product will get : New,Sale,Best sale</param>
-		///// <returns></returns>
-		//private async Task ImportData(IDictionary<string, string> argument, TypeMechandises type)
-		//{
-		//	JToken _product = null;
-		//	_product = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, argument);
-
-		//	JArray results = JArray.Parse(_product.ToString());
-		//	foreach (var result in results)
-		//	{
-		//		AdvertiseItem temp = new AdvertiseItem();
-		//		temp.ProductID = (int)result["ProductId"];
-		//		temp.ProductName = (string)result["ProductName"];
-		//		temp.Image = (string)result["Image"];
-		//		temp.UnitPrice = (float)result["UnitPrice"];
-		//		temp.Unit = (string)result["Unit"];
-		//		temp.StoreId = (int)result["StoreID"];
-		//		temp.StoreName = (string)result["StoreName"];
-		//		temp.MarketId = (int)result["MarketID"];
-		//		temp.MarketName = (string)result["MarketName"];
-		//		temp.SalePrice = (float)result["SalePrice"];
-		//		switch (type)
-		//		{
-		//			case TypeMechandises.NEW:
-		//			_newMerchandiseItemList.Add(temp);
-		//			break;
-		//			case TypeMechandises.SALE:
-		//			_saleMerchandiseItemList.Add(temp);
-		//			break;
-		//			default:
-		//			_hotMerchandiseItemList.Add(temp);
-		//			break;
-		//		}
-
-		//	}
-		//}
-
-	}
+    }
 }

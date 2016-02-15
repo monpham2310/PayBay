@@ -1,30 +1,35 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PayBayService.Models;
+using PayBayService.Models.BlobStorage;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace PayBayService.App_Code
 {
     public class Methods
     {
+        private static string connectionString = ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
+
+        static SqlConnection cnn = new SqlConnection(connectionString);
         static SqlCommand cmd;
-        static SqlConnection cnn = new SqlConnection(PayBayDatabaseEntities.connectionString);
         static SqlDataAdapter da;
-        public static string err = ""; 
 
-        public enum TypeProduct
-        {
-            NEW = 1,
-            SALE = 2,
-            BESTSALE = 3
-        };
+        public static string err = "";
 
+        static string StorageAccoutName = ConfigurationManager.AppSettings["STORAGE_ACCOUNT_NAME"].ToString();
+        static string StorageAccountKey = ConfigurationManager.AppSettings["STORAGE_ACCOUNT_ACCESS_KEY"].ToString();
+                                
         /// <summary>
         /// Return a json object
         /// </summary>
@@ -110,7 +115,7 @@ namespace PayBayService.App_Code
 
                 da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
-                json = JsonConvert.SerializeObject(dt);                
+                json = JsonConvert.SerializeObject(dt);
                 result = JArray.Parse(json);
             }
             catch (SqlException ex)
@@ -163,6 +168,74 @@ namespace PayBayService.App_Code
             }
             return result;
 
+        }
+
+        public static string GetImageFromByteArray(byte[] f, string fileName)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream(f);
+
+                string path = System.Web.Hosting.HostingEnvironment.MapPath("~/StorageImage/") + fileName + ".png";
+
+                FileStream fs = new FileStream(path, FileMode.Create);
+
+                ms.WriteTo(fs);
+
+                ms.Close();
+                fs.Close();
+                fs.Dispose();
+
+                return path;
+            }
+            catch (Exception ex)
+            {
+                // return the error message if the operation fails
+                return ex.Message.ToString();
+            }
+        }
+
+        public static async Task<ModelBlob> GetSasAndImageUriFromBlob(string containnerName, string resourceName, int objectId)
+        {
+            ModelBlob blob = new ModelBlob();
+            
+            // Set the URI for the Blob Storage service.
+            Uri blobEndpoint = new Uri(string.Format("https://{0}.blob.core.windows.net", StorageAccoutName));
+
+            // Create the BLOB service client.
+            CloudBlobClient blobClient = new CloudBlobClient(blobEndpoint,
+                new StorageCredentials(StorageAccoutName, StorageAccountKey));
+                        
+            // Set the BLOB store container name on the item, which must be lowercase.
+            string _resname = resourceName.ToLower();
+            _resname = (_resname.IndexOf(" ") != -1) ? _resname.Replace(" ", "") : _resname;
+
+            // Create a container, if it doesn't already exist.
+            CloudBlobContainer container = blobClient.GetContainerReference(containnerName);
+            await container.CreateIfNotExistsAsync();
+
+            // Create a shared access permission policy. 
+            BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+
+            // Enable anonymous read access to BLOBs.
+            containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+            container.SetPermissions(containerPermissions);
+
+            // Define a policy that gives write access to the container for 5 minutes.                                   
+            SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+                Permissions = SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Read
+            };
+
+            // Get the SAS as a string.
+            blob.SasQuery = container.GetSharedAccessSignature(sasPolicy);
+
+            // Set the URL used to store the image.
+            blob.ImageUri = string.Format("{0}{1}/{2}", blobEndpoint.ToString(),
+                containnerName, _resname + objectId + ".jpg");
+
+            return blob;            
         }
 
     }

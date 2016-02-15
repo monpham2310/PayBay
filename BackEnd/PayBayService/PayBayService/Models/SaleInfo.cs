@@ -16,12 +16,12 @@ namespace PayBayService.Models
     {
         public int SaleId { get; set; }
         public string Title { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public string Describes { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public int StoreID { get; set; }
-        public string StoreName { get; set; }
         public bool isRequired { get; set; }
+        public string SasQuery { get; set; }
     }
 }

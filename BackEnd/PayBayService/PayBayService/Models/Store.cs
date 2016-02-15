@@ -17,10 +17,11 @@ namespace PayBayService.Models
         public int StoreId { get; set; }
         public string StoreName { get; set; }
         public string KiotNo { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public string Phone { get; set; }
         public int MarketID { get; set; }
         public int OwnerID { get; set; }
-        public Nullable<int> Rate { get; set; }
+        public Nullable<int> NumOfLike { get; set; }
+        public string SasQuery { get; set; }
     }
 }

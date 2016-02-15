@@ -16,255 +16,89 @@
 	<Page.Resources>
 		<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 	</Page.Resources>
-	
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="1.5*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="0.1*"/>
-			<RowDefinition Height="2*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
 
-		<Grid Grid.Row="0">
-			<FlipView ItemsSource="{Binding AdvertiseItemList}"
-					  SelectedItem="{Binding SelectedAd, Mode=TwoWay}">
-				<FlipView.ItemTemplate>
-					<DataTemplate>
-						<Image Source="{Binding Image}"
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <FlipView ItemsSource="{Binding AdvertiseItemList}"
+					  SelectedItem="{Binding SelectedAd, Mode=TwoWay}" >
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Image}"
 							   Stretch="Fill"/>
-					</DataTemplate>
-				</FlipView.ItemTemplate>
-			</FlipView>
-			<ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+            <ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
 						  HorizontalAlignment="Center" 
 						  VerticalAlignment="Bottom" 
 						  Margin="0,10">
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Grid Height="15" Width="15" Margin="5,0">
-							<Ellipse Fill="{StaticResource LightGrayBrush}" />
-							<Ellipse Fill="{StaticResource OrangeBrush}"
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="15" Width="15" Margin="5,0">
+                            <Ellipse Fill="{StaticResource LightGrayBrush}" />
+                            <Ellipse Fill="{StaticResource OrangeBrush}"
 									 Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
-						</Grid>
-						
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-			<!--<customControl:SlideShowPanel/>-->
-		</Grid>
-		
-		<Grid Grid.Row="1"
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--<customControl:SlideShowPanel/>-->
+        </Grid>
+
+        <Grid Grid.Row="1"
 			  BorderThickness="0,0,0,0.2"
 			  BorderBrush="{StaticResource GrayBrush}">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>
-			<Grid Grid.Column="0" 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" 
 				  BorderThickness="0,0,0.2,0"
 				  BorderBrush="{StaticResource GrayBrush}"/>
-			<Grid Grid.Column="1" 
+            <Grid Grid.Column="1" 
 				  BorderThickness="0,0,0.2,0"
 				  BorderBrush="{StaticResource GrayBrush}"/>
-			<Grid Grid.Column="2" 
+            <Grid Grid.Column="2" 
 				  BorderThickness="0,0,0.2,0"
 				  BorderBrush="{StaticResource GrayBrush}"/>
-			<Grid Grid.Column="3" />
-		</Grid>
+            <Grid Grid.Column="3" />
+        </Grid>
 
-		<Grid Grid.Row="3"
+        <Grid Grid.Row="3"
 			  BorderThickness="0,0.2"
 			  BorderBrush="{StaticResource GrayBrush}">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>
-			<Grid Grid.Column="0"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0"
 				  BorderThickness="0,0,0.2,0"
 				  BorderBrush="{StaticResource GrayBrush}" />
-			<Grid Grid.Column="1" />
-		</Grid>
+            <Grid Grid.Column="1" />
+        </Grid>
 
-		<Grid Grid.Row="4"
+        <Grid Grid.Row="4"
 			  Margin="0,2,0,0"
 			  Background="{StaticResource LightBlueBrush}"/>
 
-		<Grid Grid.Row="5"
+        <Grid Grid.Row="5"
 			  Margin="0,2,0,0"
 			  Background="{StaticResource LightGrayBrush}"/>
-	</Grid>
-
-	<!--<Page.Resources>
-		<Style TargetType="ListView">
-			<Setter Property="ItemsPanel">
-				<Setter.Value>
-					<ItemsPanelTemplate>
-						<ItemsStackPanel Orientation="Horizontal"
-										 VerticalAlignment="Center"
-										 HorizontalAlignment="Center"/>
-					</ItemsPanelTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-
-		<DataTemplate x:Key="ListViewItemTemplate" x:DataType="model:AdvertiseItem">
-			<StackPanel Width="150">
-<<<<<<< HEAD
-                <Image Width="140"
-					   Height="140"
-                       Source="{x:Bind Image, Mode=OneWay}" />
-=======
->>>>>>> 1f97e250b7c2ef202370bdd815c71151200a925b
-				<TextBlock Text="{x:Bind ProductName, Mode=OneWay}"
-						   HorizontalAlignment="Center"
-						   TextAlignment="Center"
-						   Foreground="{StaticResource BlackBrush}"
-						   FontSize="12" 
-						   MaxLines="1" 
-						   Width="140"
-						   TextWrapping="Wrap" 
-						   FontWeight="Bold" />
-				<TextBlock Text="{x:Bind StoreName, Mode=OneWay}"
-						   HorizontalAlignment="Center"
-						   TextAlignment="Center"
-						   Foreground="{StaticResource BlackBrush}"
-						   MaxLines="1"
-						   FontSize="12" 
-						   Width="140"
-						   TextWrapping="Wrap" 
-						   FontWeight="Bold" />
-                <!--<TextBlock Text="{x:Bind MarketName, Mode=OneWay}"
-						   HorizontalAlignment="Center"
-						   TextAlignment="Center"
-						   Foreground="{StaticResource BlackBrush}"
-						   MaxLines="1"
-						   FontSize="12" 
-						   Width="140"
-						   TextWrapping="Wrap" 
-						   FontWeight="Bold" />-->
-			</StackPanel>
-		</DataTemplate>
-
-		<Style TargetType="HyperlinkButton">
-			<Setter Property="ContentTemplate">
-				<Setter.Value>
-					<DataTemplate>
-						<TextBlock Text="{Binding}" />
-					</DataTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		
-	</Page.Resources>
-
-	<ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
-		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="50" />
-				<RowDefinition Height="200" />
-				<RowDefinition Height="50" />
-				<RowDefinition Height="200" />
-				<RowDefinition Height="50" />
-				<RowDefinition Height="200" />
-			</Grid.RowDefinitions>
-			<TextBlock Grid.Row="0"
-				   HorizontalAlignment="Left" 
-				   Margin="10,0,0,0" 
-				   TextWrapping="Wrap" 
-				   Text="Hàng mới về" 
-				   Foreground="{StaticResource TealBrush}"
-				   VerticalAlignment="Center" 
-				   FontSize="25" />
-
-			<HyperlinkButton Grid.Row="0"
-							 Content="Show all" 
-							 Margin="0,0,20,0"
-							 FontSize="18"
-							 Foreground="{StaticResource Brush5}"
-							 HorizontalAlignment="Right" 
-							 VerticalAlignment="Center" 
-							 Click="HyperlinkButton_Click" />
-
-			<ListView Grid.Row="1"
-				  Height="200"
-				  SelectionMode="Single"
-				  ScrollViewer.HorizontalScrollMode="Enabled"
-				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-				  ScrollViewer.IsScrollInertiaEnabled="True"
-				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-				  ScrollViewer.VerticalScrollMode="Disabled"
-				  ItemTemplate="{StaticResource ListViewItemTemplate}"
-				  ItemsSource="{x:Bind AdVm.NewMerchandiseItemList, Mode=OneWay}"
-                />
-
-			<TextBlock Grid.Row="2"
-				   HorizontalAlignment="Left" 
-				   Margin="10,10,0,0" 
-				   TextWrapping="Wrap" 
-				   Text="Hàng khuyến mãi" 
-				   Foreground="{StaticResource TealBrush}"
-				   VerticalAlignment="Top" 
-				   FontSize="25"                    
-                   />
-
-			<HyperlinkButton Grid.Row="2"
-							 Content="Show all" 
-							 Margin="0,0,20,0"
-							 FontSize="18"
-							 Foreground="{StaticResource Brush5}"
-							 HorizontalAlignment="Right" 
-							 VerticalAlignment="Center"
-							 Click="HyperlinkButton_Click" />
-
-			<ListView Grid.Row="3"
-				  Height="200"
-				  SelectionMode="Single"
-				  ScrollViewer.HorizontalScrollMode="Enabled"
-				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-				  ScrollViewer.IsScrollInertiaEnabled="True"
-				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-				  ScrollViewer.VerticalScrollMode="Disabled"
-				  ItemTemplate="{StaticResource ListViewItemTemplate}"
-				  ItemsSource="{x:Bind AdVm.SaleMerchandiseItemList, Mode=OneWay}" />
-
-			<TextBlock Grid.Row="4"
-				   HorizontalAlignment="Left" 
-				   Margin="10,10,0,0" 
-				   TextWrapping="Wrap" 
-				   Text="Hàng bán chạy" 
-				   Foreground="{StaticResource TealBrush}"
-				   VerticalAlignment="Top" 
-				   FontSize="25" />
-			
-			<HyperlinkButton Grid.Row="4"
-							 Content="Show all" 
-							 Margin="0,0,20,0"
-							 FontSize="18"
-							 Foreground="{StaticResource Brush5}"
-							 HorizontalAlignment="Right" 
-							 VerticalAlignment="Center"
-							 Click="HyperlinkButton_Click" />
-
-			<ListView Grid.Row="5"
-				  Height="200"
-				  SelectionMode="Single"
-				  ScrollViewer.HorizontalScrollMode="Enabled"
-				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-				  ScrollViewer.IsScrollInertiaEnabled="True"
-				  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-				  ScrollViewer.VerticalScrollMode="Disabled"
-				  ItemTemplate="{StaticResource ListViewItemTemplate}"
-				  ItemsSource="{x:Bind AdVm.HotMerchandiseItemList, Mode=OneWay}" />
-	
-		</Grid>
-	</ScrollViewer>-->
+    </Grid>
 </Page>

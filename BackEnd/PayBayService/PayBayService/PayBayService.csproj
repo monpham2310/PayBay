@@ -262,6 +262,7 @@
     <Compile Include="Models\Market.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlobStorage\ModelBlob.cs" />
     <Compile Include="Models\PaybayModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -361,13 +362,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PaybayModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Models\PaybayModel.edmx.diagram">
       <DependentUpon>PaybayModel.edmx</DependentUpon>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\PublishProfiles\paybayservice - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>

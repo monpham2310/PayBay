@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bills">
           <Key>
             <PropertyRef Name="BillId" />
@@ -16,6 +16,7 @@
           <Property Name="ReducedPrice" Type="float" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="isShiped" Type="bit" />
+          <Property Name="Note" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -47,7 +48,8 @@
           <Property Name="MarketName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="12" />
-          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="SasQuery" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -55,12 +57,14 @@
           </Key>
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="UnitPrice" Type="float" Nullable="false" />
           <Property Name="NumberOf" Type="int" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="20" />
           <Property Name="StoreID" Type="int" Nullable="false" />
-          <Property Name="SalePrice" Type="float" />
+          <Property Name="ImportDate" Type="date" />
+          <Property Name="SalePrice" Type="float" Nullable="false" />
+          <Property Name="SasQuery" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ProductStatistic">
           <Key>
@@ -90,12 +94,13 @@
           </Key>
           <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="Describes" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="StoreID" Type="int" Nullable="false" />
           <Property Name="isRequired" Type="bit" Nullable="false" />
+          <Property Name="SasQuery" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Stores">
           <Key>
@@ -104,11 +109,12 @@
           <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StoreName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="KiotNo" Type="varchar" MaxLength="8" />
-          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="Phone" Type="varchar" MaxLength="12" />
           <Property Name="MarketID" Type="int" Nullable="false" />
           <Property Name="OwnerID" Type="int" Nullable="false" />
-          <Property Name="Rate" Type="int" />
+          <Property Name="NumOfLike" Type="int" />
+          <Property Name="SasQuery" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -121,10 +127,11 @@
           <Property Name="Phone" Type="varchar" MaxLength="12" />
           <Property Name="Gender" Type="bit" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
-          <Property Name="Avatar" Type="varbinary(max)" />
+          <Property Name="Avatar" Type="nvarchar(max)" />
           <Property Name="TypeID" Type="int" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="30" />
           <Property Name="Pass" Type="varbinary(max)" />
+          <Property Name="SasQuery" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -146,7 +153,8 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="paybayservice" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PayBayDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -161,6 +169,7 @@
           <Property Name="ReducedPrice" Type="Double" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="isShiped" Type="Boolean" />
+          <Property Name="Note" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -192,7 +201,8 @@
           <Property Name="MarketName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -200,12 +210,14 @@
           </Key>
           <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UnitPrice" Type="Double" Nullable="false" />
           <Property Name="NumberOf" Type="Int32" Nullable="false" />
           <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="StoreID" Type="Int32" Nullable="false" />
-          <Property Name="SalePrice" Type="Double" />
+          <Property Name="ImportDate" Type="DateTime" Precision="0" />
+          <Property Name="SalePrice" Type="Double" Nullable="false" />
+          <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductStatistic">
           <Key>
@@ -235,12 +247,13 @@
           </Key>
           <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Describes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="StoreID" Type="Int32" Nullable="false" />
           <Property Name="isRequired" Type="Boolean" Nullable="false" />
+          <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Store">
           <Key>
@@ -249,11 +262,12 @@
           <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StoreName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="KiotNo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="MarketID" Type="Int32" Nullable="false" />
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
-          <Property Name="Rate" Type="Int32" />
+          <Property Name="NumOfLike" Type="Int32" />
+          <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -266,10 +280,11 @@
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="Boolean" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TypeID" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Pass" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -300,13 +315,14 @@
           <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Bill">
               <MappingFragment StoreEntitySet="Bills">
-                <ScalarProperty Name="isShiped" ColumnName="isShiped" />
                 <ScalarProperty Name="BillId" ColumnName="BillId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="ReducedPrice" ColumnName="ReducedPrice" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="isShiped" ColumnName="isShiped" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -342,13 +358,13 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
@@ -356,6 +372,9 @@
                 <ScalarProperty Name="NumberOf" ColumnName="NumberOf" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="ImportDate" ColumnName="ImportDate" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -394,13 +413,13 @@
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />
                 <ScalarProperty Name="isRequired" ColumnName="isRequired" />
+                <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Store">
               <MappingFragment StoreEntitySet="Stores">
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
                 <ScalarProperty Name="StoreName" ColumnName="StoreName" />
                 <ScalarProperty Name="KiotNo" ColumnName="KiotNo" />
@@ -408,14 +427,14 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="MarketID" ColumnName="MarketID" />
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="NumOfLike" ColumnName="NumOfLike" />
+                <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Pass" ColumnName="Pass" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
@@ -425,6 +444,9 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

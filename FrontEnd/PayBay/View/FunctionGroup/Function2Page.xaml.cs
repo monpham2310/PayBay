@@ -39,42 +39,9 @@ namespace PayBay.View.FunctionGroup
     {
         public Function2Page()
         {
-<<<<<<< HEAD
             this.InitializeComponent();            
         }
-
-        StorageFile media = null;
-        MediaCapture cameraCapture;
-        bool IsCaptureInProgress;                
                 
-        private async Task GetPhotoFromGallery()
-        {            
-            FileOpenPicker filePicker = new FileOpenPicker();
-            filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            filePicker.ViewMode = PickerViewMode.Thumbnail;
-
-            // Filter to include a sample subset of file types
-            filePicker.FileTypeFilter.Clear();
-            filePicker.FileTypeFilter.Add(".bmp");
-            filePicker.FileTypeFilter.Add(".png");
-            filePicker.FileTypeFilter.Add(".jpeg");
-            filePicker.FileTypeFilter.Add(".jpg");
-
-            media = await filePicker.PickSingleFileAsync();
-
-            var stream = await media.OpenAsync(FileAccessMode.Read);
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(stream);
-
-            var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(stream);
-            imagePreview.Visibility = Visibility.Visible;
-            imagePreview.Source = bitmapImage;           
-        }
-=======
-            this.InitializeComponent();
-            //view = CoreApplication.GetCurrentView();
-        }
-
 //        StorageFile media = null;
 //        MediaCapture cameraCapture;
 //        bool IsCaptureInProgress;
@@ -107,7 +74,7 @@ namespace PayBay.View.FunctionGroup
 //            imagePreview.Visibility = Visibility.Visible;
 //            imagePreview.Source = bitmapImage;           
 //        }
->>>>>>> 1f97e250b7c2ef202370bdd815c71151200a925b
+
                 
 //        private async Task CaptureImage()
 //        {
@@ -172,83 +139,8 @@ namespace PayBay.View.FunctionGroup
             
 
 //            await InsertProduct(temp);
-//        }
-        
-<<<<<<< HEAD
-        private async Task InsertProduct(AdvertiseItem product)
-        {
-            try {
-                JToken data = JToken.FromObject(product);
-                JToken result = await App.MobileService.InvokeApiAsync("Products", data, HttpMethod.Post, null);
+//        }      
 
-                JObject response = JObject.Parse(result.ToString());
-
-                product.Image = response["Image"].ToString();
-                product.SasQuery = response["SasQuery"].ToString();
-                string productName = product.ProductName.ToLower();
-
-                // If we have a returned SAS, then upload the blob.
-                if (!string.IsNullOrEmpty(product.SasQuery))
-                {
-                    // Get the URI generated that contains the SAS 
-                    // and extract the storage credentials.
-                    StorageCredentials cred = new StorageCredentials(product.SasQuery);
-                    var imageUri = new Uri(product.Image);
-
-                    // Instantiate a Blob store container based on the info in the returned item.
-                    CloudBlobContainer container = new CloudBlobContainer(
-                        new Uri(string.Format("https://{0}/{1}",
-                            imageUri.Host, "products")), cred);
-
-                    // Get the new image as a stream.
-                    using (var inputStream = await media.OpenReadAsync())
-                    {
-                        // Upload the new image as a BLOB from the stream.
-                        CloudBlockBlob blobFromSASCredential =
-                            container.GetBlockBlobReference(productName + product.ProductID + ".jpg");
-                        await blobFromSASCredential.UploadFromStreamAsync(inputStream);
-                    }
-
-                    // When you request an SAS at the container-level instead of the blob-level,
-                    // you are able to upload multiple streams using the same container credentials.
-
-                    await ResetCaptureAsync();
-                }
-
-                AdvertiseViewModel.GetInstance().NewMerchandiseItemList.Add(product);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private async Task ResetCaptureAsync()
-        {            
-            previewElement.Source = null;
-            imagePreview.Source = null;
-
-            // Make sure we stop the preview and release resources.
-            await cameraCapture.StopPreviewAsync();
-            cameraCapture.Dispose();
-            //media = null;
-        }
-
-        private async void previewElement_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            // Block multiple taps.
-            if (!IsCaptureInProgress)
-            {
-                IsCaptureInProgress = true;
-
-                // Create the temporary storage file.
-                media = await ApplicationData.Current.LocalFolder
-                    .CreateFileAsync("capture.jpg", CreationCollisionOption.ReplaceExisting);
-
-                // Take the picture and store it locally as a JPEG.
-                await cameraCapture.CapturePhotoToStorageFileAsync(
-                    ImageEncodingProperties.CreateJpeg(), media);
-=======
 //        private async Task InsertProduct(AdvertiseItem product)
 //        {
 //            try {
@@ -322,7 +214,6 @@ namespace PayBay.View.FunctionGroup
 //                // Take the picture and store it locally as a JPEG.
 //                await cameraCapture.CapturePhotoToStorageFileAsync(
 //                    ImageEncodingProperties.CreateJpeg(), media);
->>>>>>> 1f97e250b7c2ef202370bdd815c71151200a925b
                 
 //                // Use the stored image as the preview source.
 //                BitmapImage tempBitmap = new BitmapImage(new Uri(media.Path));

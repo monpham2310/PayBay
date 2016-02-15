@@ -13,6 +13,7 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
 using System.Data.SqlClient;
+using PayBayService.Models.BlobStorage;
 
 namespace PayBayService.Controllers
 {
@@ -26,7 +27,7 @@ namespace PayBayService.Controllers
             JArray result = new JArray();
             try
             {
-               result = Methods.ExecQueryWithResult("paybayservice.sp_GetAllSaleInfo", CommandType.StoredProcedure, ref Methods.err);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetAllSaleInfo", CommandType.StoredProcedure, ref Methods.err);
             }
             catch (Exception ex)
             {
@@ -40,8 +41,6 @@ namespace PayBayService.Controllers
         public async Task<IHttpActionResult> GetSaleInfo(int id)
         {
             SaleInfo saleInfo = await db.SaleInfoes.FindAsync(id);
-            string storeName = (string)Methods.GetValue("select StoreName from paybayservice.Stores where StoreId = " + saleInfo.StoreID, CommandType.Text, ref Methods.err);
-            saleInfo.StoreName = storeName;
             if (saleInfo == null)
             {
                 return NotFound();
@@ -49,17 +48,35 @@ namespace PayBayService.Controllers
 
             return Ok(saleInfo);
         }
-                
+
         // GET: api/SaleInfoes/KM
         [ResponseType(typeof(SaleInfo))]
-        public HttpResponseMessage GetSaleInfo(int storeId,bool required)
+        public HttpResponseMessage GetSaleInfo(int storeId, bool required)
         {
             JArray result = new JArray();
             try
             {
                 var id = new SqlParameter("@StoreID", storeId);
                 var pRequired = new SqlParameter("@isRequired", required);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_GetSaleInfoOfStore", CommandType.StoredProcedure,ref Methods.err, id, pRequired);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetSaleInfoOfStore", CommandType.StoredProcedure, ref Methods.err, id, pRequired);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message.ToString());
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // GET: api/SaleInfoes/KM
+        [ResponseType(typeof(SaleInfo))]
+        public HttpResponseMessage GetImageSale(bool required)
+        {
+            JArray result = new JArray();
+            try
+            {                
+                var pRequired = new SqlParameter("@isRequired", required);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetImageSale", CommandType.StoredProcedure, ref Methods.err, pRequired);
             }
             catch (Exception ex)
             {
@@ -76,9 +93,9 @@ namespace PayBayService.Controllers
             JObject result = new JObject();
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-                        
+
             db.Entry(saleInfo).State = EntityState.Modified;
 
             try
@@ -131,8 +148,21 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.SaleInfoes.Add(saleInfo);
-            await db.SaveChangesAsync();
+            int saleId = (int)Methods.GetValue("paybayservice.sp_GetMaxSaleId", CommandType.StoredProcedure, ref Methods.err);
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("sales", saleInfo.Title, saleId);
+
+            if (blob != null)
+            {
+                saleInfo.Image = blob.ImageUri;
+                saleInfo.SasQuery = blob.SasQuery;
+                db.SaleInfoes.Add(saleInfo);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
             result = Methods.CustomResponseMessage(1, "Add sale info is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);

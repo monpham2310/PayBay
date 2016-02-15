@@ -594,5 +594,22 @@ as
 		 on c.StoreID=b.StoreID join paybayservice.Markets d on c.MarketID=d.MarketID
 	group by a.ProductId,ProductName,b.Image,a.UnitPrice,b.NumberOf,a.Unit,b.StoreID,StoreName,c.MarketID,MarketName,SalePrice
 	order by sum(a.NumberOf) DESC
+
+create proc paybayservice.sp_GetMaxProductId
+as
+	select max(ProductId)
+	from paybayservice.Products
+
+create proc paybayservice.sp_GetMaxSaleId
+as
+	select max(SaleId)
+	from paybayservice.SalesInfo
+
+create proc paybayservice.sp_GetImageSale
+@isRequired bit
+as
+	select Image,SasQuery
+	from paybayservice.SaleInfo
+	where isRequired = @isRequired
 	
 

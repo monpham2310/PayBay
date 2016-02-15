@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="98e9fc07170240ccb82e119e2d3ef304" Name="Diagram1">
-        <EntityTypeShape EntityType="PayBayDatabaseModel.Bill" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.Comment" Width="1.5" PointX="2.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.DetailBill" Width="1.5" PointX="0.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.Market" Width="1.5" PointX="2.125" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.Product" Width="1.5" PointX="3.75" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.ProductStatistic" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.RevenueStatistic" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.SaleInfo" Width="1.5" PointX="7.125" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.Store" Width="1.5" PointX="5.375" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.User" Width="1.5" PointX="8.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.UserType" Width="1.5" PointX="7.125" PointY="0.5" IsExpanded="true" />
+      <Diagram DiagramId="98a44e7c59cc4c80b1dd22fc5df44d55" Name="Diagram1">
+        <EntityTypeShape EntityType="PayBayDatabaseModel.Bill" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.Comment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.DetailBill" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.Market" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.Product" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.ProductStatistic" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.RevenueStatistic" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.SaleInfo" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.Store" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.User" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.UserType" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

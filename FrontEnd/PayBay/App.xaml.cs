@@ -42,8 +42,9 @@ namespace PayBay
         private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
 
         public static MobileServiceClient MobileService = new MobileServiceClient(
-            UrlHost,ApplicationKey
-        );
+            UrlHost,
+			ApplicationKey
+		);
 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
         // and application key. You're all set to start working with your Mobile Service!

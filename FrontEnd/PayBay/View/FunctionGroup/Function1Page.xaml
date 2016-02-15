@@ -69,7 +69,7 @@
                     HorizontalContentAlignment="Center"
 		            HorizontalAlignment="Stretch"
 		            VerticalAlignment="Stretch" FontSize="46.667" FontFamily="Calibri Light" FontWeight="Bold"
-		            Background="{StaticResource Brush4}"
+		            Background="{StaticResource TealBrush}"
                     Foreground="White"/>
         </Grid>
     </ScrollViewer>

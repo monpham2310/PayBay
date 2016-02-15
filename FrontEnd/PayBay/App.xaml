@@ -8,17 +8,27 @@
 
             <viewModel:ViewModelLocator x:Key="Locator" />
 
-			<Color x:Key="Color1">#FF006666</Color>
-			<Color x:Key="Color2">White</Color>
-			<Color x:Key="Color3">Black</Color>
-			<Color x:Key="Color4">#FF339999</Color>
-			<Color x:Key="Color5">#FFFF0000</Color>
+			<Color x:Key="DarkTealColor">#FF006666</Color>
+			<Color x:Key="WhiteColor">White</Color>
+			<Color x:Key="BlackColor">Black</Color>
+			<Color x:Key="TealColor">Teal</Color>
+			<Color x:Key="RedColor">Red</Color>
+			<Color x:Key="LightGrayColor">LightGray</Color>
+			<Color x:Key="GrayColor">Gray</Color>
+			<Color x:Key="OrangeColor">Orange</Color>
+			<Color x:Key="LightBlueColor">#FF4FC3F7</Color>
+			<Color x:Key="LightBlackColor">#FF424242</Color>
 
-			<SolidColorBrush x:Key="Brush1" Color="{StaticResource Color1}" />
-            <SolidColorBrush x:Key="Brush2" Color="{StaticResource Color2}" />
-			<SolidColorBrush x:Key="Brush3" Color="{StaticResource Color3}" />
-			<SolidColorBrush x:Key="Brush4" Color="{StaticResource Color4}" />
-			<SolidColorBrush x:Key="Brush5" Color="{StaticResource Color5}" />
+			<SolidColorBrush x:Key="DarkTealBrush" Color="{StaticResource DarkTealColor}" />
+            <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource WhiteColor}" />
+			<SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
+			<SolidColorBrush x:Key="TealBrush" Color="{StaticResource TealColor}" />
+			<SolidColorBrush x:Key="RedBrush" Color="{StaticResource RedColor}" />
+			<SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGrayColor}" />
+			<SolidColorBrush x:Key="GrayBrush" Color="{StaticResource GrayColor}" />
+			<SolidColorBrush x:Key="OrangeBrush" Color="{StaticResource OrangeColor}" />
+			<SolidColorBrush x:Key="LightBlueBrush" Color="{StaticResource LightBlueColor}" />
+			<SolidColorBrush x:Key="LightBlackBrush" Color="{StaticResource LightBlackColor}" />
 
 		</ResourceDictionary>
 

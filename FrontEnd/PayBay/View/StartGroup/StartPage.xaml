@@ -36,7 +36,7 @@
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"
                           Data="{x:Bind Icon, Mode=OneWay}"
-                          Fill="{StaticResource Brush2}"
+                          Fill="{StaticResource WhiteBrush}"
                           Stretch="Uniform" />-->
 				</Grid>
 
@@ -44,7 +44,7 @@
 					<TextBlock Margin="6,0,0,0"
                                VerticalAlignment="Center"
                                FontSize="18"
-                               Foreground="{StaticResource Brush2}"
+                               Foreground="{StaticResource WhiteBrush}"
                                Text="{x:Bind Name, Mode=OneWay}" />
 				</Grid>
 
@@ -85,105 +85,139 @@
 			</Setter>
 		</Style>
 
-		<Style x:Key="ButtonStyle" TargetType="Button">
-			<Setter Property="Foreground" Value="{StaticResource Brush2}" />
-			<!--<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>-->
-		</Style>
-
 	</Page.Resources>
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="WindowSizeState">
+				<VisualState x:Name="NarrowState">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="MainSplitView.DisplayMode" Value="Overlay" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="MediumState">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="720" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="WideState">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="1280" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="MainSplitView.DisplayMode" Value="Inline" />
+						<Setter Target="MainSplitView.IsPaneOpen" Value="True" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<Grid Grid.Row="0" Height="48">
-
-			<Grid.Background>
-				<SolidColorBrush Color="{StaticResource Color1}" />
-			</Grid.Background>
-
+		<Grid Grid.Row="0" Height="48" Background="{StaticResource LightBlueBrush}">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="48" />
+				<ColumnDefinition Width="48" />
 				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="48" />
+				<ColumnDefinition Width="48" />
+				<ColumnDefinition Width="48" />
 			</Grid.ColumnDefinitions>
 
-			<Button x:Name="HamburgerButton" 
+			<AppBarButton x:Name="HamburgerButton" 
                     Grid.Column="0"
                     Width="48"
                     Height="48"
-					Foreground="{StaticResource Brush2}"
-					Background="{StaticResource Brush1}"
-                    Click="HamburgerButton_Click"
-                    Content="&#xE700;"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="30"
-					Style="{StaticResource ButtonStyle}"/>
-                        
-			<Grid x:Name="TitleGrid" Grid.Column="1">
+					HorizontalAlignment="Center"
+					Foreground="{StaticResource WhiteBrush}"
+					Background="{StaticResource LightBlueBrush}"
+                    Click="HamburgerButton_Click">
+				<AppBarButton.Icon>
+					<FontIcon Glyph="&#xE700;" 
+							  FontSize="30"/>
+				</AppBarButton.Icon>
+			</AppBarButton>
 
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="48" />
-				</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="2"
+					   Text="Paybay.xyz"
+					   VerticalAlignment="Center"
+					   Margin="0,0,0,15"
+					   Foreground="{StaticResource WhiteBrush}"/>
 
-				<AutoSuggestBox x:Name="MarketSearch" 
-								Grid.Column="0" 
+			<TextBlock Grid.Column="2"
+					   FontSize="13"
+					   Text="Break me of a piece"
+					   VerticalAlignment="Center"
+					   Margin="0,15,0,0"
+					   Foreground="{StaticResource WhiteBrush}"/>
+
+			<!--<AutoSuggestBox x:Name="MarketSearch" 
+								Grid.Column="3" 
 								Width="Auto"
 								Height="30"
+								
 								VerticalAlignment="Center"
-								Foreground="{StaticResource Brush3}" 
-								Background="{StaticResource Brush2}">
-					<AutoSuggestBox.QueryIcon>
-						<FontIcon Glyph="&#xE11A;" 
+								Foreground="{StaticResource BlackBrush}" 
+								Background="{StaticResource WhiteBrush}">
+				<AutoSuggestBox.QueryIcon>
+					<FontIcon Glyph="&#xE11A;" 
 								  FontSize="20" 
 								  FontWeight="Bold"
-								  Foreground="{StaticResource Brush3}"/>
-					</AutoSuggestBox.QueryIcon>
-				</AutoSuggestBox>
+								  Foreground="{StaticResource BlackBrush}"/>
+				</AutoSuggestBox.QueryIcon>
+			</AutoSuggestBox>-->
 
-				<Button x:Name="AccountButton"
-						Grid.Column="1"
-						VerticalAlignment="Stretch" 
-						HorizontalAlignment="Stretch"
-						Content="&#xE77B;"
-						FontFamily="Segoe MDL2 Assets"
-						FontSize="28"
-						Foreground="{StaticResource Brush2}" 
-						Background="{StaticResource Brush1}" 
-                        Click="AccountButton_Click" />
-                
-				<!--<TextBlock Margin="12,0,0,0"
+			<AppBarButton x:Name="SearchIcon"
+						  Icon="Zoom"
+						  Grid.Column="3"
+						  HorizontalAlignment="Center"
+						  Foreground="{StaticResource WhiteBrush}" 
+						  Background="{StaticResource LightBlueBrush}" 
+						  Click="AccountButton_Click"  />
+
+			<AppBarButton x:Name="AccountButton"
+						  Icon="Contact"
+						  Grid.Column="4"
+						  HorizontalAlignment="Center"
+						  Foreground="{StaticResource WhiteBrush}" 
+						  Background="{StaticResource LightBlueBrush}" 
+						  Click="AccountButton_Click" />
+
+			<AppBarButton x:Name="MailButton"
+						  Icon="Mail"
+						  Grid.Column="5"
+						  HorizontalAlignment="Center"
+						  Foreground="{StaticResource WhiteBrush}" 
+						  Background="{StaticResource LightBlueBrush}" 
+						  Click="AccountButton_Click" />
+
+			<!--<TextBlock Margin="12,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="24"
-                           Foreground="{StaticResource Brush2}"
+                           Foreground="{StaticResource WhiteBrush}"
                            Padding="0,0,0,4"
                            Text="{Binding Content,
                                           Converter={StaticResource PageToNameConverter},
                                           ElementName=MainFrame}" />-->
-			</Grid>
-
 		</Grid>
 
 		<SplitView x:Name="MainSplitView"
                    Grid.Row="1"
                    CompactPaneLength="48"
-                   DisplayMode="CompactOverlay"
-                   IsPaneOpen="False"
-                   PaneBackground="{StaticResource Brush2}">
+                   DisplayMode="Overlay"
+                   PaneBackground="{StaticResource WhiteBrush}">
 
 			<SplitView.Pane>
-				<Grid>
-					<Grid.Background>
-						<SolidColorBrush Color="{StaticResource Color1}" />
-					</Grid.Background>
+				<Grid Background="{StaticResource LightBlackBrush}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
@@ -200,7 +234,7 @@
 					</StackPanel>
 
 					<StackPanel Grid.Row="1">
-						<Rectangle Height="1" Fill="{StaticResource Brush2}" />
+						<Rectangle Height="1" Fill="{StaticResource WhiteBrush}" />
 						<ListView x:Name="BottomListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"

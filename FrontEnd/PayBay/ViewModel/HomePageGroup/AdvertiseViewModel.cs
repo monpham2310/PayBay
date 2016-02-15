@@ -77,7 +77,6 @@ namespace PayBay.ViewModel.HomePageGroup
 		{
 			//InitializeData();
             InitializeDataFromDB();
-
         }
 
 		/// <summary>
@@ -106,7 +105,8 @@ namespace PayBay.ViewModel.HomePageGroup
         private async void InitializeDataFromDB()
         {
             MobileServiceInvalidOperationException exception = null;
-                       
+            AdvertiseItemList = new ObservableCollection<AdvertiseItem>();
+
             try
             {
                 IDictionary<string, string> sale = new Dictionary<string, string>
@@ -134,16 +134,15 @@ namespace PayBay.ViewModel.HomePageGroup
         /// <param name="type">type product will get : New,Sale,Best sale</param>
         /// <returns></returns>
         private async Task ImportData(IDictionary<string, string> argument)
-        {
-            _advertiseItemList = new ObservableCollection<AdvertiseItem>();
+        {            
             JToken _product = null;
 
             _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
 
             JArray results = JArray.Parse(_product.ToString());
 
-            _advertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
-            _selectedAd = _advertiseItemList[0];
+            AdvertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
+            _selectedAd = AdvertiseItemList[0];
             _selectedAd.IsSelected = true;
         }
 

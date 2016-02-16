@@ -27,7 +27,7 @@ namespace PayBay.View.StartGroup
         private void StartPage_Loaded(object sender, RoutedEventArgs e)
         {
             //Default page when open app
-            FunctionsListView.SelectedIndex = 0;
+            TopFunctionsListView.SelectedIndex = 0;
             Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
         }
                
@@ -55,28 +55,44 @@ namespace PayBay.View.StartGroup
         }
 
         /// <summary>
-        /// To deselect the bottome listview
+        /// To deselect the bottom and middle listview
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FunctionsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TopFunctionsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (FunctionsListView.SelectedIndex != -1)
+            if (TopFunctionsListView.SelectedIndex != -1)
             {
+				MiddleFunctionsListView.SelectedIndex = -1;
                 BottomListView.SelectedIndex = -1;
             }
         }
 
-        /// <summary>
-        /// To deselect the function listview
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BottomListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		/// <summary>
+		/// To deselect the top and bottom listview
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MiddleFunctionsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (MiddleFunctionsListView.SelectedIndex != -1)
+			{
+				TopFunctionsListView.SelectedIndex = -1;
+				BottomListView.SelectedIndex = -1;
+			}
+		}
+
+		/// <summary>
+		/// To deselect the top and middle listview
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BottomListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (BottomListView.SelectedIndex != -1)
             {
-                FunctionsListView.SelectedIndex = -1;
+                TopFunctionsListView.SelectedIndex = -1;
+				MiddleFunctionsListView.SelectedIndex = -1;
             }
         }
 

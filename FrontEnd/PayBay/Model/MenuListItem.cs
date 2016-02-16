@@ -5,10 +5,16 @@ namespace PayBay.Model
     public enum MenuFunc
     {
 		HomePage,
+		Inbox,
+		MyPayBay,
+		MyFavorites,
         Func1,
         Func2,
-        Settings,
-        About
+		FreeCall,
+		AboutUs,
+		Print,
+		FeedbackAndApps,
+        Settings
     };
 
     public class MenuListItem : BaseViewModel

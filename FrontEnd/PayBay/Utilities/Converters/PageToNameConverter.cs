@@ -1,7 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 using PayBay.View.BottomFunctionGroup.SettingGroup;
-using PayBay.View.FunctionGroup;
+using PayBay.View.TopFunctionGroup;
+using PayBay.View.MiddleFunctionGroup;
 using PayBay.View.StartGroup;
 
 namespace PayBay.Utilities.Converters

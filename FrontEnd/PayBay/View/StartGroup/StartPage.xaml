@@ -88,6 +88,7 @@
 	</Page.Resources>
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<!--Adaptive trigger handling segment-->
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="WindowSizeState">
 				<VisualState x:Name="NarrowState">
@@ -219,20 +220,31 @@
 				<Grid Background="{StaticResource LightBlackBrush}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
 					<StackPanel Grid.Row="0">
-						<ListView x:Name="FunctionsListView"
+						<ListView x:Name="TopFunctionsListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
                                   ItemTemplate="{StaticResource MenuListItemDataTemplate}"
-                                  ItemsSource="{x:Bind Vm.FunctionItemList, Mode=OneWay}"
-                                  SelectionChanged="FunctionsListView_OnSelectionChanged"
+                                  ItemsSource="{x:Bind Vm.TopFunctionItemList, Mode=OneWay}"
+                                  SelectionChanged="TopFunctionsListView_OnSelectionChanged"
                                   SelectionMode="Single" />
 					</StackPanel>
 
 					<StackPanel Grid.Row="1">
+						<ListView x:Name="MiddleFunctionsListView"
+                                  VerticalAlignment="Center"
+                                  ItemContainerStyle="{StaticResource ListViewItemStyle}"
+                                  ItemTemplate="{StaticResource MenuListItemDataTemplate}"
+                                  ItemsSource="{x:Bind Vm.MiddleFunctionItemList, Mode=OneWay}"
+                                  SelectionChanged="MiddleFunctionsListView_OnSelectionChanged"
+                                  SelectionMode="Single" />
+					</StackPanel>
+
+					<StackPanel Grid.Row="2">
 						<Rectangle Height="1" Fill="{StaticResource WhiteBrush}" />
 						<ListView x:Name="BottomListView"
                                   VerticalAlignment="Center"
@@ -249,7 +261,6 @@
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
-						<!--<ColumnDefinition Width="300" />-->
 					</Grid.ColumnDefinitions>
 
 					<Frame x:Name="MainFrame" Grid.Column="0" />

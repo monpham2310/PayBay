@@ -113,6 +113,12 @@
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\BottomFunctionGroup\FeedbackAndAppsPage.xaml.cs">
+      <DependentUpon>FeedbackAndAppsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BottomFunctionGroup\PrintPage.xaml.cs">
+      <DependentUpon>PrintPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BottomFunctionGroup\SettingGroup\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -122,17 +128,32 @@
     <Compile Include="View\BottomFunctionGroup\SettingGroup\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\FunctionGroup\Function1Page.xaml.cs">
+    <Compile Include="View\MiddleFunctionGroup\AboutUsPage.xaml.cs">
+      <DependentUpon>AboutUsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MiddleFunctionGroup\FreeCallPage.xaml.cs">
+      <DependentUpon>FreeCallPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\Function1Page.xaml.cs">
       <DependentUpon>Function1Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\FunctionGroup\Function2Page.xaml.cs">
+    <Compile Include="View\TopFunctionGroup\Function2Page.xaml.cs">
       <DependentUpon>Function2Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\FunctionGroup\HomePage.xaml.cs">
+    <Compile Include="View\TopFunctionGroup\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StartGroup\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\InboxPage.xaml.cs">
+      <DependentUpon>InboxPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\MyFavoritesPage.xaml.cs">
+      <DependentUpon>MyFavoritesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\MyPayBayPage.xaml.cs">
+      <DependentUpon>MyPayBayPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +216,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\BottomFunctionGroup\FeedbackAndAppsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BottomFunctionGroup\PrintPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BottomFunctionGroup\SettingGroup\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -207,19 +236,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FunctionGroup\Function1Page.xaml">
+    <Page Include="View\MiddleFunctionGroup\AboutUsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FunctionGroup\Function2Page.xaml">
+    <Page Include="View\MiddleFunctionGroup\FreeCallPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FunctionGroup\HomePage.xaml">
+    <Page Include="View\TopFunctionGroup\Function1Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\Function2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StartGroup\StartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\InboxPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\MyFavoritesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\MyPayBayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

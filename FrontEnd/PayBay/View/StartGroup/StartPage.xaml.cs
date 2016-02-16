@@ -51,7 +51,7 @@ namespace PayBay.View.StartGroup
             MenuListItem m = ((Grid)sender).Tag as MenuListItem;
             Debug.Assert(m != null, "m != null");
             Vm.NavigateToFunction(MainFrame, m.MenuF);
-            //MainSplitView.IsPaneOpen = false;
+            MainSplitView.IsPaneOpen = false;
         }
 
         /// <summary>

@@ -260,11 +260,6 @@ namespace PayBay.ViewModel.StartGroup
                     frame.Navigate(typeof (SettingPage));
                     break;
                 }
-				//case MenuFunc.About:
-				//{
-				//	frame.Navigate(typeof(AboutPage));
-				//	break;
-				//}
                 default:
                 {
                     frame.Navigate(typeof (HomePage));

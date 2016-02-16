@@ -17,88 +17,133 @@
 		<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 	</Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+	<ScrollViewer HorizontalScrollMode="Disabled" >
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="WindowSizeState">
+				<VisualState x:Name="NarrowState">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="AdvertiseFrameHeight.Height" Value="120" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="MediumState">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="720" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="AdvertiseFrameHeight.Height" Value="150" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="WideState">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="1280" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="AdvertiseFrameHeight.Height" Value="180" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 
-        <Grid Grid.Row="0">
-            <FlipView ItemsSource="{Binding AdvertiseItemList}"
-					  SelectedItem="{Binding SelectedAd, Mode=TwoWay}" >
-                <FlipView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding Image}"
-							   Stretch="Fill"/>
-                    </DataTemplate>
-                </FlipView.ItemTemplate>
-            </FlipView>
-            <ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
-						  HorizontalAlignment="Center" 
-						  VerticalAlignment="Bottom" 
-						  Margin="0,10">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Height="15" Width="15" Margin="5,0">
-                            <Ellipse Fill="{StaticResource LightGrayBrush}" />
-                            <Ellipse Fill="{StaticResource OrangeBrush}"
-									 Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <!--<customControl:SlideShowPanel/>-->
-        </Grid>
+		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+			<Grid.RowDefinitions>
+				<RowDefinition x:Name="AdvertiseFrameHeight" Height="120"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="5"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="100"/>
+				<RowDefinition Height="100"/>
+			</Grid.RowDefinitions>
 
-        <Grid Grid.Row="1"
-			  BorderThickness="0,0,0,0.2"
-			  BorderBrush="{StaticResource GrayBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" 
-				  BorderThickness="0,0,0.2,0"
-				  BorderBrush="{StaticResource GrayBrush}"/>
-            <Grid Grid.Column="1" 
-				  BorderThickness="0,0,0.2,0"
-				  BorderBrush="{StaticResource GrayBrush}"/>
-            <Grid Grid.Column="2" 
-				  BorderThickness="0,0,0.2,0"
-				  BorderBrush="{StaticResource GrayBrush}"/>
-            <Grid Grid.Column="3" />
-        </Grid>
+			<Grid Grid.Row="0">
+				<FlipView ItemsSource="{Binding AdvertiseItemList}"
+						  SelectedItem="{Binding SelectedAd, Mode=TwoWay}">
+					<FlipView.ItemTemplate>
+						<DataTemplate>
+							<Image Source="{Binding Image}"
+								   Stretch="Fill" />
+						</DataTemplate>
+					</FlipView.ItemTemplate>
+				</FlipView>
+				<ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
+							  HorizontalAlignment="Center" 
+							  VerticalAlignment="Bottom" 
+							  Margin="0,10">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Grid Height="15" Width="15" Margin="5,0">
+								<Ellipse Fill="{StaticResource LightGrayBrush}" />
+								<Ellipse Fill="{StaticResource OrangeBrush}"
+										 Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
+							</Grid>
 
-        <Grid Grid.Row="3"
-			  BorderThickness="0,0.2"
-			  BorderBrush="{StaticResource GrayBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0"
-				  BorderThickness="0,0,0.2,0"
-				  BorderBrush="{StaticResource GrayBrush}" />
-            <Grid Grid.Column="1" />
-        </Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+				<!--<customControl:SlideShowPanel/>-->
+			</Grid>
 
-        <Grid Grid.Row="4"
-			  Margin="0,2,0,0"
-			  Background="{StaticResource LightBlueBrush}"/>
+			<Grid Grid.Row="1"
+				  BorderThickness="0,0,0,0.2"
+				  BorderBrush="{StaticResource GrayBrush}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0"
+					  HorizontalAlignment="Stretch"
+					  VerticalAlignment="Stretch"
+					  BorderThickness="0,0,0.2,0"
+					  BorderBrush="{StaticResource GrayBrush}" 
+					  SizeChanged="Grid_SizeChanged"/>
+				<Grid Grid.Column="1" 
+					  HorizontalAlignment="Stretch"
+					  BorderThickness="0,0,0.2,0"
+					  BorderBrush="{StaticResource GrayBrush}"
+					  SizeChanged="Grid_SizeChanged" />
+				<Grid Grid.Column="2" 
+					  HorizontalAlignment="Stretch" 
+					  BorderThickness="0,0,0.2,0"
+					  BorderBrush="{StaticResource GrayBrush}"
+					  SizeChanged="Grid_SizeChanged" />
+				<Grid Grid.Column="3" 
+					  HorizontalAlignment="Stretch"
+					  SizeChanged="Grid_SizeChanged" />
+			</Grid>
 
-        <Grid Grid.Row="5"
-			  Margin="0,2,0,0"
-			  Background="{StaticResource LightGrayBrush}"/>
-    </Grid>
+			<Grid Grid.Row="3"
+				  BorderThickness="0,0.2"
+				  BorderBrush="{StaticResource GrayBrush}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0"
+					  HorizontalAlignment="Stretch"
+					  BorderThickness="0,0,0.2,0"
+					  BorderBrush="{StaticResource GrayBrush}"
+					  SizeChanged="Grid_SizeChanged" />
+				<Grid Grid.Column="1"
+					  HorizontalAlignment="Stretch"
+					  SizeChanged="Grid_SizeChanged" />
+			</Grid>
+
+			<Grid Grid.Row="4"
+				  Margin="0,2,0,0"
+				  Background="{StaticResource LightBlueBrush}"/>
+
+			<Grid Grid.Row="5"
+				  Margin="0,2,0,0"
+				  Background="{StaticResource LightGrayBrush}"/>
+		</Grid>
+	</ScrollViewer>
 </Page>

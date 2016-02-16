@@ -34,15 +34,22 @@ namespace PayBay.View.FunctionGroup
 		{
 			this.InitializeComponent();
 		}
-                
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-		
+
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+
+		}
+
 		private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(Function1Page));
 		}
-    }
+
+		private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			Grid grid = sender as Grid;
+
+			grid.Height = grid.ActualWidth;
+		}
+	}
 }

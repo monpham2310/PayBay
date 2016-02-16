@@ -99,9 +99,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\SlideShowPanel.xaml.cs">
-      <DependentUpon>SlideShowPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Model\AdvertiseItem.cs" />
     <Compile Include="Model\Market.cs" />
     <Compile Include="Model\MenuListItem.cs" />
@@ -198,10 +195,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="CustomControls\SlideShowPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\BottomFunctionGroup\SettingGroup\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

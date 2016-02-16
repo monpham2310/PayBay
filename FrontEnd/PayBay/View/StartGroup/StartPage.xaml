@@ -111,8 +111,7 @@
 						<AdaptiveTrigger MinWindowWidth="1280" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="MainSplitView.DisplayMode" Value="Inline" />
-						<Setter Target="MainSplitView.IsPaneOpen" Value="True" />
+						<Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

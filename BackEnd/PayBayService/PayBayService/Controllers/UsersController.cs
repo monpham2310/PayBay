@@ -13,6 +13,7 @@ using PayBayService.Models;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using PayBayService.Models.BlobStorage;
 
 namespace PayBayService.Controllers
 {
@@ -100,9 +101,21 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            db.Users.Add(user);
-                        
-            await db.SaveChangesAsync();
+            int userId = (int)Methods.GetValue("paybayservice.sp_GetMaxUserId", CommandType.StoredProcedure, ref Methods.err);
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("users", user.Username, userId);
+
+            if (blob != null)
+            {
+                user.Avatar = blob.ImageUri;
+                user.SasQuery = blob.SasQuery;
+                db.Users.Add(user);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
             result = JObject.FromObject(user);        
             return Request.CreateResponse(HttpStatusCode.OK, result);

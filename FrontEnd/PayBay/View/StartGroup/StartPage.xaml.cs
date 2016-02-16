@@ -38,7 +38,7 @@ namespace PayBay.View.StartGroup
         /// <param name="e"></param>
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;            
         }
 
         /// <summary>

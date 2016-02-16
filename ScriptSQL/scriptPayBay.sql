@@ -612,4 +612,18 @@ as
 	from paybayservice.SaleInfo
 	where isRequired = @isRequired
 	
+create proc paybayservice.sp_GetMaxMarketId
+as
+	select max(MarketId)
+	from paybayservice.Markets
+
+create proc paybayservice.sp_GetMaxUserId
+as
+	select max(UserId)
+	from paybayservice.Users
+
+create proc paybayservice.sp_GetMaxStoreId
+as
+	select max(StoreID)
+	from paybayservice.Stores
 

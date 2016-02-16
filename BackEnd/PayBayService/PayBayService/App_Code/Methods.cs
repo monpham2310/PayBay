@@ -195,6 +195,13 @@ namespace PayBayService.App_Code
             }
         }
 
+        /// <summary>
+        /// Get Sas Query to write on Blob storage and get image uri
+        /// </summary>
+        /// <param name="containnerName">Directory</param>
+        /// <param name="resourceName">File name</param>
+        /// <param name="objectId">File id avoid same name</param>
+        /// <returns>Model Blob</returns>
         public static async Task<ModelBlob> GetSasAndImageUriFromBlob(string containnerName, string resourceName, int objectId)
         {
             ModelBlob blob = new ModelBlob();

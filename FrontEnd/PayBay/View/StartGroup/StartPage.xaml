@@ -44,12 +44,44 @@
 					<TextBlock Margin="6,0,0,0"
                                VerticalAlignment="Center"
                                FontSize="18"
+                               Foreground="{StaticResource GrayBrush}"
+                               Text="{x:Bind Name, Mode=OneWay}" />
+				</Grid>
+			</Grid>
+		</DataTemplate>
+
+		<DataTemplate x:Key="BottomMenuListItemDataTemplate" x:DataType="model:MenuListItem">
+			<Grid HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Background="Transparent"
+                  Tag="{Binding}"
+                  Tapped="MenuListItem_OnTapped">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Grid Grid.Column="0"
+                      Width="22"
+                      Height="22">
+					<Image Width="15" 
+						   Height="15"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Stretch="Uniform"
+						   Source="{x:Bind Icon, Mode=OneWay}" />
+				</Grid>
+
+				<Grid Grid.Column="1">
+					<TextBlock Margin="6,0,0,0"
+                               VerticalAlignment="Center"
+                               FontSize="13"
                                Foreground="{StaticResource WhiteBrush}"
                                Text="{x:Bind Name, Mode=OneWay}" />
 				</Grid>
-
 			</Grid>
 		</DataTemplate>
+
 		<Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
 			<Setter Property="Padding" Value="0,0,12,0" />
 			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -117,7 +149,7 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-		
+
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
@@ -213,18 +245,49 @@
 		<SplitView x:Name="MainSplitView"
                    Grid.Row="1"
                    CompactPaneLength="48"
+				   OpenPaneLength="200"
                    DisplayMode="Overlay"
                    PaneBackground="{StaticResource WhiteBrush}">
 
 			<SplitView.Pane>
 				<Grid Background="{StaticResource LightBlackBrush}">
 					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
 					<StackPanel Grid.Row="0">
+						<Ellipse Width="60"
+								 Height="60"
+								 HorizontalAlignment="Left"
+								 Margin="20,10,0,0">
+							<Ellipse.Fill>
+								<ImageBrush ImageSource="/Assets/lol.jpg" />
+							</Ellipse.Fill>
+						</Ellipse>
+						<!--<StackPanel Orientation="Horizontal"
+									Height="30">
+						</StackPanel>-->
+						<TextBlock Text="Sign In | Join Free"
+								   Margin="8,8"
+								   Foreground="{StaticResource GrayBrush}"/>
+						<Grid Background="{StaticResource BlackBrush}">
+							<AutoSuggestBox Width="Auto"
+											Height="30"
+											QueryIcon="Find"
+											Margin="10,5"
+											VerticalAlignment="Center"
+											BorderThickness="0.5"
+											BorderBrush="{StaticResource WhiteBrush}"
+											Foreground="{StaticResource WhiteBrush}" 
+											Background="{StaticResource BlackBrush}" />
+						</Grid>
+					</StackPanel>
+
+					<StackPanel Grid.Row="1">
+						<Rectangle Height="1" Fill="{StaticResource GrayBrush}" />
 						<ListView x:Name="TopFunctionsListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
@@ -234,7 +297,7 @@
                                   SelectionMode="Single" />
 					</StackPanel>
 
-					<StackPanel Grid.Row="1">
+					<StackPanel Grid.Row="2">
 						<ListView x:Name="MiddleFunctionsListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
@@ -244,12 +307,12 @@
                                   SelectionMode="Single" />
 					</StackPanel>
 
-					<StackPanel Grid.Row="2">
-						<Rectangle Height="1" Fill="{StaticResource WhiteBrush}" />
+					<StackPanel Grid.Row="3">
+						<Rectangle Height="1" Fill="{StaticResource GrayBrush}" />
 						<ListView x:Name="BottomListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                                  ItemTemplate="{StaticResource MenuListItemDataTemplate}"
+                                  ItemTemplate="{StaticResource BottomMenuListItemDataTemplate}"
                                   ItemsSource="{x:Bind Vm.BottomFunctionItemList, Mode=OneWay}"
                                   SelectionChanged="BottomListView_OnSelectionChanged"
                                   SelectionMode="Single" />

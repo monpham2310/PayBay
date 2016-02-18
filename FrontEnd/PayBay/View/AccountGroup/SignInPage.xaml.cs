@@ -36,5 +36,10 @@ namespace PayBay.View.AccountGroup
 		{
 			((Popup)Frame.Parent).IsOpen = false;
 		}
+
+		private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(CreateAccountPage));
+		}
 	}
 }

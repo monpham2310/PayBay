@@ -32,6 +32,10 @@
 			<SolidColorBrush x:Key="LightBlueBrush" Color="{StaticResource LightBlueColor}" />
 			<SolidColorBrush x:Key="LightBlackBrush" Color="{StaticResource LightBlackColor}" />
 
+			<DataTemplate x:Key="NoUnderlineDataTemplate">
+				<TextBlock Text="{Binding}"/>
+			</DataTemplate>
+
 		</ResourceDictionary>
 
     </Application.Resources>

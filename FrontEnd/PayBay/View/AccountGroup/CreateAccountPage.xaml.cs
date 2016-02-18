@@ -26,5 +26,10 @@ namespace PayBay.View.AccountGroup
 		{
 			this.InitializeComponent();
 		}
+
+		private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.GoBack();
+		}
 	}
 }

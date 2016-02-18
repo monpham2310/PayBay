@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using PayBay.View.AccountGroup;
 using PayBay.Common;
+using PayBay.View.AppBarFunctionGroup;
 
 namespace PayBay.View.StartGroup
 {
@@ -106,12 +107,11 @@ namespace PayBay.View.StartGroup
 
         }
 
-
         private void MainSplitView_PaneClosed(SplitView sender, object args)
         {
             asbSearch.IsEnabled = false;
         }
-    
+
         public void UserLoginSucceed()
         {
             if (Vm.UserLogin != null)
@@ -123,9 +123,14 @@ namespace PayBay.View.StartGroup
 
                 if (Vm.UserLogin.Avatar == null)
                 {
-                    Vm.UserLogin.Avatar = "/Assets/lol.jpg";
+                    Vm.UserLogin.Avatar = "/Assets/Square150x150Logo.scale-100.png";
                 }
             }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SearchPage));
         }
 
 		private void SignInButton_Click(object sender, RoutedEventArgs e)

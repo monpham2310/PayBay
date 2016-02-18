@@ -15,9 +15,116 @@
 
 		<Grid Grid.Row="0"
 			  Background="{StaticResource LightBlueBrush}">
-			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<HyperlinkButton x:Name="BackHyperlinkButton"
+							 Grid.Column="0"
+							 FontFamily="Segoe MDL2 Assets"
+							 Content="&#xE72B;"
+							 FontSize="20"
+							 FontWeight="ExtraBold"
+							 Margin="20,0"
+							 Foreground="{StaticResource WhiteBrush}"
+							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}" Click="BackHyperlinkButton_Click"/>
+			<TextBlock Text="Create Account" 
+					   Grid.Column="1"
+					   FontSize="20"
+					   FontWeight="Bold"
+					   VerticalAlignment="Center"
+					   Margin="10,0"
+					   Foreground="{StaticResource WhiteBrush}"/>
 		</Grid>
-		
-		
+
+		<ScrollViewer Grid.Row="1">
+			<StackPanel>
+				<Grid Margin="10,10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<TextBlock Grid.Row="0" 
+							   Grid.Column="0" 
+							   Margin="5,5"
+							   Text="Country/Region"/>
+					<TextBlock Grid.Row="1" 
+							   Grid.Column="0" 
+							   Margin="5,5"
+							   Text="City"/>
+					<!--<ComboBox Grid.Row="1" 
+							  Grid.Column="0"
+							  Margin="0,0,10,0"
+							  HorizontalAlignment="Stretch"/>
+					<ComboBox Grid.Row="1" 
+							  Grid.Column="1"
+							  HorizontalAlignment="Stretch"/>-->
+				</Grid>
+				<Rectangle Height="2"
+						   Fill="{StaticResource LightGrayBrush}"/>
+				<Grid Margin="10,10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<TextBlock Grid.Row="0" 
+							   Grid.Column="0" 
+							   Margin="5,5"
+							   Text="First Name"
+							   Foreground="{StaticResource GrayBrush}"/>
+					<TextBlock Grid.Row="0" 
+							   Grid.Column="1" 
+							   Margin="5,5"
+							   Text="Last Name"
+							   Foreground="{StaticResource GrayBrush}"/>
+					<TextBox Grid.Row="1" 
+							 Grid.Column="0"
+							 Margin="5,0,20,0"
+							 HorizontalAlignment="Stretch" 
+							 BorderThickness="0,0,0,2"/>
+					<TextBox Grid.Row="1" 
+							 Grid.Column="1"
+							 Margin="5,0,20,0"
+							 HorizontalAlignment="Stretch"
+							 BorderThickness="0,0,0,2"/>
+				</Grid>
+				<TextBlock Text="Email"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+				<TextBox BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" />
+				<TextBlock Text="Password (6-20 characters)"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+				<TextBox BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" />
+				<TextBlock Text="By creating an account, I agree to abide by PayBay's Free Membership Agreement" TextWrapping="Wrap"
+						   Margin="15,20"/>
+				<Border CornerRadius="20"
+						BorderThickness="10"
+						Margin="50,0"
+						Background="{StaticResource LightBlueBrush}"
+						BorderBrush="{StaticResource LightBlueBrush}">
+					<Button Content="SUBMIT"
+							FontWeight="Bold"
+							BorderThickness="0"
+							BorderBrush="{StaticResource LightBlueBrush}"
+							Foreground="{StaticResource WhiteBrush}"
+							Background="{StaticResource LightBlueBrush}"
+							HorizontalAlignment="Stretch"/>
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
 	</Grid>
 </Page>

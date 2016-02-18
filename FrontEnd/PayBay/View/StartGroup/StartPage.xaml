@@ -228,7 +228,7 @@
 						  HorizontalAlignment="Center"
 						  Foreground="{StaticResource WhiteBrush}" 
 						  Background="{StaticResource LightBlueBrush}" 
-						  Click="AccountButton_Click"  />
+						  Click="SearchButton_Click"  />
 
 			<AppBarButton x:Name="AccountButton"
 						  Icon="Contact"
@@ -259,12 +259,13 @@
 		<SplitView x:Name="MainSplitView"
                    Grid.Row="1"
                    CompactPaneLength="48"
-				   OpenPaneLength="250"
+				   OpenPaneLength="270"
                    DisplayMode="Overlay"
                    PaneClosed="MainSplitView_PaneClosed"
                    PaneBackground="{StaticResource WhiteBrush}">
 
 			<SplitView.Pane>
+				<ScrollViewer HorizontalScrollMode="Disabled">
 				<Grid Background="{StaticResource LightBlackBrush}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
@@ -356,6 +357,7 @@
                                   SelectionMode="Single" />
 					</StackPanel>
 				</Grid>
+				</ScrollViewer>
 			</SplitView.Pane>
 
 			<SplitView.Content>

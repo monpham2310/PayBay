@@ -14,19 +14,7 @@ namespace PayBay.ViewModel.StartGroup
         private ObservableCollection<MenuListItem> _topFunctionItemList;
 		private ObservableCollection<MenuListItem> _middleFunctionItemList;
         private ObservableCollection<MenuListItem> _bottomFunctionItemList;
-
-        public class UserSignin
-        {
-            public string Avatar { get; set; }
-            public string Username { get; set; }
-
-            public UserSignin(string avatar, string username)
-            {
-                Avatar = avatar;
-                Username = username;
-            }
-        }
-
+                
         private UserSignin userLogin;
          
         #region Property with calling to PropertyChanged

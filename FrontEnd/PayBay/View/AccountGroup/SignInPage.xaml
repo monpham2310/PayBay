@@ -11,10 +11,6 @@
 
 	<Page.Resources>
 		<converter:BoolToVisibilityConverter x:Name="BoolToVisibilityConverter"/>
-
-		<DataTemplate x:Key="NoUnderlineDataTemplate">
-			<TextBlock Text="{Binding}"/>
-		</DataTemplate>
 	</Page.Resources>
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -54,7 +50,7 @@
 							 Margin="10,0"
 							 VerticalAlignment="Center"
 							 Foreground="{StaticResource WhiteBrush}"
-							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}"/>
+							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}" Click="HyperlinkButton_Click"/>
 		</Grid>
 
 		<StackPanel Grid.Row="1">

@@ -14,20 +14,8 @@ namespace PayBay.ViewModel.AccountGroup
     public class UserInfoViewModel : BaseViewModel
     {
         private ObservableCollection<UserInfo> _userInfoList;
-        private static UserInfo _userInfo;
-
-        class Account
-        {
-            public string Username { get; set; }
-            public byte[] Password { get; set; }
-
-            public Account(string username, byte[] password)
-            {
-                Username = username;
-                Password = password;
-            }
-        }
-                                
+        private UserInfo _userInfo;
+                                                
         public ObservableCollection<UserInfo> UserAccountList
         {
             get
@@ -42,7 +30,7 @@ namespace PayBay.ViewModel.AccountGroup
             }
         }
 
-        public static UserInfo UserInfo
+        public UserInfo UserInfo
         {
             get
             {
@@ -51,7 +39,8 @@ namespace PayBay.ViewModel.AccountGroup
 
             set
             {
-                _userInfo = value;                
+                _userInfo = value;
+                OnPropertyChanged();                          
             }
         }
                 
@@ -89,7 +78,7 @@ namespace PayBay.ViewModel.AccountGroup
             var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
             JObject user = JObject.Parse(result.ToString());
             UserInfo = user.ToObject<UserInfo>();
-            MediateClass.StartVM.UserLogin = new StartGroup.StartViewModel.UserSignin(UserInfo.Avatar, UserInfo.Username);            
+            MediateClass.StartVM.UserLogin = new UserSignin(UserInfo.Avatar, UserInfo.Username);            
         }
 
     }

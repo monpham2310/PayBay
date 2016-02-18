@@ -99,15 +99,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\MediateClass.cs" />
     <Compile Include="Model\AdvertiseItem.cs" />
     <Compile Include="Model\Market.cs" />
     <Compile Include="Model\MenuListItem.cs" />
+    <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
     <Compile Include="Utilities\Helpers\StorageHelper.cs" />
+    <Compile Include="ViewModel\AccountGroup\UserInfoViewModel.cs" />
     <Compile Include="ViewModel\HomePageGroup\AdvertiseViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\MarketViewModel.cs" />
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />

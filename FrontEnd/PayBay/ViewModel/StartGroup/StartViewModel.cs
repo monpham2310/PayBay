@@ -5,6 +5,7 @@ using PayBay.View.BottomFunctionGroup.SettingGroup;
 using PayBay.View.BottomFunctionGroup;
 using PayBay.View.TopFunctionGroup;
 using PayBay.View.MiddleFunctionGroup;
+using PayBay.Common;
 
 namespace PayBay.ViewModel.StartGroup
 {
@@ -14,6 +15,20 @@ namespace PayBay.ViewModel.StartGroup
 		private ObservableCollection<MenuListItem> _middleFunctionItemList;
         private ObservableCollection<MenuListItem> _bottomFunctionItemList;
 
+        public class UserSignin
+        {
+            public string Avatar { get; set; }
+            public string Username { get; set; }
+
+            public UserSignin(string avatar, string username)
+            {
+                Avatar = avatar;
+                Username = username;
+            }
+        }
+
+        private UserSignin userLogin;
+         
         #region Property with calling to PropertyChanged
         public ObservableCollection<MenuListItem> TopFunctionItemList
         {
@@ -48,6 +63,20 @@ namespace PayBay.ViewModel.StartGroup
             }
         }
 
+        public UserSignin UserLogin
+        {
+            get
+            {
+                return userLogin;
+            }
+
+            set
+            {
+                userLogin = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -56,8 +85,9 @@ namespace PayBay.ViewModel.StartGroup
         public StartViewModel()
         {
             InitializeData();
+            MediateClass.StartVM = this;            
         }
-
+                
         /// <summary>
         /// Initialize function list in splitview control
         /// </summary>

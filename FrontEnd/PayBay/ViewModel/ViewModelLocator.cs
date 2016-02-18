@@ -17,6 +17,7 @@ using Microsoft.Practices.ServiceLocation;
 using PayBay.ViewModel.StartGroup;
 using PayBay.ViewModel.HomePageGroup;
 using PayBay.ViewModel.MarketGroup;
+using PayBay.ViewModel.AccountGroup;
 
 namespace PayBay.ViewModel
 {
@@ -48,13 +49,14 @@ namespace PayBay.ViewModel
             SimpleIoc.Default.Register<StartViewModel>();
 			SimpleIoc.Default.Register<AdvertiseViewModel>();
             SimpleIoc.Default.Register<MarketViewModel>();
-
+            SimpleIoc.Default.Register<UserInfoViewModel>();
         }
 
         //TODO: Register to use ViewModel here, syntax as below
         public StartViewModel StartVm => ServiceLocator.Current.GetInstance<StartViewModel>();
 		public AdvertiseViewModel AdvertiseVm => ServiceLocator.Current.GetInstance<AdvertiseViewModel>();
         public MarketViewModel MarketVm => ServiceLocator.Current.GetInstance<MarketViewModel>();
+        public UserInfoViewModel AccountVm => ServiceLocator.Current.GetInstance<UserInfoViewModel>();
 
         public static void Cleanup()
         {

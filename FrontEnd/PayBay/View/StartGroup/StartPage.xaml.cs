@@ -6,6 +6,8 @@ using PayBay.Model;
 using PayBay.ViewModel.StartGroup;
 using System.Threading.Tasks;
 using Windows.UI.Core;
+using PayBay.View.AccountGroup;
+using PayBay.Common;
 
 namespace PayBay.View.StartGroup
 {
@@ -16,7 +18,7 @@ namespace PayBay.View.StartGroup
         public StartPage()
         {
             InitializeComponent();
-
+            MediateClass.StartPage = this;
             //TODO: comment out 3 line of code below to return to defaul view: TitleBar is a white bar, do nothing
             //Set title bar
             //CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
@@ -104,9 +106,61 @@ namespace PayBay.View.StartGroup
 
         }
 
+
         private void MainSplitView_PaneClosed(SplitView sender, object args)
         {
             asbSearch.IsEnabled = false;
         }
+    
+        public void UserLoginSucceed()
+        {
+            if (Vm.UserLogin != null)
+            {
+                AvatarEllipse.Visibility = Visibility.Collapsed;
+                SignInButton.Visibility = Visibility.Collapsed;
+                UserAvatarElipse.Visibility = Visibility.Visible;
+                UserInfoViewButton.Visibility = Visibility.Visible;
+
+                if (Vm.UserLogin.Avatar == null)
+                {
+                    Vm.UserLogin.Avatar = "/Assets/lol.jpg";
+                }
+            }
+        }
+
+		private void SignInButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainSplitView.IsPaneOpen = false;
+			AccountPopup.IsOpen = true;
+
+			MainGrid.Opacity = 0.4;
+			MainGrid.IsHitTestVisible = false;
+
+			AccountFrame.Height = ActualHeight * 0.8;
+			AccountFrame.Width = AccountFrame.Height / 1.5;
+
+			AccountPopup.HorizontalOffset = (ActualWidth - AccountFrame.Width) / 2;
+			AccountPopup.VerticalOffset = (ActualHeight - AccountFrame.Height) / 2;
+
+			AccountFrame.Navigate(typeof(SignInPage));
+                        
+		}
+
+		private void JoinFreeButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(CreateAccountPage));
+		}
+
+		private void AccountPopup_Closed(object sender, object e)
+		{
+			MainGrid.Opacity = 1.0;
+			MainGrid.IsHitTestVisible = true;
+		}
+
+        private void UserInfoViewButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+
 }

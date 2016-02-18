@@ -88,7 +88,7 @@ namespace PayBayService.App_Code
         }
 
         /// <summary>
-        /// Excute query with data from database
+        /// Excute query with data list from database
         /// </summary>
         /// <param name="sql">String query or procedure name</param>
         /// <param name="ct">Text or Store Procedure</param>
@@ -130,7 +130,7 @@ namespace PayBayService.App_Code
             }
             return result;
         }
-
+                
         /// <summary>
         /// Get a value from specific column
         /// </summary>

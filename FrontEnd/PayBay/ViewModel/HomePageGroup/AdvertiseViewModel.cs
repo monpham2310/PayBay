@@ -15,18 +15,7 @@ using System.IO;
 namespace PayBay.ViewModel.HomePageGroup
 {
 	public class AdvertiseViewModel : BaseViewModel
-	{		
-        private static AdvertiseViewModel m_Instance = null;
-
-        public static AdvertiseViewModel GetInstance()
-        {
-            if( m_Instance == null)
-            {
-                return new AdvertiseViewModel();
-            }
-            return m_Instance;
-        }
-
+	{	   
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
 		private AdvertiseItem _selectedAd;
 
@@ -86,7 +75,7 @@ namespace PayBay.ViewModel.HomePageGroup
 		{
 			_advertiseItemList = new ObservableCollection<AdvertiseItem>();
 
-			for (var i = 0; i < 5; i++)
+			for (var i = 0; i < 6; i++)
 			{
 				AdvertiseItem ad = new AdvertiseItem();
 				ad.Image = "/Assets/lol.jpg";

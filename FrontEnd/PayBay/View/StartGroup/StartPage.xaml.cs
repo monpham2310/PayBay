@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Input;
 using PayBay.Model;
 using PayBay.ViewModel.StartGroup;
 using PayBay.View.AccountGroup;
+using PayBay.View.AppBarFunctionGroup;
 
 namespace PayBay.View.StartGroup
 {
@@ -100,6 +101,11 @@ namespace PayBay.View.StartGroup
         private void AccountButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SearchPage));
         }
 
 		private void SignInButton_Click(object sender, RoutedEventArgs e)

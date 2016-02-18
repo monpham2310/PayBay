@@ -227,7 +227,7 @@
 						  HorizontalAlignment="Center"
 						  Foreground="{StaticResource WhiteBrush}" 
 						  Background="{StaticResource LightBlueBrush}" 
-						  Click="AccountButton_Click"  />
+						  Click="SearchButton_Click"  />
 
 			<AppBarButton x:Name="AccountButton"
 						  Icon="Contact"

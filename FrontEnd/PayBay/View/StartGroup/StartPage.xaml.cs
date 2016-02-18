@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using PayBay.Model;
 using PayBay.ViewModel.StartGroup;
+using PayBay.View.AccountGroup;
 
 namespace PayBay.View.StartGroup
 {
@@ -100,5 +101,34 @@ namespace PayBay.View.StartGroup
         {
 
         }
-    }
+
+		private void SignInButton_Click(object sender, RoutedEventArgs e)
+		{
+			MainSplitView.IsPaneOpen = false;
+			AccountPopup.IsOpen = true;
+
+			MainGrid.Opacity = 0.4;
+			MainGrid.IsHitTestVisible = false;
+
+			AccountFrame.Height = ActualHeight * 0.8;
+			AccountFrame.Width = AccountFrame.Height / 1.5;
+
+			AccountPopup.HorizontalOffset = (ActualWidth - AccountFrame.Width) / 2;
+			AccountPopup.VerticalOffset = (ActualHeight - AccountFrame.Height) / 2;
+
+			AccountFrame.Navigate(typeof(SignInPage));
+			//Frame.Navigate(typeof(SignInPage));
+		}
+
+		private void JoinFreeButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(CreateAccountPage));
+		}
+
+		private void AccountPopup_Closed(object sender, object e)
+		{
+			MainGrid.Opacity = 1.0;
+			MainGrid.IsHitTestVisible = true;
+		}
+	}
 }

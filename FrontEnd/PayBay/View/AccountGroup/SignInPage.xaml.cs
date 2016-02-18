@@ -26,5 +26,15 @@ namespace PayBay.View.AccountGroup
 		{
 			this.InitializeComponent();
 		}
+
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			EmailTextBox.Focus(FocusState.Programmatic);
+		}
+
+		private void ExitHyperlinkButton_Click(object sender, RoutedEventArgs e)
+		{
+			((Popup)Frame.Parent).IsOpen = false;
+		}
 	}
 }

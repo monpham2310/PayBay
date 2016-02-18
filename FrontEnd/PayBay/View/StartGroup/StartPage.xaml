@@ -11,6 +11,7 @@
 
 	<Page.Resources>
 		<converters:PageToNameConverter x:Key="PageToNameConverter" />
+		<converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 		<DataTemplate x:Key="MenuListItemDataTemplate" x:DataType="model:MenuListItem">
 			<Grid HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
@@ -117,9 +118,21 @@
 			</Setter>
 		</Style>
 
+		<Style TargetType="HyperlinkButton">
+			<Setter Property="ContentTemplate">
+				<Setter.Value>
+					<DataTemplate>
+						<TextBlock Text="{Binding}" />
+					</DataTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
 	</Page.Resources>
 
-	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Grid>
+	<Grid x:Name="MainGrid" 
+		  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<!--Adaptive trigger handling segment-->
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="WindowSizeState">
@@ -245,9 +258,9 @@
 		<SplitView x:Name="MainSplitView"
                    Grid.Row="1"
                    CompactPaneLength="48"
-				   OpenPaneLength="200"
+				   OpenPaneLength="250"
                    DisplayMode="Overlay"
-                   PaneBackground="{StaticResource WhiteBrush}">
+                   PaneBackground="{StaticResource WhiteBrush}" >
 
 			<SplitView.Pane>
 				<Grid Background="{StaticResource LightBlackBrush}">
@@ -258,7 +271,9 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
-					<StackPanel Grid.Row="0">
+					<StackPanel Grid.Row="0"
+								x:Name="AccountGroupStackPanel"
+								Visibility="{Binding IsPaneOpen, ElementName=MainSplitView, Converter={StaticResource BoolToVisibilityConverter}}">
 						<Ellipse Width="60"
 								 Height="60"
 								 HorizontalAlignment="Left"
@@ -267,12 +282,20 @@
 								<ImageBrush ImageSource="/Assets/lol.jpg" />
 							</Ellipse.Fill>
 						</Ellipse>
-						<!--<StackPanel Orientation="Horizontal"
-									Height="30">
-						</StackPanel>-->
-						<TextBlock Text="Sign In | Join Free"
-								   Margin="8,8"
-								   Foreground="{StaticResource GrayBrush}"/>
+						<StackPanel Orientation="Horizontal"
+									Margin="10,0">
+							<HyperlinkButton x:Name="SignInButton" 
+											 Content="Sign In | Join Free"
+											 Click="SignInButton_Click"
+											 Foreground="{StaticResource GrayBrush}"/>
+							<!--<Rectangle Width="1" Height="20"
+									   Fill="{StaticResource GrayBrush}"
+									   Margin="5,4,5,0"/>
+							<HyperlinkButton x:Name="JoinFreeButton" 
+											 Content="Join Free"
+											 Click="JoinFreeButton_Click"
+											 Foreground="{StaticResource GrayBrush}"/>-->
+						</StackPanel>
 						<Grid Background="{StaticResource BlackBrush}">
 							<AutoSuggestBox Width="Auto"
 											Height="30"
@@ -312,7 +335,7 @@
 						<ListView x:Name="BottomListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                                  ItemTemplate="{StaticResource BottomMenuListItemDataTemplate}"
+                                  ItemTemplate="{StaticResource MenuListItemDataTemplate}"
                                   ItemsSource="{x:Bind Vm.BottomFunctionItemList, Mode=OneWay}"
                                   SelectionChanged="BottomListView_OnSelectionChanged"
                                   SelectionMode="Single" />
@@ -332,5 +355,14 @@
 			</SplitView.Content>
 
 		</SplitView>
+
+		
+	</Grid>
+		<Popup x:Name="AccountPopup" 
+			   Closed="AccountPopup_Closed">
+			<Frame x:Name="AccountFrame"
+				   BorderThickness="1"
+				   BorderBrush="{StaticResource BlackBrush}"/>
+		</Popup>
 	</Grid>
 </Page>

@@ -82,14 +82,14 @@
 			</Grid>
 		</DataTemplate>
 
-		<Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
-			<Setter Property="Padding" Value="0,0,12,0" />
-			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="ListViewItem">
-						<ListViewItemPresenter HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+        <Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Padding" Value="0,0,12,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
                                                CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
@@ -112,12 +112,12 @@
                                                SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
                                                SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
                                                SelectionCheckMarkVisualEnabled="True" />
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-	</Page.Resources>
+    </Page.Resources>
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<!--Adaptive trigger handling segment-->
@@ -247,6 +247,7 @@
                    CompactPaneLength="48"
 				   OpenPaneLength="200"
                    DisplayMode="Overlay"
+                   PaneClosed="MainSplitView_PaneClosed"
                    PaneBackground="{StaticResource WhiteBrush}">
 
 			<SplitView.Pane>
@@ -274,16 +275,19 @@
 								   Margin="8,8"
 								   Foreground="{StaticResource GrayBrush}"/>
 						<Grid Background="{StaticResource BlackBrush}">
-							<AutoSuggestBox Width="Auto"
+							<AutoSuggestBox Name="asbSearch"
+                                            Width="Auto"
 											Height="30"
 											QueryIcon="Find"
 											Margin="10,5"
 											VerticalAlignment="Center"
-											BorderThickness="0.5"
+                                            PlaceholderText="Search..."     
+                                            IsEnabled="False"
+											BorderThickness="0.5"                                                                                 
 											BorderBrush="{StaticResource WhiteBrush}"
 											Foreground="{StaticResource WhiteBrush}" 
-											Background="{StaticResource BlackBrush}" />
-						</Grid>
+											Background="{StaticResource BlackBrush}" />                         
+                        </Grid>
 					</StackPanel>
 
 					<StackPanel Grid.Row="1">

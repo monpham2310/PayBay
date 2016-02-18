@@ -4,6 +4,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using PayBay.Model;
 using PayBay.ViewModel.StartGroup;
+using System.Threading.Tasks;
+using Windows.UI.Core;
 
 namespace PayBay.View.StartGroup
 {
@@ -15,12 +17,12 @@ namespace PayBay.View.StartGroup
         {
             InitializeComponent();
 
-			//TODO: comment out 3 line of code below to return to defaul view: TitleBar is a white bar, do nothing
-			//Set title bar
-			//CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-			//coreTitleBar.ExtendViewIntoTitleBar = true;
-			//Window.Current.SetTitleBar(TitleGrid);
-
+            //TODO: comment out 3 line of code below to return to defaul view: TitleBar is a white bar, do nothing
+            //Set title bar
+            //CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            //coreTitleBar.ExtendViewIntoTitleBar = true;
+            //Window.Current.SetTitleBar(TitleGrid);
+                           
 			Loaded += StartPage_Loaded;
         }
 
@@ -28,7 +30,7 @@ namespace PayBay.View.StartGroup
         {
             //Default page when open app
             TopFunctionsListView.SelectedIndex = 0;
-            Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
+            Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);            
         }
                
         /// <summary>
@@ -38,7 +40,8 @@ namespace PayBay.View.StartGroup
         /// <param name="e"></param>
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;            
+            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+            asbSearch.IsEnabled = true;         
         }
 
         /// <summary>
@@ -99,6 +102,11 @@ namespace PayBay.View.StartGroup
         private void AccountButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void MainSplitView_PaneClosed(SplitView sender, object args)
+        {
+            asbSearch.IsEnabled = false;
         }
     }
 }

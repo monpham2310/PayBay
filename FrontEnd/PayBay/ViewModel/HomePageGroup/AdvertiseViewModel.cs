@@ -125,14 +125,17 @@ namespace PayBay.ViewModel.HomePageGroup
         private async Task ImportData(IDictionary<string, string> argument)
         {            
             JToken _product = null;
-
-            _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
-
-            JArray results = JArray.Parse(_product.ToString());
-
-            AdvertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
-            _selectedAd = AdvertiseItemList[0];
-            _selectedAd.IsSelected = true;
+            try {
+                _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
+                JArray results = JArray.Parse(_product.ToString());
+                AdvertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
+                _selectedAd = AdvertiseItemList[0];
+                _selectedAd.IsSelected = true;
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message, "Error loading items").ShowAsync();
+            }
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using PayBay.Common;
+﻿using PayBay.Utilities.Common;
 using PayBay.ViewModel.AccountGroup;
 using System;
 using System.Collections.Generic;
@@ -51,12 +51,11 @@ namespace PayBay.View.AccountGroup
                 await Vm.LoginAccount(username, password);
                 ((Popup)Frame.Parent).IsOpen = false;
                 MediateClass.StartPage.UserLoginSucceed();
+                await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
             }
             catch (Exception ex)
             {
-                MessageDialog dialog = new MessageDialog("Login isn't successful!");
-                            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
-                                async () => { await dialog.ShowAsync(); });
+                await new MessageDialog("Login is not successful.Please try again!","Notification!").ShowAsync();
             }
         }
 

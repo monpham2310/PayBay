@@ -5,7 +5,7 @@ using PayBay.View.BottomFunctionGroup.SettingGroup;
 using PayBay.View.BottomFunctionGroup;
 using PayBay.View.TopFunctionGroup;
 using PayBay.View.MiddleFunctionGroup;
-using PayBay.Common;
+using PayBay.Utilities.Common;
 
 namespace PayBay.ViewModel.StartGroup
 {

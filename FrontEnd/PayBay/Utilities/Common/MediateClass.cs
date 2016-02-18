@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PayBay.Common
+namespace PayBay.Utilities.Common
 {
     public class MediateClass
     {

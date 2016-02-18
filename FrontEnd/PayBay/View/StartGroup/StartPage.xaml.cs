@@ -7,7 +7,7 @@ using PayBay.ViewModel.StartGroup;
 using System.Threading.Tasks;
 using Windows.UI.Core;
 using PayBay.View.AccountGroup;
-using PayBay.Common;
+using PayBay.Utilities.Common;
 using PayBay.View.AppBarFunctionGroup;
 
 namespace PayBay.View.StartGroup

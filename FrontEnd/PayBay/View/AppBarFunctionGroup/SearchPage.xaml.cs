@@ -26,5 +26,12 @@ namespace PayBay.View.AppBarFunctionGroup
         {
             Frame.GoBack();
         }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Grid grid = sender as Grid;
+
+            grid.Height = grid.ActualWidth;
+        }
     }
 }

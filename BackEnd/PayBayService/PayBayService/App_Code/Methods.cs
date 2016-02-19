@@ -88,7 +88,7 @@ namespace PayBayService.App_Code
         }
 
         /// <summary>
-        /// Excute query with data from database
+        /// Excute query with data list from database
         /// </summary>
         /// <param name="sql">String query or procedure name</param>
         /// <param name="ct">Text or Store Procedure</param>
@@ -130,7 +130,7 @@ namespace PayBayService.App_Code
             }
             return result;
         }
-
+                
         /// <summary>
         /// Get a value from specific column
         /// </summary>
@@ -195,6 +195,13 @@ namespace PayBayService.App_Code
             }
         }
 
+        /// <summary>
+        /// Get Sas Query to write on Blob storage and get image uri
+        /// </summary>
+        /// <param name="containnerName">Directory</param>
+        /// <param name="resourceName">File name</param>
+        /// <param name="objectId">File id avoid same name</param>
+        /// <returns>Model Blob</returns>
         public static async Task<ModelBlob> GetSasAndImageUriFromBlob(string containnerName, string resourceName, int objectId)
         {
             ModelBlob blob = new ModelBlob();

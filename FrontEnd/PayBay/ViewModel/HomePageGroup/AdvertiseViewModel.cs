@@ -15,18 +15,7 @@ using System.IO;
 namespace PayBay.ViewModel.HomePageGroup
 {
 	public class AdvertiseViewModel : BaseViewModel
-	{		
-        private static AdvertiseViewModel m_Instance = null;
-
-        public static AdvertiseViewModel GetInstance()
-        {
-            if( m_Instance == null)
-            {
-                return new AdvertiseViewModel();
-            }
-            return m_Instance;
-        }
-
+	{	   
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
 		private AdvertiseItem _selectedAd;
 
@@ -86,7 +75,7 @@ namespace PayBay.ViewModel.HomePageGroup
 		{
 			_advertiseItemList = new ObservableCollection<AdvertiseItem>();
 
-			for (var i = 0; i < 5; i++)
+			for (var i = 0; i < 6; i++)
 			{
 				AdvertiseItem ad = new AdvertiseItem();
 				ad.Image = "/Assets/lol.jpg";
@@ -136,14 +125,17 @@ namespace PayBay.ViewModel.HomePageGroup
         private async Task ImportData(IDictionary<string, string> argument)
         {            
             JToken _product = null;
-
-            _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
-
-            JArray results = JArray.Parse(_product.ToString());
-
-            AdvertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
-            _selectedAd = AdvertiseItemList[0];
-            _selectedAd.IsSelected = true;
+            try {
+                _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
+                JArray results = JArray.Parse(_product.ToString());
+                AdvertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
+                _selectedAd = AdvertiseItemList[0];
+                _selectedAd.IsSelected = true;
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message, "Error loading items").ShowAsync();
+            }
         }
 
     }

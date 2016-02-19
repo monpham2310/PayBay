@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using PayBayService.Models.BlobStorage;
 
 namespace PayBayService.Controllers
 {
@@ -94,9 +95,21 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.Markets.Add(market);
-            await db.SaveChangesAsync();
+            int marketId = (int)Methods.GetValue("paybayservice.sp_GetMaxMarketId", CommandType.StoredProcedure, ref Methods.err);
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("markets", market.MarketName, marketId);
 
+            if (blob != null)
+            {
+                market.Image = blob.ImageUri;
+                market.SasQuery = blob.SasQuery;
+                db.Markets.Add(market);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
             result = Methods.CustomResponseMessage(1, "Add market is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

@@ -135,3 +135,4 @@ create table paybayservice.ProductStatistic (
 	SaleDate date
 );
 
+

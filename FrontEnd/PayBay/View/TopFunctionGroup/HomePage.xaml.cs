@@ -18,6 +18,10 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.MobileServices;
 using PayBay.Model;
 using System.Net.Http;
+using PayBay.Utilities.Common;
+using Windows.UI.Core;
+using Windows.UI.Popups;
+using PayBay.Utilities.Helpers;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -35,10 +39,13 @@ namespace PayBay.View.TopFunctionGroup
 			this.InitializeComponent();
 		}
 
-		private void Page_Loaded(object sender, RoutedEventArgs e)
+		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-
-		}
+            if (!NetworkHelper.HasInternetConnection)
+            {
+                await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
+            }
+        }
 
 		private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
 		{

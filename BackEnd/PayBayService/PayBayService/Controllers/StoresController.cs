@@ -13,6 +13,7 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
 using System.Data.SqlClient;
+using PayBayService.Models.BlobStorage;
 
 namespace PayBayService.Controllers
 {
@@ -101,8 +102,21 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            db.Stores.Add(store);
-            await db.SaveChangesAsync();
+            int storeId = (int)Methods.GetValue("paybayservice.sp_GetMaxStoreId", CommandType.StoredProcedure, ref Methods.err);
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("users", store.StoreName, storeId);
+
+            if (blob != null)
+            {
+                store.Image = blob.ImageUri;
+                store.SasQuery = blob.SasQuery;
+                db.Stores.Add(store);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
             result = Methods.CustomResponseMessage(1, "Add store is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);

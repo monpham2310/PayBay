@@ -16,6 +16,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.View.StartGroup;
+using Windows.UI.Popups;
+using PayBay.Utilities.Common;
+using Windows.UI.Core;
+using PayBay.Utilities.Helpers;
 
 namespace PayBay
 {
@@ -37,31 +41,33 @@ namespace PayBay
             Suspending += OnSuspending;
         }
 
-        //public static string UrlHost = "http://localhost:4591";
-        public static string UrlHost = "https://paybayservice.azure-mobile.net/";
+        public static string UrlHost = "http://localhost:4591";
+        //public static string UrlHost = "https://paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
+
+        NetworkHelper InternetAccess;
 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
         // and application key. You're all set to start working with your Mobile Service!
         public static MobileServiceClient MobileService = new MobileServiceClient(
-            UrlHost, ApplicationKey
+            UrlHost//, ApplicationKey
         );
-
+                  
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             //TODO: Disable these line of code to remove FrameRateCounter
-//#if DEBUG
-//            if (System.Diagnostics.Debugger.IsAttached)
-//            {
-//                this.DebugSettings.EnableFrameRateCounter = true;
-//            }
-//#endif
-
+            //#if DEBUG
+            //            if (System.Diagnostics.Debugger.IsAttached)
+            //            {
+            //                this.DebugSettings.EnableFrameRateCounter = true;
+            //            }
+            //#endif
+            InternetAccess = new NetworkHelper();
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -89,10 +95,16 @@ namespace PayBay
                 // parameter
                 rootFrame.Navigate(typeof(StartPage), e.Arguments);
             }
-            // Ensure the current window is active
-            Window.Current.Activate();
-        }
 
+            if (!NetworkHelper.HasInternetConnection)
+            {
+                await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
+            }
+
+            // Ensure the current window is active
+            Window.Current.Activate();                        
+        }
+        
         protected override void OnActivated(IActivatedEventArgs args)
         {
             

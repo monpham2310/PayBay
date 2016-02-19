@@ -57,9 +57,9 @@
 			</Grid.RowDefinitions>
 
 			<Grid Grid.Row="0">
-				<FlipView ItemsSource="{Binding AdvertiseItemList}"
+                <FlipView ItemsSource="{Binding AdvertiseItemList}"
 						  SelectedItem="{Binding SelectedAd, Mode=TwoWay}">
-					<FlipView.ItemTemplate>
+                    <FlipView.ItemTemplate>
 						<DataTemplate>
 							<Image Source="{Binding Image}"
 								   Stretch="Fill" />

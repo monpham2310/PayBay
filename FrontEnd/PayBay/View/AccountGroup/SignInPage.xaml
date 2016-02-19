@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:converter="using:PayBay.Utilities.Converters"
+    DataContext="{Binding Source={StaticResource Locator}, Path=AccountVm}"
     mc:Ignorable="d" Loaded="Page_Loaded">
 
 	<Page.Resources>
@@ -54,13 +55,13 @@
 
 		<StackPanel Grid.Row="1">
 			<Grid Margin="20,20">
-				<TextBox x:Name="EmailTextBox"
+				<TextBox x:Name="UsernameTextBox"
 						 BorderThickness="0,0,0,2" 
-						 PlaceholderText="Your Email Address"/>
+						 PlaceholderText="Your Username"/>
 			</Grid>
 			<Grid Margin="20,20">
-				<TextBox x:Name="PasswordTextBox" 
-						 BorderThickness="0,0,0,2"
+				<PasswordBox x:Name="PasswordBox" 
+						 BorderThickness="0,0,0,2"                         
 						 PlaceholderText="Enter your password"/>
 			</Grid>
 			<Button Content="SIGN IN"
@@ -68,6 +69,7 @@
 					Height="50"
 					FontWeight="Bold"
 					HorizontalAlignment="Stretch"
+                    Click="Button_Click"
 					Background="{StaticResource LightBlueBrush}"
 					Foreground="{StaticResource WhiteBrush}"/>
 			<HyperlinkButton Margin="20,0"

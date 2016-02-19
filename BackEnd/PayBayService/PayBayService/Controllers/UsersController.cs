@@ -13,6 +13,8 @@ using PayBayService.Models;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
+using PayBayService.Models.BlobStorage;
+using PayBayService.Models.Accounts;
 
 namespace PayBayService.Controllers
 {
@@ -39,22 +41,23 @@ namespace PayBayService.Controllers
             return Ok(user);
         }
 
-        // POST: api/Accounts/
+        // POST: api/Users/Account
         [ResponseType(typeof(HttpResponseMessage))]
-        public HttpResponseMessage PostLogin(string username, byte[] password)
+        public HttpResponseMessage PostLogin(Account account, string type)
         {
             JArray result = new JArray();
-            if (!AccountExists(username, password))
+            if (!AccountExists(account.Username, account.Password))
             {
-                var check = Methods.CustomResponseMessage(0, "Login isn't successful!");
-                result.Add(check);
+                var error = Methods.CustomResponseMessage(0, "Login isn't successful!");
+                result.Add(error);            
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
-            var uid = new SqlParameter("@Username", username);
-            var pwd = new SqlParameter("@Pass", password);
-            result = Methods.ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);         
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            var uid = new SqlParameter("@Username", account.Username);
+            var pwd = new SqlParameter("@Pass", account.Password);
+            result = Methods.ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);
+            JObject body = (JObject)result[0];     
+            return Request.CreateResponse(HttpStatusCode.OK, body);
         }
 
         // PUT: api/Users/5
@@ -100,9 +103,21 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            db.Users.Add(user);
-                        
-            await db.SaveChangesAsync();
+            int userId = (int)Methods.GetValue("paybayservice.sp_GetMaxUserId", CommandType.StoredProcedure, ref Methods.err);
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("users", user.Username, userId);
+
+            if (blob != null)
+            {
+                user.Avatar = blob.ImageUri;
+                user.SasQuery = blob.SasQuery;
+                db.Users.Add(user);
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            }
 
             result = JObject.FromObject(user);        
             return Request.CreateResponse(HttpStatusCode.OK, result);

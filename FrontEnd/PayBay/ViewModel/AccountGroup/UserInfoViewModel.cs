@@ -77,7 +77,7 @@ namespace PayBay.ViewModel.AccountGroup
             };
             var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
             JObject user = JObject.Parse(result.ToString());
-            UserInfo = user.ToObject<UserInfo>();
+            UserInfo = user.ToObject<UserInfo>();            
             MediateClass.StartVM.UserLogin = new UserSignin(UserInfo.Avatar, UserInfo.Username);            
         }
 

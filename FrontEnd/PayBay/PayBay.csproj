@@ -11,7 +11,7 @@
     <AssemblyName>PayBay</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -184,6 +184,24 @@
     <Content Include="Assets\Logo\SplashScreen.scale-125.png" />
     <Content Include="Assets\Logo\SplashScreen.scale-150.png" />
     <Content Include="Assets\Logo\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-125.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-150.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Logo\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-100.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-125.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-150.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-200.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-400.png" />
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />

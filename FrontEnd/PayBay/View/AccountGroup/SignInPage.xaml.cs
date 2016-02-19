@@ -1,4 +1,5 @@
 ﻿using PayBay.Utilities.Common;
+using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace PayBay.View.AccountGroup
 	public sealed partial class SignInPage : Page
 	{
         public UserInfoViewModel Vm => (UserInfoViewModel)DataContext;
-
+                
 		public SignInPage()
 		{
 			this.InitializeComponent();
@@ -45,12 +46,13 @@ namespace PayBay.View.AccountGroup
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;                       
+            string password = PasswordBox.Password;
+            StartPage startPage = new StartPage();       
             try
             {
                 await Vm.LoginAccount(username, password);
                 ((Popup)Frame.Parent).IsOpen = false;
-                MediateClass.StartPage.UserLoginSucceed();
+                MediateClass.StartPage.UserLoginSucceed();                
                 await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
             }
             catch (Exception ex)

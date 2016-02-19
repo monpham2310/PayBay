@@ -74,8 +74,8 @@ namespace PayBay.ViewModel.StartGroup
         {
             InitializeData();
             MediateClass.StartVM = this;            
-        }
-                
+        }    
+
         /// <summary>
         /// Initialize function list in splitview control
         /// </summary>

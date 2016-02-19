@@ -7,6 +7,78 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+	<Page.Resources>
+		<Style x:Key="ImageButtonStyle" TargetType="Button">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate>
+						<Grid x:Name="RootGrid">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal">
+										<Storyboard>
+											<PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="PointerOver">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="Ellipse">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<!--<ObjectAnimationUsingKeyFrames  Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+												<DiscreteObjectKeyFrame KeyTime="00:00:00">
+													<DiscreteObjectKeyFrame.Value>
+														<Cursor>Hand</Cursor>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>-->
+											<PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Pressed">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="Ellipse">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+										</Storyboard>
+									</VisualState>
+									<!--<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonText">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledTransparentBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>-->
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Ellipse x:Name="Ellipse"
+										 Width="{Binding ElementName=AvatarButton, Path=Width}"
+										 Height="{Binding ElementName=AvatarButton, Path=Height}"
+										 HorizontalAlignment="Left">
+								<Ellipse.Fill>
+									<ImageBrush x:Name="Image">
+										<ImageBrush.ImageSource>
+											<BitmapImage DecodePixelHeight="80" 
+															 DecodePixelWidth="80"
+															 UriSource="/Assets/lol.jpg"/>
+										</ImageBrush.ImageSource>
+									</ImageBrush>
+								</Ellipse.Fill>
+							</Ellipse>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Page.Resources>
+	
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="48"/>
@@ -67,7 +139,7 @@
 				</Grid>
 				<Rectangle Height="2"
 						   Fill="{StaticResource LightGrayBrush}"/>
-				<Grid Margin="10,10">
+				<!--<Grid Margin="10,10">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
@@ -96,34 +168,97 @@
 							 Margin="5,0,20,0"
 							 HorizontalAlignment="Stretch"
 							 BorderThickness="0,0,0,2"/>
-				</Grid>
+				</Grid>-->
+				<TextBlock Text="Full Name"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+				<TextBox x:Name="FullNameTextBox" BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" />
+				
 				<TextBlock Text="Email"
 						   Margin="15,20,15,10"
 						   Foreground="{StaticResource GrayBrush}"/>
-				<TextBox BorderThickness="0,0,0,2"
+				<TextBox x:Name="EmailTextBox"
+						 BorderThickness="0,0,0,2"
 						 Margin="15,0"
 						 HorizontalAlignment="Stretch" />
+				
 				<TextBlock Text="Password (6-20 characters)"
 						   Margin="15,20,15,10"
 						   Foreground="{StaticResource GrayBrush}"/>
-				<TextBox BorderThickness="0,0,0,2"
+				<PasswordBox x:Name="PasswordTextBox" 
+							 BorderThickness="0,0,0,2"
+							 Margin="15,0"
+							 HorizontalAlignment="Stretch" />
+				
+				<TextBlock Text="Phone"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+				<TextBox x:Name="PhoneTextBox"
+						 BorderThickness="0,0,0,2"
 						 Margin="15,0"
 						 HorizontalAlignment="Stretch" />
+				
+				<TextBlock Text="Day of birth"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+				<DatePicker x:Name="BirthdayDatePicker"
+							Margin="15,10"
+							HorizontalAlignment="Stretch"/>
+				
+				<TextBlock Text="Gender"
+						   Margin="15,10,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+				<StackPanel Orientation="Horizontal"
+							Margin="15,0">
+					<RadioButton x:Name="MaleRadioButton" 
+								 GroupName="Gender" 
+								 Content="Male"/>
+					<RadioButton x:Name="FemalRadioButton"
+								 GroupName="Gender"
+								 Content="Female"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal"
+							Margin="15,10">
+					<TextBlock Text="Choose your Avatar:"
+							   VerticalAlignment="Center"
+							   Foreground="{StaticResource GrayBrush}"/>
+					<Button x:Name="AvatarButton"
+							Width="80"
+							Height="80"
+							Margin="10,0" 
+							Click="AvatarButton_Click"
+							Style="{StaticResource ImageButtonStyle}">
+					</Button>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal"
+							Margin="15,10">
+					<TextBlock Text="Account type:"
+							   Margin="0,0,20,0"
+							   VerticalAlignment="Center"
+							   Foreground="{StaticResource GrayBrush}"/>
+					<ComboBox Grid.Row="1" 
+							  Grid.Column="0"
+							  VerticalAlignment="Center"
+							  HorizontalAlignment="Stretch"
+							  SelectedIndex="0">
+						<ComboBoxItem x:Name="Customer">Customer</ComboBoxItem>
+						<ComboBoxItem x:Name="StoreOwner">Store Owner</ComboBoxItem>
+					</ComboBox>
+				</StackPanel>
+				
 				<TextBlock Text="By creating an account, I agree to abide by PayBay's Free Membership Agreement" TextWrapping="Wrap"
 						   Margin="15,20"/>
-				<Border CornerRadius="20"
-						BorderThickness="10"
-						Margin="50,0"
+				<Button x:Name="button" Content="SUBMIT"
+						Margin="50,0,50,50"
+						FontWeight="Bold"
+						Foreground="{StaticResource WhiteBrush}"
 						Background="{StaticResource LightBlueBrush}"
-						BorderBrush="{StaticResource LightBlueBrush}">
-					<Button Content="SUBMIT"
-							FontWeight="Bold"
-							BorderThickness="0"
-							BorderBrush="{StaticResource LightBlueBrush}"
-							Foreground="{StaticResource WhiteBrush}"
-							Background="{StaticResource LightBlueBrush}"
-							HorizontalAlignment="Stretch"/>
-				</Border>
+						Style="{StaticResource RoundedButtonStyle}"
+						HorizontalAlignment="Stretch"/>
 			</StackPanel>
 		</ScrollViewer>
 	</Grid>

@@ -13,7 +13,6 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
 using PayBayService.Models.BlobStorage;
-using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -96,9 +95,8 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var table = new SqlParameter("@table", "paybayservice.Markets");
-            int marketId = Convert.ToInt32(Methods.GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
-            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("markets", market.MarketName, marketId + 1);
+            int marketId = (int)Methods.GetValue("paybayservice.sp_GetMaxMarketId", CommandType.StoredProcedure, ref Methods.err);
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("markets", market.MarketName, marketId);
 
             if (blob != null)
             {

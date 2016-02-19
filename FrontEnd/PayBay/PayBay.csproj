@@ -100,6 +100,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Common\Functions.cs" />
+    <Compile Include="Model\Product.cs" />
     <Compile Include="Utilities\Common\MediateClass.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AdvertiseItem.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="ViewModel\AccountGroup\UserInfoViewModel.cs" />
     <Compile Include="ViewModel\HomePageGroup\AdvertiseViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\MarketViewModel.cs" />
+    <Compile Include="ViewModel\ProductGroup\ProductViewModel.cs" />
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -208,6 +210,9 @@
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />
+    <Content Include="Assets\Product\Apple.jpg" />
+    <Content Include="Assets\Product\Beef.jpg" />
+    <Content Include="Assets\Product\RauMuong.jpg" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />

@@ -514,61 +514,59 @@
                                    FontSize="15"/>
                     </PivotItem.Header>-->
                     <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0"
-					          HorizontalAlignment="Stretch"
-					          VerticalAlignment="Stretch"
-					          BorderThickness="0,0,0.2,0"
-					          BorderBrush="{StaticResource GrayBrush}" 
-					          SizeChanged="Grid_SizeChanged"/>
-                        <Grid Grid.Column="1" 
-					          HorizontalAlignment="Stretch"
-					          BorderThickness="0,0,0.2,0"
-					          BorderBrush="{StaticResource GrayBrush}"
-					          SizeChanged="Grid_SizeChanged" />
-                        <TextBlock Text="Recent Searches"
-                                   FontSize="10"
-                                   Foreground="Gray"
-                                   Margin="10,10,-10,-10" 
-                                   HorizontalAlignment="Left" 
-                                   VerticalAlignment="Top"/>
-                        <Border BorderThickness="1.5"
-                                BorderBrush="#FFC3B8B8" 
-                                HorizontalAlignment="Left" 
-                                VerticalAlignment="Top" 
-                                Margin="10,25,0,0" 
-                                CornerRadius="2" >
-                            <TextBlock Text="Beef"
-                                       TextAlignment="Center"
-                                       FontSize="10"
-                                       Foreground="#FFDD6060"
-                                       Padding="3"
-                                       Width="80"
-                                       />
-                        </Border>
-                        <TextBox Grid.Column="0"    
-                                 HorizontalAlignment="Left" 
-                                 VerticalAlignment="Top" 
-                                 Margin="130,0,-100,0" 
-                                 Width="220" 
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 Margin="0,0,15,0" 
                                  BorderThickness="0,0,0,1.5"
-                                 BorderBrush="#FFC3B8B8" Grid.ColumnSpan="2"
+                                 BorderBrush="#FFC3B8B8"
                                  >
                         </TextBox>
-                        <!--<AppBarButton 
-                            Grid.Column="1"
-                            x:Name="SearchButton"
-                            HorizontalAlignment="Right"
-                            Margin="0,0,0,0"
-                            Width="30"
-                            Height="40"
-                            Icon="Zoom"
-                            Foreground="{StaticResource BlackBrush}" 
-						    Background="{StaticResource WhiteBrush}" 
-                            />-->
+                        <Button x:Name="searchBtn2"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Content="Search" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center" Margin="10,10,0,0"/>
+                        <ListBox x:Name="productListBox"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="2"
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Top" 
+                                 DataContext="{Binding Source={StaticResource Locator},Path=ProductVm}"
+                                 ItemsSource="{Binding ProductList}"
+                                 Background="White">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                BorderThickness="2,2,2,2"
+                                                BorderBrush="{StaticResource LightBlueBrush}">
+                                        <Image Source="{Binding Image}" 
+                                               Width="107" 
+                                               Height="63" 
+                                               Stretch="Fill"/>
+                                        <StackPanel Orientation="Vertical"
+                                                    HorizontalAlignment="Stretch"
+                                                    Width="280">
+                                            <TextBlock Text="{Binding Name}"
+                                                       Foreground="{StaticResource LightBlueBrush}"/>
+                                            <TextBlock Text="{Binding Price}"/>
+                                            <TextBlock Text="{Binding StoreName}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                 </PivotItem>
             </Pivot>

@@ -25,7 +25,7 @@ create table paybayservice.Users (
 	Pass varbinary(max)	
 );
 
-drop table paybayservice.Accounts
+alter table paybayservice.Users drop column Name
 
 --create table paybayservice.Accounts (
 --	Id int identity(1,1) not null primary key,

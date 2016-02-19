@@ -10,7 +10,6 @@ namespace PayBay.Model
     public class UserInfo : BaseViewModel
     {
         private int _userId;
-        private string _name;
         private DateTime _birthday;
         private string _email;
         private string _phone;
@@ -35,21 +34,7 @@ namespace PayBay.Model
                 OnPropertyChanged();
             }
         }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
-
+                
         public DateTime Birthday
         {
             get

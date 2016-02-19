@@ -148,8 +148,9 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            int saleId = (int)Methods.GetValue("paybayservice.sp_GetMaxSaleId", CommandType.StoredProcedure, ref Methods.err);
-            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("sales", saleInfo.Title, saleId);
+            var table = new SqlParameter("@table", "paybayservice.SaleInfo");
+            int saleId = Convert.ToInt32(Methods.GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("sales", saleInfo.Title, saleId + 1);
 
             if (blob != null)
             {

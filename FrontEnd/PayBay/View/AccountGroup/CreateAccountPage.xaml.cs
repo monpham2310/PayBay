@@ -17,6 +17,13 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using PayBay.Utilities.Common;
+using PayBay.ViewModel.AccountGroup;
+using PayBay.Model;
+using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -27,6 +34,8 @@ namespace PayBay.View.AccountGroup
 	/// </summary>
 	public sealed partial class CreateAccountPage : Page
 	{
+        StorageFile mediaFile = null;
+
 		public CreateAccountPage()
 		{
 			this.InitializeComponent();
@@ -37,30 +46,72 @@ namespace PayBay.View.AccountGroup
 			Frame.GoBack();
 		}
 
-		private async void AvatarButton_Click(object sender, RoutedEventArgs e)
-		{
-			FileOpenPicker fp = new FileOpenPicker();     
-			fp.FileTypeFilter.Add(".jpeg");
-			fp.FileTypeFilter.Add(".png");
-			fp.FileTypeFilter.Add(".bmp");
-			fp.FileTypeFilter.Add(".jpg");
-			
-			StorageFile file = await fp.PickSingleFileAsync();
+        private async void AvatarButton_Click(object sender, RoutedEventArgs e)
+        {            
+            mediaFile = await Functions.GetPhotoFromGallery();
 
-			using (IRandomAccessStream fileStream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read))
-			{
-				// Set the image source to the selected bitmap
-				BitmapImage bitmapImage = new BitmapImage();
-				bitmapImage.DecodePixelHeight = 80;
-				bitmapImage.DecodePixelWidth = 80;
-				await bitmapImage.SetSourceAsync(fileStream);
+            if (mediaFile != null)
+            { 
+                var stream = await mediaFile.OpenAsync(FileAccessMode.Read);
+                var bitmapImage = new BitmapImage();
+                await bitmapImage.SetSourceAsync(stream);
 
-				((VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(AvatarButton, 
-					0) as Grid, 
-					0) as Ellipse)
-					.Fill as ImageBrush)
-					.ImageSource = bitmapImage;
-			}
-		}
-	}
+                var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(stream);
+                AvatarImage.Source = bitmapImage;
+            }
+        }
+
+        private async void SummitButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserInfo user = new UserInfo();
+            
+            user.Username = FullNameTextBox.Text;
+            user.Address = AddressTextBox.Text;
+            user.Phone = PhoneTextBox.Text;
+            user.Email = EmailTextBox.Text;
+            user.Gender = ((bool)MaleRadioButton.IsChecked) ? true : false;
+            user.Pass = Functions.GetBytes(PasswordTextBox.Password);
+            user.Birthday = BirthdayDatePicker.Date.DateTime;
+            ComboBoxItem ComboItem = (ComboBoxItem)TypeCommboBox.SelectedItem;
+            int typeid = int.Parse(ComboItem.Tag.ToString());
+            user.TypeId = typeid;
+
+            await InsertUser(user);
+        }
+
+        private async Task InsertUser(UserInfo user)
+        {
+            try
+            {
+                JToken data = JToken.FromObject(user);
+                JToken result = await App.MobileService.InvokeApiAsync("Users", data, HttpMethod.Post, null);
+
+                JObject response = JObject.Parse(result.ToString());
+
+                user.UserId = int.Parse(response["UserId"].ToString());
+                user.Avatar = response["Avatar"].ToString();
+                user.SasQuery = response["SasQuery"].ToString();
+
+                string userName = user.Username.ToLower();
+                userName = (userName.IndexOf(" ") != 1) ? userName.Replace(" ", "") : userName;
+
+                var func = Functions.GetInstance();
+
+                bool check = await func.UploadImageToBlob("users", userName, user.UserId, user.Avatar, user.SasQuery, mediaFile);
+                if (check)
+                {
+                    await new MessageDialog("Create Account is successful!", "Notification!").ShowAsync();
+                }
+                else
+                {
+                    await new MessageDialog("Create Account is NOT successful!", "Notification!").ShowAsync();
+                }                                         
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+        }
+
+    }
 }

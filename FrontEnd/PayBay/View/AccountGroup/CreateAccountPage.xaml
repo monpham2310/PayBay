@@ -199,8 +199,16 @@
 						 BorderThickness="0,0,0,2"
 						 Margin="15,0"
 						 HorizontalAlignment="Stretch" />
-				
-				<TextBlock Text="Day of birth"
+
+                <TextBlock Text="Address"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+                <TextBox x:Name="AddressTextBox"
+						 BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" />
+
+                <TextBlock Text="Day of birth"
 						   Margin="15,20,15,10"
 						   Foreground="{StaticResource GrayBrush}"/>
 				<DatePicker x:Name="BirthdayDatePicker"
@@ -214,24 +222,27 @@
 							Margin="15,0">
 					<RadioButton x:Name="MaleRadioButton" 
 								 GroupName="Gender" 
-								 Content="Male"/>
+								 Content="Male"
+                                 IsChecked="True"/>
 					<RadioButton x:Name="FemalRadioButton"
 								 GroupName="Gender"
 								 Content="Female"/>
 				</StackPanel>
-
-				<StackPanel Orientation="Horizontal"
+                
+                <StackPanel Orientation="Horizontal"
 							Margin="15,10">
 					<TextBlock Text="Choose your Avatar:"
 							   VerticalAlignment="Center"
 							   Foreground="{StaticResource GrayBrush}"/>
-					<Button x:Name="AvatarButton"
+					<Image x:Name="AvatarImage"
 							Width="80"
 							Height="80"
 							Margin="10,0" 
-							Click="AvatarButton_Click"
-							Style="{StaticResource ImageButtonStyle}">
-					</Button>
+                            Source="/Assets/LockScreenLogo.scale-200.png"
+							>
+					</Image>
+                    <AppBarButton Label="" Icon="Camera" Name="ButtonCapture" 
+                                  Click="AvatarButton_Click" Height="68" Width="52" Margin="0,20,0,0" />
 				</StackPanel>
 
 				<StackPanel Orientation="Horizontal"
@@ -244,20 +255,24 @@
 							  Grid.Column="0"
 							  VerticalAlignment="Center"
 							  HorizontalAlignment="Stretch"
-							  SelectedIndex="0">
-						<ComboBoxItem x:Name="Customer">Customer</ComboBoxItem>
-						<ComboBoxItem x:Name="StoreOwner">Store Owner</ComboBoxItem>
+							  SelectedIndex="0"
+                              Name="TypeCommboBox"                              
+                              >
+                        <ComboBoxItem x:Name="Admin" Tag="1">Admin</ComboBoxItem>
+						<ComboBoxItem x:Name="User" Tag="3" >Customer</ComboBoxItem>
+						<ComboBoxItem x:Name="StoreOwner" Tag="2">Store Owner</ComboBoxItem>
 					</ComboBox>
 				</StackPanel>
 				
 				<TextBlock Text="By creating an account, I agree to abide by PayBay's Free Membership Agreement" TextWrapping="Wrap"
 						   Margin="15,20"/>
-				<Button x:Name="button" Content="SUBMIT"
+				<Button x:Name="SummitButton" Content="SUBMIT"
 						Margin="50,0,50,50"
 						FontWeight="Bold"
 						Foreground="{StaticResource WhiteBrush}"
 						Background="{StaticResource LightBlueBrush}"
 						Style="{StaticResource RoundedButtonStyle}"
+                        Click="SummitButton_Click"
 						HorizontalAlignment="Stretch"/>
 			</StackPanel>
 		</ScrollViewer>

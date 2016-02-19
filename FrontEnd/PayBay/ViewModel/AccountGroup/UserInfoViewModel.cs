@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using PayBay.Utilities.Handler;
 
 namespace PayBay.ViewModel.AccountGroup
 {
@@ -48,28 +49,11 @@ namespace PayBay.ViewModel.AccountGroup
         {
             MediateClass.UserVM = this;
         }
-
-        static byte[] GetBytes(string str)
-        {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(str);
-            //byte[] bytes = new byte[str.Length * sizeof(char)];
-            //System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
-
-        static string GetString(byte[] bytes)
-        {
-            string str = System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            //char[] chars = new char[bytes.Length / sizeof(char)];
-            //System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
-            //return new string(chars);
-            return str;
-        }
-
-        public async Task LoginAccount(string username,string password)
+                
+        public async Task LoginAccount(string mail,string password)
         {            
-            byte[] pwd = GetBytes(password);
-            Account account = new Account(username, pwd);
+            byte[] pwd = Functions.GetBytes(password);
+            Account account = new Account(mail, pwd);
             JToken body = JToken.FromObject(account);
             IDictionary<string, string> argument = new Dictionary<string, string>
             {
@@ -77,8 +61,10 @@ namespace PayBay.ViewModel.AccountGroup
             };
             var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
             JObject user = JObject.Parse(result.ToString());
-            UserInfo = user.ToObject<UserInfo>();            
-            MediateClass.StartVM.UserLogin = new UserSignin(UserInfo.Avatar, UserInfo.Username);            
+            UserInfo = user.ToObject<UserInfo>();
+             
+            DelegateHandler.RemoteFuncArg = new DelegateHandler.FuncArgCallHandler(MediateClass.StartVM.InitializeUserLogin);
+            DelegateHandler.RemoteFuncArg(UserInfo.Avatar, UserInfo.Username);        
         }
 
     }

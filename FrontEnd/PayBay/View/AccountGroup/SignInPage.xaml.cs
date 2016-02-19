@@ -1,4 +1,5 @@
 ﻿using PayBay.Utilities.Common;
+using PayBay.Utilities.Handler;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using System;
@@ -35,7 +36,7 @@ namespace PayBay.View.AccountGroup
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			UsernameTextBox.Focus(FocusState.Programmatic);
+			EmailTextBox.Focus(FocusState.Programmatic);
 		}
 
 		private void ExitHyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -45,14 +46,17 @@ namespace PayBay.View.AccountGroup
         
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            string username = UsernameTextBox.Text;
+            string mail = EmailTextBox.Text;
             string password = PasswordBox.Password;
-            StartPage startPage = new StartPage();       
+            
             try
             {
-                await Vm.LoginAccount(username, password);
+                await Vm.LoginAccount(mail, password);
                 ((Popup)Frame.Parent).IsOpen = false;
-                MediateClass.StartPage.UserLoginSucceed();                
+
+                DelegateHandler.RemoteFunc = new DelegateHandler.FuncCallHandler(MediateClass.StartPage.UserLoginSucceed);
+                DelegateHandler.RemoteFunc();
+
                 await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
             }
             catch (Exception ex)

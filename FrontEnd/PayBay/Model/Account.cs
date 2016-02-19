@@ -9,19 +9,19 @@ namespace PayBay.Model
 {
     public class Account : BaseViewModel
     {
-        private string username;
+        private string mail;
         private byte[] password;
 
-        public string Username
+        public string Email
         {
             get
             {
-                return username;
+                return mail;
             }
 
             set
             {
-                username = value;
+                mail = value;
                 OnPropertyChanged();
             }
         }
@@ -40,9 +40,9 @@ namespace PayBay.Model
             }
         }
 
-        public Account(string user, byte[] pwd)
+        public Account(string email, byte[] pwd)
         {
-            Username = user;
+            Email = email;
             Password = pwd;
         }
     }

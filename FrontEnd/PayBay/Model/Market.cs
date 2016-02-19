@@ -14,6 +14,7 @@ namespace PayBay.Model
         private string _address;
         private string _itemtypes;
         private string _map;
+        private string _phone;
 
         public string Map
         {
@@ -66,6 +67,17 @@ namespace PayBay.Model
             {
                 if (value == _image) return;
                 _image = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Phone
+        {
+            get { return _phone; }
+            set
+            {
+                if (value == _phone) return;
+                _phone = value;
                 OnPropertyChanged();
             }
         }

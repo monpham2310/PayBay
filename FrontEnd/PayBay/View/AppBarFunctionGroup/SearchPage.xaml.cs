@@ -12,11 +12,15 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PayBay.ViewModel.MarketGroup;
 
 namespace PayBay.View.AppBarFunctionGroup
 {
     public sealed partial class SearchPage : Page
     {
+
+        public MarketViewModel MarketVm => (MarketViewModel)DataContext;
+
         public SearchPage()
         {
             InitializeComponent();

@@ -193,11 +193,18 @@
 				</AppBarButton.Icon>
 			</AppBarButton>
 
-			<TextBlock Grid.Column="2"
-					   Text="Paybay.xyz"
-					   VerticalAlignment="Center"
-					   Margin="0,0,0,15"
-					   Foreground="{StaticResource WhiteBrush}"/>
+            <Image Grid.Column="1"
+                   Width="48"
+                   Height="48"
+                   HorizontalAlignment="Center"
+                   Source="/Assets/Logo/icon.jpg"                   
+                />
+
+            <TextBlock Grid.Column="2"
+					Text="Paybay.xyz"
+					VerticalAlignment="Center"
+					Margin="0,0,0,15"
+					Foreground="{StaticResource WhiteBrush}"/>
 
 			<TextBlock Grid.Column="2"
 					   FontSize="13"
@@ -277,33 +284,34 @@
 					<StackPanel Grid.Row="0"
 								x:Name="AccountGroupStackPanel"
 								Visibility="{Binding IsPaneOpen, ElementName=MainSplitView, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal" Margin="10,0" >                                
-                               <Ellipse Width="60"
-								Height="60"
-								HorizontalAlignment="Left"
-								Margin="20,10,0,0" Name="AvatarEllipse" >
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="/Assets/lol.jpg" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <Ellipse Width="60"
-								 Height="60"
-								 HorizontalAlignment="Left"
-								 Margin="20,10,0,0"
-                                 Visibility="Collapsed" Name="UserAvatarElipse" >
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding UserLogin.Avatar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,0" >                                
+                            <Ellipse Width="60"
+								    Height="60"
+								    HorizontalAlignment="Left"
+								    Margin="20,10,0,0"                                         
+                                    Name="AvatarEllipse" >
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="/Assets/lol.jpg" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Ellipse Width="60"
+								        Height="60"
+								        HorizontalAlignment="Left"
+								        Margin="20,10,0,0"
+                                        Visibility="Collapsed" 
+                                        Name="UserAvatarElipse" >
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding UserLogin.Avatar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </StackPanel>
                             
-                            <StackPanel Orientation="Horizontal" Margin="10,0">
-							<HyperlinkButton x:Name="SignInButton" 
-                                             Visibility="Visible"
+                        <StackPanel Orientation="Horizontal" Margin="10,0">
+							<HyperlinkButton Name="SignInButton"                                              
 											 Content="Sign in | Join Free"
 											 Click="SignInButton_Click"                                             
 											 Foreground="{StaticResource GrayBrush}"/>
-                            <HyperlinkButton x:Name="UserInfoViewButton" 
+                            <HyperlinkButton Name="UserInfoViewButton" 
                                              Visibility="Collapsed"
 											 Content="{Binding UserLogin.Username, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											 Click="UserInfoViewButton_Click"                                             

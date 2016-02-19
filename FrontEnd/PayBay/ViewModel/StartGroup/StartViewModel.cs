@@ -74,8 +74,13 @@ namespace PayBay.ViewModel.StartGroup
         {
             InitializeData();
             MediateClass.StartVM = this;            
+        }    
+
+        public void InitializeUserLogin(string avatar, string username)
+        {
+            UserLogin = new UserSignin(avatar, username);
         }
-                
+
         /// <summary>
         /// Initialize function list in splitview control
         /// </summary>

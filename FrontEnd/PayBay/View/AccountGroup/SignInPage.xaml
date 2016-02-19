@@ -55,9 +55,9 @@
 
 		<StackPanel Grid.Row="1">
 			<Grid Margin="20,20">
-				<TextBox x:Name="UsernameTextBox"
+				<TextBox x:Name="EmailTextBox"
 						 BorderThickness="0,0,0,2" 
-						 PlaceholderText="Your Username"/>
+						 PlaceholderText="Your Email Address"/>
 			</Grid>
 			<Grid Margin="20,20">
 				<PasswordBox x:Name="PasswordBox" 

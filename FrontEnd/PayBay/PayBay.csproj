@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Utilities\Common\MediateClass.cs" />
     <Compile Include="Model\Account.cs" />
@@ -110,7 +111,9 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Utilities\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
+    <Compile Include="Utilities\Handler\DelegateHandler.cs" />
     <Compile Include="Utilities\Helpers\NetworkHelper.cs" />
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
     <Compile Include="Utilities\Helpers\StorageHelper.cs" />
@@ -181,6 +184,29 @@
   <ItemGroup>
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\Hamburger.png" />
+    <Content Include="Assets\Logo\icon.jpg" />
+    <Content Include="Assets\Logo\SplashScreen.scale-100.png" />
+    <Content Include="Assets\Logo\SplashScreen.scale-125.png" />
+    <Content Include="Assets\Logo\SplashScreen.scale-150.png" />
+    <Content Include="Assets\Logo\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-125.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-150.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Logo\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Logo\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-100.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-125.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-150.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-200.png" />
+    <Content Include="Assets\Logo\StoreLogo.scale-400.png" />
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />

@@ -45,7 +45,7 @@ namespace PayBay.Utilities.Common
         public static async Task<StorageFile> GetPhotoFromGallery()
         {            
             FileOpenPicker filePicker = new FileOpenPicker();
-            filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            //filePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
             filePicker.ViewMode = PickerViewMode.Thumbnail;
 
             // Filter to include a sample subset of file types

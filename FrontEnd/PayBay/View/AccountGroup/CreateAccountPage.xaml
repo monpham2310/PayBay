@@ -187,6 +187,7 @@
 				<TextBlock Text="Password (6-20 characters)"
 						   Margin="15,20,15,10"
 						   Foreground="{StaticResource GrayBrush}"/>
+                
 				<PasswordBox x:Name="PasswordTextBox" 
 							 BorderThickness="0,0,0,2"
 							 Margin="15,0"
@@ -195,10 +196,12 @@
 				<TextBlock Text="Phone"
 						   Margin="15,20,15,10"
 						   Foreground="{StaticResource GrayBrush}"/>
+                
 				<TextBox x:Name="PhoneTextBox"
 						 BorderThickness="0,0,0,2"
 						 Margin="15,0"
-						 HorizontalAlignment="Stretch" />
+						 HorizontalAlignment="Stretch" 
+                         InputScope="Number" />
 
                 <TextBlock Text="Address"
 						   Margin="15,20,15,10"
@@ -234,13 +237,16 @@
 					<TextBlock Text="Choose your Avatar:"
 							   VerticalAlignment="Center"
 							   Foreground="{StaticResource GrayBrush}"/>
-					<Image x:Name="AvatarImage"
-							Width="80"
-							Height="80"
-							Margin="10,0" 
-                            Source="/Assets/LockScreenLogo.scale-200.png"
-							>
-					</Image>
+                    <Ellipse Width="80"
+								    Height="80"
+								    HorizontalAlignment="Left"
+								    Margin="10,0,0,0"                                         
+                                    Name="AvatarEllipse" >
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="AvatarImage"							    
+                                ImageSource="/Assets/LockScreenLogo.scale-200.png" />
+                        </Ellipse.Fill>
+                    </Ellipse>
                     <AppBarButton Label="" Icon="Camera" Name="ButtonCapture" 
                                   Click="AvatarButton_Click" Height="68" Width="52" Margin="0,20,0,0" />
 				</StackPanel>

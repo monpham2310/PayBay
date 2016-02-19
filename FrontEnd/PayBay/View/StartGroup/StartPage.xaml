@@ -326,7 +326,7 @@
 											VerticalAlignment="Center"
                                             PlaceholderText="Search..."     
                                             IsEnabled="False"
-											BorderThickness="0.5"                                                                                 
+											BorderThickness="0.5"                                               
 											BorderBrush="{StaticResource WhiteBrush}"
 											Foreground="{StaticResource WhiteBrush}" 
 											Background="{StaticResource BlackBrush}" />                         

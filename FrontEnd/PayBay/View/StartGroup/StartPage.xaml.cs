@@ -34,6 +34,7 @@ namespace PayBay.View.StartGroup
 			//Default page when open app
 			TopFunctionsListView.SelectedIndex = 0;
 			Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
+
 		}
 
 		/// <summary>

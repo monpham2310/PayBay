@@ -57,7 +57,7 @@ namespace PayBay.View.AccountGroup
                 await bitmapImage.SetSourceAsync(stream);
 
                 var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(stream);
-                AvatarImage.Source = bitmapImage;
+                AvatarImage.ImageSource = bitmapImage;
             }
         }
 
@@ -112,6 +112,6 @@ namespace PayBay.View.AccountGroup
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
-
+               
     }
 }

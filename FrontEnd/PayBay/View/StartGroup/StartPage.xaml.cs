@@ -104,20 +104,14 @@ namespace PayBay.View.StartGroup
 
 		private void SignInButton_Click(object sender, RoutedEventArgs e)
 		{
-			MainSplitView.IsPaneOpen = false;
 			AccountPopup.IsOpen = true;
-
-			MainGrid.Opacity = 0.4;
+			MainSplitView.IsPaneOpen = false;
 			MainGrid.IsHitTestVisible = false;
+			MainGrid.Opacity = 0.4;
 
-			AccountFrame.Height = ActualHeight * 0.8;
-			AccountFrame.Width = AccountFrame.Height / 1.5;
-
-			AccountPopup.HorizontalOffset = (ActualWidth - AccountFrame.Width) / 2;
-			AccountPopup.VerticalOffset = (ActualHeight - AccountFrame.Height) / 2;
+			ProcessPopupSizeAndPos();
 
 			AccountFrame.Navigate(typeof(SignInPage));
-			//Frame.Navigate(typeof(SignInPage));
 		}
 
 		private void JoinFreeButton_Click(object sender, RoutedEventArgs e)
@@ -129,6 +123,23 @@ namespace PayBay.View.StartGroup
 		{
 			MainGrid.Opacity = 1.0;
 			MainGrid.IsHitTestVisible = true;
+		}
+
+		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			ProcessPopupSizeAndPos();
+		}
+
+		private void ProcessPopupSizeAndPos()
+		{
+			AccountFrame.Height = ActualHeight * 0.85;
+			AccountFrame.Width = AccountFrame.Height / 1.5;
+
+			if (AccountFrame.Width < 330)
+				AccountFrame.Width = 330;
+
+			AccountPopup.HorizontalOffset = (ActualWidth - AccountFrame.Width) / 2;
+			AccountPopup.VerticalOffset = (ActualHeight - AccountFrame.Height) / 2;
 		}
 	}
 }

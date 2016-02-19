@@ -11,7 +11,7 @@
     <AssemblyName>PayBay</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -179,6 +179,11 @@
   <ItemGroup>
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\Hamburger.png" />
+    <Content Include="Assets\Logo\icon.jpg" />
+    <Content Include="Assets\Logo\SplashScreen.scale-100.png" />
+    <Content Include="Assets\Logo\SplashScreen.scale-125.png" />
+    <Content Include="Assets\Logo\SplashScreen.scale-150.png" />
+    <Content Include="Assets\Logo\SplashScreen.scale-200.png" />
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />

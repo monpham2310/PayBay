@@ -193,11 +193,18 @@
 				</AppBarButton.Icon>
 			</AppBarButton>
 
-			<TextBlock Grid.Column="2"
-					   Text="Paybay.xyz"
-					   VerticalAlignment="Center"
-					   Margin="0,0,0,15"
-					   Foreground="{StaticResource WhiteBrush}"/>
+            <Image Grid.Column="1"
+                   Width="48"
+                   Height="48"
+                   HorizontalAlignment="Center"
+                   Source="/Assets/Logo/icon.jpg"                   
+                />
+
+            <TextBlock Grid.Column="2"
+					Text="Paybay.xyz"
+					VerticalAlignment="Center"
+					Margin="0,0,0,15"
+					Foreground="{StaticResource WhiteBrush}"/>
 
 			<TextBlock Grid.Column="2"
 					   FontSize="13"

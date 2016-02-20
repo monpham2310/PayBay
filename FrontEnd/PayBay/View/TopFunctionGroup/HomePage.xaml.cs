@@ -37,6 +37,7 @@ namespace PayBay.View.TopFunctionGroup
 		public HomePage()
 		{
 			this.InitializeComponent();
+            
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)

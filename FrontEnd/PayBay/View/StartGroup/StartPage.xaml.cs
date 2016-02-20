@@ -34,7 +34,10 @@ namespace PayBay.View.StartGroup
 			//Default page when open app
 			TopFunctionsListView.SelectedIndex = 0;
 			Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
-
+            if(Vm.UserLogin != null)
+            {
+                isLoginControl(true);
+            }
 		}
 
 		/// <summary>
@@ -113,14 +116,23 @@ namespace PayBay.View.StartGroup
 			asbSearch.IsEnabled = false;
 		}
 
+        private void isLoginControl(bool visibility)
+        {
+            bool isLogin = visibility;
+            bool isNotLogin = !visibility;
+
+            AvatarEllipse.Visibility = (isNotLogin) ? Visibility.Visible : Visibility.Collapsed;
+            SignInButton.Visibility = (isNotLogin) ? Visibility.Visible : Visibility.Collapsed;
+
+            UserAvatarElipse.Visibility = (isLogin) ? Visibility.Visible : Visibility.Collapsed;
+            UserInfoViewButton.Visibility = (isLogin) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
 		public void UserLoginSucceed()
 		{
 			if (Vm.UserLogin != null)
 			{
-				AvatarEllipse.Visibility = Visibility.Collapsed;
-				SignInButton.Visibility = Visibility.Collapsed;
-				UserAvatarElipse.Visibility = Visibility.Visible;
-				UserInfoViewButton.Visibility = Visibility.Visible;
+                isLoginControl(true);
 
 				if (Vm.UserLogin.Avatar == null)
 				{

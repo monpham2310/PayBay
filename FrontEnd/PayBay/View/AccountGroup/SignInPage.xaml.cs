@@ -48,20 +48,26 @@ namespace PayBay.View.AccountGroup
         {
             string mail = EmailTextBox.Text;
             string password = PasswordBox.Password;
-            
-            try
+            if (mail != "" && password != "")
             {
-                await Vm.LoginAccount(mail, password);
-                ((Popup)Frame.Parent).IsOpen = false;
+                try
+                {                    
+                    await Vm.LoginAccount(mail, password);
+                    ((Popup)Frame.Parent).IsOpen = false;
 
-                DelegateHandler.RemoteFunc = new DelegateHandler.FuncCallHandler(MediateClass.StartPage.UserLoginSucceed);
-                DelegateHandler.RemoteFunc();
+                    DelegateHandler.RemoteFunc = new DelegateHandler.FuncCallHandler(MediateClass.StartPage.UserLoginSucceed);
+                    DelegateHandler.RemoteFunc();
 
-                await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+                    await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+                }
+                catch (Exception ex)
+                {
+                    await new MessageDialog("Login is NOT successful!\nMaybe wrong email or password,please try again!", "Notification!").ShowAsync();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                await new MessageDialog(ex.Message.ToString(),"Notification!").ShowAsync();
+                await new MessageDialog("Please type your email and your password!", "Notification").ShowAsync();
             }
         }
 

@@ -64,19 +64,34 @@ namespace PayBay.View.AccountGroup
         private async void SummitButton_Click(object sender, RoutedEventArgs e)
         {
             UserInfo user = new UserInfo();
-            
-            user.Username = FullNameTextBox.Text;
-            user.Address = AddressTextBox.Text;
-            user.Phone = PhoneTextBox.Text;
-            user.Email = EmailTextBox.Text;
-            user.Gender = ((bool)MaleRadioButton.IsChecked) ? true : false;
-            user.Pass = Functions.GetBytes(PasswordTextBox.Password);
-            user.Birthday = BirthdayDatePicker.Date.DateTime;
-            ComboBoxItem ComboItem = (ComboBoxItem)TypeCommboBox.SelectedItem;
-            int typeid = int.Parse(ComboItem.Tag.ToString());
-            user.TypeId = typeid;
 
-            await InsertUser(user);
+            if (FullNameTextBox.Text != "" && AddressTextBox.Text != "" && PhoneTextBox.Text != "" && EmailTextBox.Text != ""
+                && PasswordTextBox.Password != "")
+            {
+                if (Functions.EmailIsValid(EmailTextBox.Text))
+                {
+                    user.Username = FullNameTextBox.Text;
+                    user.Address = AddressTextBox.Text;
+                    user.Phone = PhoneTextBox.Text;
+                    user.Email = EmailTextBox.Text;
+                    user.Gender = ((bool)MaleRadioButton.IsChecked) ? true : false;
+                    user.Pass = Functions.GetBytes(PasswordTextBox.Password);
+                    user.Birthday = BirthdayDatePicker.Date.DateTime;
+                    ComboBoxItem ComboItem = (ComboBoxItem)TypeCommboBox.SelectedItem;
+                    int typeid = int.Parse(ComboItem.Tag.ToString());
+                    user.TypeId = typeid;
+
+                    await InsertUser(user);
+                }
+                else
+                {
+                    await new MessageDialog("Your email is NOT valid!Please try again!", "Notification").ShowAsync();
+                }
+            }
+            else
+            {
+                await new MessageDialog("Please fill all the infomation!Thank you!", "Notification").ShowAsync();
+            }
         }
 
         private async Task InsertUser(UserInfo user)

@@ -263,8 +263,7 @@
 							  HorizontalAlignment="Stretch"
 							  SelectedIndex="0"
                               Name="TypeCommboBox"                              
-                              >
-                        <ComboBoxItem x:Name="Admin" Tag="1">Admin</ComboBoxItem>
+                              >                        
 						<ComboBoxItem x:Name="User" Tag="3" >Customer</ComboBoxItem>
 						<ComboBoxItem x:Name="StoreOwner" Tag="2">Store Owner</ComboBoxItem>
 					</ComboBox>

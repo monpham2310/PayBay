@@ -9,10 +9,14 @@
             <!--
                 Name Convention
                 button -> btn
-                textbox -> txt
+                textbox -> tbx
+				textblock -> tbl
                 Listbox -> lbx
                 Image -> img
                 ImageBrush -> imgbr
+				Ellipse -> ellp
+				HyperlinkButton -> linkbtn
+				Hyperlink -> link
             ...
             -->
             

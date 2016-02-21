@@ -421,11 +421,11 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
+        <!--<Grid Grid.Row="0"
               Background="{StaticResource LightBlueBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -448,7 +448,7 @@
                        Foreground="{StaticResource WhiteBrush}"
                        FontWeight="ExtraBold"
                        Margin="10, 0"/>
-        </Grid>
+        </Grid>-->
         <Grid Grid.Row="1">
 
             <Pivot Style="{StaticResource SearchPagePivot}">
@@ -507,13 +507,13 @@
                                       HorizontalAlignment="Center"
                                       DataContext="{Binding Source={StaticResource Locator},Path=MarketVm}"
                                       ViewChanged="ScrollViewer_ViewChanged" >
-                            <ListBox x:Name="marketListBox"                                     
+                            <ListView x:Name="marketListBox"                                     
                                      HorizontalAlignment="Center" 
                                      VerticalAlignment="Top"                                      
                                      ItemsSource="{Binding MarketItemList}"
                                      ItemTemplate="{StaticResource itemListMarket}"
-                                     Background="White" >                                
-                            </ListBox>
+                                     Background="White" SelectionChanged="marketListBox_SelectionChanged" >                                
+                            </ListView>
                         </ScrollViewer>
                         <!--<ListBox ItemsSource="{Binding MarketItemList}" Width="350" Margin="0,5,0,10">
                             <ListBox.ItemTemplate>

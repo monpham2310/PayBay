@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 using PayBay.Model;
 using PayBay.ViewModel.StartGroup;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Windows.UI.Core;
 using PayBay.View.AccountGroup;
 using PayBay.Utilities.Common;
 using PayBay.View.AppBarFunctionGroup;
+using System;
 
 namespace PayBay.View.StartGroup
 {
@@ -25,12 +27,24 @@ namespace PayBay.View.StartGroup
 			//CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
 			//coreTitleBar.ExtendViewIntoTitleBar = true;
 			//Window.Current.SetTitleBar(TitleGrid);
-            
+
 			Loaded += StartPage_Loaded;
 		}
 
 		private void StartPage_Loaded(object sender, RoutedEventArgs e)
 		{
+			MainFrame.Navigated += OnNavigated;
+			MainFrame.NavigationFailed += OnNavigationFailed;
+
+			// Register a handler for BackRequested events and set the
+			// visibility of the Back button
+			SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+
+			SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+				MainFrame.CanGoBack ?
+				AppViewBackButtonVisibility.Visible :
+				AppViewBackButtonVisibility.Collapsed;
+
 			//Default page when open app
 			TopFunctionsListView.SelectedIndex = 0;
 			Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
@@ -39,6 +53,38 @@ namespace PayBay.View.StartGroup
                 if(MediateClass.UserVM.UserInfo != null)
                     isLoginControl(true);
             }
+		}
+
+		private void OnBackRequested(object sender, BackRequestedEventArgs e)
+		{
+			if (MainFrame.CanGoBack)
+			{
+				e.Handled = true;
+				MainFrame.GoBack();
+			}
+		}
+
+		/// <summary>
+		/// Invoked when Navigation to a certain page and update the Back button's visibility
+		/// </summary>
+		/// <param name="sender">The Frame which navigate</param>
+		/// <param name="e"></param>
+		private void OnNavigated(object sender, NavigationEventArgs e)
+		{
+			SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+				((Frame)sender).CanGoBack ?
+				AppViewBackButtonVisibility.Visible :
+				AppViewBackButtonVisibility.Collapsed;
+		}
+
+		/// <summary>
+		/// Invoked when Navigation to a certain page fails
+		/// </summary>
+		/// <param name="sender">The Frame which failed navigation</param>
+		/// <param name="e">Details about the navigation failure</param>
+		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+		{
+			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 		}
 
 		/// <summary>
@@ -143,7 +189,7 @@ namespace PayBay.View.StartGroup
 
 		private void SearchButton_Click(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(SearchPage));
+			MainFrame.Navigate(typeof(SearchPage));
 		}
 
 		private void SignInButton_Click(object sender, RoutedEventArgs e)

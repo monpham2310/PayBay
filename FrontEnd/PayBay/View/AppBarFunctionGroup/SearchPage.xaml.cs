@@ -12,8 +12,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Core;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.ViewModel.ProductGroup;
+using PayBay.View.MarketGroup;
 using PayBay.Model;
 using Windows.UI.Popups;
 
@@ -27,8 +29,10 @@ namespace PayBay.View.AppBarFunctionGroup
         
         public SearchPage()
         {
-            InitializeComponent();                        
-        }
+            InitializeComponent();
+			//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+		}
                 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
@@ -101,5 +105,10 @@ namespace PayBay.View.AppBarFunctionGroup
 
             }
         }
-    }
+
+		private void marketListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			Frame.Navigate(typeof(MarketPage));
+		}
+	}
 }

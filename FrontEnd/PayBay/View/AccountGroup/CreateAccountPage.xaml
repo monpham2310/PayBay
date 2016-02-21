@@ -240,15 +240,18 @@
                     <Ellipse Width="80"
 								    Height="80"
 								    HorizontalAlignment="Left"
-								    Margin="10,0,0,0"                                         
+								    Margin="10,0"                                         
                                     Name="AvatarEllipse" >
                         <Ellipse.Fill>
                             <ImageBrush x:Name="AvatarImage"							    
                                 ImageSource="/Assets/LockScreenLogo.scale-200.png" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <AppBarButton Label="" Icon="Camera" Name="ButtonCapture" 
-                                  Click="AvatarButton_Click" Height="68" Width="52" Margin="0,20,0,0" />
+					<HyperlinkButton x:Name="ButtonCapture"
+									 FontFamily="Segoe MDL2 Assets"
+									 Content="&#xE722;"
+									 FontSize="30"
+									 Click="AvatarButton_Click"/>
 				</StackPanel>
 
 				<StackPanel Orientation="Horizontal"

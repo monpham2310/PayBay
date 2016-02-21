@@ -86,18 +86,18 @@ namespace PayBay
 
                 }
 
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
+				// Place the frame in the current Window
+				Window.Current.Content = rootFrame;
 
-                // Register a handler for BackRequested events and set the
-                // visibility of the Back button
-                SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+				// Register a handler for BackRequested events and set the
+				// visibility of the Back button
+				SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    rootFrame.CanGoBack ?
-                    AppViewBackButtonVisibility.Visible :
-                    AppViewBackButtonVisibility.Collapsed;
-            }
+				SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+					rootFrame.CanGoBack ?
+					AppViewBackButtonVisibility.Visible :
+					AppViewBackButtonVisibility.Collapsed;
+			}
 
             if (rootFrame.Content == null)
             {
@@ -111,9 +111,9 @@ namespace PayBay
             {
                 await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
             }
-
-            // Ensure the current window is active
-            Window.Current.Activate();                        
+			
+			// Ensure the current window is active
+			Window.Current.Activate();                        
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)

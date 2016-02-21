@@ -34,6 +34,33 @@ namespace PayBay.View.AccountGroup
 			this.InitializeComponent();
 		}
 
+		private async void Login()
+		{
+			string mail = EmailTextBox.Text;
+			string password = PasswordBox.Password;
+			if (mail != "" && password != "")
+			{
+				try
+				{
+					await Vm.LoginAccount(mail, password);
+					((Popup)Frame.Parent).IsOpen = false;
+
+					DelegateHandler.RemoteFunc = new DelegateHandler.FuncCallHandler(MediateClass.StartPage.UserLoginSucceed);
+					DelegateHandler.RemoteFunc();
+
+					await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+				}
+				catch (Exception ex)
+				{
+					await new MessageDialog("Login is NOT successful!\nMaybe wrong email or password,please try again!", "Notification!").ShowAsync();
+				}
+			}
+			else
+			{
+				await new MessageDialog("Please type your email and your password!", "Notification").ShowAsync();
+			}
+		}
+
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			EmailTextBox.Focus(FocusState.Programmatic);
@@ -44,36 +71,22 @@ namespace PayBay.View.AccountGroup
 			((Popup)Frame.Parent).IsOpen = false;
 		}
         
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string mail = EmailTextBox.Text;
-            string password = PasswordBox.Password;
-            if (mail != "" && password != "")
-            {
-                try
-                {                    
-                    await Vm.LoginAccount(mail, password);
-                    ((Popup)Frame.Parent).IsOpen = false;
-
-                    DelegateHandler.RemoteFunc = new DelegateHandler.FuncCallHandler(MediateClass.StartPage.UserLoginSucceed);
-                    DelegateHandler.RemoteFunc();
-
-                    await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
-                }
-                catch (Exception ex)
-                {
-                    await new MessageDialog("Login is NOT successful!\nMaybe wrong email or password,please try again!", "Notification!").ShowAsync();
-                }
-            }
-            else
-            {
-                await new MessageDialog("Please type your email and your password!", "Notification").ShowAsync();
-            }
+			Login();
         }
 
 		private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(CreateAccountPage));
+		}
+
+		private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+		{
+			if (e.Key == Windows.System.VirtualKey.Enter)
+			{
+				Login();
+			}
 		}
 	}
 

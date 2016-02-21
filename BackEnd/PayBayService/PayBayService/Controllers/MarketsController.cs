@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
-using PayBayService.App_Code;
+using PayBayService.Common;
 using PayBayService.Models.BlobStorage;
 using System.Data.SqlClient;
 
@@ -29,7 +29,7 @@ namespace PayBayService.Controllers
             try
             {
                 var marketId = new SqlParameter("@MarketId", id);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_GetMoreMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
             }
             catch (Exception ex)
             {
@@ -48,7 +48,7 @@ namespace PayBayService.Controllers
             {
                 var marketId = new SqlParameter("@MarketId", id);
                 var marketName = new SqlParameter("@MarketName", name);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
             }
             catch (Exception ex)
             {
@@ -100,8 +100,9 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            int marketId = (int)Methods.GetValue("paybayservice.sp_GetMaxMarketId", CommandType.StoredProcedure, ref Methods.err);
-            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("markets", market.MarketName, marketId);
+            var table = new SqlParameter("@table", "paybayservice.Markets");
+            int marketId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("markets", market.MarketName, marketId + 1);
 
             if (blob != null)
             {

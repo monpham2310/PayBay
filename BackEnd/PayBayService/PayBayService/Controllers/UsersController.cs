@@ -12,7 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
-using PayBayService.App_Code;
+using PayBayService.Common;
 using PayBayService.Models.BlobStorage;
 using PayBayService.Models.Accounts;
 
@@ -46,16 +46,16 @@ namespace PayBayService.Controllers
         public HttpResponseMessage PostLogin(Account account, string type)
         {
             JArray result = new JArray();
-            if (!AccountExists(account.Username, account.Password))
+            if (!AccountExists(account.Email, account.Password))
             {
                 var error = Methods.CustomResponseMessage(0, "Login isn't successful!");
                 result.Add(error);            
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
-            var uid = new SqlParameter("@Username", account.Username);
+            var uid = new SqlParameter("@Email", account.Email);
             var pwd = new SqlParameter("@Pass", account.Password);
-            result = Methods.ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);
+            result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);
             JObject body = (JObject)result[0];     
             return Request.CreateResponse(HttpStatusCode.OK, body);
         }
@@ -103,8 +103,9 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            int userId = (int)Methods.GetValue("paybayservice.sp_GetMaxUserId", CommandType.StoredProcedure, ref Methods.err);
-            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("users", user.Username, userId);
+            var table = new SqlParameter("@table", "paybayservice.Users");
+            int userId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, userId + 1);
 
             if (blob != null)
             {
@@ -156,9 +157,9 @@ namespace PayBayService.Controllers
             return db.Users.Count(e => e.UserId == id) > 0;
         }
               
-        private bool AccountExists(string username, byte[] password)
+        private bool AccountExists(string email, byte[] password)
         {
-            return db.Users.Count(e => e.Username == username && e.Pass == password) > 0;
+            return db.Users.Count(e => e.Email == email && e.Pass == password) > 0;
         }
           
     }

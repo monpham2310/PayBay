@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
-using PayBayService.App_Code;
+using PayBayService.Common;
 using System.Data.SqlClient;
 using PayBayService.Models.BlobStorage;
 
@@ -49,7 +49,7 @@ namespace PayBayService.Controllers
             try
             {
                 var market = new SqlParameter("@MarketID", marketId);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market);
             }
             catch (Exception ex)
             {
@@ -102,8 +102,9 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            int storeId = (int)Methods.GetValue("paybayservice.sp_GetMaxStoreId", CommandType.StoredProcedure, ref Methods.err);
-            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("users", store.StoreName, storeId);
+            var table = new SqlParameter("@table", "paybayservice.Stores");
+            int storeId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", store.StoreName, storeId + 1);
 
             if (blob != null)
             {
@@ -131,7 +132,7 @@ namespace PayBayService.Controllers
             {
                 var store = new SqlParameter("@StoreID", storeId);
                 var num = new SqlParameter("@NumberOf", number);
-                result = (int)Methods.GetValue("paybayservice.sp_UpdateLike", CommandType.StoredProcedure, ref Methods.err, store, num);
+                result = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_UpdateLike", CommandType.StoredProcedure, ref Methods.err, store, num));
             }
             catch (Exception ex)
             {

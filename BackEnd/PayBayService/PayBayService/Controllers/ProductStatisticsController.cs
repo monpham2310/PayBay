@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
-using PayBayService.App_Code;
+using PayBayService.Common;
 
 namespace PayBayService.Controllers
 {

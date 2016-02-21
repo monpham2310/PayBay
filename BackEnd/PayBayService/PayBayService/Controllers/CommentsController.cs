@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
-using PayBayService.App_Code;
+using PayBayService.Common;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 
@@ -48,7 +48,7 @@ namespace PayBayService.Controllers
             try
             {
                 var id = new SqlParameter("@StoreID", storeId);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_ViewCommentOfStore", CommandType.StoredProcedure, ref Methods.err, id);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_ViewCommentOfStore", CommandType.StoredProcedure, ref Methods.err, id);
             }
             catch (Exception ex)
             {

@@ -12,7 +12,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
-using PayBayService.App_Code;
+using PayBayService.Common;
 using System.Data.SqlClient;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -34,7 +34,7 @@ namespace PayBayService.Controllers
             try
             {
                 var marketId = new SqlParameter("@ProductId", id);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_GetMoreProduct", CommandType.StoredProcedure, ref Methods.err, marketId);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreProduct", CommandType.StoredProcedure, ref Methods.err, marketId);
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace PayBayService.Controllers
             {
                 var productId = new SqlParameter("@ProductId", id);
                 var productName = new SqlParameter("@ProductName", name);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace PayBayService.Controllers
             try
             {
                 var store = new SqlParameter("@StoreID", storeId);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_GetProductOfStore", CommandType.StoredProcedure, ref Methods.err, store);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductOfStore", CommandType.StoredProcedure, ref Methods.err, store);
             }
             catch (Exception ex)
             {
@@ -146,7 +146,7 @@ namespace PayBayService.Controllers
                 var product = new SqlParameter("@ProductID", productid);
                 var number = new SqlParameter("@NumberOf", numberof);
                 var importdate = new SqlParameter("@ImportDate", DateTime.Now);
-                result = Methods.ExecQueryWithResult("paybayservice.sp_UpdateNumOfProduct", CommandType.StoredProcedure, ref Methods.err, product, number, importdate);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UpdateNumOfProduct", CommandType.StoredProcedure, ref Methods.err, product, number, importdate);
             }
             catch (Exception ex)
             {
@@ -168,8 +168,9 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            int productId = (int)Methods.GetValue("paybayservice.sp_GetMaxProductId", CommandType.StoredProcedure, ref Methods.err);
-            ModelBlob blob = await Methods.GetSasAndImageUriFromBlob("products", product.ProductName, productId);
+            var table = new SqlParameter("@table", "paybayservice.Products");
+            int productId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, productId + 1);
                         
             if (blob != null)
             {

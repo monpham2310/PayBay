@@ -15,7 +15,6 @@ namespace PayBayService.Models
     public partial class User
     {
         public int UserId { get; set; }
-        public string Name { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

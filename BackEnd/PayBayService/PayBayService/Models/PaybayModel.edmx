@@ -121,7 +121,6 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Birthday" Type="date" />
           <Property Name="Email" Type="nvarchar" MaxLength="30" />
           <Property Name="Phone" Type="varchar" MaxLength="12" />
@@ -274,7 +273,6 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Birthday" Type="DateTime" Precision="0" />
           <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
@@ -293,7 +291,7 @@
           <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="PayBayDatabaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PayBayDatabaseEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bills" EntityType="Self.Bill" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="DetailBills" EntityType="Self.DetailBill" />
@@ -311,7 +309,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PayBayDatabaseModelStoreContainer" CdmEntityContainer="PayBayDatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="PayBayDatabaseModelStoreContainer" CdmEntityContainer="PayBayDatabaseEntities1">
           <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Bill">
               <MappingFragment StoreEntitySet="Bills">
@@ -436,7 +434,6 @@
             <EntityTypeMapping TypeName="PayBayDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />

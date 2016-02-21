@@ -15,21 +15,32 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace PayBayService.App_Code
+namespace PayBayService.Common
 {
     public class Methods
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
 
-        static SqlConnection cnn = new SqlConnection(connectionString);
-        static SqlCommand cmd;
-        static SqlDataAdapter da;
+        SqlConnection cnn;
+        SqlCommand cmd;
+        SqlDataAdapter da;
 
         public static string err = "";
 
         static string StorageAccoutName = ConfigurationManager.AppSettings["STORAGE_ACCOUNT_NAME"].ToString();
         static string StorageAccountKey = ConfigurationManager.AppSettings["STORAGE_ACCOUNT_ACCESS_KEY"].ToString();
-                                
+                  
+        private static Methods m_Instance = null;
+
+        public static Methods GetInstance()
+        {
+            if (m_Instance == null)
+                return new Methods();
+            return m_Instance;
+        }
+
+        private Methods() { }
+
         /// <summary>
         /// Return a json object
         /// </summary>
@@ -53,36 +64,41 @@ namespace PayBayService.App_Code
         /// <param name="err">Error</param>
         /// <param name="param">Parameters</param>
         /// <returns></returns>
-        public static bool ExecNonQuery(string sql, CommandType ct, ref string err, params SqlParameter[] param)
+        public bool ExecNonQuery(string sql, CommandType ct, ref string err, params SqlParameter[] param)
         {
             bool result = false;
-            try
+            using (cnn = new SqlConnection(connectionString))
             {
-                cnn.Open();
-                cmd = new SqlCommand(sql, cnn);
-                cmd.CommandType = ct;
-                cmd.CommandTimeout = 6000;
-                cmd.Parameters.Clear();
-                if (param != null)
+                try
                 {
-                    foreach (SqlParameter p in param)
+                    if (cnn.State == ConnectionState.Open)
+                        cnn.Close();
+                    cnn.Open();
+                    cmd = new SqlCommand(sql, cnn);
+                    cmd.CommandType = ct;
+                    cmd.CommandTimeout = 6000;
+                    cmd.Parameters.Clear();
+                    if (param != null)
                     {
-                        cmd.Parameters.Add(p);
+                        foreach (SqlParameter p in param)
+                        {
+                            cmd.Parameters.Add(p);
+                        }
                     }
+
+                    cmd.ExecuteNonQuery();
+
+                    result = true;
                 }
-
-                cmd.ExecuteNonQuery();
-
-                result = true;
-            }
-            catch (Exception ex)
-            {
-                err = ex.Message;
-                result = false;
-            }
-            finally
-            {
-                cnn.Close();
+                catch (Exception ex)
+                {
+                    err = ex.Message;
+                    result = false;
+                }
+                finally
+                {
+                    cnn.Close();
+                }
             }
             return result;
         }
@@ -95,38 +111,43 @@ namespace PayBayService.App_Code
         /// <param name="err">Error</param>
         /// <param name="param">Parameters</param>
         /// <returns></returns>
-        public static JArray ExecQueryWithResult(string sql, CommandType ct, ref string err, params SqlParameter[] param)
+        public JArray ExecQueryWithResult(string sql, CommandType ct, ref string err, params SqlParameter[] param)
         {
             DataTable dt = new DataTable();
             JArray result = new JArray();
             string json = "";
-            try
+            using (cnn = new SqlConnection(connectionString))
             {
-                cnn.Open();
-                cmd = new SqlCommand(sql, cnn);
-                cmd.CommandType = ct;
-                cmd.CommandTimeout = 6000;
-                cmd.Parameters.Clear();
-                if (param != null)
+                try
                 {
-                    foreach (SqlParameter p in param)
-                        cmd.Parameters.Add(p);
-                }
+                    if (cnn.State == ConnectionState.Open)
+                        cnn.Close();
+                    cnn.Open();
+                    cmd = new SqlCommand(sql, cnn);
+                    cmd.CommandType = ct;
+                    cmd.CommandTimeout = 6000;
+                    cmd.Parameters.Clear();
+                    if (param != null)
+                    {
+                        foreach (SqlParameter p in param)
+                            cmd.Parameters.Add(p);
+                    }
 
-                da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                json = JsonConvert.SerializeObject(dt);
-                result = JArray.Parse(json);
-            }
-            catch (SqlException ex)
-            {
-                JObject message = CustomResponseMessage(0, ex.Message.ToString());
-                result.Add(message);
-                err = ex.Message;
-            }
-            finally
-            {
-                cnn.Close();
+                    da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    json = JsonConvert.SerializeObject(dt);
+                    result = JArray.Parse(json);
+                }
+                catch (SqlException ex)
+                {
+                    JObject message = CustomResponseMessage(0, ex.Message.ToString());
+                    result.Add(message);
+                    err = ex.Message;
+                }
+                finally
+                {
+                    cnn.Close();
+                }
             }
             return result;
         }
@@ -139,38 +160,43 @@ namespace PayBayService.App_Code
         /// <param name="err">Storage error</param>
         /// <param name="param">List parameters</param>
         /// <returns></returns>
-        public static object GetValue(string sql, CommandType ct, ref string err, params SqlParameter[] param)
+        public object GetValue(string sql, CommandType ct, ref string err, params SqlParameter[] param)
         {
             object result = null;
-            try
+            using (cnn = new SqlConnection(connectionString))
             {
-                cnn.Open();
-                cmd = new SqlCommand(sql, cnn);
-                cmd.CommandType = ct;
-                cmd.CommandTimeout = 6000;
-                cmd.Parameters.Clear();
-                if (param != null)
+                try
                 {
-                    foreach (SqlParameter p in param)
+                    if (cnn.State == ConnectionState.Open)
+                        cnn.Close();
+                    cnn.Open();
+                    cmd = new SqlCommand(sql, cnn);
+                    cmd.CommandType = ct;
+                    cmd.CommandTimeout = 6000;
+                    cmd.Parameters.Clear();
+                    if (param != null)
                     {
-                        cmd.Parameters.Add(p);
+                        foreach (SqlParameter p in param)
+                        {
+                            cmd.Parameters.Add(p);
+                        }
                     }
+                    result = cmd.ExecuteScalar();
                 }
-                result = cmd.ExecuteScalar();
-            }
-            catch (Exception ex)
-            {
-                err = ex.Message;
-            }
-            finally
-            {
-                cnn.Close();
+                catch (Exception ex)
+                {
+                    err = ex.Message;
+                }
+                finally
+                {
+                    cnn.Close();
+                }
             }
             return result;
 
         }
 
-        public static string GetImageFromByteArray(byte[] f, string fileName)
+        public string GetImageFromByteArray(byte[] f, string fileName)
         {
             try
             {
@@ -202,7 +228,7 @@ namespace PayBayService.App_Code
         /// <param name="resourceName">File name</param>
         /// <param name="objectId">File id avoid same name</param>
         /// <returns>Model Blob</returns>
-        public static async Task<ModelBlob> GetSasAndImageUriFromBlob(string containnerName, string resourceName, int objectId)
+        public async Task<ModelBlob> GetSasAndImageUriFromBlob(string containnerName, string resourceName, int objectId)
         {
             ModelBlob blob = new ModelBlob();
             

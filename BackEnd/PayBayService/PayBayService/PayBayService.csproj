@@ -238,7 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="App_Code\Methods.cs" />
+    <Compile Include="Common\Methods.cs" />
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\DetailBillsController.cs" />
@@ -254,6 +254,7 @@
     <Compile Include="Models\Bill.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlobStorage\ModelBlob.cs" />
     <Compile Include="Models\Comment.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
@@ -263,7 +264,6 @@
     <Compile Include="Models\Market.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BlobStorage\ModelBlob.cs" />
     <Compile Include="Models\PaybayModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -347,6 +347,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

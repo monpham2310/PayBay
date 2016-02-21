@@ -61,7 +61,7 @@ namespace PayBay.View.AccountGroup
             }
             catch (Exception ex)
             {
-                await new MessageDialog("Login is not successful.Please try again!","Notification!").ShowAsync();
+                await new MessageDialog(ex.Message.ToString(),"Notification!").ShowAsync();
             }
         }
 

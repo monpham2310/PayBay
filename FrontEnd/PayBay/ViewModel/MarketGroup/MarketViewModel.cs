@@ -56,32 +56,97 @@ namespace PayBay.ViewModel.MarketGroup
         /// <summary>
         /// Initialize market
         /// </summary>
-        private void InitializeData()
+        private async void InitializeData()
         {
 
-            _marketItemList = new ObservableCollection<Market>();
+            MarketItemList = new ObservableCollection<Market>();
 
-            NewMarket = new Market();
-            NewMarket.Name = "Chợ Bến Thành";
-            NewMarket.Address = "Phường Bến Thành, Quận 1, TP.HCM";
-            NewMarket.Image = "/Assets/Market/ChoBenThanh/Main.jpg";
-            NewMarket.Itemtypes = "Quần áo, Giày dép, Thực phẩm, Đồ khô...";
-            NewMarket.Map = "/Assets/Market/ChoBenThanh/Map.png";
-            NewMarket.Phone = "0932273623";
-            _marketItemList.Add(NewMarket);
-
-            for (int i = 0; i < 5; i++)
+            IDictionary<string, string> param = new Dictionary<string, string>
             {
-                Market secondMarket = new Market();
-                secondMarket.Name = "Chợ Bánh Thền";
-                secondMarket.Address = "Phường Bánh Thền, Quận 100, TP.NNT";
-                secondMarket.Image = "/Assets/Market/ChoBenThanh/Main.jpg";
-                secondMarket.Itemtypes = "Bánh mì, Bút chì, Hủ tiếu mì...";
-                secondMarket.Map = "/Assets/Market/ChoBenThanh/Map.png";
-                secondMarket.Phone = "0938393592";
-                _marketItemList.Add(secondMarket);
-            }
+                { "id" , "-1" }
+            };
 
+            try {
+                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
+                JArray markets = JArray.Parse(result.ToString());
+                MarketItemList = markets.ToObject<ObservableCollection<Market>>();                                
+            }
+            catch (Exception ex)
+            {
+                App.MobileService.Dispose();
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
         }
+
+        public async Task GetMarketFollowName(string name)
+        {
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                { "id" , "-1" },
+                { "name" , name }
+            };
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
+                JArray list = JArray.Parse(result.ToString());
+
+                MarketItemList = list.ToObject<ObservableCollection<Market>>();
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
+        }
+
+        public async void LoadMoreMarket()
+        {
+            string lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
+
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"id" , lastId}
+            };
+            try {
+                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
+                JArray markets = JArray.Parse(result.ToString());
+                ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
+
+                foreach (var item in moreMarket)
+                {
+                    MarketItemList.Add(item);
+                }                
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
+        }
+
+        public async void LoadMoreMarket(string name)
+        {
+            string lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
+
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"id" , lastId},
+                { "name" , name }
+            };
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
+                JArray markets = JArray.Parse(result.ToString());
+                ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
+
+                foreach (var item in moreMarket)
+                {
+                    MarketItemList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
+        }
+
     }
 }

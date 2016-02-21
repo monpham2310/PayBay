@@ -13,43 +13,48 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.App_Code;
 using PayBayService.Models.BlobStorage;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
     public class MarketsController : ApiController
     {
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
-
-        // GET: api/Markets
-        public IQueryable<Market> GetMarkets()
-        {
-            return db.Markets;
-        }
-
+                
         // GET: api/Markets/5
         [ResponseType(typeof(Market))]
-        public async Task<IHttpActionResult> GetMarket(int id)
+        public HttpResponseMessage GetMoreMarket(int id)
         {
-            Market market = await db.Markets.FindAsync(id);
-            if (market == null)
+            JArray result = new JArray();
+            try
             {
-                return NotFound();
+                var marketId = new SqlParameter("@MarketId", id);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetMoreMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
-            return Ok(market);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // GET: api/Markets/BenThanh
         [ResponseType(typeof(Market))]
-        public async Task<IHttpActionResult> GetMarket(string name)
+        public HttpResponseMessage GetMarket(int id, string name)
         {
-            Market market = await db.Markets.FindAsync(name);
-            if (market == null)
+            JArray result = new JArray();
+            try
             {
-                return NotFound();
+                var marketId = new SqlParameter("@MarketId", id);
+                var marketName = new SqlParameter("@MarketName", name);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
             }
-
-            return Ok(market);
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/Markets/5

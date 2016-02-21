@@ -93,6 +93,6 @@ namespace PayBay.Utilities.Common
                 return false;
             }
         }
-
+                
     }
 }

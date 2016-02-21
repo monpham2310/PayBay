@@ -25,24 +25,42 @@ namespace PayBayService.Controllers
     public class ProductsController : ApiController
     {
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
-
-        // GET: api/Products
-        public IQueryable<Product> GetProducts()
+                
+        // GET: api/Products/5
+        [ResponseType(typeof(Product))]
+        public HttpResponseMessage GetProducts(int id)
         {
-            return db.Products;
+            JArray result = new JArray();
+            try
+            {
+                var marketId = new SqlParameter("@ProductId", id);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetMoreProduct", CommandType.StoredProcedure, ref Methods.err, marketId);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // GET: api/Products/5
         [ResponseType(typeof(Product))]
-        public async Task<IHttpActionResult> GetProduct(int id)
+        public HttpResponseMessage GetProductFollowName(int id, string name)
         {
-            Product product = await db.Products.FindAsync(id);
-            if (product == null)
+            JArray result = new JArray();
+            try
             {
-                return NotFound();
+                var productId = new SqlParameter("@ProductId", id);
+                var productName = new SqlParameter("@ProductName", name);
+                result = Methods.ExecQueryWithResult("paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
-            return Ok(product);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // GET: api/Products/5

@@ -49,37 +49,96 @@ namespace PayBay.ViewModel.ProductGroup
             InitializeData();
         }
 
-        private void InitializeData()
+        private async void InitializeData()
         {
-            _productList = new ObservableCollection<Product>();
+            ProductList = new ObservableCollection<Product>();
 
-            _newProduct = new Product();
-            _newProduct.Image = "/Assets/Product/Beef.jpg";
-            _newProduct.Name = "Thịt Bò";
-            _newProduct.Price = "30000";
-            _newProduct.SalePrice = "23000";
-            _newProduct.StoreName = "Quầy Thịt";
-
-            _productList.Add(_newProduct);
-
-            Product secondProduct = new Product();
-            secondProduct.Image = "/Assets/Product/RauMuong.jpg";
-            secondProduct.Name = "Rau Muống";
-            secondProduct.Price = "5000";
-            secondProduct.SalePrice = "4000";
-            secondProduct.StoreName = "Quầy Rau";
-            _productList.Add(secondProduct);
-
-            for (int i = 0; i < 5; i++)
+            IDictionary<string, string> param = new Dictionary<string, string>
             {
-                Product thirdProduct = new Product();
-                thirdProduct.Image = "/Assets/Product/Apple.jpg";
-                thirdProduct.Name = "Táo";
-                thirdProduct.Price = "25000";
-                thirdProduct.SalePrice = "20000";
-                thirdProduct.StoreName = "Quầy Trái Cây";
-                _productList.Add(thirdProduct);
+                { "id" , "-1" }
+            };
+
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                JArray products = JArray.Parse(result.ToString());
+                ProductList = products.ToObject<ObservableCollection<Product>>();
             }
+            catch (Exception ex)
+            {                
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
         }
+
+        public async Task GetProductFollowName(string name)
+        {            
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                { "id" , "-1" },
+                { "name" , name }
+            };
+            try {
+                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                JArray list = JArray.Parse(result.ToString());
+
+                ProductList = list.ToObject<ObservableCollection<Product>>();
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
+        }
+
+        public async void LoadMoreProduct()
+        {
+            string lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
+
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"id" , lastId}                
+            };
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                JArray markets = JArray.Parse(result.ToString());
+                ObservableCollection<Product> moreProduct = markets.ToObject<ObservableCollection<Product>>();
+
+                foreach (var item in moreProduct)
+                {
+                    ProductList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
+        }
+
+        public async void LoadMoreProduct(string name)
+        {
+            string lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
+
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"id" , lastId},
+                { "name" , name }
+            };
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                JArray markets = JArray.Parse(result.ToString());
+                ObservableCollection<Product> moreProduct = markets.ToObject<ObservableCollection<Product>>();
+
+                foreach (var item in moreProduct)
+                {
+                    ProductList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }            
+        }
+
     }
 }

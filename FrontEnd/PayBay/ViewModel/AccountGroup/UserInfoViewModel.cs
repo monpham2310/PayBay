@@ -61,10 +61,7 @@ namespace PayBay.ViewModel.AccountGroup
             };
             var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
             JObject user = JObject.Parse(result.ToString());
-            UserInfo = user.ToObject<UserInfo>();
-             
-            DelegateHandler.RemoteFuncArg = new DelegateHandler.FuncArgCallHandler(MediateClass.StartVM.InitializeUserLogin);
-            DelegateHandler.RemoteFuncArg(UserInfo.Avatar, UserInfo.Username);        
+            UserInfo = user.ToObject<UserInfo>();                             
         }
 
     }

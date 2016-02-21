@@ -627,3 +627,32 @@ as
 	select max(StoreID)
 	from paybayservice.Stores
 
+alter proc paybayservice.sp_GetProductWithName --'B'
+@ProductId int,
+@ProductName nvarchar(100)
+as
+	select ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where ProductName like '%'+@ProductName+'%' and ProductId > @ProductId
+
+create proc paybayservice.sp_GetMarkettWithName --0,'B'
+@MarketId int,
+@MarketName nvarchar(100)
+as
+	select top 10 MarketId,MarketName,Address,Phone,Image,SasQuery
+	from paybayservice.Markets
+	where MarketName like '%'+@MarketName+'%' and MarketId > @MarketId
+
+alter proc paybayservice.sp_GetMoreMarket --0
+@MarketId int
+as
+	select top 10 MarketId,MarketName,Address,Phone,Image,SasQuery
+	from paybayservice.Markets
+	where MarketId > @MarketId
+
+create proc paybayservice.sp_GetMoreProduct --0
+@ProductId int
+as
+	select ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where ProductId > @ProductId

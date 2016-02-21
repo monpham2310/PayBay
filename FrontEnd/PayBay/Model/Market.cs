@@ -9,31 +9,20 @@ namespace PayBay.Model
 {
     public class Market : BaseViewModel
     {
-        private string _name;
+        private int _marketId;
+        private string _marketName;
         private string _image;
         private string _address;
-        private string _itemtypes;
-        private string _map;
+        private string _sasQuery;
         private string _phone;
-
-        public string Map
+                
+        public string SasQuery
         {
-            get { return _map; }
+            get { return _sasQuery; }
             set
             {
-                if (value == _map) return;
-                _map = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Itemtypes
-        {
-            get { return _itemtypes; }
-            set
-            {
-                if (value == _itemtypes) return;
-                _itemtypes = value;
+                if (value == _sasQuery) return;
+                _sasQuery = value;
                 OnPropertyChanged();
             }
         }
@@ -49,13 +38,13 @@ namespace PayBay.Model
             }
         }
 
-        public string Name
+        public string MarketName
         {
-            get { return _name; }
+            get { return _marketName; }
             set
             {
-                if (value == _name) return;
-                _name= value;
+                if (value == _marketName) return;
+                _marketName= value;
                 OnPropertyChanged();
             }
         }
@@ -82,5 +71,18 @@ namespace PayBay.Model
             }
         }
 
+        public int MarketId
+        {
+            get
+            {
+                return _marketId;
+            }
+
+            set
+            {
+                _marketId = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

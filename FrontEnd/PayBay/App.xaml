@@ -6,6 +6,16 @@
 	<Application.Resources>
 		<ResourceDictionary>
 
+            <!--
+                Name Convention
+                button -> btn
+                textbox -> txt
+                Listbox -> lbx
+                Image -> img
+                ImageBrush -> imgbr
+            ...
+            -->
+            
 			<viewModel:ViewModelLocator x:Key="Locator" />
 
 			<Color x:Key="DarkTealColor">#FF006666</Color>

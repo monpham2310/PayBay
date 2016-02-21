@@ -284,41 +284,43 @@
 					<StackPanel Grid.Row="0"
 								x:Name="AccountGroupStackPanel"
 								Visibility="{Binding IsPaneOpen, ElementName=MainSplitView, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <StackPanel Orientation="Horizontal" Margin="10,0" >                                
-                            <Ellipse Width="60"
-								    Height="60"
-								    HorizontalAlignment="Left"
-								    Margin="20,10,0,0"                                         
-                                    Name="AvatarEllipse" >
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="/Assets/lol.jpg" />
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <Ellipse Width="60"
+                                <StackPanel Name="panelUser" Orientation="Vertical" DataContext="{Binding Source={StaticResource Locator}, Path=AccountVm}">
+                                    <StackPanel Orientation="Horizontal" Margin="10,0" >
+                                        <Ellipse Width="60"
 								        Height="60"
 								        HorizontalAlignment="Left"
-								        Margin="20,10,0,0"
-                                        Visibility="Collapsed" 
-                                        Name="UserAvatarElipse" >
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{Binding UserLogin.Avatar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </Ellipse.Fill>
-                            </Ellipse>
+								        Margin="20,10,0,0"                                         
+                                        Name="AvatarEllipse" >
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="/Assets/lol.jpg" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <Ellipse Width="60"
+								            Height="60"
+								            HorizontalAlignment="Left"
+								            Margin="20,10,0,0"
+                                            Visibility="Collapsed" 
+                                            Name="UserAvatarElipse" >
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding UserInfo.Avatar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="10,0">
+							            <HyperlinkButton Name="SignInButton"                                              
+											     Content="Sign in | Join Free"
+											     Click="SignInButton_Click"                                             
+											     Foreground="{StaticResource GrayBrush}"/>
+                                        <HyperlinkButton Name="UserInfoViewButton" 
+                                                 Visibility="Collapsed"                                                 
+											     Content="{Binding UserInfo.Username, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+											     Click="UserInfoViewButton_Click"                                             
+											     Foreground="{StaticResource GrayBrush}"/>
+                                    </StackPanel>
                         </StackPanel>
-                            
-                        <StackPanel Orientation="Horizontal" Margin="10,0">
-							<HyperlinkButton Name="SignInButton"                                              
-											 Content="Sign in | Join Free"
-											 Click="SignInButton_Click"                                             
-											 Foreground="{StaticResource GrayBrush}"/>
-                            <HyperlinkButton Name="UserInfoViewButton" 
-                                             Visibility="Collapsed"
-											 Content="{Binding UserLogin.Username, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-											 Click="UserInfoViewButton_Click"                                             
-											 Foreground="{StaticResource GrayBrush}"/>
-                        </StackPanel>
-						<Grid Background="{StaticResource BlackBrush}">
-							<AutoSuggestBox Name="asbSearch"
+                        <Grid Background="{StaticResource BlackBrush}">
+                                    <AutoSuggestBox Name="asbSearch"
                                             Width="Auto"
 											Height="30"
 											QueryIcon="Find"

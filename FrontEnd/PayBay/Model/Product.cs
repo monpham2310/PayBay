@@ -9,19 +9,25 @@ namespace PayBay.Model
 {
     public class Product : BaseViewModel
     {
-        private string _name;
+        private int _productId;
+        private string _productName;
         private string _image;
-        private string _price;
-        private string _storename;
-        private string _saleprice;
+        private float _unitPrice;
+        private int _numberOf;
+        private string _unit;
+        private int _storeId;
+        private DateTime _importDate;
+        private float _salePrice;
+        private string _sasQuery;
+        private string _storeName;
 
-        public string Name
+        public string ProductName
         {
-            get { return _name; }
+            get { return _productName; }
             set
             {
-                if (value == _name) return;
-                _name = value;
+                if (value == _productName) return;
+                _productName = value;
                 OnPropertyChanged();
             }
         }
@@ -37,39 +43,121 @@ namespace PayBay.Model
             }
         }
 
-        public string Price
+        public float UnitPrice
         {
-            get { return _price; }
+            get { return _unitPrice; }
             set
             {
-                if (value == _price) return;
-                _price = value;
+                if (value == _unitPrice) return;
+                _unitPrice = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int NumberOf
+        {
+            get { return _numberOf; }
+            set
+            {
+                if (value == _numberOf) return;
+                _numberOf = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public float SalePrice
+        {
+            get { return _salePrice; }
+            set
+            {
+                if (value == _salePrice) return;
+                _salePrice = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int ProductId
+        {
+            get
+            {
+                return _productId;
+            }
+
+            set
+            {
+                _productId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Unit
+        {
+            get
+            {
+                return _unit;
+            }
+
+            set
+            {
+                _unit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int StoreId
+        {
+            get
+            {
+                return _storeId;
+            }
+
+            set
+            {
+                _storeId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime ImportDate
+        {
+            get
+            {
+                return _importDate;
+            }
+
+            set
+            {
+                _importDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string SasQuery
+        {
+            get
+            {
+                return _sasQuery;
+            }
+
+            set
+            {
+                _sasQuery = value;
                 OnPropertyChanged();
             }
         }
 
         public string StoreName
         {
-            get { return _storename; }
+            get
+            {
+                return _storeName;
+            }
+
             set
             {
-                if (value == _storename) return;
-                _storename = value;
+                _storeName = value;
                 OnPropertyChanged();
             }
         }
-
-        public string SalePrice
-        {
-            get { return _saleprice; }
-            set
-            {
-                if (value == _saleprice) return;
-                _saleprice = value;
-                OnPropertyChanged();
-            }
-        }
-
-
     }
 }

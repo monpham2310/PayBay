@@ -14,7 +14,7 @@ namespace PayBay.View.StartGroup
 {
 	public sealed partial class StartPage
 	{
-		public StartViewModel Vm => (StartViewModel)DataContext;
+		private StartViewModel Vm => (StartViewModel)DataContext;
 
 		public StartPage()
 		{
@@ -25,7 +25,7 @@ namespace PayBay.View.StartGroup
 			//CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
 			//coreTitleBar.ExtendViewIntoTitleBar = true;
 			//Window.Current.SetTitleBar(TitleGrid);
-
+            
 			Loaded += StartPage_Loaded;
 		}
 
@@ -34,9 +34,10 @@ namespace PayBay.View.StartGroup
 			//Default page when open app
 			TopFunctionsListView.SelectedIndex = 0;
 			Vm.NavigateToFunction(MainFrame, MenuFunc.HomePage);
-            if(Vm.UserLogin != null)
+            if(MediateClass.UserVM != null)
             {
-                isLoginControl(true);
+                if(MediateClass.UserVM.UserInfo != null)
+                    isLoginControl(true);
             }
 		}
 
@@ -129,14 +130,13 @@ namespace PayBay.View.StartGroup
         }
 
 		public void UserLoginSucceed()
-		{
-			if (Vm.UserLogin != null)
+		{            
+            if (MediateClass.UserVM.UserInfo != null)
 			{
                 isLoginControl(true);
-
-				if (Vm.UserLogin.Avatar == null)
+                if (MediateClass.UserVM.UserInfo.Avatar == null)
 				{
-					Vm.UserLogin.Avatar = "/Assets/Square150x150Logo.scale-100.png";
+                    MediateClass.UserVM.UserInfo.Avatar = "/Assets/Square150x150Logo.scale-100.png";
 				}
 			}
 		}

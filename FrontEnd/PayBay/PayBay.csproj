@@ -114,6 +114,7 @@
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
+    <Compile Include="Utilities\Converters\RatingToStarConverter.cs" />
     <Compile Include="Utilities\Handler\DelegateHandler.cs" />
     <Compile Include="Utilities\Helpers\NetworkHelper.cs" />
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
@@ -221,6 +222,9 @@
     <Content Include="Assets\Product\Apple.jpg" />
     <Content Include="Assets\Product\Beef.jpg" />
     <Content Include="Assets\Product\RauMuong.jpg" />
+    <Content Include="Assets\Rating\emptystar.png" />
+    <Content Include="Assets\Rating\fullstar.png" />
+    <Content Include="Assets\Rating\halfstar.png" />
     <Content Include="Assets\SearchIcon.PNG" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />

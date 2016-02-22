@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace PayBay.ViewModel.MarketGroup
 {
@@ -44,14 +47,14 @@ namespace PayBay.ViewModel.MarketGroup
                     k1.Avatar = "ms-appx:///Assets/Troll/namdog.jpg";
                     k1.Kiosname = "#DogStore";
                     k1.Name = "CoHoNam";
-                    k1.Rating = 1.5f;
+                    k1.Rating = 4.6f;
                 }
                 else
                 {
                     k1.Avatar = "ms-appx:///Assets/Troll/huygay.png";
                     k1.Kiosname = "#GayStore";
                     k1.Name = "GayHuy";
-                    k1.Rating = 1.5f;
+                    k1.Rating = 2.5f;
                 }
                 _kiosList.Add(k1);
 

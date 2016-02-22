@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Kios.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Utilities\Common\MediateClass.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Utilities\Helpers\StorageHelper.cs" />
     <Compile Include="ViewModel\AccountGroup\UserInfoViewModel.cs" />
     <Compile Include="ViewModel\HomePageGroup\AdvertiseViewModel.cs" />
+    <Compile Include="ViewModel\MarketGroup\KiosViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\MarketViewModel.cs" />
     <Compile Include="ViewModel\ProductGroup\ProductViewModel.cs" />
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />
@@ -147,6 +149,9 @@
     </Compile>
     <Compile Include="View\BottomFunctionGroup\SettingGroup\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MarketGroup\KiosPage.xaml.cs">
+      <DependentUpon>KiosPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MarketGroup\MarketPage.xaml.cs">
       <DependentUpon>MarketPage.xaml</DependentUpon>
@@ -216,6 +221,7 @@
     <Content Include="Assets\Product\Apple.jpg" />
     <Content Include="Assets\Product\Beef.jpg" />
     <Content Include="Assets\Product\RauMuong.jpg" />
+    <Content Include="Assets\SearchIcon.PNG" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
@@ -246,6 +252,8 @@
     <Content Include="Assets\StoreLogo.scale-150.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Troll\huygay.png" />
+    <Content Include="Assets\Troll\namdog.jpg" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
@@ -294,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BottomFunctionGroup\SettingGroup\SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MarketGroup\KiosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

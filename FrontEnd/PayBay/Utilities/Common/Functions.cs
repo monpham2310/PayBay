@@ -15,6 +15,12 @@ namespace PayBay.Utilities.Common
     public class Functions
     {
 
+        public enum TYPEGET
+        {
+            START = 0,
+            MORE = 1
+        };
+
         private static Functions m_Instance = null;
 
         static Regex ValidEmailRegex = CreateValidEmailRegex();

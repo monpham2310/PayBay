@@ -45,6 +45,9 @@ create table paybayservice.Stores (
 	NumOfLike int default 0
 );
 
+exec sp_rename 'paybayservice.Stores.NumOfLike','Rate','COLUMN'
+alter table paybayservice.Stores alter column Rate float
+alter table paybayservice.Stores drop DF__Stores__NumOfLik__04459E07
 alter table paybayservice.Stores add NumOfLike int default 0
 
 create table paybayservice.Products (

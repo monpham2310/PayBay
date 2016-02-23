@@ -29,27 +29,33 @@ namespace PayBayService.Controllers
 
         // GET: api/Stores/5
         [ResponseType(typeof(Store))]
-        public async Task<IHttpActionResult> GetStore(int id)
+        public HttpResponseMessage FindStore(string name,int markId, int storeId)
         {
-            Store store = await db.Stores.FindAsync(id);
-            
-            if (store == null)
+            JArray result = new JArray();
+            try
             {
-                return NotFound();
+                var storeName = new SqlParameter("@StoreName", name);
+                var marId = new SqlParameter("@MarketID", markId);
+                var storeid = new SqlParameter("@StoreId", storeId);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_FindStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
             }
-
-            return Ok(store);
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // GET: api/Stores/MarketID
         [ResponseType(typeof(Store))]
-        public HttpResponseMessage GetStoreOfMarket(int marketId)
+        public HttpResponseMessage GetStoreOfMarket(int marketId, int storeId)
         {
             JArray result = new JArray();
             try
             {
                 var market = new SqlParameter("@MarketID", marketId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market);
+                var store = new SqlParameter("@StoreID", storeId);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
             }
             catch (Exception ex)
             {

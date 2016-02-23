@@ -11,12 +11,14 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using PayBay.Utilities.Common;
 
 namespace PayBay.ViewModel.MarketGroup
 {
     public class KiosViewModel : BaseViewModel
     {
         private ObservableCollection<Kios> _kiosList;
+        private int _marketID;
 
         #region Property with calling to PropertyChanged
         public ObservableCollection<Kios> KiosList
@@ -29,36 +31,106 @@ namespace PayBay.ViewModel.MarketGroup
                 OnPropertyChanged();
             }
         }
+
+        public int MarketID
+        {
+            get
+            {
+                return _marketID;
+            }
+
+            set
+            {
+                _marketID = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         public KiosViewModel()
         {
+            MediateClass.KiotVM = this;
+            InitializeProperties();
             InitializeData();
         }
 
-        private void InitializeData()
+        private void InitializeProperties()
         {
-            _kiosList = new ObservableCollection<Kios>();
-            for (int i = 0; i < 9; i++)
+            MarketID = -1;
+            KiosList = new ObservableCollection<Kios>();
+        }
+
+        public async void InitializeData()
+        {            
+            await LoadMoreStore(Functions.TYPEGET.START);
+        }
+
+        public async Task LoadMoreStore(Functions.TYPEGET type)
+        {
+            int lastId = -1;
+            if(type == Functions.TYPEGET.MORE)
+                lastId = KiosList[KiosList.Count - 1].StoreId;
+            MarketID = MediateClass.MarketVM.SelectedMarket.MarketId;        
+            IDictionary<string, string> market = new Dictionary<string, string>
             {
-                Kios k1 = new Kios();
-                if (i < 5)
+                {"marketId", MarketID.ToString()},
+                {"storeId" , lastId.ToString()}
+            };
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Get, market);
+                JArray response = JArray.Parse(result.ToString());
+                if (type == Functions.TYPEGET.MORE)
                 {
-                    k1.Avatar = "ms-appx:///Assets/Troll/namdog.jpg";
-                    k1.Kiosname = "#DogStore";
-                    k1.Name = "CoHoNam";
-                    k1.Rating = 4.6f;
+                    ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
+
+                    foreach (var item in kiosLst)
+                    {
+                        KiosList.Add(item);
+                    }
                 }
                 else
-                {
-                    k1.Avatar = "ms-appx:///Assets/Troll/huygay.png";
-                    k1.Kiosname = "#GayStore";
-                    k1.Name = "GayHuy";
-                    k1.Rating = 2.5f;
-                }
-                _kiosList.Add(k1);
-
+                    KiosList = response.ToObject<ObservableCollection<Kios>>();
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
+               
+        public async Task LoadMoreStore(string storeName, Functions.TYPEGET type)
+        {
+            int lastId = -1;
+            if (type == Functions.TYPEGET.MORE)
+                lastId = KiosList[KiosList.Count - 1].StoreId;
+            MarketID = MediateClass.MarketVM.SelectedMarket.MarketId;
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"name" , storeName},
+                {"markId" , MarketID.ToString()},
+                {"storeId" , "-1"}
+            };
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Post, param);
+                JArray response = JArray.Parse(result.ToString());
+                if (type == Functions.TYPEGET.MORE)
+                {
+                    ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
+
+                    foreach (var item in kiosLst)
+                    {
+                        KiosList.Add(item);
+                    }
+                }
+                else
+                    KiosList = response.ToObject<ObservableCollection<Kios>>();
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+        }
+
     }
 }

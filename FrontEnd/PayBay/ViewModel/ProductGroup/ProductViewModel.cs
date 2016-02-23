@@ -8,22 +8,23 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System;
 using Windows.UI.Popups;
+using PayBay.Utilities.Common;
 
 namespace PayBay.ViewModel.ProductGroup
 {
     public class ProductViewModel : BaseViewModel
     {
-        private Product _newProduct;
+        private Product _selectedProduct;
         private ObservableCollection<Product> _productList;
-
+                
         #region Property with calling to PropertyChanged
-        public Product NewProduct
+        public Product SelectedProduct
         {
-            get { return _newProduct; }
+            get { return _selectedProduct; }
             set
             {
-                if (Equals(value, _newProduct)) return;
-                _newProduct = value;
+                if (Equals(value, _selectedProduct)) return;
+                _selectedProduct = value;
                 OnPropertyChanged();
             }
         }
@@ -46,53 +47,27 @@ namespace PayBay.ViewModel.ProductGroup
 
         public ProductViewModel()
         {
+            InitializeProperties();
             InitializeData();
+        }
+
+        private void InitializeProperties()
+        {
+            ProductList = new ObservableCollection<Product>();
         }
 
         private async void InitializeData()
         {
-            ProductList = new ObservableCollection<Product>();
+            await LoadMoreProduct(Functions.TYPEGET.START);
+        }      
 
-            IDictionary<string, string> param = new Dictionary<string, string>
-            {
-                { "id" , "-1" }
-            };
-
-            try
-            {
-                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                JArray products = JArray.Parse(result.ToString());
-                ProductList = products.ToObject<ObservableCollection<Product>>();
-            }
-            catch (Exception ex)
-            {                
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
-        }
-
-        public async Task GetProductFollowName(string name)
-        {            
-            IDictionary<string, string> param = new Dictionary<string, string>
-            {
-                { "id" , "-1" },
-                { "name" , name }
-            };
-            try {
-                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                JArray list = JArray.Parse(result.ToString());
-
-                ProductList = list.ToObject<ObservableCollection<Product>>();
-            }
-            catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
-        }
-
-        public async void LoadMoreProduct()
+        public async Task LoadMoreProduct(Functions.TYPEGET type)
         {
-            string lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
-
+            string lastId = "";
+            if (type == Functions.TYPEGET.MORE)
+                lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
+            else
+                lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId}                
@@ -100,13 +75,18 @@ namespace PayBay.ViewModel.ProductGroup
             try
             {
                 JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                JArray markets = JArray.Parse(result.ToString());
-                ObservableCollection<Product> moreProduct = markets.ToObject<ObservableCollection<Product>>();
-
-                foreach (var item in moreProduct)
+                JArray products = JArray.Parse(result.ToString());
+                if (type == Functions.TYPEGET.MORE)
                 {
-                    ProductList.Add(item);
+                    ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
+
+                    foreach (var item in moreProduct)
+                    {
+                        ProductList.Add(item);
+                    }
                 }
+                else
+                    ProductList = products.ToObject<ObservableCollection<Product>>();
             }
             catch (Exception ex)
             {
@@ -114,10 +94,13 @@ namespace PayBay.ViewModel.ProductGroup
             }            
         }
 
-        public async void LoadMoreProduct(string name)
+        public async Task LoadMoreProduct(string name, Functions.TYPEGET type)
         {
-            string lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
-
+            string lastId = "";
+            if (type == Functions.TYPEGET.MORE)
+                lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
+            else
+                lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId},
@@ -126,13 +109,18 @@ namespace PayBay.ViewModel.ProductGroup
             try
             {
                 JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                JArray markets = JArray.Parse(result.ToString());
-                ObservableCollection<Product> moreProduct = markets.ToObject<ObservableCollection<Product>>();
-
-                foreach (var item in moreProduct)
+                JArray products = JArray.Parse(result.ToString());
+                if (type == Functions.TYPEGET.MORE)
                 {
-                    ProductList.Add(item);
+                    ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
+
+                    foreach (var item in moreProduct)
+                    {
+                        ProductList.Add(item);
+                    }
                 }
+                else
+                    ProductList = products.ToObject<ObservableCollection<Product>>();
             }
             catch (Exception ex)
             {

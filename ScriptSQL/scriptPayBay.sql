@@ -631,28 +631,37 @@ alter proc paybayservice.sp_GetProductWithName --'B'
 @ProductId int,
 @ProductName nvarchar(100)
 as
-	select ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
 	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
-	where ProductName like '%'+@ProductName+'%' and ProductId > @ProductId
+	where ProductId > @ProductId and ProductName like N'%'+@ProductName+N'%'
 
-create proc paybayservice.sp_GetMarkettWithName --0,'B'
+alter proc paybayservice.sp_GetMarketWithName --0,'Ba'
 @MarketId int,
 @MarketName nvarchar(100)
 as
-	select top 10 MarketId,MarketName,Address,Phone,Image,SasQuery
+	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery
 	from paybayservice.Markets
-	where MarketName like '%'+@MarketName+'%' and MarketId > @MarketId
+	where MarketId > @MarketId and MarketName like N'%'+@MarketName+N'%'
+
+alter proc paybayservice.sp_FindStore 'Ba',1,-1
+@StoreName nvarchar(100),
+@MarketID int,
+@StoreId int
+as
+	select top 12 StoreId,StoreName,KiotNo,Image,a.Phone,MarketID,OwnerID,Username,a.SasQuery,Rate
+	from paybayservice.Stores a join paybayservice.Users b on a.OwnerID=b.UserId
+	where MarketID=@MarketID and StoreId>@StoreId and StoreName like N'%'+@StoreName+N'%'
 
 alter proc paybayservice.sp_GetMoreMarket --0
 @MarketId int
 as
-	select top 10 MarketId,MarketName,Address,Phone,Image,SasQuery
+	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery
 	from paybayservice.Markets
 	where MarketId > @MarketId
 
-create proc paybayservice.sp_GetMoreProduct --0
+alter proc paybayservice.sp_GetMoreProduct --0
 @ProductId int
 as
-	select ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
 	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
 	where ProductId > @ProductId

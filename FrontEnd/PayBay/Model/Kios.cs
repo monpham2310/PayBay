@@ -9,51 +9,142 @@ namespace PayBay.Model
 {
     public class Kios : BaseViewModel
     {
-        private string _avatar;
-        private string _name;
-        private string _kiosname;
-        private float _rating;
+        private int _storeId;
+        private string _storeName;        
+        private string _kiotNo;
+        private string _image;
+        private string _phone;
+        private int _marketId;
+        private int _ownerId;
+        private string _userName;        
+        private string _sasQuery;
+        private float _rate;
 
-        public string Avatar
+        public string Image
         {
-            get { return _avatar; }
+            get { return _image; }
             set
             {
-                if (value == _avatar) return;
-                _avatar = value;
+                if (value == null)
+                    value = "/Assets/lol.jpg";
+                _image = value;
                 OnPropertyChanged();
             }
         }
 
-        public string Name
+        public string StoreName
         {
-            get { return _name; }
+            get { return _storeName; }
             set
             {
-                if (value == _name) return;
-                _name = value;
+                if (value == _storeName) return;
+                _storeName = value;
                 OnPropertyChanged();
             }
         }
 
-        public string Kiosname
+        public string KiotNo
         {
-            get { return _kiosname; }
+            get { return _kiotNo; }
             set
             {
-                if (value == _kiosname) return;
-                _kiosname = value;
+                if (value == _kiotNo) return;
+                _kiotNo = value;
                 OnPropertyChanged();
             }
         }
 
-        public float Rating
+        public float Rate
         {
-            get { return _rating; }
+            get { return _rate; }
             set
             {
-                if (value == _rating) return;
-                _rating = value;
+                if (value == _rate) return;
+                _rate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int StoreId
+        {
+            get
+            {
+                return _storeId;
+            }
+
+            set
+            {
+                _storeId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Phone
+        {
+            get
+            {
+                return _phone;
+            }
+
+            set
+            {
+                _phone = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int MarketId
+        {
+            get
+            {
+                return _marketId;
+            }
+
+            set
+            {
+                _marketId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int OwnerId
+        {
+            get
+            {
+                return _ownerId;
+            }
+
+            set
+            {
+                _ownerId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Username
+        {
+            get
+            {
+                return _userName;
+            }
+
+            set
+            {
+                _userName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string SasQuery
+        {
+            get
+            {
+                return _sasQuery;
+            }
+
+            set
+            {
+                _sasQuery = value;
                 OnPropertyChanged();
             }
         }

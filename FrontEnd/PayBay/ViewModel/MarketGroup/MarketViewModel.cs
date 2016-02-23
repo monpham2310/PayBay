@@ -8,23 +8,24 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System;
 using Windows.UI.Popups;
+using PayBay.Utilities.Common;
 
 namespace PayBay.ViewModel.MarketGroup
 {
     public class MarketViewModel : BaseViewModel
     {
 
-        private Market _newMarket;
+        private Market _selectedMarket;
         private ObservableCollection<Market> _marketItemList;
 
         #region Property with calling to PropertyChanged
-        public Market NewMarket
+        public Market SelectedMarket
         {
-            get { return _newMarket; }
+            get { return _selectedMarket; }
             set
             {
-                if (Equals(value, _newMarket)) return;
-                _newMarket = value;
+                if (Equals(value, _selectedMarket)) return;
+                _selectedMarket = value;
                 OnPropertyChanged();
             }
         }
@@ -50,58 +51,32 @@ namespace PayBay.ViewModel.MarketGroup
         /// </summary>
         public MarketViewModel()
         {
+            MediateClass.MarketVM = this;
+            InitializeProperties();
             InitializeData();
         }
 
+        private void InitializeProperties()
+        {
+            SelectedMarket = new Market();
+            MarketItemList = new ObservableCollection<Market>();
+        }
+                
         /// <summary>
         /// Initialize market
         /// </summary>
         private async void InitializeData()
         {
-
-            MarketItemList = new ObservableCollection<Market>();
-
-            IDictionary<string, string> param = new Dictionary<string, string>
-            {
-                { "id" , "-1" }
-            };
-
-            try {
-                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
-                JArray markets = JArray.Parse(result.ToString());
-                MarketItemList = markets.ToObject<ObservableCollection<Market>>();                                
-            }
-            catch (Exception ex)
-            {
-                App.MobileService.Dispose();
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
+            await LoadMoreMarket(Functions.TYPEGET.START);
         }
-
-        public async Task GetMarketFollowName(string name)
+                
+        public async Task LoadMoreMarket(Functions.TYPEGET type)
         {
-            IDictionary<string, string> param = new Dictionary<string, string>
-            {
-                { "id" , "-1" },
-                { "name" , name }
-            };
-            try
-            {
-                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
-                JArray list = JArray.Parse(result.ToString());
-
-                MarketItemList = list.ToObject<ObservableCollection<Market>>();
-            }
-            catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
-        }
-
-        public async void LoadMoreMarket()
-        {
-            string lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
-
+            string lastId = "";
+            if (type == Functions.TYPEGET.MORE)
+                lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
+            else
+                lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId}
@@ -109,12 +84,17 @@ namespace PayBay.ViewModel.MarketGroup
             try {
                 JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
                 JArray markets = JArray.Parse(result.ToString());
-                ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
-
-                foreach (var item in moreMarket)
+                if (type == Functions.TYPEGET.MORE)
                 {
-                    MarketItemList.Add(item);
-                }                
+                    ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
+
+                    foreach (var item in moreMarket)
+                    {
+                        MarketItemList.Add(item);
+                    }
+                }
+                else
+                    MarketItemList = markets.ToObject<ObservableCollection<Market>>();
             }
             catch (Exception ex)
             {
@@ -122,10 +102,13 @@ namespace PayBay.ViewModel.MarketGroup
             }            
         }
 
-        public async void LoadMoreMarket(string name)
+        public async Task LoadMoreMarket(string name, Functions.TYPEGET type)
         {
-            string lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
-
+            string lastId = "";
+            if (type == Functions.TYPEGET.MORE)
+                lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
+            else
+                lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId},
@@ -135,12 +118,17 @@ namespace PayBay.ViewModel.MarketGroup
             {
                 JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
                 JArray markets = JArray.Parse(result.ToString());
-                ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
-
-                foreach (var item in moreMarket)
+                if (type == Functions.TYPEGET.MORE)
                 {
-                    MarketItemList.Add(item);
+                    ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
+
+                    foreach (var item in moreMarket)
+                    {
+                        MarketItemList.Add(item);
+                    }
                 }
+                else
+                    MarketItemList = markets.ToObject<ObservableCollection<Market>>();
             }
             catch (Exception ex)
             {

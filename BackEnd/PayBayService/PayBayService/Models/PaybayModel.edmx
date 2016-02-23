@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bills">
           <Key>
             <PropertyRef Name="BillId" />
@@ -113,7 +113,7 @@
           <Property Name="Phone" Type="varchar" MaxLength="12" />
           <Property Name="MarketID" Type="int" Nullable="false" />
           <Property Name="OwnerID" Type="int" Nullable="false" />
-          <Property Name="NumOfLike" Type="int" />
+          <Property Name="Rate" Type="float" />
           <Property Name="SasQuery" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Users">
@@ -152,8 +152,7 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="paybayservice" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PayBayDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -265,8 +264,8 @@
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="MarketID" Type="Int32" Nullable="false" />
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
-          <Property Name="NumOfLike" Type="Int32" />
           <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Double" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -418,6 +417,7 @@
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Store">
               <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
                 <ScalarProperty Name="StoreName" ColumnName="StoreName" />
                 <ScalarProperty Name="KiotNo" ColumnName="KiotNo" />
@@ -425,7 +425,6 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="MarketID" ColumnName="MarketID" />
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-                <ScalarProperty Name="NumOfLike" ColumnName="NumOfLike" />
                 <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -507,13 +507,13 @@
                                       HorizontalAlignment="Center"
                                       DataContext="{Binding Source={StaticResource Locator},Path=MarketVm}"
                                       ViewChanged="ScrollViewer_ViewChanged" >
-                            <ListView x:Name="marketListBox"                                     
+                            <ListBox x:Name="marketListBox"                                     
                                      HorizontalAlignment="Center" 
                                      VerticalAlignment="Top"                                      
                                      ItemsSource="{Binding MarketItemList}"
-                                     ItemTemplate="{StaticResource itemListMarket}"
+                                     ItemTemplate="{StaticResource itemListMarket}"                                     
                                      Background="White" SelectionChanged="marketListBox_SelectionChanged" >                                
-                            </ListView>
+                            </ListBox>
                         </ScrollViewer>
                         <!--<ListBox ItemsSource="{Binding MarketItemList}" Width="350" Margin="0,5,0,10">
                             <ListBox.ItemTemplate>

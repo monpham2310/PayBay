@@ -29,9 +29,7 @@ namespace PayBay.Utilities.Converters
 
             }
             catch (Exception ex)
-            {
-                String haha;
-                haha = ex.ToString();
+            {                
                 System.Diagnostics.Debug.WriteLine("EXCEPTIONNN: " + ex.ToString());
                 return "Assets/lol.jpg";
             }

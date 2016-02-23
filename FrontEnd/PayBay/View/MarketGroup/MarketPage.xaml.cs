@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PayBay.Utilities.Common;
+using PayBay.ViewModel.MarketGroup;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,14 +24,22 @@ namespace PayBay.View.MarketGroup
 	/// </summary>
 	public sealed partial class MarketPage : Page
 	{
+        private MarketViewModel MarketVm => (MarketViewModel)spnHeader.DataContext;
 		public MarketPage()
 		{
 			this.InitializeComponent();
 		}
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             Frame.Navigate(typeof(KiosPage));
+        }
+
+        private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MarketVm != null)
+                MarketVm.SelectedMarket = null;
+            Frame.GoBack();
         }
     }
 }

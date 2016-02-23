@@ -21,7 +21,7 @@ namespace PayBayService.Models
         public string Phone { get; set; }
         public int MarketID { get; set; }
         public int OwnerID { get; set; }
-        public Nullable<int> NumOfLike { get; set; }
         public string SasQuery { get; set; }
+        public Nullable<double> Rate { get; set; }
     }
 }

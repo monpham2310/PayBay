@@ -10,21 +10,21 @@
 
 	<ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 				  HorizontalScrollMode="Disabled">
-		<StackPanel>
-			<Grid Height="150">
+        <StackPanel Name="spnHeader" DataContext="{Binding Source={StaticResource Locator}, Path=MarketVm}">            
+            <Grid Height="150">                
 				<Image x:Name="imgMarket" 
-					Source="/Assets/lol.jpg"
+					Source="{Binding Path=SelectedMarket.Image}"
 					Stretch="Fill"/>
 				<Border Background="{StaticResource WhiteBrush}"
 					Opacity="0.4"/>
 				<TextBlock x:Name="tblMarketName" 
-					Text="ABC Market"
+					Text="{Binding Path=SelectedMarket.MarketName}"
 					VerticalAlignment="Center"
 					FontSize="30"
 					FontWeight="Bold"
 					Margin="30,0"/>
 				<TextBlock x:Name="tblMarketAddress" 
-					Text="XYZ Ward, Dist 1, HCMC"
+					Text="{Binding Path=SelectedMarket.Address}"
 					FontSize="20"
 					FontStyle="Italic"
 					VerticalAlignment="Bottom"

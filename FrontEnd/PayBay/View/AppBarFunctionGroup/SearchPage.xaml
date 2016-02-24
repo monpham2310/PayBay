@@ -484,23 +484,34 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Row="0"
-                                 Grid.Column="1"
-                                 HorizontalAlignment="Stretch" 
-                                 VerticalAlignment="Center" 
-                                 Margin="0,0,15,0" 
-                                 BorderThickness="0,0,0,1.5"
-                                 BorderBrush="#FFC3B8B8"
-                                 Name="txtSearchMarket">
-                        </TextBox>
-                        <Button x:Name="btSearchMarket"
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Content="Search" 
-                                HorizontalAlignment="Center" 
-                                VerticalAlignment="Center" Margin="10,10,0,0"
-                                Click="btSearchMarket_Click"/>
+                        </Grid.ColumnDefinitions>                        
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Background="#EBEBEB" 
+                              Height="30"
+                              Margin="10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="50" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox BorderThickness="0" 
+                                     HorizontalAlignment="Stretch"
+                                     Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,35,-2"
+                                     x:Name="txtSearchMarket"
+                                     />
+                            <Button x:Name="btSearchMarket" 
+                    	            Height="31" 
+                    	            Width="35" 
+                    	            Background="#EBEBEB"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Click="btSearchMarket_Click">
+                                <Image Source="/Assets/SearchIcon.PNG" 
+                    	               HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            </Button>                            
+                        </Grid>
                         <ScrollViewer Name="scrollvMarket" 
                                       Grid.Row="1"
                                       Grid.ColumnSpan="2" 
@@ -547,7 +558,7 @@
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Row="0"
+                        <!--<TextBox Grid.Row="0"
                                  Grid.Column="1"
                                  HorizontalAlignment="Stretch" 
                                  VerticalAlignment="Center" 
@@ -562,7 +573,34 @@
                                 Content="Search" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center" Margin="10,10,0,0"
-                                Click="btSearchProduct_Click"/>
+                                Click="btSearchProduct_Click"/>-->
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Background="#EBEBEB" 
+                              Height="30"
+                              Margin="10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="50" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox BorderThickness="0" 
+                                     HorizontalAlignment="Stretch"
+                                     Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,35,-2"
+                                     x:Name="txtSearchProduct"
+                                     />
+                            <Button x:Name="btSearchProduct" 
+                    	            Height="31" 
+                    	            Width="35" 
+                    	            Background="#EBEBEB"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Click="btSearchProduct_Click">
+                                <Image Source="/Assets/SearchIcon.PNG" 
+                    	               HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            </Button>
+                        </Grid>
                         <ScrollViewer Name="scrollvProduct"
                                       Grid.Row="1"
                                       Grid.ColumnSpan="2" 

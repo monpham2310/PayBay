@@ -35,66 +35,82 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="productItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding ProductId}"
+                           Foreground="White"/>
+                <TextBlock Text="."
+                           Foreground="White"/>
+                <TextBlock Text="{Binding ProductName}"
+                           Foreground="White" 
+                           Margin="15,0,0,0" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="commentItemTemplate">
+            <Grid Width="270">
+                <TextBlock Text="01/01/2016" 
+                           Foreground="White"
+                           HorizontalAlignment="Right"
+                           FontSize="11"/>
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Height="40" Width="40">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="ms-appx:///Assets/lol.jpg"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <StackPanel Margin="5,0,0,0">
+                        <TextBlock Text="User 1" 
+                                   Foreground="White"
+                                   FontSize="11"/>
+                        <TextBlock Text="It's good"
+                                   Foreground="White"
+                                   FontSize="11" 
+                                   Margin="0,5,0,0"
+                                   FontStyle="Italic"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <SplitView DisplayMode="CompactOverlay"
+            IsPaneOpen="False"
+            CompactPaneLength="0"
+            OpenPaneLength="300"
+               x:Name="splitviewKios"
+               PanePlacement="Right">
+        <SplitView.Content>
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
-			  Background="{StaticResource SkyBlueBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <!--<HyperlinkButton x:Name="BackHyperlinkButton"
-							 Grid.Column="0"
-							 FontFamily="Segoe MDL2 Assets"
-							 Content="&#xE72B;"
-							 FontSize="20"
-							 FontWeight="ExtraBold"
-							 Margin="20,0"
-							 Foreground="{StaticResource WhiteBrush}"
-							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}" 
-                             Click="BackHyperlinkButton_Click"/>-->
-            <TextBlock Text="Stores List" 
-					   Grid.Column="1"
-					   FontSize="20"
-					   FontWeight="Bold"
-					   VerticalAlignment="Center"
-					   Margin="10,0"
-					   Foreground="{StaticResource WhiteBrush}"/>
-        </Grid>
-
-        <Grid Grid.Row="1" 
+                <Grid Grid.Row="0" 
               Background="#EBEBEB" 
               Height="30"
               Margin="10,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="50" />
-            </Grid.ColumnDefinitions>
-            <TextBox x:Name="tbxSearch"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="50" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="tbxSearch"
                      BorderThickness="0" 
                      HorizontalAlignment="Stretch"
                      Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,35,-2"
                      />
-            <Button x:Name="btnSearch" 
+                    <Button x:Name="btnSearch" 
                     	Height="31" 
                     	Width="35" 
                     	Background="#EBEBEB"
                         HorizontalAlignment="Right"
                         Grid.Column="1"
                         Click="btnSearch_Click">
-                <Image Source="/Assets/SearchIcon.PNG" 
+                        <Image Source="/Assets/SearchIcon.PNG" 
                     	HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
-            </Button>
-            <!--<StackPanel Background="#EBEBEB"
+                    </Button>
+                    <!--<StackPanel Background="#EBEBEB"
                         Height="30"
                         Orientation="Horizontal">
                 <TextBox x:Name="tbxSearch"
@@ -111,19 +127,173 @@
                 </Button>
 
             </StackPanel>-->
-        </Grid>
+                </Grid>
 
-        <Grid Grid.Row="2">
-            <ScrollViewer Name="scrollvStore"
+                <Grid Grid.Row="1">
+                    <ScrollViewer Name="scrollvStore"
                           DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}"
                           ViewChanged="ScrollViewer_ViewChanged">
-                <GridView x:Name="gridviewKiosList"                      
+                        <GridView x:Name="gridviewKiosList"                      
                           ItemsSource="{Binding KiosList}"
-                          ItemTemplate="{StaticResource kiosItemTemplate}">
-                </GridView>
+                          ItemTemplate="{StaticResource kiosItemTemplate}"
+                                  SelectionChanged="kiosItem_SelectionChanged">
+                        </GridView>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </SplitView.Content>
+        <SplitView.Pane>
+            <ScrollViewer>
+                <Grid Background="#4F81BC">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+                    <RowDefinition Height="295" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" BorderBrush="White" BorderThickness="0,0,0,1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="130" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center">
+                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <StackPanel Margin="10,0,0,0">
+                            <Ellipse Height="80" Width="80">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="ms-appx:///Assets/lol.jpg"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock Text="HAHA"
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+                            <TextBlock Text="HUHU" 
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Call Mobile"
+                                           VerticalAlignment="Top"
+                                           Foreground="White"
+                                           Height="17"
+                                           Margin="20,0,0,0"/>
+                            <TextBlock Text="09xxxxxxx"
+                                           Foreground="White"
+                                           Height="17" 
+                                           Margin="20,15,0,0"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Button Background="#4F81BC">
+                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Message"
+                                           VerticalAlignment="Center"
+                                           Foreground="White"
+                                           Height="25"
+                                           Margin="20,0,0,0"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Button Background="#4F81BC">
+                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1" BorderBrush="White" BorderThickness="0,0,0,1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="Product List" 
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListView x:Name="listviewProductList"
+                                  ItemTemplate="{StaticResource productItemTemplate}"
+                                  ItemsSource="{Binding FakeKios.ProductList}"
+                                  DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}">
+                         </ListView>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Button HorizontalAlignment="Right"
+                                Background="#4B82BB">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="See more and Details"
+                                       Foreground="White"
+                                       FontStyle="Italic"
+                                       FontSize="12"/>
+                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG"  />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBox Background="White"
+                                 Margin="10,10,10,-2"
+                                 BorderThickness="0"
+                                 PlaceholderText="Write your comment"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListView ItemTemplate="{StaticResource commentItemTemplate}"
+                                  ItemsSource="{Binding FakeKios.ProductList}"
+                                  DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}">
+                                    
+                        </ListView>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Button HorizontalAlignment="Right"
+                                Background="#4B82BB">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="See more"
+                                       Foreground="White"
+                                       FontStyle="Italic"
+                                       FontSize="12"/>
+                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG"  />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Grid>
             </ScrollViewer>
-        </Grid>
-    </Grid>
-    
-    
+        </SplitView.Pane>
+    </SplitView>
+
+
 </Page>

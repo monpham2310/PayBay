@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using PayBay.ViewModel;
 
 namespace PayBay.Model
@@ -19,6 +20,7 @@ namespace PayBay.Model
         private string _userName;        
         private string _sasQuery;
         private float _rate;
+        private ObservableCollection<Product> _productList;
 
         public string Image
         {
@@ -145,6 +147,20 @@ namespace PayBay.Model
             set
             {
                 _sasQuery = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Product> ProductList
+        {
+            get
+            {
+                return _productList;
+            }
+
+            set
+            {
+                _productList = value;
                 OnPropertyChanged();
             }
         }

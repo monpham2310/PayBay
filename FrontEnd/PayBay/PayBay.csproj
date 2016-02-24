@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Button\Account.png" />
+    <Content Include="Assets\Button\ForwardIcon.PNG" />
     <Content Include="Assets\Button\Hamburger.png" />
     <Content Include="Assets\Logo\icon.jpg" />
     <Content Include="Assets\Logo\SplashScreen.scale-100.png" />

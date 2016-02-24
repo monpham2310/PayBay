@@ -46,6 +46,11 @@ namespace PayBay.View.MarketGroup
             }
         }
 
+        private void kiosItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            splitviewKios.IsPaneOpen = true;
+        }
+
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if(scrollvStore.VerticalOffset >= scrollvStore.ScrollableHeight)

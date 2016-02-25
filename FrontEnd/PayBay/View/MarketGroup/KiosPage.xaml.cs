@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PayBay.Utilities.Handler;
 using PayBay.ViewModel.MarketGroup;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace PayBay.View.MarketGroup
 {
@@ -49,6 +50,41 @@ namespace PayBay.View.MarketGroup
         private void kiosItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             splitviewKios.IsPaneOpen = true;
+        }
+
+        private void btnStar1_Click(object sender, RoutedEventArgs e)
+        {
+            imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        }
+
+        private void btnStar2_Click(object sender, RoutedEventArgs e)
+        {
+            imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        }
+
+        private void btnStar3_Click(object sender, RoutedEventArgs e)
+        {
+            imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        }
+
+        private void btnStar4_Click(object sender, RoutedEventArgs e)
+        {
+            imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        }
+
+        private void btnStar5_Click(object sender, RoutedEventArgs e)
+        {
+            imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+            imgBtnStar5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

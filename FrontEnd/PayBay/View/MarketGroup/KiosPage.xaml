@@ -160,12 +160,32 @@
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal" 
                                     HorizontalAlignment="Center">
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                        </StackPanel>
+                            <!--<Image Source="ms-appx:///Assets/Rating/emptystar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/emptystar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/emptystar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/emptystar.png" Width="30"/>
+                            <Image Source="ms-appx:///Assets/Rating/emptystar.png" Width="30"/>-->
+                                <Button x:Name="btnStar1" Width="40"
+                                        Click="btnStar1_Click">
+                                    <Image x:Name="imgBtnStar1" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar2" Width="40"
+                                        Click="btnStar2_Click">
+                                    <Image x:Name="imgBtnStar2" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar3" Width="40"
+                                        Click="btnStar3_Click">
+                                    <Image x:Name="imgBtnStar3" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar4" Width="40"
+                                        Click="btnStar4_Click">
+                                    <Image x:Name="imgBtnStar4" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar5" Width="40"
+                                        Click="btnStar5_Click">
+                                    <Image x:Name="imgBtnStar5" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                            </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1">
                         <StackPanel Margin="10,0,0,0">
@@ -273,7 +293,8 @@
                     <Grid Grid.Row="1">
                         <ListView ItemTemplate="{StaticResource commentItemTemplate}"
                                   ItemsSource="{Binding FakeKios.ProductList}"
-                                  DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}">
+                                  DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}"
+                                  Margin="0,5,0,0">
                                     
                         </ListView>
                     </Grid>

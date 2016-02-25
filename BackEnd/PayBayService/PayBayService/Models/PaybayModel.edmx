@@ -23,8 +23,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CommentDate" Type="date" />
-          <Property Name="CommentTime" Type="time" Precision="7" />
+          <Property Name="CommentDate" Type="datetime" />
           <Property Name="StoreID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Content" Type="nvarchar(max)" />
@@ -174,8 +173,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CommentDate" Type="DateTime" Precision="0" />
-          <Property Name="CommentTime" Type="Time" Precision="7" />
+          <Property Name="CommentDate" Type="DateTime" Precision="3" />
           <Property Name="StoreID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -328,7 +326,6 @@
               <MappingFragment StoreEntitySet="Comments">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
-                <ScalarProperty Name="CommentTime" ColumnName="CommentTime" />
                 <ScalarProperty Name="StoreID" ColumnName="StoreID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Content" ColumnName="Content" />

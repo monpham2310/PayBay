@@ -16,7 +16,6 @@ namespace PayBayService.Models
     {
         public int Id { get; set; }
         public Nullable<System.DateTime> CommentDate { get; set; }
-        public Nullable<System.TimeSpan> CommentTime { get; set; }
         public int StoreID { get; set; }
         public int UserID { get; set; }
         public string Content { get; set; }

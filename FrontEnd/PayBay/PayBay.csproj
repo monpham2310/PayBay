@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Kios.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
     <Compile Include="Utilities\Helpers\StorageHelper.cs" />
     <Compile Include="ViewModel\AccountGroup\UserInfoViewModel.cs" />
+    <Compile Include="ViewModel\CommentGroup\CommentViewModel.cs" />
     <Compile Include="ViewModel\HomePageGroup\AdvertiseViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\KiosViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\MarketViewModel.cs" />

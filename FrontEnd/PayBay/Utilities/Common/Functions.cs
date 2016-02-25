@@ -119,5 +119,16 @@ namespace PayBay.Utilities.Common
             return isValid;
         }
 
+        //public static IList<T> AddSorted<T>(this IList<T> list, T item, IComparer<T> comparer = null)
+        //{
+        //    if (comparer == null)
+        //    {
+        //        comparer = Comparer<T>.Default;
+        //    }
+        //    int i = 0;
+        //    list.Insert(i, item);
+        //    return list;
+        //}
+
     }
 }

@@ -586,7 +586,9 @@
                             </Grid.ColumnDefinitions>
                             <TextBox BorderThickness="0" 
                                      HorizontalAlignment="Stretch"
-                                     Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,35,-2"
+                                     Grid.Column="0" 
+                                     Grid.ColumnSpan="2" 
+                                     Margin="0,0,35,-2"
                                      x:Name="txtSearchProduct"
                                      />
                             <Button x:Name="btSearchProduct" 

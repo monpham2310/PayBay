@@ -49,21 +49,22 @@
         </DataTemplate>
         <DataTemplate x:Key="commentItemTemplate">
             <Grid Width="270">
-                <TextBlock Text="01/01/2016" 
+                <TextBlock Text="{Binding CommentDate}" 
                            Foreground="White"
+                           Margin="0,0,30,0"
                            HorizontalAlignment="Right"
                            FontSize="11"/>
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Height="40" Width="40">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="ms-appx:///Assets/lol.jpg"/>
+                            <ImageBrush ImageSource="{Binding Avatar}"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel Margin="5,0,0,0">
-                        <TextBlock Text="User 1" 
+                        <TextBlock Text="{Binding Username}" 
                                    Foreground="White"
                                    FontSize="11"/>
-                        <TextBlock Text="It's good"
+                        <TextBlock Text="{Binding Content}"
                                    Foreground="White"
                                    FontSize="11" 
                                    Margin="0,5,0,0"
@@ -77,7 +78,7 @@
     <SplitView DisplayMode="CompactOverlay"
             IsPaneOpen="False"
             CompactPaneLength="0"
-            OpenPaneLength="250"
+            OpenPaneLength="270"
                x:Name="splitviewKios"
                PanePlacement="Right">
         <SplitView.Content>
@@ -88,9 +89,9 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" 
-              Background="#EBEBEB" 
-              Height="30"
-              Margin="10,0">
+                      Background="#EBEBEB" 
+                      Height="30"
+                      Margin="10,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="50" />
@@ -141,20 +142,44 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" 
-                                    HorizontalAlignment="Center">
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                            <Image Source="ms-appx:///Assets/Rating/fullstar.png" Width="30"/>
-                        </StackPanel>
-                    </Grid>
+                        <!--<StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center">                            
+                                <Button x:Name="btnStar1" Width="40"
+                                        Click="btnStar1_Click">
+                                    <Image x:Name="imgBtnStar1" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar2" Width="40"
+                                        Click="btnStar2_Click">
+                                    <Image x:Name="imgBtnStar2" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar3" Width="40"
+                                        Click="btnStar3_Click">
+                                    <Image x:Name="imgBtnStar3" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar4" Width="40"
+                                        Click="btnStar4_Click">
+                                    <Image x:Name="imgBtnStar4" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                                <Button x:Name="btnStar5" Width="40"
+                                        Click="btnStar5_Click">
+                                    <Image x:Name="imgBtnStar5" Source="ms-appx:///Assets/Rating/emptystar.png" />
+                                </Button>
+                            </StackPanel>-->
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center"                                                                                
+                                        Margin="1,0,0,0">
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="30" Width="30"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="30" Width="30"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="30" Width="30"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="30" Width="30"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="30" Width="30"></Image>
+                            </StackPanel>
+                        </Grid>
                     <Grid Grid.Row="1">
                         <StackPanel Margin="10,0,0,0">
                             <Ellipse Height="80" Width="80">
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="ms-appx:///Assets/lol.jpg"/>
+                                    <ImageBrush ImageSource="{Binding Path=SelectedStore.Image}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
                             <TextBlock Text="{Binding Path=SelectedStore.StoreName}"
@@ -244,30 +269,56 @@
                                 Background="#4B82BB">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="See more and Details"
-                                       Foreground="White"
+                                       Foreground="White"                                       
                                        FontStyle="Italic"
-                                       FontSize="12"/>
-                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG"  />
+                                       FontSize="14"/>
+                                <Image Margin="0,3,0,0" Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />
                             </StackPanel>
                         </Button>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
+                        <RowDefinition Height="40" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="30" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <TextBox Background="White"
-                                 Margin="10,10,10,-2"
-                                 BorderThickness="0"
-                                 PlaceholderText="Write your comment"/>
-                    </Grid>
+                    </Grid.RowDefinitions>                    
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Background="#EBEBEB" 
+                              Height="30"
+                              Margin="10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="50" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox BorderThickness="0" 
+                                     HorizontalAlignment="Stretch"
+                                     Grid.Column="0" 
+                                     Grid.ColumnSpan="2" 
+                                     Margin="0,0,35,0"
+                                     x:Name="txtComment"
+                                     PlaceholderText="Write a comment..."
+                                     />
+                            <Button x:Name="btSend" 
+                    	            Height="31" 
+                    	            Width="35" 
+                    	            Background="#EBEBEB"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Click="btSend_Click">
+                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG" 
+                    	               HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            </Button>
+                        </Grid>
                     <Grid Grid.Row="1">
                         <ListView ItemTemplate="{StaticResource commentItemTemplate}"
-                                  ItemsSource="{Binding FakeKios.ProductList}"
-                                  >
+                                  ItemsSource="{Binding CommentLstOfStore}"
+                                  DataContext="{Binding Source={StaticResource Locator},Path=CommentVm}"
+                                  Margin="0,5,0,0"
+                                  Name="lvComments">
                                     
                         </ListView>
                     </Grid>
@@ -275,11 +326,12 @@
                         <Button HorizontalAlignment="Right"
                                 Background="#4B82BB">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="See more"
-                                       Foreground="White"
-                                       FontStyle="Italic"
-                                       FontSize="12"/>
-                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG"  />
+                                    <TextBlock Text="See more"
+                                           Margin="0,2,0,0"
+                                           Foreground="White"
+                                           FontStyle="Italic"
+                                           FontSize="14"/>
+                                    <Image Margin="0,5,0,0" Source="ms-appx:///Assets/Button/ForwardIcon.PNG"  />
                             </StackPanel>
                         </Button>
                     </Grid>

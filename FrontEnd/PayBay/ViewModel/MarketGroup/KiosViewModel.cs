@@ -87,6 +87,7 @@ namespace PayBay.ViewModel.MarketGroup
         private void InitializeProperties()
         {
             MarketID = -1;
+            SelectedStore = new Kios();
             KiosList = new ObservableCollection<Kios>();
         }
 

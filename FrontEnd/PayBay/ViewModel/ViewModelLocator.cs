@@ -19,6 +19,7 @@ using PayBay.ViewModel.HomePageGroup;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.ViewModel.AccountGroup;
 using PayBay.ViewModel.ProductGroup;
+using PayBay.ViewModel.CommentGroup;
 
 namespace PayBay.ViewModel
 {
@@ -53,6 +54,7 @@ namespace PayBay.ViewModel
             SimpleIoc.Default.Register<UserInfoViewModel>();
             SimpleIoc.Default.Register<ProductViewModel>();
             SimpleIoc.Default.Register<KiosViewModel>();
+            SimpleIoc.Default.Register<CommentViewModel>();
         }
 
         //TODO: Register to use ViewModel here, syntax as below
@@ -62,6 +64,7 @@ namespace PayBay.ViewModel
         public UserInfoViewModel AccountVm => ServiceLocator.Current.GetInstance<UserInfoViewModel>();
         public ProductViewModel ProductVm => ServiceLocator.Current.GetInstance<ProductViewModel>();
         public KiosViewModel KiosVm => ServiceLocator.Current.GetInstance<KiosViewModel>();
+        public CommentViewModel CommentVm => ServiceLocator.Current.GetInstance<CommentViewModel>();
 
         public static void Cleanup()
         {

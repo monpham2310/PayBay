@@ -23,12 +23,16 @@ using System.Threading.Tasks;
 using PayBay.Utilities.Handler;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.ViewModel.ProductGroup;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Popups;
+using PayBay.ViewModel.CommentGroup;
 
 namespace PayBay.View.MarketGroup
 {
     public sealed partial class KiosPage : Page
     {
-        private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;        
+        private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;
+        private CommentViewModel CommentVm => (CommentViewModel)lvComments.DataContext;    
 
         public KiosPage()
         {
@@ -55,8 +59,45 @@ namespace PayBay.View.MarketGroup
                 KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
                 int selectedId = KiosVm.SelectedStore.StoreId;
                 await MediateClass.ProductVM.GetProductsOfStore(selectedId);
-            }            
+                await MediateClass.CommentVM.GetCommentOfStore(selectedId);
+            }
+            txtComment.Text = "";         
         }
+
+        //private void btnStar1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //}
+
+        //private void btnStar2_Click(object sender, RoutedEventArgs e)
+        //{
+        //    imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //}
+
+        //private void btnStar3_Click(object sender, RoutedEventArgs e)
+        //{
+        //    imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //}
+
+        //private void btnStar4_Click(object sender, RoutedEventArgs e)
+        //{
+        //    imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //}
+
+        //private void btnStar5_Click(object sender, RoutedEventArgs e)
+        //{
+        //    imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar2.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar3.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar4.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //    imgBtnStar5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
+        //}
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
@@ -75,6 +116,17 @@ namespace PayBay.View.MarketGroup
 
             }
         }
-                
+
+        private async void btSend_Click(object sender, RoutedEventArgs e)
+        {
+            if(MediateClass.UserVM.UserInfo != null)
+            {
+                await CommentVm.UserComment(txtComment.Text, KiosVm.SelectedStore.StoreId);
+            }
+            else
+            {
+                await new MessageDialog("You are not login.Please login to comment!","Notification!").ShowAsync();
+            }
+        }
     }
 }

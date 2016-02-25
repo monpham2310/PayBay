@@ -116,6 +116,8 @@ create table paybayservice.Comments (
 	Content nvarchar(max)
 );
 
+alter table paybayservice.Comments alter column CommentDate nvarchar(50)
+
 create table paybayservice.RevenueStatistic (
 	Id int identity(1,1) not null primary key,
 	StoreID int not null,

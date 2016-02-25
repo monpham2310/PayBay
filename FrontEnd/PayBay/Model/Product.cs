@@ -161,7 +161,7 @@ namespace PayBay.Model
             }
         }
 
-        public int Stt
+        public int STT
         {
             get
             {

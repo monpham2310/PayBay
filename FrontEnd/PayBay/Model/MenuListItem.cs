@@ -12,7 +12,7 @@ namespace PayBay.Model
         Func2,
 		FreeCall,
 		AboutUs,
-		Print,
+		Logout,
 		FeedbackAndApps,
         Settings
     };

@@ -22,12 +22,13 @@ using System.Text;
 using System.Threading.Tasks;
 using PayBay.Utilities.Handler;
 using PayBay.ViewModel.MarketGroup;
+using PayBay.ViewModel.ProductGroup;
 
 namespace PayBay.View.MarketGroup
 {
     public sealed partial class KiosPage : Page
     {
-        private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;
+        private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;        
 
         public KiosPage()
         {
@@ -46,9 +47,15 @@ namespace PayBay.View.MarketGroup
             }
         }
 
-        private void kiosItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void kiosItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             splitviewKios.IsPaneOpen = true;
+            if (KiosVm != null)
+            {
+                KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
+                int selectedId = KiosVm.SelectedStore.StoreId;
+                await MediateClass.ProductVM.GetProductsOfStore(selectedId);
+            }            
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -68,11 +75,6 @@ namespace PayBay.View.MarketGroup
 
             }
         }
-
-        //private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Frame.GoBack();
-        //}
-
+                
     }
 }

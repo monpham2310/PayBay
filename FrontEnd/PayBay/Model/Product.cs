@@ -9,6 +9,7 @@ namespace PayBay.Model
 {
     public class Product : BaseViewModel
     {
+        private int _stt;
         private int _productId;
         private string _productName;
         private string _image;
@@ -156,6 +157,20 @@ namespace PayBay.Model
             set
             {
                 _storeName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int Stt
+        {
+            get
+            {
+                return _stt;
+            }
+
+            set
+            {
+                _stt = value;
                 OnPropertyChanged();
             }
         }

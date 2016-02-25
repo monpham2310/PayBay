@@ -1,6 +1,7 @@
 ﻿using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using PayBay.ViewModel.MarketGroup;
+using PayBay.ViewModel.ProductGroup;
 using PayBay.ViewModel.StartGroup;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,6 @@ namespace PayBay.Utilities.Common
         public static StartViewModel StartVM;
         public static MarketViewModel MarketVM;
         public static KiosViewModel KiotVM;
+        public static ProductViewModel ProductVM;
     }
 }

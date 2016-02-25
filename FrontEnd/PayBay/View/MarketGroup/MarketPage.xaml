@@ -64,7 +64,7 @@
 						BorderBrush="{StaticResource LightGrayBrush}">
 					<TextBlock x:Name="tblAddress2"
 							   VerticalAlignment="Center"
-							   Text="1, NPQ Streetm Dist. 1, HCMC" />
+							   Text="{Binding Path=SelectedMarket.Phone}" />
 				</Border>
 				<Border Grid.Column="1"
 						Grid.Row="1"

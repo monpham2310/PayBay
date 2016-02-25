@@ -19,8 +19,7 @@ namespace PayBay.Model
         private int _ownerId;
         private string _userName;        
         private string _sasQuery;
-        private float _rate;
-        private ObservableCollection<Product> _productList;
+        private float _rate;        
 
         public string Image
         {
@@ -150,19 +149,6 @@ namespace PayBay.Model
                 OnPropertyChanged();
             }
         }
-
-        public ObservableCollection<Product> ProductList
-        {
-            get
-            {
-                return _productList;
-            }
-
-            set
-            {
-                _productList = value;
-                OnPropertyChanged();
-            }
-        }
+                
     }
 }

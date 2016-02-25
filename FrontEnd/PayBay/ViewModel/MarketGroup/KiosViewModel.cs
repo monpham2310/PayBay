@@ -17,11 +17,10 @@ namespace PayBay.ViewModel.MarketGroup
 {
     public class KiosViewModel : BaseViewModel
     {
+        private Kios _selectedStore;
         private ObservableCollection<Kios> _kiosList;
         private int _marketID;
-
-        private Kios _fakeKios;
-
+        
         #region Property with calling to PropertyChanged
         public ObservableCollection<Kios> KiosList
         {
@@ -47,16 +46,17 @@ namespace PayBay.ViewModel.MarketGroup
                 OnPropertyChanged();
             }
         }
-
-        public Kios FakeKios
+                
+        public Kios SelectedStore
         {
             get
             {
-                return _fakeKios;
+                return _selectedStore;
             }
+
             set
             {
-                _fakeKios = value;
+                _selectedStore = value;
                 OnPropertyChanged();
             }
         }
@@ -67,24 +67,22 @@ namespace PayBay.ViewModel.MarketGroup
             MediateClass.KiotVM = this;
             InitializeProperties();
             InitializeData();
-
-            //Fake Data
-            InitFakeData();
+                        
         }
 
         //Initialize Fake Data
-        private void InitFakeData()
-        {
-            _fakeKios = new Kios();
-            ObservableCollection<Product> fakeProductList = new ObservableCollection<Product>();
-            for (int i=0; i < 5; i++)
-            {
-                Product fakeProduct = new Product();
-                fakeProduct.ProductName = "Ba Con Soi";
-                fakeProductList.Add(fakeProduct);
-            }
-            _fakeKios.ProductList = fakeProductList;
-        }
+        //private void InitFakeData()
+        //{
+        //    _fakeKios = new Kios();
+        //    ObservableCollection<Product> fakeProductList = new ObservableCollection<Product>();
+        //    for (int i=0; i < 5; i++)
+        //    {
+        //        Product fakeProduct = new Product();
+        //        fakeProduct.ProductName = "Ba Con Soi";
+        //        fakeProductList.Add(fakeProduct);
+        //    }
+        //    _fakeKios.ProductList = fakeProductList;
+        //}
 
         private void InitializeProperties()
         {

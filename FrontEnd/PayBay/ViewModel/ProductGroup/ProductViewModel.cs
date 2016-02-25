@@ -15,6 +15,7 @@ namespace PayBay.ViewModel.ProductGroup
     public class ProductViewModel : BaseViewModel
     {
         private Product _selectedProduct;
+        private ObservableCollection<Product> _productsOfStore;
         private ObservableCollection<Product> _productList;
                 
         #region Property with calling to PropertyChanged
@@ -43,10 +44,25 @@ namespace PayBay.ViewModel.ProductGroup
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<Product> ProductsOfStore
+        {
+            get
+            {
+                return _productsOfStore;
+            }
+
+            set
+            {
+                _productsOfStore = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         public ProductViewModel()
         {
+            MediateClass.ProductVM = this;
             InitializeProperties();
             InitializeData();
         }
@@ -126,6 +142,25 @@ namespace PayBay.ViewModel.ProductGroup
             {
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }            
+        }
+
+        public async Task GetProductsOfStore(int storeId)
+        {
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"storeId" , storeId.ToString()}
+            };
+            try
+            {
+                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                JArray response = JArray.Parse(result.ToString());
+
+                ProductsOfStore = response.ToObject<ObservableCollection<Product>>();
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
         }
 
     }

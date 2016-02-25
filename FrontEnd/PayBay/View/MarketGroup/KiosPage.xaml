@@ -7,6 +7,7 @@
     xmlns:converters="using:PayBay.Utilities.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=KiosVm}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -37,7 +38,7 @@
         </DataTemplate>
         <DataTemplate x:Key="productItemTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding ProductId}"
+                <TextBlock Text="{Binding STT}"
                            Foreground="White"/>
                 <TextBlock Text="."
                            Foreground="White"/>
@@ -76,7 +77,7 @@
     <SplitView DisplayMode="CompactOverlay"
             IsPaneOpen="False"
             CompactPaneLength="0"
-            OpenPaneLength="300"
+            OpenPaneLength="250"
                x:Name="splitviewKios"
                PanePlacement="Right">
         <SplitView.Content>
@@ -95,10 +96,10 @@
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="tbxSearch"
-                     BorderThickness="0" 
-                     HorizontalAlignment="Stretch"
-                     Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,35,-2"
-                     />
+                         BorderThickness="0" 
+                         HorizontalAlignment="Stretch"
+                         Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,35,-2"
+                         />
                     <Button x:Name="btnSearch" 
                     	Height="31" 
                     	Width="35" 
@@ -109,34 +110,16 @@
                         <Image Source="/Assets/SearchIcon.PNG" 
                     	HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
-                    </Button>
-                    <!--<StackPanel Background="#EBEBEB"
-                        Height="30"
-                        Orientation="Horizontal">
-                <TextBox x:Name="tbxSearch"
-                             BorderThickness="0" 
-                             HorizontalAlignment="Stretch" Margin="0,0,0,-2" Width="323"/>
-                <Button x:Name="btnSearch" 
-                    	Height="31" 
-                    	Width="42" 
-                    	Background="#EBEBEB"
-                        HorizontalAlignment="Right">
-                    <Image Source="/Assets/SearchIcon.PNG" 
-                    	HorizontalAlignment="Stretch"
-                           VerticalAlignment="Stretch"/>
-                </Button>
-
-            </StackPanel>-->
+                    </Button>                    
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <ScrollViewer Name="scrollvStore"
-                          DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}"
+                    <ScrollViewer Name="scrollvStore"                          
                           ViewChanged="ScrollViewer_ViewChanged">
                         <GridView x:Name="gridviewKiosList"                      
-                          ItemsSource="{Binding KiosList}"
-                          ItemTemplate="{StaticResource kiosItemTemplate}"
-                                  SelectionChanged="kiosItem_SelectionChanged">
+                              ItemsSource="{Binding KiosList}"
+                              ItemTemplate="{StaticResource kiosItemTemplate}"
+                              SelectionChanged="kiosItem_SelectionChanged">
                         </GridView>
                     </ScrollViewer>
                 </Grid>
@@ -174,55 +157,65 @@
                                     <ImageBrush ImageSource="ms-appx:///Assets/lol.jpg"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock Text="HAHA"
-                           Foreground="White"
-                           HorizontalAlignment="Center"/>
-                            <TextBlock Text="HUHU" 
-                           Foreground="White"
-                           HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Path=SelectedStore.StoreName}"
+                                Foreground="White"
+                                HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Path=SelectedStore.KiotNo}" 
+                                Foreground="White"
+                                HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <TextBlock Text="Call Mobile"
-                                           VerticalAlignment="Top"
-                                           Foreground="White"
-                                           Height="17"
-                                           Margin="20,0,0,0"/>
-                            <TextBlock Text="09xxxxxxx"
-                                           Foreground="White"
-                                           Height="17" 
-                                           Margin="20,15,0,0"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                        <Button Background="#4B82BB"
+                        HorizontalAlignment="Stretch"
+                        Name="btCallMobile"
+                        Grid.ColumnSpan="2">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <Grid Grid.Column="0">
+                                   <TextBlock Text="Call Mobile"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Foreground="White"
+                                    Height="25"
+                                    Margin="0,0,135,10"/>
+                                    <TextBlock Text="{Binding Path=SelectedStore.Phone}"
+                                    Foreground="White"
+                                    Height="17" 
+                                    Margin="0,12,135,0"/>
+                                    </Grid>
+                                <Grid Grid.Column="1">
+                                    <Image HorizontalAlignment="Right" Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />
+                                </Grid>
+                            </StackPanel>
+                        </Button>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <Button Background="#4F81BC">
-                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />
-                            </Button>
-                        </Grid>
-
-                    </Grid>
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <TextBlock Text="Message"
-                                           VerticalAlignment="Center"
-                                           Foreground="White"
-                                           Height="25"
-                                           Margin="20,0,0,0"/>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <Button Background="#4F81BC">
-                                <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />
-                            </Button>
-                        </Grid>
-
+                        <Button Background="#4B82BB"
+                                HorizontalAlignment="Stretch"
+                                Name="btSendMessage"
+                                Grid.ColumnSpan="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <Grid Grid.Column="0">
+                                <TextBlock Text="Message"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Foreground="White"
+                                    Height="25"
+                                    Margin="0,0,150,0"/>                                        
+                            </Grid>
+                            <Grid Grid.Column="1">                                
+                                 <Image HorizontalAlignment="Right" Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />                                
+                            </Grid>
+                        </StackPanel>
+                        </Button>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1" BorderBrush="White" BorderThickness="0,0,0,1">
@@ -239,11 +232,12 @@
 
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ListView x:Name="listviewProductList"
+                            <ListView x:Name="listviewProductList"
                                   ItemTemplate="{StaticResource productItemTemplate}"
-                                  ItemsSource="{Binding FakeKios.ProductList}"
-                                  DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}">
-                         </ListView>
+                                  DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+                                  ItemsSource="{Binding ProductsOfStore}">
+
+                            </ListView>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Button HorizontalAlignment="Right"
@@ -273,7 +267,7 @@
                     <Grid Grid.Row="1">
                         <ListView ItemTemplate="{StaticResource commentItemTemplate}"
                                   ItemsSource="{Binding FakeKios.ProductList}"
-                                  DataContext="{Binding Source={StaticResource Locator},Path=KiosVm}">
+                                  >
                                     
                         </ListView>
                     </Grid>

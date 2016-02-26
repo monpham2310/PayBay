@@ -139,5 +139,10 @@ namespace PayBay.View.MarketGroup
 		{
 			Frame.Navigate(typeof(KiosPage));
 		}
-	}
+
+        private void btCallMobile_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI("+84932273623", "TamBaDao");
+        }
+    }
 }

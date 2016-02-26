@@ -1,0 +1,98 @@
+﻿<UserControl
+    x:Class="PayBay.View.MarketGroup.KiosGroup.KiosProductPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PayBay.View.MarketGroup.KiosGroup"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="300"
+	DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}">
+
+	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" 
+				   Text="Product List"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   FontSize="20"/>
+
+		<Grid Grid.Row="1">
+			<StackPanel>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50"/>
+						<ColumnDefinition Width="1.5*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="1.5*"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Column="0" 
+							   Text="No."
+							   HorizontalAlignment="Center"/>
+					<TextBlock Grid.Column="1" 
+							   Text="Product"
+							   HorizontalAlignment="Center"/>
+					<TextBlock Grid.Column="2" 
+							   Text="Price"
+							   HorizontalAlignment="Center"/>
+					<TextBlock Grid.Column="3" 
+							   Text="Status"
+							   HorizontalAlignment="Center"/>
+					<TextBlock Grid.Column="4" 
+							   Text="Order"
+							   HorizontalAlignment="Center"/>
+				</Grid>
+
+				<ListView ItemsSource="{Binding ProductsOfStore}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="50"/>
+									<ColumnDefinition Width="1.5*"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="1.5*"/>
+								</Grid.ColumnDefinitions>
+
+								<TextBlock Grid.Column="0"
+										   Text="{Binding STT}"
+										   HorizontalAlignment="Center"/>
+								<TextBlock Grid.Column="1" 
+										   Text="{Binding ProductName}"
+										   HorizontalAlignment="Center"/>
+								<TextBlock Grid.Column="2" 
+										   Text="{Binding SalePrice}"
+										   HorizontalAlignment="Center"/>
+								<TextBlock Grid.Column="3" 
+										  Text="{Binding NumberOf}"
+										   HorizontalAlignment="Center"/>
+								<TextBox Grid.Column="4" 
+										 Text="0"
+										 HorizontalAlignment="Center"/>
+							</Grid>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackPanel>
+		</Grid>
+
+		<Button Grid.Row="2" 
+				Content="CHECK" 
+				FontWeight="Bold"
+				FontSize="20"
+				Margin="40,10"
+				Style="{StaticResource RoundedButtonStyle}"
+				Foreground="{StaticResource WhiteBrush}"
+				Background="{StaticResource LightBlueBrush}"
+				HorizontalAlignment="Stretch"/>
+	</Grid>
+</UserControl>

@@ -155,8 +155,14 @@
     <Compile Include="View\BottomFunctionGroup\SettingGroup\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MarketGroup\KiosPage.xaml.cs">
-      <DependentUpon>KiosPage.xaml</DependentUpon>
+    <Compile Include="View\MarketGroup\KiosGroup\CommentPage.xaml.cs">
+      <DependentUpon>CommentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MarketGroup\KiosGroup\KiosProductPage.xaml.cs">
+      <DependentUpon>KiosProductPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MarketGroup\KiosListPage.xaml.cs">
+      <DependentUpon>KiosListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MarketGroup\MarketPage.xaml.cs">
       <DependentUpon>MarketPage.xaml</DependentUpon>
@@ -228,6 +234,7 @@
     <Content Include="Assets\Logo\StoreLogo.scale-200.png" />
     <Content Include="Assets\Logo\StoreLogo.scale-400.png" />
     <Content Include="Assets\lol.jpg" />
+    <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />
     <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao.png" />
@@ -240,6 +247,7 @@
     <Content Include="Assets\Product\RauMuong.jpg" />
     <Content Include="Assets\Rating\emptystar.png" />
     <Content Include="Assets\Rating\fullstar.png" />
+    <Content Include="Assets\Rating\fullstar2.png" />
     <Content Include="Assets\Rating\halfstar.png" />
     <Content Include="Assets\SearchIcon.PNG" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
@@ -323,7 +331,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MarketGroup\KiosPage.xaml">
+    <Page Include="View\MarketGroup\KiosGroup\CommentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MarketGroup\KiosGroup\KiosProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MarketGroup\KiosListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

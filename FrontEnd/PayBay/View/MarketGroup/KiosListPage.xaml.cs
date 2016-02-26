@@ -26,15 +26,16 @@ using PayBay.ViewModel.ProductGroup;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Popups;
 using PayBay.ViewModel.CommentGroup;
+using PayBay.View.MarketGroup.KiosGroup;
 
 namespace PayBay.View.MarketGroup
 {
-    public sealed partial class KiosPage : Page
+    public sealed partial class KiosListPage : Page
     {
         private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;
         private CommentViewModel CommentVm => (CommentViewModel)lvComments.DataContext;    
 
-        public KiosPage()
+        public KiosListPage()
         {
             this.InitializeComponent();
         }
@@ -127,7 +128,17 @@ namespace PayBay.View.MarketGroup
             {
                 await new MessageDialog("You are not login.Please login to comment!","Notification!").ShowAsync();
             }
-        }
-                
-    }
+        }             
+
+		private void linkSeeComments_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(KiosPage));
+		}
+		
+		private void linkSeeProducts_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(KiosPage));
+		}
+	}
+
 }

@@ -233,6 +233,7 @@
     <Content Include="Assets\Logo\StoreLogo.scale-200.png" />
     <Content Include="Assets\Logo\StoreLogo.scale-400.png" />
     <Content Include="Assets\lol.jpg" />
+    <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />
     <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao.png" />
@@ -245,6 +246,7 @@
     <Content Include="Assets\Product\RauMuong.jpg" />
     <Content Include="Assets\Rating\emptystar.png" />
     <Content Include="Assets\Rating\fullstar.png" />
+    <Content Include="Assets\Rating\fullstar2.png" />
     <Content Include="Assets\Rating\halfstar.png" />
     <Content Include="Assets\SearchIcon.PNG" />
     <Content Include="Assets\SplashScreen.scale-100.png" />

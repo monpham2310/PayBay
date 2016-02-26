@@ -34,7 +34,8 @@
 				FontSize="20"
 				FontWeight="Bold"
 				Margin="10"/>
-			<Maps:MapControl Height="250"/>
+			<Maps:MapControl Height="250"
+                             x:Name="MarketAddressMap"/>
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>

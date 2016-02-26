@@ -32,7 +32,7 @@ namespace PayBay.View.MarketGroup
 		public MarketPage()
 		{
 			this.InitializeComponent();
-            //SetUpMap();
+            SetUpMap();
 		}
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)

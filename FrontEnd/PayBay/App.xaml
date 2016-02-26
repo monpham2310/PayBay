@@ -52,6 +52,7 @@
 				<TextBlock Text="{Binding}"/>
 			</DataTemplate>
 
+			<!-- ROUND BUTTON STYLE -->
 			<Style TargetType="Button" x:Key="RoundedButtonStyle">
 				<Setter Property="Template">
 					<Setter.Value>

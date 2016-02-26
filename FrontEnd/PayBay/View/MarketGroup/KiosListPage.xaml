@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="PayBay.View.MarketGroup.KiosPage"
+    x:Class="PayBay.View.MarketGroup.KiosListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PayBay"
@@ -15,12 +15,12 @@
         
         <DataTemplate x:Key="kiosItemTemplate">
             <StackPanel Margin="10,0,0,0">
-                <Ellipse Height="69" Width="72">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="{Binding Image}"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <TextBlock Text="{Binding StoreName}"
+				<Ellipse Height="69" Width="72">
+					<Ellipse.Fill>
+						<ImageBrush ImageSource="{Binding Image}"/>
+					</Ellipse.Fill>
+				</Ellipse>
+				<TextBlock Text="{Binding StoreName}"
                            Foreground="{StaticResource LightBlueBrush}"
                            HorizontalAlignment="Center"/>
                 <TextBlock Text="{Binding KiotNo}" 
@@ -127,12 +127,12 @@
             </Grid>
         </SplitView.Content>
         <SplitView.Pane>
-            <ScrollViewer>
+            <ScrollViewer HorizontalScrollMode="Auto">
                 <Grid Background="#4F81BC">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="250" />
-                    <RowDefinition Height="295" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" BorderBrush="White" BorderThickness="0,0,0,1">
                     <Grid.RowDefinitions>
@@ -265,16 +265,20 @@
                             </ListView>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <Button HorizontalAlignment="Right"
+							<HyperlinkButton x:Name="linkSeeProducts" 
+											 Content="See more and Details  >"
+											 HorizontalAlignment="Right"
+											 Foreground="White"   
+											 FontStyle="Italic"
+											 FontSize="14"
+											 Click="linkSeeProducts_Click"/>
+							<!--<Button HorizontalAlignment="Right"
                                 Background="#4B82BB">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="See more and Details"
-                                       Foreground="White"                                       
-                                       FontStyle="Italic"
-                                       FontSize="14"/>
+                                
                                 <Image Margin="0,3,0,0" Source="ms-appx:///Assets/Button/ForwardIcon.PNG" />
                             </StackPanel>
-                        </Button>
+                        </Button>-->
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="2">
@@ -323,17 +327,20 @@
                         </ListView>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <Button HorizontalAlignment="Right"
+							<HyperlinkButton x:Name="linkSeeComments" 
+													 Content="See more  >"
+													 HorizontalAlignment="Right"
+													 Foreground="White"
+													 FontStyle="Italic"
+													 FontSize="14"
+													 Click="linkSeeComments_Click"/>
+							<!--<Button HorizontalAlignment="Right"
                                 Background="#4B82BB">
                             <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="See more"
-                                           Margin="0,2,0,0"
-                                           Foreground="White"
-                                           FontStyle="Italic"
-                                           FontSize="14"/>
+                                    
                                     <Image Margin="0,5,0,0" Source="ms-appx:///Assets/Button/ForwardIcon.PNG"  />
                             </StackPanel>
-                        </Button>
+                        </Button>-->
                     </Grid>
                 </Grid>
             </Grid>

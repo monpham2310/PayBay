@@ -32,7 +32,7 @@ namespace PayBay.View.MarketGroup
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)
         {            
-            Frame.Navigate(typeof(KiosPage));
+            Frame.Navigate(typeof(KiosListPage));
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)

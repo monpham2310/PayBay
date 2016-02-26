@@ -238,13 +238,13 @@
 							   VerticalAlignment="Center"
 							   Foreground="{StaticResource GrayBrush}"/>
                     <Ellipse Width="100"
-								    Height="100"
-								    HorizontalAlignment="Left"
-								    Margin="10,0"                                         
-                                    Name="AvatarEllipse" >
+							 Height="100"
+							 HorizontalAlignment="Left"
+							 Margin="10,0"     
+							 Name="AvatarEllipse" >
                         <Ellipse.Fill>
-                            <ImageBrush x:Name="AvatarImage"							    
-                                ImageSource="/Assets/LockScreenLogo.scale-200.png" />
+                            <ImageBrush x:Name="AvatarImage"	
+										ImageSource="/Assets/LockScreenLogo.scale-200.png" />
                         </Ellipse.Fill>
                     </Ellipse>
 					<HyperlinkButton x:Name="ButtonCapture"

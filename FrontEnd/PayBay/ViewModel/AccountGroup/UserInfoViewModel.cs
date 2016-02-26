@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using PayBay.Utilities.Handler;
+using Windows.UI.Popups;
 
 namespace PayBay.ViewModel.AccountGroup
 {
@@ -59,9 +60,19 @@ namespace PayBay.ViewModel.AccountGroup
             {
                 {"type" , "Test"}
             };
-            var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
-            JObject user = JObject.Parse(result.ToString());
-            UserInfo = user.ToObject<UserInfo>();                             
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
+                    JObject user = JObject.Parse(result.ToString());
+                    UserInfo = user.ToObject<UserInfo>();
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }                    
         }
 
     }

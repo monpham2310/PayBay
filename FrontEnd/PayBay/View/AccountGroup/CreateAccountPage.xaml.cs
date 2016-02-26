@@ -110,9 +110,9 @@ namespace PayBay.View.AccountGroup
                 string userName = user.Username.ToLower();
                 userName = (userName.IndexOf(" ") != 1) ? userName.Replace(" ", "") : userName;
 
-                var func = Functions.GetInstance();
+                var func = Functions.Instance;
 
-                bool check = await func.UploadImageToBlob("users", userName, user.UserId, user.Avatar, user.SasQuery, mediaFile);
+                bool check = await func.UploadImageToBlob("users", user.Avatar, user.SasQuery, mediaFile);
                 if (check)
                 {
                     await new MessageDialog("Create Account is successful!", "Notification!").ShowAsync();

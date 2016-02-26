@@ -110,13 +110,14 @@ namespace PayBayService.Controllers
                 market.SasQuery = blob.SasQuery;
                 db.Markets.Add(market);
                 await db.SaveChangesAsync();
+
+                result = JObject.FromObject(market);
             }
             else
             {
                 result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
-            result = Methods.CustomResponseMessage(1, "Add market is successful!");
+            }            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

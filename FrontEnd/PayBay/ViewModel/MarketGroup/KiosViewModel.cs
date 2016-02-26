@@ -93,13 +93,13 @@ namespace PayBay.ViewModel.MarketGroup
 
         public async void InitializeData()
         {            
-            await LoadMoreStore(Functions.TYPEGET.START);
+            await LoadMoreStore(TYPEGET.START);
         }
 
-        public async Task LoadMoreStore(Functions.TYPEGET type)
+        public async Task LoadMoreStore(TYPEGET type)
         {
             int lastId = -1;
-            if(type == Functions.TYPEGET.MORE)
+            if(type == TYPEGET.MORE)
                 lastId = KiosList[KiosList.Count - 1].StoreId;
             MarketID = MediateClass.MarketVM.SelectedMarket.MarketId;        
             IDictionary<string, string> market = new Dictionary<string, string>
@@ -109,19 +109,22 @@ namespace PayBay.ViewModel.MarketGroup
             };
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Get, market);
-                JArray response = JArray.Parse(result.ToString());
-                if (type == Functions.TYPEGET.MORE)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
-
-                    foreach (var item in kiosLst)
+                    JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Get, market);
+                    JArray response = JArray.Parse(result.ToString());
+                    if (type == TYPEGET.MORE)
                     {
-                        KiosList.Add(item);
+                        ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
+
+                        foreach (var item in kiosLst)
+                        {
+                            KiosList.Add(item);
+                        }
                     }
+                    else
+                        KiosList = response.ToObject<ObservableCollection<Kios>>();
                 }
-                else
-                    KiosList = response.ToObject<ObservableCollection<Kios>>();
             }
             catch (Exception ex)
             {
@@ -129,10 +132,10 @@ namespace PayBay.ViewModel.MarketGroup
             }
         }
                
-        public async Task LoadMoreStore(string storeName, Functions.TYPEGET type)
+        public async Task LoadMoreStore(string storeName, TYPEGET type)
         {
             int lastId = -1;
-            if (type == Functions.TYPEGET.MORE)
+            if (type == TYPEGET.MORE)
                 lastId = KiosList[KiosList.Count - 1].StoreId;
             MarketID = MediateClass.MarketVM.SelectedMarket.MarketId;
             IDictionary<string, string> param = new Dictionary<string, string>
@@ -143,19 +146,22 @@ namespace PayBay.ViewModel.MarketGroup
             };
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Post, param);
-                JArray response = JArray.Parse(result.ToString());
-                if (type == Functions.TYPEGET.MORE)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
-
-                    foreach (var item in kiosLst)
+                    JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Post, param);
+                    JArray response = JArray.Parse(result.ToString());
+                    if (type == TYPEGET.MORE)
                     {
-                        KiosList.Add(item);
+                        ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
+
+                        foreach (var item in kiosLst)
+                        {
+                            KiosList.Add(item);
+                        }
                     }
+                    else
+                        KiosList = response.ToObject<ObservableCollection<Kios>>();
                 }
-                else
-                    KiosList = response.ToObject<ObservableCollection<Kios>>();
             }
             catch (Exception ex)
             {

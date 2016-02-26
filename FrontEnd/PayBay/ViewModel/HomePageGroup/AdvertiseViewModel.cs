@@ -11,6 +11,7 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using System.IO;
+using PayBay.Utilities.Helpers;
 
 namespace PayBay.ViewModel.HomePageGroup
 {
@@ -125,12 +126,16 @@ namespace PayBay.ViewModel.HomePageGroup
         private async Task ImportData(IDictionary<string, string> argument)
         {            
             JToken _product = null;
-            try {
-                _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
-                JArray results = JArray.Parse(_product.ToString());
-                AdvertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
-                _selectedAd = AdvertiseItemList[0];
-                _selectedAd.IsSelected = true;
+            try
+            {
+                if (NetworkHelper.Instance.HasInternetConnection)
+                {                    
+                    _product = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, argument);
+                    JArray results = JArray.Parse(_product.ToString());
+                    AdvertiseItemList = results.ToObject<ObservableCollection<AdvertiseItem>>();
+                    _selectedAd = AdvertiseItemList[0];
+                    _selectedAd.IsSelected = true;
+                }                
             }
             catch (Exception ex)
             {

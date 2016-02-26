@@ -18,13 +18,13 @@ using PayBay.ViewModel.MarketGroup;
 
 namespace PayBay.View.MarketGroup.KiosGroup
 {
-	public sealed partial class KiosPage : Page
-	{
-		private KiosViewModel KiosVm => (KiosViewModel)DataContext;
+    public sealed partial class KiosPage : Page
+    {
+        private KiosViewModel KiosVm => (KiosViewModel)DataContext;
 
-		public KiosPage()
-		{
-			this.InitializeComponent();
-		}
-	}
+        public KiosPage()
+        {
+            this.InitializeComponent();
+        }
+    }
 }

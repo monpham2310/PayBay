@@ -42,10 +42,7 @@ namespace PayBay.View.TopFunctionGroup
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-            if (!NetworkHelper.HasInternetConnection)
-            {
-                await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
-            }
+            
         }
 
 		private void HyperlinkButton_Click(object sender, RoutedEventArgs e)

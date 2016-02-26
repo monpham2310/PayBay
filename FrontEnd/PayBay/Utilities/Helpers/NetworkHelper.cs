@@ -9,31 +9,49 @@ using Windows.Networking.Connectivity;
 namespace PayBay.Utilities.Helpers
 {
     public class NetworkHelper
-    {
-        public static bool HasInternetConnection { get; private set; }
-
-        public NetworkHelper()
+    {        
+        private static NetworkHelper _networkAvailabilty;
+        public static NetworkHelper Instance
         {
-            NetworkInformation.NetworkStatusChanged += NetworkInformationOnNetworkStatusChanged;
-            CheckInternetConnection();
+            get { return _networkAvailabilty ?? (_networkAvailabilty = new NetworkHelper()); }
+            set { _networkAvailabilty = value; }
+        }
+
+        private bool _hasInternetConnection;
+        public event Action<bool> OnNetworkAvailabilityChange = delegate { };
+
+        public bool HasInternetConnection
+        {
+            get
+            {
+                return _hasInternetConnection;
+            }
+            protected set
+            {
+                if (_hasInternetConnection == value) return;
+                _hasInternetConnection = value;
+                OnNetworkAvailabilityChange(value);
+            }
+        }
+
+        private void CheckInternetAccess()
+        {
+            var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+            HasInternetConnection = (connectionProfile != null &&
+                                 connectionProfile.GetNetworkConnectivityLevel() ==
+                                 NetworkConnectivityLevel.InternetAccess);            
         }
 
         private void NetworkInformationOnNetworkStatusChanged(object sender)
         {
-            CheckInternetConnection();
+            CheckInternetAccess();            
         }
 
-        public void CheckInternetConnection()
+        private NetworkHelper()
         {
-            HasInternetConnection = NetworkInterface.GetIsNetworkAvailable();
-
-            ConnectionProfile InternetConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
-            NetworkConnectivityLevel connection = InternetConnectionProfile.GetNetworkConnectivityLevel();
-            if (connection == NetworkConnectivityLevel.None || connection == NetworkConnectivityLevel.LocalAccess
-                || InternetConnectionProfile == null)
-            {
-                HasInternetConnection = false;
-            }
+            NetworkInformation.NetworkStatusChanged += new NetworkStatusChangedEventHandler(NetworkInformationOnNetworkStatusChanged);
+            CheckInternetAccess();
         }
+
     }
 }

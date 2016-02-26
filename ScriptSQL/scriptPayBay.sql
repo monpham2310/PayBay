@@ -665,3 +665,21 @@ as
 	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
 	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
 	where ProductId > @ProductId
+
+create proc paybayservice.sp_UserRate
+@UserId int,
+@StoreId int,
+@Rate float
+as
+	begin tran postRate
+		if not exists (select 1 from paybayservice.StatisticRating where UserID=@UserId and StoreID=@StoreId)
+		begin
+			insert into paybayservice.StatisticRating values(@UserId,@StoreId,@Rate)
+		end
+		else
+		begin
+			update paybayservice.StatisticRating
+			set RateOfUser = @Rate
+			where UserID=@UserId and StoreID=@StoreId
+		end
+	commit

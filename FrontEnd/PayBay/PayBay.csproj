@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Kios.cs" />
+    <Compile Include="Model\Rating.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Utilities\Common\MediateClass.cs" />
@@ -125,8 +126,8 @@
     <Compile Include="ViewModel\HomePageGroup\AdvertiseViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\KiosViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\MarketViewModel.cs" />
-    <Compile Include="ViewModel\PlaceholderNewHomepageGroup\PlaceholderNewHomepageViewModel.cs" />
     <Compile Include="ViewModel\ProductGroup\ProductViewModel.cs" />
+    <Compile Include="ViewModel\RatingGroup\RatingViewModel.cs" />
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -181,14 +182,17 @@
     <Compile Include="View\TopFunctionGroup\Function2Page.xaml.cs">
       <DependentUpon>Function2Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\Function3Page.xaml.cs">
+      <DependentUpon>Function3Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\Function4Page.xaml.cs">
+      <DependentUpon>Function4Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StartGroup\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TopFunctionGroup\HomePageNew.xaml.cs">
-      <DependentUpon>HomePageNew.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TopFunctionGroup\InboxPage.xaml.cs">
       <DependentUpon>InboxPage.xaml</DependentUpon>
@@ -366,15 +370,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TopFunctionGroup\Function3Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\Function4Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TopFunctionGroup\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StartGroup\StartPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TopFunctionGroup\HomePageNew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

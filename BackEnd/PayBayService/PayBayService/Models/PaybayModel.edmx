@@ -101,6 +101,15 @@
           <Property Name="isRequired" Type="bit" Nullable="false" />
           <Property Name="SasQuery" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="StatisticRating">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="StoreID" Type="int" />
+          <Property Name="RateOfUser" Type="float" />
+        </EntityType>
         <EntityType Name="Stores">
           <Key>
             <PropertyRef Name="StoreId" />
@@ -147,6 +156,7 @@
           <EntitySet Name="ProductStatistic" EntityType="Self.ProductStatistic" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="RevenueStatistic" EntityType="Self.RevenueStatistic" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="SaleInfo" EntityType="Self.SaleInfo" Schema="paybayservice" store:Type="Tables" />
+          <EntitySet Name="StatisticRating" EntityType="Self.StatisticRating" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="Stores" EntityType="Self.Stores" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="paybayservice" store:Type="Tables" />
@@ -300,7 +310,17 @@
           <EntitySet Name="Stores" EntityType="Self.Store" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+          <EntitySet Name="StatisticRatings" EntityType="PayBayDatabaseModel.StatisticRating" />
         </EntityContainer>
+        <EntityType Name="StatisticRating">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="StoreID" Type="Int32" />
+          <Property Name="RateOfUser" Type="Double" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -448,6 +468,16 @@
               <MappingFragment StoreEntitySet="UserType">
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatisticRatings">
+            <EntityTypeMapping TypeName="PayBayDatabaseModel.StatisticRating">
+              <MappingFragment StoreEntitySet="StatisticRating">
+                <ScalarProperty Name="RateOfUser" ColumnName="RateOfUser" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

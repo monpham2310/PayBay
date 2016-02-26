@@ -5,8 +5,17 @@ namespace PayBay.Model
 {
 	public class AdvertiseItem : BaseViewModel
 	{
-		private string _image;
-		private bool _isSelected = false;
+        private int _id;
+        private string _title;
+        private string _describes;
+        private DateTime _startDate;
+        private DateTime _endDate;
+        private int _storeId;
+        private string _storeName;
+        private bool _isRequired;
+        private string _image;
+        private string _sasQuery;
+        private bool _isSelected = false;
 
 		public string Image
 		{
@@ -36,195 +45,131 @@ namespace PayBay.Model
 			}
 		}
 
-		//private int _productID;
-		//private string _productName;
-		//private string _image;
-		//private float _unitPrice;
-		//private int _numberOf;
-		//private string _unit;
-		//private int _storeId;
-		//private DateTime _importDate;
-		//private float _salePrice;
-		//private string _sasQuery;
-		//private string _storeName;
-		//private int _marketId;
-		//private string _marketName;
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
 
-		//public int ProductID
-		//{
-		//	get
-		//	{
-		//		return _productID;
-		//	}
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_productID = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
 
-		//public string ProductName
-		//{
-		//	get
-		//	{
-		//		return _productName;
-		//	}
+            set
+            {
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_productName = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public string Describes
+        {
+            get
+            {
+                return _describes;
+            }
 
-		//public string Image
-		//{
-		//	get
-		//	{
-		//		return _image;
-		//	}
+            set
+            {
+                _describes = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_image = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public DateTime StartDate
+        {
+            get
+            {
+                return _startDate;
+            }
 
-		//public float UnitPrice
-		//{
-		//	get
-		//	{
-		//		return _unitPrice;
-		//	}
+            set
+            {
+                _startDate = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_unitPrice = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public DateTime EndDate
+        {
+            get
+            {
+                return _endDate;
+            }
 
-		//public int NumberOf
-		//{
-		//	get
-		//	{
-		//		return _numberOf;
-		//	}
+            set
+            {
+                _endDate = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_numberOf = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public int StoreId
+        {
+            get
+            {
+                return _storeId;
+            }
 
-		//public string Unit
-		//{
-		//	get
-		//	{
-		//		return _unit;
-		//	}
+            set
+            {
+                _storeId = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_unit = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public string StoreName
+        {
+            get
+            {
+                return _storeName;
+            }
 
-		//public int StoreId
-		//{
-		//	get
-		//	{
-		//		return _storeId;
-		//	}
+            set
+            {
+                _storeName = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_storeId = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public bool IsRequired
+        {
+            get
+            {
+                return _isRequired;
+            }
 
-		//public float SalePrice
-		//{
-		//	get
-		//	{
-		//		return _salePrice;
-		//	}
+            set
+            {
+                _isRequired = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_salePrice = value;
-		//		OnPropertyChanged();
-		//	}
-		//}
+        public string SasQuery
+        {
+            get
+            {
+                return _sasQuery;
+            }
 
-		//public string SasQuery
-		//{
-		//	get
-		//	{
-		//		return _sasQuery;
-		//	}
+            set
+            {
+                _sasQuery = value;
+                OnPropertyChanged();
+            }
+        }
 
-		//	set
-		//	{
-		//		_sasQuery = value;
-		//	}
-		//}
-
-		//public DateTime ImportDate
-		//{
-		//	get
-		//	{
-		//		return _importDate;
-		//	}
-
-		//	set
-		//	{
-		//		_importDate = value;
-		//	}
-		//}
-
-		//public string StoreName
-		//{
-		//	get
-		//	{
-		//		return _storeName;
-		//	}
-
-		//	set
-		//	{
-		//		_storeName = value;
-		//	}
-		//}
-
-		//public int MarketId
-		//{
-		//	get
-		//	{
-		//		return _marketId;
-		//	}
-
-		//	set
-		//	{
-		//		_marketId = value;
-		//	}
-		//}
-
-		//public string MarketName
-		//{
-		//	get
-		//	{
-		//		return _marketName;
-		//	}
-
-		//	set
-		//	{
-		//		_marketName = value;
-		//	}
-		//}
-	}
+    }
 }

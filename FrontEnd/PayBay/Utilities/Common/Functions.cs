@@ -12,28 +12,31 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace PayBay.Utilities.Common
 {
-    public class Functions
+    public enum TYPEGET
     {
+        START = 0,
+        MORE = 1
+    };
 
-        public enum TYPEGET
-        {
-            START = 0,
-            MORE = 1
-        };
-
+    public class Functions
+    {                
         private static Functions m_Instance = null;
 
         static Regex ValidEmailRegex = CreateValidEmailRegex();
 
-        public static Functions GetInstance()
+        public static Functions Instance
         {
-            if(m_Instance == null)
+            get
             {
-                return new Functions();
+                return m_Instance ?? (m_Instance = new Functions());
             }
-            return m_Instance;
-        }
 
+            protected set
+            {
+                m_Instance = value;
+            }
+        }
+                
         public static byte[] GetBytes(string str)
         {
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(str);
@@ -69,7 +72,7 @@ namespace PayBay.Utilities.Common
             return media;
         }
 
-        public async Task<bool> UploadImageToBlob(string containerName, string resourceName, int objectId, string image, string SasQuery, StorageFile media)
+        public async Task<bool> UploadImageToBlob(string containerName, string image, string SasQuery, StorageFile media)
         {
             try
             {
@@ -86,12 +89,14 @@ namespace PayBay.Utilities.Common
                         new Uri(string.Format("https://{0}/{1}",
                             imageUri.Host, containerName)), cred);
 
+                    string resourceName = image.Substring(image.LastIndexOf('/') + 1);
+
                     // Get the new image as a stream.
                     using (var inputStream = await media.OpenReadAsync())
                     {
                         // Upload the new image as a BLOB from the stream.
                         CloudBlockBlob blobFromSASCredential =
-                            container.GetBlockBlobReference(resourceName + objectId + ".jpg");
+                            container.GetBlockBlobReference(resourceName);
                         await blobFromSASCredential.UploadFromStreamAsync(inputStream);
                     }                                                           
                 }
@@ -119,16 +124,32 @@ namespace PayBay.Utilities.Common
             return isValid;
         }
 
-        //public static IList<T> AddSorted<T>(this IList<T> list, T item, IComparer<T> comparer = null)
-        //{
-        //    if (comparer == null)
-        //    {
-        //        comparer = Comparer<T>.Default;
-        //    }
-        //    int i = 0;
-        //    list.Insert(i, item);
-        //    return list;
-        //}
+        public async Task ComposeSms(Windows.ApplicationModel.Contacts.Contact recipient,
+                                        string messageBody,
+                                        StorageFile attachmentFile,
+                                        string mimeType)
+        {
+            var chatMessage = new Windows.ApplicationModel.Chat.ChatMessage();
+            chatMessage.Body = messageBody;
+
+            if (attachmentFile != null)
+            {
+                var stream = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromFile(attachmentFile);
+
+                var attachment = new Windows.ApplicationModel.Chat.ChatMessageAttachment(
+                    mimeType,
+                    stream);
+
+                chatMessage.Attachments.Add(attachment);
+            }
+
+            var phone = recipient.Phones.FirstOrDefault<Windows.ApplicationModel.Contacts.ContactPhone>();
+            if (phone != null)
+            {
+                chatMessage.Recipients.Add(phone.Number);
+            }
+            await Windows.ApplicationModel.Chat.ChatMessageManager.ShowComposeSmsMessageAsync(chatMessage);
+        }
 
     }
 }

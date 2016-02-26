@@ -46,103 +46,168 @@
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
 
-		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-			<Grid.RowDefinitions>
-				<RowDefinition x:Name="AdvertiseFrameHeight" Height="120"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="5"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="100"/>
-				<RowDefinition Height="100"/>
-			</Grid.RowDefinitions>
+		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">			
+            <Grid.RowDefinitions>                
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="145"/>
+            </Grid.RowDefinitions>
 
-			<Grid Grid.Row="0">
+            <Grid Grid.Row="0">
                 <FlipView ItemsSource="{Binding AdvertiseItemList}"
 						  SelectedItem="{Binding SelectedAd, Mode=TwoWay}">
                     <FlipView.ItemTemplate>
-						<DataTemplate>
-							<Image Source="{Binding Image}"
+                        <DataTemplate>
+                            <Image Source="{Binding Image}"
 								   Stretch="Fill" />
-						</DataTemplate>
-					</FlipView.ItemTemplate>
-				</FlipView>
-				<ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
+                        </DataTemplate>
+                    </FlipView.ItemTemplate>
+                </FlipView>
+                <ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
 							  HorizontalAlignment="Center" 
 							  VerticalAlignment="Bottom" 
 							  Margin="0,10">
-					<ItemsControl.ItemsPanel>
-						<ItemsPanelTemplate>
-							<StackPanel Orientation="Horizontal" />
-						</ItemsPanelTemplate>
-					</ItemsControl.ItemsPanel>
-					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<Grid Height="15" Width="15" Margin="5,0">
-								<Ellipse Fill="{StaticResource LightGrayBrush}" />
-								<Ellipse Fill="{StaticResource OrangeBrush}"
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="15" Width="15" Margin="5,0">
+                                <Ellipse Fill="{StaticResource LightGrayBrush}" />
+                                <Ellipse Fill="{StaticResource OrangeBrush}"
 										 Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" />
-							</Grid>
+                            </Grid>
 
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
-				<!--<customControl:SlideShowPanel/>-->
-			</Grid>
-
-			<Grid Grid.Row="1"
-				  BorderThickness="0,0,0,0.2"
-				  BorderBrush="{StaticResource GrayBrush}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid Grid.Column="0"
-					  HorizontalAlignment="Stretch"
-					  VerticalAlignment="Stretch"
-					  BorderThickness="0,0,0.2,0"
-					  BorderBrush="{StaticResource GrayBrush}" 
-					  SizeChanged="Grid_SizeChanged"/>
-				<Grid Grid.Column="1" 
-					  HorizontalAlignment="Stretch"
-					  BorderThickness="0,0,0.2,0"
-					  BorderBrush="{StaticResource GrayBrush}"
-					  SizeChanged="Grid_SizeChanged" />
-				<Grid Grid.Column="2" 
-					  HorizontalAlignment="Stretch" 
-					  BorderThickness="0,0,0.2,0"
-					  BorderBrush="{StaticResource GrayBrush}"
-					  SizeChanged="Grid_SizeChanged" />
-				<Grid Grid.Column="3" 
-					  HorizontalAlignment="Stretch"
-					  SizeChanged="Grid_SizeChanged" />
-			</Grid>
-
-			<Grid Grid.Row="3"
-				  BorderThickness="0,0.2"
-				  BorderBrush="{StaticResource GrayBrush}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid Grid.Column="0"
-					  HorizontalAlignment="Stretch"
-					  BorderThickness="0,0,0.2,0"
-					  BorderBrush="{StaticResource GrayBrush}"
-					  SizeChanged="Grid_SizeChanged" />
-				<Grid Grid.Column="1"
-					  HorizontalAlignment="Stretch"
-					  SizeChanged="Grid_SizeChanged" />
-			</Grid>
-
-			<Grid Grid.Row="4"
-				  Margin="0,2,0,0"
-				  Background="{StaticResource LightBlueBrush}"/>
-
-			<Grid Grid.Row="5"
-				  Margin="0,2,0,0"
-				  Background="{StaticResource LightGrayBrush}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <!--<customControl:SlideShowPanel/>-->
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" 
+                      BorderThickness="0,0,1,0"
+                      BorderBrush="Gray">
+                    <Button Background="White"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                            x:Name="btnMarketSupermarket">
+                        <TextBlock Text="Market &amp; Supermarket"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Foreground="Gray"/>
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="1" 
+                      BorderThickness="0,0,1,0"
+                      BorderBrush="Gray">
+                    <Button Background="White"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                            x:Name="btnShopMall">
+                        <TextBlock Text="Shop &amp; Mall"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Foreground="Gray"/>
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="2" 
+                      BorderThickness="0,0,1,0"
+                      BorderBrush="Gray">
+                    <Button Background="White"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                            x:Name="btnVillageFarmer">
+                        <TextBlock Text="Village &amp; Farmer"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Foreground="Gray"/>
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <Button Background="White"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                            x:Name="btnAllSaleOff">
+                        <TextBlock Text="All Sale OFF"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Foreground="Gray"/>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" 
+                  BorderBrush="Gray"
+                  BorderThickness="0,1"/>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" 
+                      BorderThickness="0,0,1,0"
+                      BorderBrush="Gray">
+                    <Button Background="White"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                            x:Name="btnMostPopular">
+                        <TextBlock Text="MOST POPULAR"
+                                   FontSize="18"
+                                   TextWrapping="Wrap"
+                                   Foreground="Gray"/>
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Button Background="White"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                            x:Name="btnNewThisMonth">
+                        <TextBlock Text="NEW THIS MONTH"
+                                   FontSize="18"
+                                   TextWrapping="Wrap"
+                                   Foreground="Gray"/>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="4">
+                <FlipView ItemsSource="{Binding SaleList2}"
+                          x:Name="flipViewPaidSaleSmall">
+                    <FlipView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding ImagePath}"
+								   Stretch="Fill" />
+                        </DataTemplate>
+                    </FlipView.ItemTemplate>
+                </FlipView>
+            </Grid>
+            <Grid Grid.Row="5">
+                <Button Background="Gray"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                        x:Name="btnWeeklyDeals">
+                    <TextBlock Text="WEEKLY DEALS"
+                                   FontSize="15"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"/>
+                </Button>
+            </Grid>
 		</Grid>
 	</ScrollViewer>
 </Page>

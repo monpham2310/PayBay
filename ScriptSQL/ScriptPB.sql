@@ -116,7 +116,8 @@ create table paybayservice.Comments (
 	Content nvarchar(max)
 );
 
-alter table paybayservice.Comments alter column CommentDate nvarchar(50)
+alter table paybayservice.Comments alter column CommentDate datetime
+alter table paybayservice.Comments drop column CommentTime
 
 create table paybayservice.RevenueStatistic (
 	Id int identity(1,1) not null primary key,
@@ -140,4 +141,9 @@ create table paybayservice.ProductStatistic (
 	SaleDate date
 );
 
-
+create table paybayservice.StatisticRating(
+	ID int identity(1,1) not null primary key,
+	UserID int,
+	StoreID int,
+	RateOfUser float
+);

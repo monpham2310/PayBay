@@ -53,9 +53,9 @@ namespace PayBay.View.AppBarFunctionGroup
             if (ProductVm != null)
             {
                 if (!string.IsNullOrEmpty(txtSearchProduct.Text))
-                    await ProductVm.LoadMoreProduct(name,Functions.TYPEGET.START);
+                    await ProductVm.LoadMoreProduct(name,TYPEGET.START);
                 else
-                    await ProductVm.LoadMoreProduct(Functions.TYPEGET.START);
+                    await ProductVm.LoadMoreProduct(TYPEGET.START);
             }
         }
 
@@ -65,9 +65,9 @@ namespace PayBay.View.AppBarFunctionGroup
             if(MarketVm != null)
             {
                 if (!string.IsNullOrEmpty(txtSearchMarket.Text))
-                    await MarketVm.LoadMoreMarket(name, Functions.TYPEGET.START);
+                    await MarketVm.LoadMoreMarket(name, TYPEGET.START);
                 else
-                    await MarketVm.LoadMoreMarket(Functions.TYPEGET.START);
+                    await MarketVm.LoadMoreMarket(TYPEGET.START);
             }
         }
 
@@ -79,9 +79,9 @@ namespace PayBay.View.AppBarFunctionGroup
                 if (MarketVm != null)
                 {
                     if (string.IsNullOrEmpty(txtSearchMarket.Text))
-                        await MarketVm.LoadMoreMarket(Functions.TYPEGET.MORE);
+                        await MarketVm.LoadMoreMarket(TYPEGET.MORE);
                     else
-                        await MarketVm.LoadMoreMarket(txtSearchMarket.Text, Functions.TYPEGET.MORE);
+                        await MarketVm.LoadMoreMarket(txtSearchMarket.Text, TYPEGET.MORE);
                 }
             }
             //scroll at top
@@ -99,9 +99,9 @@ namespace PayBay.View.AppBarFunctionGroup
                 if (ProductVm != null)
                 {
                     if (string.IsNullOrEmpty(txtSearchProduct.Text))
-                        await ProductVm.LoadMoreProduct(Functions.TYPEGET.MORE);
+                        await ProductVm.LoadMoreProduct(TYPEGET.MORE);
                     else
-                        await ProductVm.LoadMoreProduct(txtSearchProduct.Text, Functions.TYPEGET.MORE);
+                        await ProductVm.LoadMoreProduct(txtSearchProduct.Text, TYPEGET.MORE);
                 }
             }
             //scroll at top

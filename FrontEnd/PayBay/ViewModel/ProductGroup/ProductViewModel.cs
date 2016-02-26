@@ -74,13 +74,13 @@ namespace PayBay.ViewModel.ProductGroup
 
         private async void InitializeData()
         {
-            await LoadMoreProduct(Functions.TYPEGET.START);
+            await LoadMoreProduct(TYPEGET.START);
         }      
 
-        public async Task LoadMoreProduct(Functions.TYPEGET type)
+        public async Task LoadMoreProduct(TYPEGET type)
         {
             string lastId = "";
-            if (type == Functions.TYPEGET.MORE)
+            if (type == TYPEGET.MORE)
                 lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
             else
                 lastId = "-1";
@@ -90,19 +90,22 @@ namespace PayBay.ViewModel.ProductGroup
             };
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                JArray products = JArray.Parse(result.ToString());
-                if (type == Functions.TYPEGET.MORE)
+                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
                 {
-                    ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
-
-                    foreach (var item in moreProduct)
+                    JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                    JArray products = JArray.Parse(result.ToString());
+                    if (type == TYPEGET.MORE)
                     {
-                        ProductList.Add(item);
+                        ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
+
+                        foreach (var item in moreProduct)
+                        {
+                            ProductList.Add(item);
+                        }
                     }
+                    else
+                        ProductList = products.ToObject<ObservableCollection<Product>>();
                 }
-                else
-                    ProductList = products.ToObject<ObservableCollection<Product>>();
             }
             catch (Exception ex)
             {
@@ -110,10 +113,10 @@ namespace PayBay.ViewModel.ProductGroup
             }            
         }
 
-        public async Task LoadMoreProduct(string name, Functions.TYPEGET type)
+        public async Task LoadMoreProduct(string name, TYPEGET type)
         {
             string lastId = "";
-            if (type == Functions.TYPEGET.MORE)
+            if (type == TYPEGET.MORE)
                 lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
             else
                 lastId = "-1";
@@ -124,19 +127,22 @@ namespace PayBay.ViewModel.ProductGroup
             };
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                JArray products = JArray.Parse(result.ToString());
-                if (type == Functions.TYPEGET.MORE)
+                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
                 {
-                    ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
-
-                    foreach (var item in moreProduct)
+                    JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                    JArray products = JArray.Parse(result.ToString());
+                    if (type == TYPEGET.MORE)
                     {
-                        ProductList.Add(item);
+                        ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
+
+                        foreach (var item in moreProduct)
+                        {
+                            ProductList.Add(item);
+                        }
                     }
+                    else
+                        ProductList = products.ToObject<ObservableCollection<Product>>();
                 }
-                else
-                    ProductList = products.ToObject<ObservableCollection<Product>>();
             }
             catch (Exception ex)
             {
@@ -152,10 +158,13 @@ namespace PayBay.ViewModel.ProductGroup
             };
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                JArray response = JArray.Parse(result.ToString());
+                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                {
+                    JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                    JArray response = JArray.Parse(result.ToString());
 
-                ProductsOfStore = response.ToObject<ObservableCollection<Product>>();
+                    ProductsOfStore = response.ToObject<ObservableCollection<Product>>();
+                }
             }
             catch (Exception ex)
             {

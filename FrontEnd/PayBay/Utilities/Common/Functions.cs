@@ -12,15 +12,14 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace PayBay.Utilities.Common
 {
-    public class Functions
+    public enum TYPEGET
     {
+        START = 0,
+        MORE = 1
+    };
 
-        public enum TYPEGET
-        {
-            START = 0,
-            MORE = 1
-        };
-
+    public class Functions
+    {                
         private static Functions m_Instance = null;
 
         static Regex ValidEmailRegex = CreateValidEmailRegex();

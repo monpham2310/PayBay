@@ -44,9 +44,12 @@ namespace PayBay.ViewModel.CommentGroup
             };
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Comments", HttpMethod.Get, param);
-                JArray response = JArray.Parse(result.ToString());
-                CommentLstOfStore = response.ToObject<ObservableCollection<Comment>>();
+                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                {
+                    JToken result = await App.MobileService.InvokeApiAsync("Comments", HttpMethod.Get, param);
+                    JArray response = JArray.Parse(result.ToString());
+                    CommentLstOfStore = response.ToObject<ObservableCollection<Comment>>();
+                }
             }
             catch (Exception ex)
             {
@@ -69,16 +72,19 @@ namespace PayBay.ViewModel.CommentGroup
 
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Comments", body, HttpMethod.Post, null);
-                JObject response = JObject.Parse(result.ToString());
-                if(response["ErrCode"].ToString().Equals("1"))
+                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
                 {
-                    CommentLstOfStore.Add(comment);
-                    var list = CommentLstOfStore.OrderByDescending(x => x.CommentDate).ToList();
-                    CommentLstOfStore.Clear();
-                    for (int i = 0; i < 4; i++)
+                    JToken result = await App.MobileService.InvokeApiAsync("Comments", body, HttpMethod.Post, null);
+                    JObject response = JObject.Parse(result.ToString());
+                    if (response["ErrCode"].ToString().Equals("1"))
                     {
-                        CommentLstOfStore.Add(list[i]);
+                        CommentLstOfStore.Add(comment);
+                        var list = CommentLstOfStore.OrderByDescending(x => x.CommentDate).ToList();
+                        CommentLstOfStore.Clear();
+                        for (int i = 0; i < 4; i++)
+                        {
+                            CommentLstOfStore.Add(list[i]);
+                        }
                     }
                 }
             }

@@ -5,72 +5,68 @@
       xmlns:local="using:PayBay.View.TopFunctionGroup"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:model="using:PayBay.Model"
-	  DataContext="{Binding Source={StaticResource Locator},
-						  Path=MarketVm}"
       mc:Ignorable="d">
 
     <Page.Resources>
     </Page.Resources>
 
-    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="150" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="150"/>
-            </Grid.RowDefinitions>
+    <Grid Grid.Row="4" Name="captureGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Name="captureButtons" 
+                Orientation="Vertical">
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Market Name:" />
+            <TextBox Name="txtMarketName"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="Type name..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Phone:" />
+            <TextBox Name="txtPhone"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="..." />
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Address:" />
+            <TextBox Name="txtAddr"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="10"
+                 PlaceholderText="..." />
+            
+            <TextBlock HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="10"
+                   Text="Image:" />
 
-            <Image Grid.Row="0" 
-               Canvas.ZIndex="0" 
-               Opacity="0.5" 
-               Source="{Binding NewMarket.Image}" 
-               Stretch="UniformToFill"/>
-            <TextBlock Grid.Row="0" 
-                   Canvas.ZIndex="1" 
-                   TextWrapping="Wrap"  
-                   Text="{Binding NewMarket.Name}" 
-                   Margin="39,60,173,54.2" 
-                   
-                   FontSize="20" 
-                   FontFamily="Calibri Light" 
-                   Foreground="#FF120E0E" 
-                   FontWeight="Bold"/>
-            <TextBlock Grid.Row="0" 
-                   Canvas.ZIndex="1" 
-                   TextWrapping="Wrap"  
-                   Text="{Binding NewMarket.Address}" 
-                   Margin="39,90,173,12.2" 
-                   FontSize="13.333" 
-                   FontStyle="Italic" 
-                   FontFamily="Calibri Light" 
-                    />
+        </StackPanel>
 
-            <TextBlock Grid.Row="1" 
-                   TextWrapping="Wrap" 
-                   Text="Mặt Hàng Kinh Doanh:" 
-                   Margin="39,36,173,10" 
-                   FontSize="20"/>
-            <TextBlock Grid.Row="1" 
-                   TextWrapping="Wrap" 
-                   Text="{Binding NewMarket.Itemtypes}" 
-                   Margin="39,62,26,5" 
-                   FontSize="16"/>
+        <!--<CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />-->
 
-            <Image Grid.Row="2" 
-               Source="{Binding NewMarket.Map}" 
-               VerticalAlignment="Stretch" 
-               HorizontalAlignment="Stretch" 
-               Stretch="UniformToFill"/>
+        <Image Grid.Row="1" Name="imagePreview"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Height="160"
+                Width="160"
+                Visibility="Collapsed" />
 
-            <Button Grid.Row="3"
-                    Content="Đi Chợ"
-                    VerticalContentAlignment="Center"
-                    HorizontalContentAlignment="Center"
-		            HorizontalAlignment="Stretch"
-		            VerticalAlignment="Stretch" FontSize="46.667" FontFamily="Calibri Light" FontWeight="Bold"
-		            Background="{StaticResource TealBrush}"
-                    Foreground="White"/>
-        </Grid>
-    </ScrollViewer>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row ="3"  Orientation="Horizontal">
+            <AppBarButton Label="Photo" Icon="Camera" Name="ButtonCapture" 
+                  Click="ButtonCapture_Click" Height="78" Width="62" />
+            <AppBarButton Label="Upload" Icon="Upload" Name="ButtonSave" 
+                  Click="ButtonSave_Click"/>
+        </StackPanel>
+
+    </Grid>
 </Page>

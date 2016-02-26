@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Kios.cs" />
+    <Compile Include="Model\Rating.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Utilities\Common\MediateClass.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="ViewModel\MarketGroup\KiosViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\MarketViewModel.cs" />
     <Compile Include="ViewModel\ProductGroup\ProductViewModel.cs" />
+    <Compile Include="ViewModel\RatingGroup\RatingViewModel.cs" />
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -170,6 +172,9 @@
     </Compile>
     <Compile Include="View\TopFunctionGroup\Function2Page.xaml.cs">
       <DependentUpon>Function2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\Function3Page.xaml.cs">
+      <DependentUpon>Function3Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TopFunctionGroup\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -331,6 +336,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TopFunctionGroup\Function2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\Function3Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

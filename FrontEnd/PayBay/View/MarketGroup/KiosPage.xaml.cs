@@ -45,9 +45,9 @@ namespace PayBay.View.MarketGroup
             if(KiosVm != null)
             {
                 if (!string.IsNullOrEmpty(storeName))
-                    await KiosVm.LoadMoreStore(storeName, Functions.TYPEGET.START);
+                    await KiosVm.LoadMoreStore(storeName, TYPEGET.START);
                 else
-                    await KiosVm.LoadMoreStore(Functions.TYPEGET.START);
+                    await KiosVm.LoadMoreStore(TYPEGET.START);
             }
         }
 
@@ -61,7 +61,7 @@ namespace PayBay.View.MarketGroup
                 await MediateClass.ProductVM.GetProductsOfStore(selectedId);
                 await MediateClass.CommentVM.GetCommentOfStore(selectedId);
             }
-            txtComment.Text = "";         
+            txtComment.Text = "";
         }
 
         //private void btnStar1_Click(object sender, RoutedEventArgs e)
@@ -106,9 +106,9 @@ namespace PayBay.View.MarketGroup
                 if (KiosVm != null)
                 {
                     if (!string.IsNullOrEmpty(tbxSearch.Text))
-                        await KiosVm.LoadMoreStore(tbxSearch.Text, Functions.TYPEGET.MORE);
+                        await KiosVm.LoadMoreStore(tbxSearch.Text, TYPEGET.MORE);
                     else
-                        await KiosVm.LoadMoreStore(Functions.TYPEGET.MORE);
+                        await KiosVm.LoadMoreStore(TYPEGET.MORE);
                 }
             }
             else if (scrollvStore.VerticalOffset == 0)
@@ -128,5 +128,6 @@ namespace PayBay.View.MarketGroup
                 await new MessageDialog("You are not login.Please login to comment!","Notification!").ShowAsync();
             }
         }
+                
     }
 }

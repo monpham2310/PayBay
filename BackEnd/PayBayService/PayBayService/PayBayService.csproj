@@ -247,6 +247,7 @@
     <Compile Include="Controllers\ProductStatisticsController.cs" />
     <Compile Include="Controllers\RevenueStatisticsController.cs" />
     <Compile Include="Controllers\SaleInfoesController.cs" />
+    <Compile Include="Controllers\StatisticRatingsController.cs" />
     <Compile Include="Controllers\StoresController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserTypesController.cs" />
@@ -289,6 +290,9 @@
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SaleInfo.cs">
+      <DependentUpon>PaybayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StatisticRating.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Store.cs">

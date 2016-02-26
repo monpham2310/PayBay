@@ -10,6 +10,7 @@ namespace PayBay.Model
 		MyFavorites,
         Func1,
         Func2,
+        Func3,
 		FreeCall,
 		AboutUs,
 		Logout,

@@ -67,13 +67,13 @@ namespace PayBay.ViewModel.MarketGroup
         /// </summary>
         private async void InitializeData()
         {
-            await LoadMoreMarket(Functions.TYPEGET.START);
+            await LoadMoreMarket(TYPEGET.START);
         }
                 
-        public async Task LoadMoreMarket(Functions.TYPEGET type)
+        public async Task LoadMoreMarket(TYPEGET type)
         {
             string lastId = "";
-            if (type == Functions.TYPEGET.MORE)
+            if (type == TYPEGET.MORE)
                 lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
             else
                 lastId = "-1";
@@ -82,19 +82,22 @@ namespace PayBay.ViewModel.MarketGroup
                 {"id" , lastId}
             };
             try {
-                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
-                JArray markets = JArray.Parse(result.ToString());
-                if (type == Functions.TYPEGET.MORE)
+                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
                 {
-                    ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
-
-                    foreach (var item in moreMarket)
+                    JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
+                    JArray markets = JArray.Parse(result.ToString());
+                    if (type == TYPEGET.MORE)
                     {
-                        MarketItemList.Add(item);
+                        ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
+
+                        foreach (var item in moreMarket)
+                        {
+                            MarketItemList.Add(item);
+                        }
                     }
+                    else
+                        MarketItemList = markets.ToObject<ObservableCollection<Market>>();
                 }
-                else
-                    MarketItemList = markets.ToObject<ObservableCollection<Market>>();
             }
             catch (Exception ex)
             {
@@ -102,10 +105,10 @@ namespace PayBay.ViewModel.MarketGroup
             }            
         }
 
-        public async Task LoadMoreMarket(string name, Functions.TYPEGET type)
+        public async Task LoadMoreMarket(string name, TYPEGET type)
         {
             string lastId = "";
-            if (type == Functions.TYPEGET.MORE)
+            if (type == TYPEGET.MORE)
                 lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
             else
                 lastId = "-1";
@@ -118,7 +121,7 @@ namespace PayBay.ViewModel.MarketGroup
             {
                 JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
                 JArray markets = JArray.Parse(result.ToString());
-                if (type == Functions.TYPEGET.MORE)
+                if (type == TYPEGET.MORE)
                 {
                     ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
 

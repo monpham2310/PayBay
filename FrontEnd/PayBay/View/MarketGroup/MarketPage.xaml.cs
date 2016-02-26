@@ -5,10 +5,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Services.Maps;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -28,6 +32,7 @@ namespace PayBay.View.MarketGroup
 		public MarketPage()
 		{
 			this.InitializeComponent();
+            SetUpMap();
 		}
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)
@@ -40,6 +45,39 @@ namespace PayBay.View.MarketGroup
             if (MarketVm != null)
                 MarketVm.SelectedMarket = null;
             Frame.GoBack();
+        }
+
+        private async void SetUpMap()
+        {
+            //SelectedItem.Address here
+            string addressToGeocode = "1083, Lạc Long Quân, Tân Bình, HCM";
+
+            //Convert address to a point on map
+            MapLocationFinderResult result =
+                  await MapLocationFinder.FindLocationsAsync(
+                                    addressToGeocode,
+                                    null,
+                                    3);
+
+            //Setting for map control
+            MarketAddressMap.ZoomInteractionMode = MapInteractionMode.GestureAndControl;
+            MarketAddressMap.TiltInteractionMode = MapInteractionMode.GestureAndControl;
+            MarketAddressMap.MapServiceToken = "xtSqkEYq82UbuykTpmRG~yab3f1f6UWvpGYeOOmhKUA~Aonl0iVFHHl4JarYn7g7GF4Gdd7l0XR2BIH9zDMXYVSyWFHl8TS9_MN5c7N0vXPX";          
+            MarketAddressMap.ZoomLevel = 16;
+            MarketAddressMap.LandmarksVisible = true;
+
+            // Set the map location.
+            MarketAddressMap.Center = result.Locations[0].Point;
+
+            // Add an icon for the market address, temporarily use fullstar2.png
+            MapIcon mapIcon = new MapIcon();
+            mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
+              new Uri("ms-appx:///Assets/Rating/fullstar2.png"));
+            mapIcon.NormalizedAnchorPoint = new Point(0.5, 0.5);
+            mapIcon.Location = result.Locations[0].Point;
+            mapIcon.Title = "Market Here !!!";
+            MarketAddressMap.MapElements.Add(mapIcon);
+
         }
     }
 }

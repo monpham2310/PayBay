@@ -32,7 +32,7 @@ namespace PayBay.View.MarketGroup
 		public MarketPage()
 		{
 			this.InitializeComponent();
-            //SetUpMap();
+            SetUpMap();
 		}
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace PayBay.View.MarketGroup
         private async void SetUpMap()
         {
             //SelectedItem.Address here
-            string addressToGeocode = "1083, Lạc Long Quân, Tân Bình, HCM";
+            string addressToGeocode = "Lê Lợi, Ho Chi Minh City, Tp. Hồ Chí Minh";
 
             //Convert address to a point on map
             MapLocationFinderResult result =

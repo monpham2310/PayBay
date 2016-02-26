@@ -214,7 +214,7 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.Inbox:
 				{
-					frame.Navigate(typeof(InboxPage));
+					frame.Navigate(typeof(HomePageNew));
 					break;
 				}
 				case MenuFunc.MyPayBay:

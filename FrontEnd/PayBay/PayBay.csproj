@@ -125,6 +125,7 @@
     <Compile Include="ViewModel\HomePageGroup\AdvertiseViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\KiosViewModel.cs" />
     <Compile Include="ViewModel\MarketGroup\MarketViewModel.cs" />
+    <Compile Include="ViewModel\PlaceholderNewHomepageGroup\PlaceholderNewHomepageViewModel.cs" />
     <Compile Include="ViewModel\ProductGroup\ProductViewModel.cs" />
     <Compile Include="ViewModel\StartGroup\StartViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -177,6 +178,9 @@
     <Compile Include="View\StartGroup\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\HomePageNew.xaml.cs">
+      <DependentUpon>HomePageNew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\InboxPage.xaml.cs">
       <DependentUpon>InboxPage.xaml</DependentUpon>
     </Compile>
@@ -222,6 +226,11 @@
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao.png" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao2.jpg" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao3.png" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao4.jpg" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao5.jpg" />
     <Content Include="Assets\Product\Apple.jpg" />
     <Content Include="Assets\Product\Beef.jpg" />
     <Content Include="Assets\Product\RauMuong.jpg" />
@@ -339,6 +348,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StartGroup\StartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\HomePageNew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

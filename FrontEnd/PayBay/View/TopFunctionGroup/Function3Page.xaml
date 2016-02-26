@@ -73,7 +73,7 @@
                 VerticalAlignment="Top"
                 Height="160"
                 Width="160"
-                Visibility="Collapsed" />
+                Visibility="Visible" />
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row ="3"  Orientation="Horizontal">
             <AppBarButton Label="Photo" Icon="Camera" Name="ButtonCapture" 

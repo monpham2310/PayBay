@@ -11,6 +11,7 @@ namespace PayBay.Model
         Func1,
         Func2,
         Func3,
+        Func4,
 		FreeCall,
 		AboutUs,
 		Logout,

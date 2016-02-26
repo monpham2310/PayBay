@@ -41,16 +41,14 @@ namespace PayBay
             Suspending += OnSuspending;
         }
         
-        //public static string UrlHost = "http://localhost:4591";
-        public static string UrlHost = "https://paybayservice.azure-mobile.net/";
+        public static string UrlHost = "http://localhost:4591";
+        //public static string UrlHost = "https://paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
-
-        NetworkHelper InternetAccess;
-
+                
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
         // and application key. You're all set to start working with your Mobile Service!
         public static MobileServiceClient MobileService = new MobileServiceClient(
-            UrlHost, ApplicationKey
+            UrlHost//, ApplicationKey
         );
                   
         /// <summary>
@@ -69,7 +67,7 @@ namespace PayBay
             //#endif
             
             Frame rootFrame = Window.Current.Content as Frame;
-            InternetAccess = new NetworkHelper();
+            
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
@@ -96,7 +94,7 @@ namespace PayBay
                 rootFrame.Navigate(typeof(StartPage), e.Arguments);
             }
 
-            if (!NetworkHelper.HasInternetConnection)
+            if (!NetworkHelper.Instance.HasInternetConnection)
             {
                 await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
             }

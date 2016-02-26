@@ -121,7 +121,7 @@ namespace PayBay.View.MarketGroup
         {
             if(MediateClass.UserVM.UserInfo != null)
             {
-                await CommentVm.UserComment(txtComment.Text, KiosVm.SelectedStore.StoreId);
+                await CommentVm.UserComment(txtComment.Text, KiosVm.SelectedStore.StoreId);                
             }
             else
             {

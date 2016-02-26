@@ -73,13 +73,14 @@ namespace PayBay.View.TopFunctionGroup
                 JToken result = await App.MobileService.InvokeApiAsync("Markets", data, HttpMethod.Post, null);
 
                 JObject response = JObject.Parse(result.ToString());
-
+                                
                 market.Image = response["Image"].ToString();
                 market.SasQuery = response["SasQuery"].ToString();
-                string productName = market.MarketName.ToLower();
+                string marketName = market.MarketName.ToLower();
+                marketName = (marketName.IndexOf(" ") != -1) ? marketName.Replace(" ", "") : marketName;
 
-                bool check = await Functions.GetInstance()
-                                            .UploadImageToBlob("markets", market.MarketName, market.MarketId, market.Image, market.SasQuery, media);
+                bool check = await Functions.Instance
+                                            .UploadImageToBlob("markets", market.Image, market.SasQuery, media);
 
                 imagePreview.Source = null;
                 //viewModel.ProductList.Add(product);

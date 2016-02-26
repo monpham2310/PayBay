@@ -62,7 +62,7 @@ namespace PayBay.ViewModel.AccountGroup
             };
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
                     JObject user = JObject.Parse(result.ToString());

@@ -109,7 +109,7 @@ namespace PayBay.ViewModel.MarketGroup
             };
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Get, market);
                     JArray response = JArray.Parse(result.ToString());
@@ -146,7 +146,7 @@ namespace PayBay.ViewModel.MarketGroup
             };
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Post, param);
                     JArray response = JArray.Parse(result.ToString());

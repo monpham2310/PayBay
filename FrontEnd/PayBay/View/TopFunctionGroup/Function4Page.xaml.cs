@@ -28,9 +28,9 @@ namespace PayBay.View.TopFunctionGroup
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Function3Page : Page
+    public sealed partial class Function4Page : Page
     {
-        public Function3Page()
+        public Function4Page()
         {
             this.InitializeComponent();
         }
@@ -54,31 +54,31 @@ namespace PayBay.View.TopFunctionGroup
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            Kios temp = new Kios();
-            temp.StoreName = txtStoreName.Text;
-            temp.KiotNo = txtKiotNo.Text;
-            temp.Phone = txtPhone.Text;
-            temp.MarketId = int.Parse(txtMarket.Text);
-            temp.OwnerId = int.Parse(txtOwnerId.Text);
+            AdvertiseItem temp = new AdvertiseItem();
+            temp.Title = txtTitle.Text;
+            temp.Describes = txtDes.Text;
+            temp.StartDate = dpStartDate.Date.DateTime;
+            temp.EndDate = dpEndDate.Date.DateTime;
+            temp.StoreId = int.Parse(txtStoreid.Text);
+            temp.IsRequired = (bool)cbxRequire.IsChecked;            
 
-            await InsertStore(temp);
+            await InsertSale(temp);
         }
 
-        private async Task InsertStore(Kios store)
+        private async Task InsertSale(AdvertiseItem sale)
         {
             try
             {
-                JToken data = JToken.FromObject(store);
-                JToken result = await App.MobileService.InvokeApiAsync("Stores", data, HttpMethod.Post, null);
+                JToken data = JToken.FromObject(sale);
+                JToken result = await App.MobileService.InvokeApiAsync("SaleInfoes", data, HttpMethod.Post, null);
 
                 JObject response = JObject.Parse(result.ToString());
 
-                store.Image = response["Image"].ToString();
-                store.SasQuery = response["SasQuery"].ToString();
-                string productName = store.StoreName.ToLower();
-
+                sale.Image = response["Image"].ToString();
+                sale.SasQuery = response["SasQuery"].ToString();
+                
                 bool check = await Functions.Instance
-                                            .UploadImageToBlob("stores", store.Image, store.SasQuery, media);
+                                            .UploadImageToBlob("sales", sale.Image, sale.SasQuery, media);
 
                 imagePreview.Source = null;
                 //viewModel.ProductList.Add(product);

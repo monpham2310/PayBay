@@ -90,7 +90,7 @@ namespace PayBay.ViewModel.ProductGroup
             };
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
                     JArray products = JArray.Parse(result.ToString());
@@ -127,7 +127,7 @@ namespace PayBay.ViewModel.ProductGroup
             };
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
                     JArray products = JArray.Parse(result.ToString());
@@ -158,7 +158,7 @@ namespace PayBay.ViewModel.ProductGroup
             };
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
                     JArray response = JArray.Parse(result.ToString());

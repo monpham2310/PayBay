@@ -156,8 +156,8 @@ namespace PayBay.View.TopFunctionGroup
                 product.SasQuery = response["SasQuery"].ToString();
                 string productName = product.ProductName.ToLower();
 
-                bool check = await Functions.GetInstance()
-                                            .UploadImageToBlob("products",product.ProductName,product.ProductId,product.Image,product.SasQuery,media);
+                bool check = await Functions.Instance
+                                            .UploadImageToBlob("products",product.Image,product.SasQuery,media);
 
                 await ResetCaptureAsync();
                 //viewModel.ProductList.Add(product);

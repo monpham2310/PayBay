@@ -44,7 +44,7 @@ namespace PayBay.ViewModel.CommentGroup
             };
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Comments", HttpMethod.Get, param);
                     JArray response = JArray.Parse(result.ToString());
@@ -72,7 +72,7 @@ namespace PayBay.ViewModel.CommentGroup
 
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Comments", body, HttpMethod.Post, null);
                     JObject response = JObject.Parse(result.ToString());

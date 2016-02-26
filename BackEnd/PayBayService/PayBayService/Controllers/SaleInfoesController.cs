@@ -148,7 +148,7 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var table = new SqlParameter("@table", "paybayservice.Markets");
+            var table = new SqlParameter("@table", "paybayservice.SaleInfo");
             int saleId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
             ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", saleInfo.Title, saleId + 1);
 
@@ -158,14 +158,14 @@ namespace PayBayService.Controllers
                 saleInfo.SasQuery = blob.SasQuery;
                 db.SaleInfoes.Add(saleInfo);
                 await db.SaveChangesAsync();
+                result = JObject.FromObject(saleInfo);
             }
             else
             {
                 result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
-
-            result = Methods.CustomResponseMessage(1, "Add sale info is successful!");
+                        
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

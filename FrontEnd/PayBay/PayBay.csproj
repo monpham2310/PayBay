@@ -176,6 +176,9 @@
     <Compile Include="View\TopFunctionGroup\Function3Page.xaml.cs">
       <DependentUpon>Function3Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\Function4Page.xaml.cs">
+      <DependentUpon>Function4Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -227,6 +230,11 @@
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
     <Content Include="Assets\Market\ChoBenThanh\Map.png" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao.png" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao2.jpg" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao3.png" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao4.jpg" />
+    <Content Include="Assets\PlaceholderAssetForNewHomepage\QuangCao5.jpg" />
     <Content Include="Assets\Product\Apple.jpg" />
     <Content Include="Assets\Product\Beef.jpg" />
     <Content Include="Assets\Product\RauMuong.jpg" />
@@ -340,6 +348,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TopFunctionGroup\Function3Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\Function4Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

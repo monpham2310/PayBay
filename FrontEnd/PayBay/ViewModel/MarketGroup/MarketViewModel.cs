@@ -82,7 +82,7 @@ namespace PayBay.ViewModel.MarketGroup
                 {"id" , lastId}
             };
             try {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
                     JArray markets = JArray.Parse(result.ToString());

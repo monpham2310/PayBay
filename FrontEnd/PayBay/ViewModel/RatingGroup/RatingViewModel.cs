@@ -39,7 +39,7 @@ namespace PayBay.ViewModel.RatingGroup
             JToken body = JToken.FromObject(numOfRate);
             try
             {
-                if (Utilities.Helpers.NetworkHelper.HasInternetConnection)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
                     var message = await App.MobileService.InvokeApiAsync("StatisticRatings", body, HttpMethod.Post, null);
                     result = JObject.Parse(message.ToString());

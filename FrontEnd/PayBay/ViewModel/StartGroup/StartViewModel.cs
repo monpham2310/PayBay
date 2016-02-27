@@ -5,6 +5,7 @@ using PayBay.View.BottomFunctionGroup.SettingGroup;
 using PayBay.View.BottomFunctionGroup;
 using PayBay.View.TopFunctionGroup;
 using PayBay.View.MiddleFunctionGroup;
+using PayBay.View.OrderGroup;
 using PayBay.Utilities.Common;
 
 namespace PayBay.ViewModel.StartGroup
@@ -236,7 +237,7 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.Inbox:
 				{
-					frame.Navigate(typeof(InboxPage));
+					frame.Navigate(typeof(OrderPage));
 					break;
 				}
 				case MenuFunc.MyPayBay:

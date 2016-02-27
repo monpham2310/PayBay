@@ -176,6 +176,9 @@
     <Compile Include="View\MiddleFunctionGroup\FreeCallPage.xaml.cs">
       <DependentUpon>FreeCallPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OrderGroup\OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\Function1Page.xaml.cs">
       <DependentUpon>Function1Page.xaml</DependentUpon>
     </Compile>
@@ -283,6 +286,9 @@
     <Content Include="Assets\StoreLogo.scale-150.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\TransitionEffect\BluePoint.png" />
+    <Content Include="Assets\TransitionEffect\GrayLine.png" />
+    <Content Include="Assets\TransitionEffect\GrayPoint.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
@@ -359,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MiddleFunctionGroup\FreeCallPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderGroup\OrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

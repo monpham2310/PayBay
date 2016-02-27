@@ -517,16 +517,21 @@
                         <ScrollViewer Name="scrollvMarket" 
                                       Grid.Row="1"
                                       Grid.ColumnSpan="2" 
-                                      HorizontalAlignment="Center"
+                                      HorizontalAlignment="Stretch"
                                       DataContext="{Binding Source={StaticResource Locator},Path=MarketVm}"
                                       ViewChanged="ScrollViewer_ViewChanged" >
-                            <ListBox x:Name="marketListBox"                                     
-                                     HorizontalAlignment="Center" 
+							<ListView x:Name="marketListBox"                                     
+                                     HorizontalAlignment="Stretch" 
                                      VerticalAlignment="Top"                                      
                                      ItemsSource="{Binding MarketItemList}"
                                      ItemTemplate="{StaticResource itemListMarket}"                                     
-                                     Background="White" SelectionChanged="marketListBox_SelectionChanged" >                                
-                            </ListBox>
+                                     Background="White" SelectionChanged="marketListBox_SelectionChanged" >
+								<ListView.ItemContainerStyle>
+									<Style TargetType="ListViewItem">
+										<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+									</Style>
+								</ListView.ItemContainerStyle>
+							</ListView>
                         </ScrollViewer>
                         <!--<ListBox ItemsSource="{Binding MarketItemList}" Width="350" Margin="0,5,0,10">
                             <ListBox.ItemTemplate>
@@ -608,15 +613,21 @@
                         <ScrollViewer Name="scrollvProduct"
                                       Grid.Row="1"
                                       Grid.ColumnSpan="2" 
+									  HorizontalAlignment="Stretch"
                                       DataContext="{Binding Source={StaticResource Locator},Path=ProductVm}"
                                       ViewChanged="scrollvProduct_ViewChanged">
-                            <ListBox x:Name="productListBox"                                     
-                                     HorizontalAlignment="Center" 
+                            <ListView x:Name="productListBox"                                     
+                                     HorizontalAlignment="Stretch" 
                                      VerticalAlignment="Top"                                      
                                      ItemsSource="{Binding ProductList}"
                                      Background="White"
                                      ItemTemplate="{StaticResource itemListProduct}" >
-                            </ListBox>
+								<ListView.ItemContainerStyle>
+									<Style TargetType="ListViewItem">
+										<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+									</Style>
+								</ListView.ItemContainerStyle>
+							</ListView>
                         </ScrollViewer>
                     </Grid>
                 </PivotItem>

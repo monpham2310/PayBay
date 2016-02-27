@@ -14,7 +14,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="70"/>
 		</Grid.RowDefinitions>
 
 		<TextBlock Grid.Row="0" 
@@ -24,14 +24,18 @@
 				   FontSize="20"/>
 
 		<Grid Grid.Row="1">
-			<StackPanel>
-				<Grid>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="25"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0">
 					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="40"/>
+						<ColumnDefinition Width="1.8*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="50"/>
-						<ColumnDefinition Width="1.5*"/>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="1.5*"/>
 					</Grid.ColumnDefinitions>
 
 					<TextBlock Grid.Column="0" 
@@ -51,38 +55,59 @@
 							   HorizontalAlignment="Center"/>
 				</Grid>
 
-				<ListView ItemsSource="{Binding ProductsOfStore}">
-					<ListView.ItemTemplate>
-						<DataTemplate>
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="50"/>
-									<ColumnDefinition Width="1.5*"/>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="1.5*"/>
-								</Grid.ColumnDefinitions>
+				<ScrollViewer Grid.Row="1">
+					<ListView ItemsSource="{Binding ProductsOfStore}">
+						<ListView.ItemContainerStyle>
+							<Style TargetType="ListViewItem">
+								<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+								<Setter Property="HorizontalAlignment" Value="Stretch"/>
+							</Style>
+						</ListView.ItemContainerStyle>
 
-								<TextBlock Grid.Column="0"
-										   Text="{Binding STT}"
-										   HorizontalAlignment="Center"/>
-								<TextBlock Grid.Column="1" 
-										   Text="{Binding ProductName}"
-										   HorizontalAlignment="Center"/>
-								<TextBlock Grid.Column="2" 
-										   Text="{Binding SalePrice}"
-										   HorizontalAlignment="Center"/>
-								<TextBlock Grid.Column="3" 
-										  Text="{Binding NumberOf}"
-										   HorizontalAlignment="Center"/>
-								<TextBox Grid.Column="4" 
-										 Text="0"
-										 HorizontalAlignment="Center"/>
-							</Grid>
-						</DataTemplate>
-					</ListView.ItemTemplate>
-				</ListView>
-			</StackPanel>
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid Margin="-10,0"
+									  BorderThickness="0,1,0,0"
+									  BorderBrush="{StaticResource GrayBrush}">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="40"/>
+										<ColumnDefinition Width="1.8*"/>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="40"/>
+									</Grid.ColumnDefinitions>
+
+									<TextBlock Grid.Column="0"
+											   Text="{Binding STT}"
+											   VerticalAlignment="Center"
+											   HorizontalAlignment="Center"/>
+									<TextBlock Grid.Column="1" 
+											   Text="{Binding ProductName}"
+											   VerticalAlignment="Center"
+											   HorizontalAlignment="Center"/>
+									<TextBlock Grid.Column="2" 
+											   Text="{Binding SalePrice}"
+											   VerticalAlignment="Center"
+											   HorizontalAlignment="Center"/>
+									<TextBlock Grid.Column="3" 
+											  Text="{Binding NumberOf}"
+											   VerticalAlignment="Center"
+											   HorizontalAlignment="Center"/>
+									<TextBox Grid.Column="4" 
+											 Text="0"
+											 TextAlignment="Center"
+											 HorizontalAlignment="Center" 
+											 VerticalAlignment="Center" 
+											 MinWidth="40"
+											 MinHeight="20"
+											 Margin="0,6,0,0"
+											 Height="30"/>
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+				</ScrollViewer>
+			</Grid>
 		</Grid>
 
 		<Button Grid.Row="2" 

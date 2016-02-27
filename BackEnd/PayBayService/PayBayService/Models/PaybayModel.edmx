@@ -49,6 +49,8 @@
           <Property Name="Phone" Type="varchar" MaxLength="12" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="SasQuery" Type="nvarchar(max)" />
+          <Property Name="Longitute" Type="float" />
+          <Property Name="Latitute" Type="float" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -209,6 +211,8 @@
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Longitute" Type="Double" />
+          <Property Name="Latitute" Type="Double" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -367,6 +371,8 @@
           <EntitySetMapping Name="Markets">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Market">
               <MappingFragment StoreEntitySet="Markets">
+                <ScalarProperty Name="Latitute" ColumnName="Latitute" />
+                <ScalarProperty Name="Longitute" ColumnName="Longitute" />
                 <ScalarProperty Name="MarketId" ColumnName="MarketId" />
                 <ScalarProperty Name="MarketName" ColumnName="MarketName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />

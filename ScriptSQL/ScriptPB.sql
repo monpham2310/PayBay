@@ -6,6 +6,15 @@ create table paybayservice.Markets (
 	Image nvarchar(max)
 );
 
+alter table paybayservice.Markets add Longitute float default 0
+alter table paybayservice.Markets add Latitute float default 0
+
+alter table paybayservice.Markets change Longitute float default 0
+alter table paybayservice.Markets add Latitute float default 0
+
+exec sp_rename 'paybayservice.Markets.Latitutes','Latitute','COLUMN'
+exec sp_rename 'paybayservice.Markets.Latitute','Longitute','COLUMN'
+
 create table paybayservice.UserType (	
 	TypeId int identity(1,1) not null primary key,
 	TypeName varchar(20)

@@ -19,6 +19,8 @@ namespace PayBayService.Models
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Image { get; set; }
-        public string SasQuery { get; set; }
+        public string SasQuery { get; set; }        
+        public Nullable<double> Latitute { get; set; }
+        public Nullable<double> Longitute { get; set; }
     }
 }

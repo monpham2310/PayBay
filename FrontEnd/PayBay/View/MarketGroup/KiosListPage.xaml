@@ -198,7 +198,7 @@
                         <Button Background="#4B82BB"
                         HorizontalAlignment="Stretch"
                         Name="btCallMobile"
-                                Click="btCallMobile_Click"
+                        Click="btCallMobile_Click"
                         Grid.ColumnSpan="2">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <Grid Grid.Column="0">

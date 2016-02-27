@@ -639,7 +639,7 @@ alter proc paybayservice.sp_GetMarketWithName --0,'Ba'
 @MarketId int,
 @MarketName nvarchar(100)
 as
-	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery
+	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery,Longitute,Latitute
 	from paybayservice.Markets
 	where MarketId > @MarketId and MarketName like N'%'+@MarketName+N'%'
 
@@ -655,7 +655,7 @@ as
 alter proc paybayservice.sp_GetMoreMarket --0
 @MarketId int
 as
-	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery
+	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery,Longitute,Latitute
 	from paybayservice.Markets
 	where MarketId > @MarketId
 

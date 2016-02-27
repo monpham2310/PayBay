@@ -197,7 +197,7 @@
 					 Height="90">
                 <Ellipse.Fill>
                     <ImageBrush x:Name="imgbrKiosImage"							    
-                                ImageSource="/Assets/LockScreenLogo.scale-200.png" />
+                                ImageSource="{Binding Image}" />
                 </Ellipse.Fill>
             </Ellipse>
 
@@ -206,9 +206,9 @@
                 <StackPanel Orientation="Horizontal"
 							Margin="0,12">
                     <TextBlock Text="Name:"/>
-                    <TextBlock Text="{Binding StoreName}" 
+					<TextBlock Text="{Binding StoreName}" 
 							   Margin="10,0,0,0"/>
-                </StackPanel>
+				</StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Kios:"/>
                     <TextBlock Text="{Binding KiotNo}" 
@@ -221,11 +221,11 @@
                     <StackPanel Orientation="Horizontal" 
 								HorizontalAlignment="Center"   
 								Margin="5,0,0,0">
-                        <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="25" Width="25"/>
-                        <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="25" Width="25"/>
-                        <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="25" Width="25"/>
-                        <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="25" Width="25"/>
-                        <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="25" Width="25"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="20" Width="20"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="20" Width="20"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="20" Width="20"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="20" Width="20"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="20" Width="20"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

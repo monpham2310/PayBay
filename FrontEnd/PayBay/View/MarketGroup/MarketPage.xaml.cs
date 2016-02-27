@@ -31,9 +31,14 @@ namespace PayBay.View.MarketGroup
         private MarketViewModel MarketVm => (MarketViewModel)spnHeader.DataContext;
 		public MarketPage()
 		{
-			this.InitializeComponent();
-            SetUpMap();
+			this.InitializeComponent();            
+            this.Loaded += Page_Loaded;
 		}
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetUpMap();
+        }
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)
         {            
@@ -47,7 +52,7 @@ namespace PayBay.View.MarketGroup
             Frame.GoBack();
         }
 
-        private async void SetUpMap()
+        private void SetUpMap()
         {
             //SelectedItem.Address here
             //string addressToGeocode = "Lê Lợi, Ho Chi Minh City, Tp. Hồ Chí Minh";
@@ -64,9 +69,7 @@ namespace PayBay.View.MarketGroup
             //                        "",                  
             //                        point,
             //                        3);
-
-            
-
+                        
             //Setting for map control
             MarketAddressMap.ZoomInteractionMode = MapInteractionMode.GestureAndControl;
             MarketAddressMap.TiltInteractionMode = MapInteractionMode.GestureAndControl;

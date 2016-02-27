@@ -102,6 +102,7 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Kios.cs" />
     <Compile Include="Model\Rating.cs" />
+    <Compile Include="Services\MobileServices\PaybayNotification\push.register.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Utilities\Common\MediateClass.cs" />
@@ -117,7 +118,6 @@
     <Compile Include="Utilities\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
     <Compile Include="Utilities\Converters\RatingToStarConverter.cs" />
-    <Compile Include="Utilities\Handler\DelegateHandler.cs" />
     <Compile Include="Utilities\Helpers\NetworkHelper.cs" />
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
     <Compile Include="Utilities\Helpers\StorageHelper.cs" />
@@ -429,6 +429,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

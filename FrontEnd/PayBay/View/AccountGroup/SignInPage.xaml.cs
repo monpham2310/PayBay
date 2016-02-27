@@ -1,5 +1,4 @@
 ﻿using PayBay.Utilities.Common;
-using PayBay.Utilities.Handler;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using System;
@@ -45,9 +44,8 @@ namespace PayBay.View.AccountGroup
 					await Vm.LoginAccount(mail, password);
 					((Popup)Frame.Parent).IsOpen = false;
 
-					DelegateHandler.RemoteFunc = new DelegateHandler.FuncCallHandler(MediateClass.StartPage.UserLoginSucceed);
-					DelegateHandler.RemoteFunc();
-
+					MediateClass.StartPage.UserLoginSucceed();
+					
 					await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
 				}
 				catch (Exception ex)

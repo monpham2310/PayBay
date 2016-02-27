@@ -20,7 +20,6 @@ using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using PayBay.Utilities.Handler;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.ViewModel.ProductGroup;
 using Windows.UI.Xaml.Media.Imaging;
@@ -142,7 +141,7 @@ namespace PayBay.View.MarketGroup
 
         private void btCallMobile_Click(object sender, RoutedEventArgs e)
         {
-            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI("+84932273623", "TamBaDao");
+            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
         }
     }
 }

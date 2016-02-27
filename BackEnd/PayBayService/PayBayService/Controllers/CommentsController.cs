@@ -13,13 +13,16 @@ using PayBayService.Models;
 using PayBayService.Common;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
+using PayBayService.Services.MobileServices;
+using Microsoft.WindowsAzure.Mobile.Service;
+using Microsoft.ServiceBus.Notifications;
 
 namespace PayBayService.Controllers
 {
     public class CommentsController : ApiController
     {
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
-
+        
         // GET: api/Comments
         public IQueryable<Comment> GetComments()
         {
@@ -103,9 +106,11 @@ namespace PayBayService.Controllers
 
             db.Comments.Add(comment);
             await db.SaveChangesAsync();
+            
+            await PushHelper.SendToastAsync(Services, comment.UserID.ToString(), comment.Content);
 
             result = Methods.CustomResponseMessage(1, "Add Comment is successful!");
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            return Request.CreateResponse(HttpStatusCode.OK, result);                        
         }
 
         // DELETE: api/Comments/5

@@ -5,13 +5,14 @@
     xmlns:local="using:PayBay.View.MarketGroup.KiosGroup"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:custom="using:PayBay.Utilities.CustomControl"
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="300"
 	DataContext="{Binding Source={StaticResource Locator}, Path=CommentVm}">
 
 	<UserControl.Resources>
-		<ControlTemplate x:Key="RatingTemplate" TargetType="ToggleButton">
+		<ControlTemplate x:Key="CommentRatingTemplate" TargetType="ToggleButton">
 			<Viewbox>
 				<VisualStateManager.VisualStateGroups>
 					<VisualStateGroup x:Name="CommonStates">
@@ -33,7 +34,55 @@
 						<VisualState x:Name="Checked">
 							<Storyboard>
 								<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="star">
-									<DiscreteObjectKeyFrame KeyTime="0" Value="Black"/>
+									<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BlackBrush}"/>
+								</ObjectAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>
+						<!--<VisualState x:Name="CheckedPointerOver">
+							<Storyboard>
+								<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="star">
+									<DiscreteObjectKeyFrame KeyTime="0" Value="{TemplateBinding Foreground}"/>
+								</ObjectAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>
+						<VisualState x:Name="CheckedPressed">
+							<Storyboard>
+								<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="star">
+									<DiscreteObjectKeyFrame KeyTime="0" Value="{TemplateBinding Foreground}"/>
+								</ObjectAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>-->
+					</VisualStateGroup>
+				</VisualStateManager.VisualStateGroups>
+				<Path Name="star"
+					  Fill="{StaticResource LightGrayBrush}" 
+					  Data="F1 M 145.637,174.227L 127.619,110.39L 180.809,70.7577L 114.528,68.1664L 93.2725,5.33333L 70.3262,67.569L 4,68.3681L 56.0988,109.423L 36.3629,172.75L 91.508,135.888L 145.637,174.227 Z" />
+			</Viewbox>
+		</ControlTemplate>
+
+		<ControlTemplate x:Key="UserRatingTemplate" TargetType="ToggleButton">
+			<Viewbox>
+				<VisualStateManager.VisualStateGroups>
+					<VisualStateGroup x:Name="CommonStates">
+						<VisualState x:Name="Normal"></VisualState>
+						<!--<VisualState x:Name="PointerOver">
+							<Storyboard>
+								<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="star">
+									<DiscreteObjectKeyFrame KeyTime="0" Value="{TemplateBinding Foreground}"/>
+								</ObjectAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>-->
+						<!--<VisualState x:Name="Pressed">
+							<Storyboard>
+								<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="star">
+									<DiscreteObjectKeyFrame KeyTime="0" Value="{TemplateBinding Foreground}"/>
+								</ObjectAnimationUsingKeyFrames>
+							</Storyboard>
+						</VisualState>-->
+						<VisualState x:Name="Checked">
+							<Storyboard>
+								<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="star">
+									<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BlueBrush}"/>
 								</ObjectAnimationUsingKeyFrames>
 							</Storyboard>
 						</VisualState>
@@ -63,13 +112,27 @@
 	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
+			<RowDefinition Height="20"/>
+			<RowDefinition Height="40"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
 		<TextBox PlaceholderText="Write your comment..."
 				 TextWrapping="Wrap"/>
 
-		<ScrollViewer Grid.Row="1"
+		<TextBlock Grid.Row="1" 
+				   Text="RATE THIS KIOS"
+				   Foreground="{StaticResource LightBlueBrush}"
+				   FontWeight="Bold"
+				   HorizontalAlignment="Center"/>
+
+		<custom:StarRating Maximum="5"
+						   Grid.Row="2"
+						   Value="2.5"
+						   StarForeground="Black"
+						   StarBackground="Yellow"/>
+
+		<ScrollViewer Grid.Row="3"
 					  Margin="0,10,0,0">
 			<ListView SelectionMode="None"
 					  ItemsSource="{Binding CommentLstOfStore}">
@@ -116,11 +179,11 @@
 								</Grid>
 
 								<StackPanel Orientation="Horizontal">
-									<ToggleButton Template="{StaticResource RatingTemplate}" Width="15" Height="15" IsChecked="True"/>
-									<ToggleButton Template="{StaticResource RatingTemplate}" Width="15" Height="15" IsChecked="True"/>
-									<ToggleButton Template="{StaticResource RatingTemplate}" Width="15" Height="15" IsChecked="True"/>
-									<ToggleButton Template="{StaticResource RatingTemplate}" Width="15" Height="15"/>
-									<ToggleButton Template="{StaticResource RatingTemplate}" Width="15" Height="15"/>
+									<ToggleButton Template="{StaticResource CommentRatingTemplate}" Width="15" Height="15" IsChecked="True"/>
+									<ToggleButton Template="{StaticResource CommentRatingTemplate}" Width="15" Height="15" IsChecked="True"/>
+									<ToggleButton Template="{StaticResource CommentRatingTemplate}" Width="15" Height="15" IsChecked="True"/>
+									<ToggleButton Template="{StaticResource CommentRatingTemplate}" Width="15" Height="15"/>
+									<ToggleButton Template="{StaticResource CommentRatingTemplate}" Width="15" Height="15"/>
 								</StackPanel>
 
 								<TextBlock Text="{Binding Content}"

@@ -117,6 +117,12 @@
     <Compile Include="Utilities\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
     <Compile Include="Utilities\Converters\RatingToStarConverter.cs" />
+    <Compile Include="Utilities\CustomControl\Star.xaml.cs">
+      <DependentUpon>Star.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\CustomControl\StarRating.xaml.cs">
+      <DependentUpon>StarRating.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\Handler\DelegateHandler.cs" />
     <Compile Include="Utilities\Helpers\NetworkHelper.cs" />
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
@@ -308,6 +314,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Utilities\CustomControl\Star.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utilities\CustomControl\StarRating.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AccountGroup\CreateAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

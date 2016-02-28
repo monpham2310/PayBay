@@ -18,6 +18,7 @@
 				HyperlinkButton -> linkbtn
 				Hyperlink -> link
 				FlipView -> flv
+				StackPanel -> sp
             ...
             -->
             
@@ -35,8 +36,8 @@
 			<Color x:Key="LightBlueColor">#FF4FC3F7</Color>
 			<Color x:Key="LightBlackColor">#FF424242</Color>
             <Color x:Key="SkyBlueColor">#007BA7</Color>
-			<Color x:Key="PressedWhiteColor">#EEFFFFFF</Color>
-			<Color x:Key="HoverWhiteColor">#CCFFFFFF</Color>
+			<Color x:Key="PressedWhiteColor">#CCFFFFFF</Color>
+			<Color x:Key="HoverWhiteColor">#AAFFFFFF</Color>
 			<Color x:Key="NormalWhiteColor">#99FFFFFF</Color>
 
 			<SolidColorBrush x:Key="DarkTealBrush" Color="{StaticResource DarkTealColor}" />

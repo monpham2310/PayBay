@@ -243,18 +243,28 @@ namespace PayBay.Utilities.CustomControl
 
 		private void spStars_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			StackPanel starContainer = (StackPanel)sender;
 			Double pos = e.GetPosition(this).X;
-
 			Value = Convert.ToDouble(Math.Ceiling((pos * Maximum) / ActualWidth));
 		}
 
 		private void spStars_PointerMoved(object sender, PointerRoutedEventArgs e)
 		{
-			StackPanel starContainer = (StackPanel)sender;
 			Double pos = e.GetCurrentPoint(this).Position.X;
-
-			RefreshStar(this, Convert.ToDouble(pos));
+			RefreshStar(this, Convert.ToDouble(Math.Ceiling((pos * Maximum) / ActualWidth)));
 		}
-	}
+
+        private void spStars_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            RefreshStar(this, Value);
+        }
+
+        private void spStars_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            StackPanel starContainer = (StackPanel)sender;
+            foreach (Star star in starContainer.Children)
+            {
+                star.StarSize = starContainer.ActualHeight;
+            }
+        }
+    }
 }

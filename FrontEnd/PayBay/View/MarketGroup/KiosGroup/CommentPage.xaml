@@ -129,8 +129,9 @@
 		<custom:StarRating Maximum="5"
 						   Grid.Row="2"
 						   Value="2.5"
-						   StarForeground="Black"
-						   StarBackground="Yellow"/>
+                           HorizontalAlignment="Center"
+						   StarForeground="LightBlue"
+                           StarBackground="Gray"/>
 
 		<ScrollViewer Grid.Row="3"
 					  Margin="0,10,0,0">

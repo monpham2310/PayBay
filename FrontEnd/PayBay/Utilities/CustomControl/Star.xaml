@@ -5,17 +5,22 @@
     xmlns:local="using:PayBay.Utilities.CustomControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-	Width="Auto"
-	Height="Auto">
+    mc:Ignorable="d">
 
     <Grid x:Name="gridStar">
-		<Path x:Name="starForeground" Fill="Gray" Stroke="Transparent" StrokeThickness="1"
-              Data="F1 M 145.637,174.227L 127.619,110.39L 180.809,70.7577L 114.528,68.1664L 93.2725,5.33333L 70.3262,67.569L 4,68.3681L 56.0988,109.423L 36.3629,172.75L 91.508,135.888L 145.637,174.227 Z"/>
+        <Viewbox>
+            <Path x:Name="starBackground" Fill="Gray" Stroke="Transparent" StrokeThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Data="M 9,0 L 7,6 L 0,6 L 6,11 L 4,17 L 9,12 L 14,17 L 12,11 L 18,6 L 11,6 L 9,0"/>
+        </Viewbox>
 
-		<Rectangle x:Name="starMask" Margin="0"/>
-
-		<Path x:Name="starOutline" Fill="Transparent" Stroke="Transparent" StrokeThickness="1"
-              Data="F1 M 145.637,174.227L 127.619,110.39L 180.809,70.7577L 114.528,68.1664L 93.2725,5.33333L 70.3262,67.569L 4,68.3681L 56.0988,109.423L 36.3629,172.75L 91.508,135.888L 145.637,174.227 Z"/>
-	</Grid>
+        <Viewbox x:Name="vbForeground">
+            <Path x:Name="starForeground" Fill="Transparent" Stroke="Transparent" StrokeThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Data="M 9,0 L 7,6 L 0,6 L 6,11 L 4,17 L 9,12 L 14,17 L 12,11 L 18,6 L 11,6 L 9,0"/>
+        </Viewbox>
+        
+        <Viewbox>
+            <Path x:Name="starOutline" Fill="Transparent" Stroke="Transparent" StrokeThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Data="M 9,0 L 7,6 L 0,6 L 6,11 L 4,17 L 9,12 L 14,17 L 12,11 L 18,6 L 11,6 L 9,0"/>
+        </Viewbox>
+    </Grid>
 </UserControl>

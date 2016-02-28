@@ -20,29 +20,53 @@ namespace PayBay.Utilities.CustomControl
 {
 	public sealed partial class Star : UserControl
 	{
-		private const Int32 DEFAULT_SIZE = 12;
-
 		public Star()
 		{
 			this.DataContext = this;
 			this.InitializeComponent();
-
-			gridStar.Width = DEFAULT_SIZE;
-			gridStar.Height = DEFAULT_SIZE;
-			gridStar.Clip = new RectangleGeometry
-			{
-				Rect = new Rect(0, 0, DEFAULT_SIZE, DEFAULT_SIZE)
-			};
-		
-			starMask.Width = DEFAULT_SIZE;
-			starMask.Height = DEFAULT_SIZE;
 		}
 
-		#region StarBackground
-		/// <summary>
-		/// StarBackground Dependency Property
-		/// </summary>
-		public static readonly DependencyProperty StarBackgroundProperty =
+        #region StarSize
+        /// <summary>
+        /// Value Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty StarSizeProperty =
+            DependencyProperty.Register("StarSize", typeof(Double), typeof(Star),
+                new PropertyMetadata((Double)(0.0), OnStarSizeChanged));
+
+        /// <summary>
+        /// Gets or sets the Value property.  
+        /// </summary>
+        public Double StarSize
+        {
+            get { return (Double)GetValue(StarSizeProperty); }
+            set { SetValue(StarSizeProperty, value); }
+        }
+
+        /// <summary>
+        /// Handles changes to the Value property.
+        /// </summary>
+        private static void OnStarSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Star star = (Star)d;
+            Double newSize = (Double)e.NewValue;
+
+            star.gridStar.Width = newSize;
+            star.gridStar.Height = newSize;
+            star.gridStar.Clip = new RectangleGeometry
+            {
+                Rect = new Rect(0, 0, newSize, newSize)
+            };
+        }
+
+        #endregion
+
+
+        #region StarBackground
+        /// <summary>
+        /// StarBackground Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty StarBackgroundProperty =
 			DependencyProperty.Register("StarBackground", typeof(SolidColorBrush), typeof(Star),
 				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.Transparent), OnStarBackgroundChanged));
 
@@ -65,8 +89,7 @@ namespace PayBay.Utilities.CustomControl
 			SolidColorBrush newBackground = (SolidColorBrush)e.NewValue;
 			Star star = (Star)d;
 
-			star.gridStar.Background = newBackground;
-			star.starMask.Fill = newBackground;
+			star.starBackground.Fill = newBackground;
 		}
 		#endregion
 
@@ -132,7 +155,7 @@ namespace PayBay.Utilities.CustomControl
 		/// </summary>
 		public static readonly DependencyProperty ValueProperty =
 			DependencyProperty.Register("Value", typeof(Double), typeof(Star),
-				new PropertyMetadata((Double)0.0, OnValueChanged));
+				new PropertyMetadata((Double)(-1.0), OnValueChanged));
 
 		/// <summary>
 		/// Gets or sets the Value property.  
@@ -146,8 +169,7 @@ namespace PayBay.Utilities.CustomControl
 		/// <summary>
 		/// Handles changes to the Value property.
 		/// </summary>
-		private static void OnValueChanged(DependencyObject d,
-			DependencyPropertyChangedEventArgs e)
+		private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			Star star = (Star)d;
 
@@ -160,12 +182,9 @@ namespace PayBay.Utilities.CustomControl
 			{
 				star.starForeground.Fill = star.StarForeground;
 			}
-
-			Int32 marginLeftOffset = (Int32)(star.Value * (Double)DEFAULT_SIZE);
-			star.starMask.Margin = new Thickness(marginLeftOffset, 0, 0, 0);
-			star.InvalidateArrange();
-			star.InvalidateMeasure();
-
+            
+			Int32 marginLeftOffset = (Int32)(star.Value * (Double)star.StarSize);
+            star.vbForeground.Clip = new RectangleGeometry { Rect = new Rect(0, 0, marginLeftOffset, star.StarSize) };
 		}
 
 		/// <summary>

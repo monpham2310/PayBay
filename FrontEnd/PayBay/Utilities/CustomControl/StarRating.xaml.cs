@@ -236,11 +236,11 @@ namespace PayBay.Utilities.CustomControl
 				value -= 1.0;
 			}
 		}
-
+        /*
 		private Double GetStarPosition(Double pointerPos)
 		{
 
-		}
+		}*/
 		#endregion
 
 		private void spStars_Tapped(object sender, TappedRoutedEventArgs e)

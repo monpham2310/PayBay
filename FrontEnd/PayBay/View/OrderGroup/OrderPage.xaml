@@ -396,7 +396,7 @@
         <Pivot Style="{StaticResource PivotStyleOrderPage}"
                SelectionChanged="pivotOrder_SelectionChanged"
                x:Name="pivotOrder">
-            <PivotItem>
+            <PivotItem x:Name="PivotItem1">
                 <PivotItem.Header>
                     <TextBlock Text="Pre-order"
                                TextAlignment="Center"/>
@@ -405,20 +405,20 @@
                     <order:PreorderPage/>
                 </PivotItem>
             </PivotItem>
-            <PivotItem>
+            <PivotItem x:Name="PivotItem2">
                 <PivotItem.Header>
                     <TextBlock Text="Product&#x0a;Information"
                                TextAlignment="Center"/>
                 </PivotItem.Header>
             </PivotItem>
-            <PivotItem>
+            <PivotItem x:Name="PivotItem3">
                 <PivotItem.Header>
                     <TextBlock Text="Delivery &amp;&#x0a; Payment Terms"
                                TextAlignment="Center"/>
 
                 </PivotItem.Header>
             </PivotItem>
-            <PivotItem>
+            <PivotItem x:Name="PivotItem4">
                 <PivotItem.Header>
                     <TextBlock Text="Confirm&#x0a;Order"
                                TextAlignment="Center"/>

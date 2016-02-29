@@ -69,6 +69,22 @@ namespace PayBay.View.MarketGroup
             txtComment.Text = "";
         }
 
+        private void kiosItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            splitviewKios.IsPaneOpen = !splitviewKios.IsPaneOpen;
+            if (KiosVm != null)
+            {
+                if (gridviewKiosList.SelectedItem != null)
+                {
+                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
+                    int selectedId = KiosVm.SelectedStore.StoreId;
+                    MediateClass.ProductVM.GetProductsOfStore(selectedId, TYPEGET.START);
+                    MediateClass.CommentVM.GetCommentOfStore(selectedId, TYPEGET.START);
+                }
+            }
+            txtComment.Text = "";
+        }
+
         //private void btnStar1_Click(object sender, RoutedEventArgs e)
         //{
         //    imgBtnStar1.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));

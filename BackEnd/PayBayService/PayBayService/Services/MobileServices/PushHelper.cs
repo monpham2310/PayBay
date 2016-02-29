@@ -28,8 +28,14 @@ namespace PayBayService.Services.MobileServices
             };
             try
             {
+                // Get the logged-in user.
+                //var currentUser = this.User as ServiceUser;
+
+                // Use a tag to only send the notification to the logged-in user.
+                //var result = await services.Push.SendAsync(message, currentUser.Id);
+
                 var result = await services.Push.SendAsync(message);
-                services.Log.Info(result.State.ToString());
+                services.Log.Info(result.State.ToString());                                
             }
             catch (System.Exception ex)
             {

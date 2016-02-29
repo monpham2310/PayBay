@@ -1,4 +1,5 @@
-﻿using PayBay.Utilities.Common;
+﻿using PayBay.Services.MobileServices.PaybayNotification;
+using PayBay.Utilities.Common;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using System;
@@ -45,7 +46,9 @@ namespace PayBay.View.AccountGroup
 					bool check = await Vm.LoginAccount(mail, password);
 					((Popup)Frame.Parent).IsOpen = false;
 
-					MediateClass.StartPage.UserLoginSucceed();
+                    //PaybayPushClient.UploadChannel();
+
+                    MediateClass.StartPage.UserLoginSucceed();
 					if(check)
 					    await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
                     btSignin.IsEnabled = true;

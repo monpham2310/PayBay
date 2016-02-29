@@ -7,6 +7,7 @@ using PayBay.View.TopFunctionGroup;
 using PayBay.View.MiddleFunctionGroup;
 using PayBay.View.OrderGroup;
 using PayBay.Utilities.Common;
+using Windows.UI.Popups;
 
 namespace PayBay.ViewModel.StartGroup
 {
@@ -226,7 +227,7 @@ namespace PayBay.ViewModel.StartGroup
         /// </summary>
         /// <param name="frame"></param>
         /// <param name="func"></param>
-        public void NavigateToFunction(Frame frame, MenuFunc func)
+        public async void NavigateToFunction(Frame frame, MenuFunc func)
         {
             switch (func)
             {
@@ -282,7 +283,16 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.Logout:
 				{
-					frame.Navigate(typeof(PrintPage));
+					//frame.Navigate(typeof(PrintPage));
+                    if(MediateClass.UserVM.UserInfo != null)
+                    {
+                        MediateClass.UserVM.UserInfo = null;
+                        MediateClass.StartPage.isLoginControl(false);
+                    }
+                    else
+                    {
+                        
+                    }
 					break;
 				}
 				case MenuFunc.FeedbackAndApps:

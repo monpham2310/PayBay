@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6fdc0a4dd4ca4c41a6d7f805a19b6367" Name="Diagram1">
+      <Diagram DiagramId="59e3f28936fe4fd990d88427f9b872ff" Name="Diagram1">
         <EntityTypeShape EntityType="PayBayDatabaseModel.Bill" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.Comment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.DetailBill" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.Market" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.Product" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.Product" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.ProductStatistic" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.RevenueStatistic" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.SaleInfo" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.Store" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.User" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.UserType" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.StatisticRating" Width="1.5" PointX="5.375" PointY="8.75" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.StatisticRating" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.Store" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.User" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PayBayDatabaseModel.UserType" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

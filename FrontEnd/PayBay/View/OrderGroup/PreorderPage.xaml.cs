@@ -12,17 +12,14 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using PayBay.ViewModel.MarketGroup;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace PayBay.View.MarketGroup.KiosGroup
+namespace PayBay.View.OrderGroup
 {
-    public sealed partial class KiosPage : Page
+    public sealed partial class PreorderPage : UserControl
     {
-        private KiosViewModel KiosVm => (KiosViewModel)DataContext;        
-
-        public KiosPage()
+        public PreorderPage()
         {
             this.InitializeComponent();
         }

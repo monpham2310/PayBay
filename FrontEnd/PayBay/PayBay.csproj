@@ -102,6 +102,7 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Kios.cs" />
     <Compile Include="Model\Rating.cs" />
+    <Compile Include="Services\MobileServices\PaybayNotification\push.register.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Utilities\Common\MediateClass.cs" />
@@ -123,7 +124,6 @@
     <Compile Include="Utilities\CustomControl\StarRating.xaml.cs">
       <DependentUpon>StarRating.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\Handler\DelegateHandler.cs" />
     <Compile Include="Utilities\Helpers\NetworkHelper.cs" />
     <Compile Include="Utilities\Helpers\SettingsHelper.cs" />
     <Compile Include="Utilities\Helpers\StorageHelper.cs" />
@@ -184,6 +184,9 @@
     </Compile>
     <Compile Include="View\OrderGroup\OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OrderGroup\PreorderPage.xaml.cs">
+      <DependentUpon>PreorderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TopFunctionGroup\Function1Page.xaml.cs">
       <DependentUpon>Function1Page.xaml</DependentUpon>
@@ -383,6 +386,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderGroup\OrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderGroup\PreorderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

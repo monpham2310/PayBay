@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure.Storage.Auth;
+﻿using Microsoft.WindowsAzure.Mobile.Service;
+using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,16 +15,24 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 
 namespace PayBayService.Common
 {
+
+    public enum TYPE
+    {
+        OLD = 0,
+        NEW = 1
+    };
+
     public class Methods
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
 
         SqlConnection cnn;
         SqlCommand cmd;
-        SqlDataAdapter da;
+        SqlDataAdapter da;        
 
         public static string err = "";
 
@@ -39,7 +48,9 @@ namespace PayBayService.Common
             return m_Instance;
         }
 
-        private Methods() { }
+        private Methods()
+        {            
+        }
 
         /// <summary>
         /// Return a json object

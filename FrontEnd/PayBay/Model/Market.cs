@@ -15,6 +15,8 @@ namespace PayBay.Model
         private string _address;
         private string _sasQuery;
         private string _phone;
+        private float _longitute;
+        private float _latitute;
                 
         public string SasQuery
         {
@@ -81,6 +83,34 @@ namespace PayBay.Model
             set
             {
                 _marketId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public float Longitute
+        {
+            get
+            {
+                return _longitute;
+            }
+
+            set
+            {
+                _longitute = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public float Latitute
+        {
+            get
+            {
+                return _latitute;
+            }
+
+            set
+            {
+                _latitute = value;
                 OnPropertyChanged();
             }
         }

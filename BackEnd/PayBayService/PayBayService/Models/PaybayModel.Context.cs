@@ -33,9 +33,9 @@ namespace PayBayService.Models
         public virtual DbSet<ProductStatistic> ProductStatistics { get; set; }
         public virtual DbSet<RevenueStatistic> RevenueStatistics { get; set; }
         public virtual DbSet<SaleInfo> SaleInfoes { get; set; }
+        public virtual DbSet<StatisticRating> StatisticRatings { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
-        public virtual DbSet<StatisticRating> StatisticRatings { get; set; }
     }
 }

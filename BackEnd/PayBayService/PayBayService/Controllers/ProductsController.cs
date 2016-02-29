@@ -28,13 +28,20 @@ namespace PayBayService.Controllers
                 
         // GET: api/Products/5
         [ResponseType(typeof(Product))]
-        public HttpResponseMessage GetProducts(int id)
+        public HttpResponseMessage GetProducts(int id, TYPE type)
         {
             JArray result = new JArray();
             try
             {
-                var marketId = new SqlParameter("@ProductId", id);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreProduct", CommandType.StoredProcedure, ref Methods.err, marketId);
+                var proId = new SqlParameter("@ProductId", id);
+                if (type == 0)
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreProduct", CommandType.StoredProcedure, ref Methods.err, proId);
+                }
+                else
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err, proId);
+                }
             }
             catch (Exception ex)
             {
@@ -46,14 +53,21 @@ namespace PayBayService.Controllers
 
         // GET: api/Products/5
         [ResponseType(typeof(Product))]
-        public HttpResponseMessage GetProductFollowName(int id, string name)
+        public HttpResponseMessage GetProductFollowName(int id, string name, TYPE type)
         {
             JArray result = new JArray();
             try
             {
                 var productId = new SqlParameter("@ProductId", id);
                 var productName = new SqlParameter("@ProductName", name);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+                if (type == TYPE.OLD)
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+                }
+                else
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+                }
             }
             catch (Exception ex)
             {
@@ -65,13 +79,17 @@ namespace PayBayService.Controllers
 
         // GET: api/Products/5
         [ResponseType(typeof(Product))]
-        public HttpResponseMessage GetProductOfStore(int storeId)
+        public HttpResponseMessage GetProductOfStore(int storeId, int productId, TYPE type)
         {
             JArray result = new JArray();
             try
             {
                 var store = new SqlParameter("@StoreID", storeId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductOfStore", CommandType.StoredProcedure, ref Methods.err, store);
+                var product = new SqlParameter("@ProductId", productId);
+                if(type == TYPE.OLD)
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductOfStore", CommandType.StoredProcedure, ref Methods.err, store, product);
+                else
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewProductOfStore", CommandType.StoredProcedure, ref Methods.err, store, product);
             }
             catch (Exception ex)
             {

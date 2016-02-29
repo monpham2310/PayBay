@@ -39,7 +39,7 @@
 					</Grid.ColumnDefinitions>
 
 					<TextBlock Grid.Column="0" 
-							   Text="No."
+							   Text="ID"
 							   HorizontalAlignment="Center"/>
 					<TextBlock Grid.Column="1" 
 							   Text="Product"
@@ -55,7 +55,7 @@
 							   HorizontalAlignment="Center"/>
 				</Grid>
 
-				<ScrollViewer Grid.Row="1">
+				<ScrollViewer Grid.Row="1" Name="scrollvProductLst" ViewChanged="scrollvProductLst_ViewChanged">
 					<ListView ItemsSource="{Binding ProductsOfStore}">
 						<ListView.ItemContainerStyle>
 							<Style TargetType="ListViewItem">
@@ -78,7 +78,7 @@
 									</Grid.ColumnDefinitions>
 
 									<TextBlock Grid.Column="0"
-											   Text="{Binding STT}"
+											   Text="{Binding ProductId}"
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>
 									<TextBlock Grid.Column="1" 
@@ -86,7 +86,7 @@
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>
 									<TextBlock Grid.Column="2" 
-											   Text="{Binding SalePrice}"
+											   Text="{Binding UnitPrice}"
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>
 									<TextBlock Grid.Column="3" 

@@ -19,6 +19,7 @@ using PayBay.View.MarketGroup;
 using PayBay.Model;
 using Windows.UI.Popups;
 using PayBay.Utilities.Common;
+using PayBay.ViewModel.HomePageGroup;
 
 namespace PayBay.View.AppBarFunctionGroup
 {
@@ -26,7 +27,7 @@ namespace PayBay.View.AppBarFunctionGroup
     {
 
         private MarketViewModel MarketVm => (MarketViewModel)scrollvMarket.DataContext;
-        private ProductViewModel ProductVm => (ProductViewModel)scrollvProduct.DataContext;
+        private AdvertiseViewModel SaleVm => (AdvertiseViewModel)scrollvSale.DataContext;
         
         public SearchPage()
         {
@@ -47,31 +48,31 @@ namespace PayBay.View.AppBarFunctionGroup
             grid.Height = grid.ActualWidth;
         }
 
-        private async void btSearchProduct_Click(object sender, RoutedEventArgs e)
+        private void btSearchProduct_Click(object sender, RoutedEventArgs e)
         {
-            string name = txtSearchProduct.Text;
-            if (ProductVm != null)
+            string name = txtSearchSale.Text;
+            if (SaleVm != null)
             {
-                if (!string.IsNullOrEmpty(txtSearchProduct.Text))
-                    await ProductVm.LoadMoreProduct(name,TYPEGET.START);
+                if (!string.IsNullOrEmpty(txtSearchSale.Text))
+                    SaleVm.LoadMoreSale(name,TYPEGET.START);
                 else
-                    await ProductVm.LoadMoreProduct(TYPEGET.START);
+                    SaleVm.LoadMoreSale(TYPEGET.START);
             }
         }
 
-        private async void btSearchMarket_Click(object sender, RoutedEventArgs e)
+        private void btSearchMarket_Click(object sender, RoutedEventArgs e)
         {
             string name = txtSearchMarket.Text;
             if(MarketVm != null)
             {
                 if (!string.IsNullOrEmpty(txtSearchMarket.Text))
-                    await MarketVm.LoadMoreMarket(name, TYPEGET.START);
+                    MarketVm.LoadMoreMarket(name, TYPEGET.START);
                 else
-                    await MarketVm.LoadMoreMarket(TYPEGET.START);
+                    MarketVm.LoadMoreMarket(TYPEGET.START);
             }
         }
 
-        private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             //scroll at bottom
             if(scrollvMarket.VerticalOffset >= scrollvMarket.ScrollableHeight)
@@ -79,9 +80,9 @@ namespace PayBay.View.AppBarFunctionGroup
                 if (MarketVm != null)
                 {
                     if (string.IsNullOrEmpty(txtSearchMarket.Text))
-                        await MarketVm.LoadMoreMarket(TYPEGET.MORE);
+                        MarketVm.LoadMoreMarket(TYPEGET.MORE);
                     else
-                        await MarketVm.LoadMoreMarket(txtSearchMarket.Text, TYPEGET.MORE);
+                        MarketVm.LoadMoreMarket(txtSearchMarket.Text, TYPEGET.MORE);
                 }
             }
             //scroll at top
@@ -91,23 +92,29 @@ namespace PayBay.View.AppBarFunctionGroup
             }
         }
 
-        private async void scrollvProduct_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private void scrollvSale_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             //scroll at bottom
-            if (scrollvProduct.VerticalOffset >= scrollvProduct.ScrollableHeight)
+            if (scrollvSale.VerticalOffset >= scrollvSale.ScrollableHeight)
             {
-                if (ProductVm != null)
+                if (SaleVm != null)
                 {
-                    if (string.IsNullOrEmpty(txtSearchProduct.Text))
-                        await ProductVm.LoadMoreProduct(TYPEGET.MORE);
+                    if (string.IsNullOrEmpty(txtSearchSale.Text))
+                        SaleVm.LoadMoreSale(TYPEGET.MORE);
                     else
-                        await ProductVm.LoadMoreProduct(txtSearchProduct.Text, TYPEGET.MORE);
+                        SaleVm.LoadMoreSale(txtSearchSale.Text, TYPEGET.MORE);
                 }
             }
             //scroll at top
-            else if (scrollvProduct.VerticalOffset == 0)
+            else if (scrollvSale.VerticalOffset == 0)
             {
-
+                if (SaleVm != null)
+                {
+                    if (string.IsNullOrEmpty(txtSearchSale.Text))
+                        SaleVm.LoadMoreSale(TYPEGET.MORE, TYPE.NEW);
+                    else
+                        SaleVm.LoadMoreSale(txtSearchSale.Text, TYPEGET.MORE, TYPE.NEW);
+                }
             }
         }
 

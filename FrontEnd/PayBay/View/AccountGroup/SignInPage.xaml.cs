@@ -1,5 +1,4 @@
 ﻿using PayBay.Utilities.Common;
-using PayBay.Utilities.Handler;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using System;
@@ -27,7 +26,7 @@ namespace PayBay.View.AccountGroup
 	/// </summary>
 	public sealed partial class SignInPage : Page
 	{
-        public UserInfoViewModel Vm => (UserInfoViewModel)DataContext;
+        public UserInfoViewModel Vm => (UserInfoViewModel)DataContext;       
                 
 		public SignInPage()
 		{
@@ -42,13 +41,14 @@ namespace PayBay.View.AccountGroup
 			{
 				try
 				{
-					await Vm.LoginAccount(mail, password);
+                    btSignin.IsEnabled = false;           
+					bool check = await Vm.LoginAccount(mail, password);
 					((Popup)Frame.Parent).IsOpen = false;
 
-					DelegateHandler.RemoteFunc = new DelegateHandler.FuncCallHandler(MediateClass.StartPage.UserLoginSucceed);
-					DelegateHandler.RemoteFunc();
-
-					await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+					MediateClass.StartPage.UserLoginSucceed();
+					if(check)
+					    await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+                    btSignin.IsEnabled = true;
 				}
 				catch (Exception ex)
 				{
@@ -80,14 +80,7 @@ namespace PayBay.View.AccountGroup
 		{
 			Frame.Navigate(typeof(CreateAccountPage));
 		}
-
-		private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-		{
-			if (e.Key == Windows.System.VirtualKey.Enter)
-			{
-				Login();
-			}
-		}
+        		
 	}
 
 }

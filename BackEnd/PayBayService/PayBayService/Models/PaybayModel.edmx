@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bills">
           <Key>
             <PropertyRef Name="BillId" />
@@ -49,6 +49,8 @@
           <Property Name="Phone" Type="varchar" MaxLength="12" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="SasQuery" Type="nvarchar(max)" />
+          <Property Name="Latitute" Type="float" />
+          <Property Name="Longitute" Type="float" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -161,7 +163,8 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="paybayservice" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PayBayDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -209,6 +212,8 @@
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Latitute" Type="Double" />
+          <Property Name="Longitute" Type="Double" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -261,6 +266,15 @@
           <Property Name="isRequired" Type="Boolean" Nullable="false" />
           <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="StatisticRating">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="StoreID" Type="Int32" />
+          <Property Name="RateOfUser" Type="Double" />
+        </EntityType>
         <EntityType Name="Store">
           <Key>
             <PropertyRef Name="StoreId" />
@@ -272,8 +286,8 @@
           <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="MarketID" Type="Int32" Nullable="false" />
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
-          <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Rate" Type="Double" />
+          <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -298,7 +312,7 @@
           <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="PayBayDatabaseEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PayBayDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bills" EntityType="Self.Bill" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
           <EntitySet Name="DetailBills" EntityType="Self.DetailBill" />
@@ -307,26 +321,17 @@
           <EntitySet Name="ProductStatistics" EntityType="Self.ProductStatistic" />
           <EntitySet Name="RevenueStatistics" EntityType="Self.RevenueStatistic" />
           <EntitySet Name="SaleInfoes" EntityType="Self.SaleInfo" />
+          <EntitySet Name="StatisticRatings" EntityType="Self.StatisticRating" />
           <EntitySet Name="Stores" EntityType="Self.Store" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserTypes" EntityType="Self.UserType" />
-          <EntitySet Name="StatisticRatings" EntityType="PayBayDatabaseModel.StatisticRating" />
         </EntityContainer>
-        <EntityType Name="StatisticRating">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="StoreID" Type="Int32" />
-          <Property Name="RateOfUser" Type="Double" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PayBayDatabaseModelStoreContainer" CdmEntityContainer="PayBayDatabaseEntities1">
+        <EntityContainerMapping StorageEntityContainer="PayBayDatabaseModelStoreContainer" CdmEntityContainer="PayBayDatabaseEntities">
           <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Bill">
               <MappingFragment StoreEntitySet="Bills">
@@ -373,6 +378,8 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
+                <ScalarProperty Name="Latitute" ColumnName="Latitute" />
+                <ScalarProperty Name="Longitute" ColumnName="Longitute" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -431,10 +438,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="StatisticRatings">
+            <EntityTypeMapping TypeName="PayBayDatabaseModel.StatisticRating">
+              <MappingFragment StoreEntitySet="StatisticRating">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="RateOfUser" ColumnName="RateOfUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="PayBayDatabaseModel.Store">
               <MappingFragment StoreEntitySet="Stores">
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
                 <ScalarProperty Name="StoreName" ColumnName="StoreName" />
                 <ScalarProperty Name="KiotNo" ColumnName="KiotNo" />
@@ -442,6 +458,7 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="MarketID" ColumnName="MarketID" />
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="SasQuery" ColumnName="SasQuery" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -468,16 +485,6 @@
               <MappingFragment StoreEntitySet="UserType">
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatisticRatings">
-            <EntityTypeMapping TypeName="PayBayDatabaseModel.StatisticRating">
-              <MappingFragment StoreEntitySet="StatisticRating">
-                <ScalarProperty Name="RateOfUser" ColumnName="RateOfUser" />
-                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

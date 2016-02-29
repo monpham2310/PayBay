@@ -19,7 +19,8 @@ namespace PayBay.ViewModel.MarketGroup
     {
         private Kios _selectedStore;
         private ObservableCollection<Kios> _kiosList;
-        private int _marketID;
+        
+        private static bool isResponsed = false;
         
         #region Property with calling to PropertyChanged
         public ObservableCollection<Kios> KiosList
@@ -32,21 +33,7 @@ namespace PayBay.ViewModel.MarketGroup
                 OnPropertyChanged();
             }
         }
-
-        public int MarketID
-        {
-            get
-            {
-                return _marketID;
-            }
-
-            set
-            {
-                _marketID = value;
-                OnPropertyChanged();
-            }
-        }
-                
+                                
         public Kios SelectedStore
         {
             get
@@ -85,86 +72,108 @@ namespace PayBay.ViewModel.MarketGroup
         //}
 
         private void InitializeProperties()
-        {
-            MarketID = -1;
+        {            
             SelectedStore = new Kios();
             KiosList = new ObservableCollection<Kios>();
         }
 
-        public async void InitializeData()
-        {            
-            await LoadMoreStore(TYPEGET.START);
+        public void InitializeData()
+        {
+            int marketID = MediateClass.MarketVM.SelectedMarket.MarketId;
+            LoadMoreStore(marketID, TYPEGET.START);
         }
 
-        public async Task LoadMoreStore(TYPEGET type)
+        public async void LoadMoreStore(int marketId, TYPEGET typeGet,TYPE type=0)
         {
-            int lastId = -1;
-            if(type == TYPEGET.MORE)
-                lastId = KiosList[KiosList.Count - 1].StoreId;
-            MarketID = MediateClass.MarketVM.SelectedMarket.MarketId;        
-            IDictionary<string, string> market = new Dictionary<string, string>
+            string lastId = "";
+            if (typeGet == TYPEGET.MORE)
             {
-                {"marketId", MarketID.ToString()},
-                {"storeId" , lastId.ToString()}
-            };
-            try
-            {
-                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                if (KiosList.Count != 0)
                 {
-                    JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Get, market);
-                    JArray response = JArray.Parse(result.ToString());
-                    if (type == TYPEGET.MORE)
-                    {
-                        ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
-
-                        foreach (var item in kiosLst)
-                        {
-                            KiosList.Add(item);
-                        }
-                    }
+                    if (type == TYPE.OLD)
+                        lastId = KiosList.Min(x => x.StoreId).ToString();
                     else
-                        KiosList = response.ToObject<ObservableCollection<Kios>>();
+                        lastId = KiosList.Max(x => x.StoreId).ToString();
                 }
             }
-            catch (Exception ex)
+            else
+                lastId = "-1";
+                  
+            IDictionary<string, string> param = new Dictionary<string, string>
             {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }
+                {"marketId", marketId.ToString()},
+                {"storeId" , lastId},
+                {"type" , type.ToString()}
+            };
+            if(lastId != "")
+                await SendData(typeGet, type, param);
         }
                
-        public async Task LoadMoreStore(string storeName, TYPEGET type)
+        public async void LoadMoreStore(int marketId, string storeName, TYPEGET typeGet, TYPE type=0)
         {
-            int lastId = -1;
-            if (type == TYPEGET.MORE)
-                lastId = KiosList[KiosList.Count - 1].StoreId;
-            MarketID = MediateClass.MarketVM.SelectedMarket.MarketId;
+            string lastId = "";
+            if (typeGet == TYPEGET.MORE)
+            {
+                if (KiosList.Count != 0)
+                {
+                    if (type == TYPE.OLD)
+                        lastId = KiosList.Min(x => x.StoreId).ToString();
+                    else
+                        lastId = KiosList.Max(x => x.StoreId).ToString();
+                }
+            }
+            else
+                lastId = "-1";
+            
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"name" , storeName},
-                {"markId" , MarketID.ToString()},
-                {"storeId" , "-1"}
+                {"markId" , marketId.ToString()},
+                {"storeId" , lastId},
+                {"type" , type.ToString()}
             };
+            if(lastId != "")
+                await SendData(typeGet, type, param);
+        }
+
+        private async Task SendData(TYPEGET typeGet, TYPE type, IDictionary<string,string> param)
+        {
             try
             {
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Post, param);
-                    JArray response = JArray.Parse(result.ToString());
-                    if (type == TYPEGET.MORE)
+                    if (!isResponsed)
                     {
-                        ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
-
-                        foreach (var item in kiosLst)
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Get, param);
+                        JArray response = JArray.Parse(result.ToString());
+                        if (typeGet == TYPEGET.MORE)
                         {
-                            KiosList.Add(item);
+                            ObservableCollection<Kios> kiosLst = response.ToObject<ObservableCollection<Kios>>();
+                            if (type == TYPE.OLD)
+                            {
+                                foreach (var item in kiosLst)
+                                {
+                                    KiosList.Add(item);
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < kiosLst.Count; i++)
+                                {
+                                    KiosList.Insert(i, kiosLst[i]);
+                                }
+                            }
                         }
+                        else
+                            KiosList = response.ToObject<ObservableCollection<Kios>>();
+                        isResponsed = false;
                     }
-                    else
-                        KiosList = response.ToObject<ObservableCollection<Kios>>();
                 }
             }
             catch (Exception ex)
             {
+                isResponsed = false;
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }

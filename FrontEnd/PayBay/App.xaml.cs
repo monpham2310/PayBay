@@ -20,6 +20,7 @@ using Windows.UI.Popups;
 using PayBay.Utilities.Common;
 using Windows.UI.Core;
 using PayBay.Utilities.Helpers;
+using PayBay.Services.MobileServices.PaybayNotification;
 
 namespace PayBay
 {
@@ -41,14 +42,14 @@ namespace PayBay
             Suspending += OnSuspending;
         }
         
-        //public static string UrlHost = "http://localhost:4591";
-        public static string UrlHost = "https://paybayservice.azure-mobile.net/";
+        public static string UrlHost = "http://localhost:4591";
+        //public static string UrlHost = "https://paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
                 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
         // and application key. You're all set to start working with your Mobile Service!
         public static MobileServiceClient MobileService = new MobileServiceClient(
-            UrlHost, ApplicationKey
+            UrlHost//, ApplicationKey
         );
                   
         /// <summary>
@@ -98,9 +99,11 @@ namespace PayBay
             {
                 await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
             }
-			
-			// Ensure the current window is active
-			Window.Current.Activate();                        
+
+            PaybayPushClient.UploadChannel();
+
+            // Ensure the current window is active
+            Window.Current.Activate();                        
         }
                 
         protected override void OnActivated(IActivatedEventArgs args)

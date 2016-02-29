@@ -188,7 +188,7 @@ namespace PayBay.View.StartGroup
 		}
 
 		private void SearchButton_Click(object sender, RoutedEventArgs e)
-		{
+		{                       
 			MainFrame.Navigate(typeof(SearchPage));
 		}
 

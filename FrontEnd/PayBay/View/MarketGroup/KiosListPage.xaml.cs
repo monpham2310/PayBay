@@ -20,7 +20,6 @@ using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using PayBay.Utilities.Handler;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.ViewModel.ProductGroup;
 using Windows.UI.Xaml.Media.Imaging;
@@ -33,34 +32,39 @@ namespace PayBay.View.MarketGroup
     public sealed partial class KiosListPage : Page
     {
         private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;
-        private CommentViewModel CommentVm => (CommentViewModel)lvComments.DataContext;    
+        private CommentViewModel CommentVm => (CommentViewModel)scrollvComment.DataContext;
+        private ProductViewModel ProductVm => (ProductViewModel)scrollvProduct.DataContext;
 
         public KiosListPage()
         {
             this.InitializeComponent();
         }
 
-        private async void btnSearch_Click(object sender, RoutedEventArgs e)
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             string storeName = tbxSearch.Text;
+            int marketId = MediateClass.MarketVM.SelectedMarket.MarketId;
             if(KiosVm != null)
             {
                 if (!string.IsNullOrEmpty(storeName))
-                    await KiosVm.LoadMoreStore(storeName, TYPEGET.START);
+                    KiosVm.LoadMoreStore(marketId, storeName, TYPEGET.START);
                 else
-                    await KiosVm.LoadMoreStore(TYPEGET.START);
+                    KiosVm.LoadMoreStore(marketId, TYPEGET.START);
             }
         }
 
-        private async void kiosItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void kiosItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             splitviewKios.IsPaneOpen = true;
             if (KiosVm != null)
             {
-                KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
-                int selectedId = KiosVm.SelectedStore.StoreId;
-                await MediateClass.ProductVM.GetProductsOfStore(selectedId);
-                await MediateClass.CommentVM.GetCommentOfStore(selectedId);
+                if (gridviewKiosList.SelectedItem != null)
+                {
+                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
+                    int selectedId = KiosVm.SelectedStore.StoreId;
+                    MediateClass.ProductVM.GetProductsOfStore(selectedId,TYPEGET.START);
+                    MediateClass.CommentVM.GetCommentOfStore(selectedId,TYPEGET.START);
+                }
             }
             txtComment.Text = "";
         }
@@ -100,21 +104,28 @@ namespace PayBay.View.MarketGroup
         //    imgBtnStar5.Source = new BitmapImage(new Uri("ms-appx:///Assets/Rating/fullstar.png"));
         //}
 
-        private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
+            int marketId = MediateClass.MarketVM.SelectedMarket.MarketId;
             if(scrollvStore.VerticalOffset >= scrollvStore.ScrollableHeight)
             {
                 if (KiosVm != null)
                 {
                     if (!string.IsNullOrEmpty(tbxSearch.Text))
-                        await KiosVm.LoadMoreStore(tbxSearch.Text, TYPEGET.MORE);
+                        KiosVm.LoadMoreStore(marketId, tbxSearch.Text, TYPEGET.MORE);
                     else
-                        await KiosVm.LoadMoreStore(TYPEGET.MORE);
+                        KiosVm.LoadMoreStore(marketId, TYPEGET.MORE);
                 }
             }
             else if (scrollvStore.VerticalOffset == 0)
             {
-
+                if (KiosVm != null)
+                {
+                    if (!string.IsNullOrEmpty(tbxSearch.Text))
+                        KiosVm.LoadMoreStore(marketId, tbxSearch.Text, TYPEGET.MORE, TYPE.NEW);
+                    else
+                        KiosVm.LoadMoreStore(marketId, TYPEGET.MORE, TYPE.NEW);
+                }
             }
         }
 
@@ -122,7 +133,8 @@ namespace PayBay.View.MarketGroup
         {
             if(MediateClass.UserVM.UserInfo != null)
             {
-                await CommentVm.UserComment(txtComment.Text, KiosVm.SelectedStore.StoreId);                
+                await CommentVm.UserComment(txtComment.Text, KiosVm.SelectedStore.StoreId, TYPEGET.START);
+                txtComment.Text = "";                
             }
             else
             {
@@ -130,19 +142,50 @@ namespace PayBay.View.MarketGroup
             }
         }             
 
-		private void linkSeeComments_Click(object sender, RoutedEventArgs e)
+		private async void linkSeeComments_Click(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(KiosPage));
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                Frame.Navigate(typeof(KiosPage));
+            }
+            else
+            {
+                await new MessageDialog("You are not login.Login is required!", "Notification!").ShowAsync();
+            }
 		}
 		
-		private void linkSeeProducts_Click(object sender, RoutedEventArgs e)
+		private async void linkSeeProducts_Click(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(KiosPage));
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                Frame.Navigate(typeof(KiosPage));
+            }
+            else
+            {
+                await new MessageDialog("You are not login.Login is required!", "Notification!").ShowAsync();
+            }
 		}
 
         private void btCallMobile_Click(object sender, RoutedEventArgs e)
         {
-            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI("+84932273623", "TamBaDao");
+            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
+        }                      
+
+        private void scrvSliderOfStore_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (scrollvProduct.VerticalOffset == 0)
+            {
+                if (ProductVm != null && KiosVm != null && CommentVm != null)
+                {
+                    ProductVm.GetProductsOfStore(KiosVm.SelectedStore.StoreId, TYPEGET.START);
+                    CommentVm.GetCommentOfStore(KiosVm.SelectedStore.StoreId, TYPEGET.START);
+                }
+            }
+            else if (scrollvComment.VerticalOffset >= scrollvStore.ScrollableHeight)
+            {
+                
+            }
         }
+                
     }
 }

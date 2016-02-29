@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel.ProductGroup;
+using PayBay.Utilities.Common;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,5 +27,24 @@ namespace PayBay.View.MarketGroup.KiosGroup
 		{
 			this.InitializeComponent();
 		}
-	}
+
+        private void scrollvProductLst_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
+            if(scrollvProductLst.VerticalOffset >= scrollvProductLst.ScrollableHeight)
+            {
+                if(ProductVm != null)
+                {
+                    ProductVm.GetProductsOfStore(storeId, TYPEGET.MORE);
+                }
+            }
+            else if (scrollvProductLst.VerticalOffset == 0)
+            {
+                if (ProductVm != null)
+                {
+                    ProductVm.GetProductsOfStore(storeId, TYPEGET.MORE, TYPE.NEW);
+                }
+            }
+        }
+    }
 }

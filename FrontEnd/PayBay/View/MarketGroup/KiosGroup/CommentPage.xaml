@@ -110,32 +110,50 @@
 	</UserControl.Resources>
 
 	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="20"/>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="*"/>
+        <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>			    
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<TextBox PlaceholderText="Write your comment..."
-				 TextWrapping="Wrap"/>
+        <TextBlock Grid.Row="0" 
+				Text="RATE THIS KIOS"
+				Foreground="{StaticResource LightBlueBrush}"
+				FontWeight="Bold"
+				HorizontalAlignment="Center"/>
 
-		<TextBlock Grid.Row="1" 
-				   Text="RATE THIS KIOS"
-				   Foreground="{StaticResource LightBlueBrush}"
-				   FontWeight="Bold"
-				   HorizontalAlignment="Center"/>
-
-		<custom:StarRating Maximum="5"
-						   Grid.Row="2"
+        <custom:StarRating Maximum="5"
+						   Grid.Row="1"
 						   Value="2.5"
                            HorizontalAlignment="Center"
 						   StarForeground="LightBlue"
                            StarBackground="Gray"/>
+        <Grid Grid.Row="2">
+		<TextBox PlaceholderText="Write your comment..."
+				 TextWrapping="Wrap"
+                 Name="txtComment"/>
 
-		<ScrollViewer Grid.Row="3"
-					  Margin="0,10,0,0">
-			<ListView SelectionMode="None"
+        <Button x:Name="btSend" 
+                Height="31" 
+                Width="35"
+                VerticalAlignment="Stretch"
+                Background="#EBEBEB"
+                HorizontalAlignment="Right"
+                Grid.Column="1"
+                Margin="0,0,10,0"
+                Click="btSend_Click">
+            <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG" 
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"/>
+        </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="3"
+					  Margin="0,10,0,0"
+                      Name="scrollvComentLst"
+                      ViewChanged="ScrollViewer_ViewChanged">
+            <ListView SelectionMode="None"
 					  ItemsSource="{Binding CommentLstOfStore}">
 				<ListView.ItemContainerStyle>
 					<Style TargetType="ListViewItem">
@@ -168,13 +186,14 @@
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*"/>
-										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="80"/>
 									</Grid.ColumnDefinitions>
 
 									<TextBlock Text="{Binding Username}" 
 										   FontWeight="Bold"/>
 									<TextBlock Text="{Binding CommentDate}"
-										   Grid.Column="1"
+										   Grid.Column="1"         
+                                           FontSize="8"                                           
 										   Foreground="{StaticResource GrayBrush}"
 										   HorizontalAlignment="Right"/>
 								</Grid>

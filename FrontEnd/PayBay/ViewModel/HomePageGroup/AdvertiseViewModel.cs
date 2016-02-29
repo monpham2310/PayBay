@@ -12,13 +12,16 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using System.IO;
 using PayBay.Utilities.Helpers;
+using PayBay.Utilities.Common;
 
 namespace PayBay.ViewModel.HomePageGroup
 {
 	public class AdvertiseViewModel : BaseViewModel
 	{	   
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
+        private ObservableCollection<AdvertiseItem> _saleList;
 		private AdvertiseItem _selectedAd;
+        private static bool isResponsed = false;
 
 		#region Property with calling to PropertyChanged
 		public ObservableCollection<AdvertiseItem> AdvertiseItemList
@@ -58,35 +61,41 @@ namespace PayBay.ViewModel.HomePageGroup
 				OnPropertyChanged();
 			}
 		}
-		#endregion
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public AdvertiseViewModel()
+        public ObservableCollection<AdvertiseItem> SaleList
+        {
+            get
+            {
+                return _saleList;
+            }
+
+            set
+            {
+                _saleList = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public AdvertiseViewModel()
 		{
-			//InitializeData();
+            MediateClass.AdvertiseVM = this;
+			InitializeProperties();
             InitializeDataFromDB();
+            LoadMoreSale(TYPEGET.START);
         }
 
 		/// <summary>
 		/// Initialize market
 		/// </summary>
-		private void InitializeData()
+		private void InitializeProperties()
 		{
-			_advertiseItemList = new ObservableCollection<AdvertiseItem>();
-
-			for (var i = 0; i < 6; i++)
-			{
-				AdvertiseItem ad = new AdvertiseItem();
-				ad.Image = "/Assets/lol.jpg";
-				ad.IsSelected = false;
-				_advertiseItemList.Add(ad);
-			}
-
-			_selectedAd = _advertiseItemList[0];
-			_selectedAd.IsSelected = true;
-		}
+            AdvertiseItemList = new ObservableCollection<AdvertiseItem>();
+            SaleList = new ObservableCollection<AdvertiseItem>();
+        }
 
         /// <summary>
         /// Get data from service
@@ -95,8 +104,7 @@ namespace PayBay.ViewModel.HomePageGroup
         private async void InitializeDataFromDB()
         {
             MobileServiceInvalidOperationException exception = null;
-            AdvertiseItemList = new ObservableCollection<AdvertiseItem>();
-
+            
             try
             {
                 IDictionary<string, string> sale = new Dictionary<string, string>
@@ -143,5 +151,95 @@ namespace PayBay.ViewModel.HomePageGroup
             }
         }
 
+        public async void LoadMoreSale(TYPEGET type, TYPE isOld=0)
+        {
+            string lastId = "";
+            if (type == TYPEGET.MORE)
+            {
+                if (SaleList.Count != 0)
+                {
+                    if (isOld == TYPE.OLD)
+                        lastId = SaleList.Min(x => x.SaleId).ToString();
+                    else
+                        lastId = SaleList.Max(x => x.SaleId).ToString();
+                }
+            }
+            else
+                lastId = "-1";
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"id" , lastId},
+                {"type" , isOld.ToString()}
+            };
+            if(lastId != "")
+                await SendData(type, isOld, param);
+        }
+
+        public async void LoadMoreSale(string title, TYPEGET type, TYPE isOld=0)
+        {
+            string lastId = "";
+            if (type == TYPEGET.MORE)
+            {
+                if (SaleList.Count != 0)
+                {
+                    if (isOld == TYPE.OLD)
+                        lastId = SaleList.Min(x => x.SaleId).ToString();
+                    else
+                        lastId = SaleList.Max(x => x.SaleId).ToString();
+                }
+            }
+            else
+                lastId = "-1";
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"id" , lastId},
+                {"title" , title},
+                {"type" , isOld.ToString()}
+            };
+            if(lastId != "")
+                await SendData(type, isOld, param);
+        }
+
+        private async Task SendData(TYPEGET typeGet, TYPE type, IDictionary<string,string> param)
+        {                     
+            try
+            {
+                if (NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (!isResponsed)
+                    {
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Get, param);
+                        JArray sales = JArray.Parse(result.ToString());
+                        if (typeGet == TYPEGET.MORE)
+                        {
+                            ObservableCollection<AdvertiseItem> moreSale = sales.ToObject<ObservableCollection<AdvertiseItem>>();
+                            if (type == TYPE.OLD)
+                            {
+                                foreach (var item in moreSale)
+                                {
+                                    SaleList.Add(item);
+                                }
+                            }
+                            else {
+                                for (int i = 0; i < moreSale.Count; i++)
+                                {
+                                    SaleList.Insert(i, moreSale[i]);
+                                }
+                            }
+                        }
+                        else
+                            SaleList = sales.ToObject<ObservableCollection<AdvertiseItem>>();
+                        isResponsed = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                isResponsed = false;
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+        }
+                
     }
 }

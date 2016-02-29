@@ -15,6 +15,8 @@ namespace PayBay.ViewModel.CommentGroup
     public class CommentViewModel : BaseViewModel
     {
         private ObservableCollection<Comment> _commentLstOfStore;
+        private static bool isResponsed = false;
+        private static bool isCommented = false;
 
         public ObservableCollection<Comment> CommentLstOfStore
         {
@@ -36,28 +38,76 @@ namespace PayBay.ViewModel.CommentGroup
             CommentLstOfStore = new ObservableCollection<Comment>();
         }
 
-        public async Task GetCommentOfStore(int storeId)
+        public async void GetCommentOfStore(int storeId, TYPEGET typeGet, TYPE type=0)
         {
+            string lastId = "";
+            if (typeGet == TYPEGET.MORE)
+            {
+                if (CommentLstOfStore.Count != 0)
+                {
+                    if (type == TYPE.OLD)
+                        lastId = CommentLstOfStore.Min(x => x.Id).ToString();
+                    else
+                        lastId = CommentLstOfStore.Max(x => x.Id).ToString();
+                }
+            }
+            else
+                lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
-                {"storeId" , storeId.ToString()}
+                {"storeId" , storeId.ToString()},
+                {"commentId" , lastId},
+                {"type" , type.ToString()}
             };
+            if(lastId != "")
+                await SendData(typeGet, type, param);
+        } 
+
+        private async Task SendData(TYPEGET typeGet, TYPE type, IDictionary<string,string> param)
+        {
             try
             {
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    JToken result = await App.MobileService.InvokeApiAsync("Comments", HttpMethod.Get, param);
-                    JArray response = JArray.Parse(result.ToString());
-                    CommentLstOfStore = response.ToObject<ObservableCollection<Comment>>();
+                    if (!isResponsed)
+                    {
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("Comments", HttpMethod.Get, param);
+                        JArray response = JArray.Parse(result.ToString());
+                        if (typeGet == TYPEGET.START)
+                        {
+                            CommentLstOfStore = response.ToObject<ObservableCollection<Comment>>();
+                        }
+                        else
+                        {
+                            ObservableCollection<Comment> more = response.ToObject<ObservableCollection<Comment>>();
+                            if (type == TYPE.OLD)
+                            {
+                                foreach (var item in more)
+                                {
+                                    CommentLstOfStore.Add(item);
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < more.Count; i++)
+                                {
+                                    CommentLstOfStore.Insert(i, more[i]);
+                                }
+                            }
+                        }
+                        isResponsed = false;
+                    }
                 }
             }
             catch (Exception ex)
             {
+                isResponsed = false;
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
-        } 
+        }
 
-        public async Task UserComment(string content,int storeId)
+        public async Task UserComment(string content,int storeId, TYPEGET type, bool inKios=false)
         {
             UserInfo currentUser = MediateClass.UserVM.UserInfo;
             Comment comment = new Comment();
@@ -74,25 +124,37 @@ namespace PayBay.ViewModel.CommentGroup
             {
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    JToken result = await App.MobileService.InvokeApiAsync("Comments", body, HttpMethod.Post, null);
-                    JObject response = JObject.Parse(result.ToString());
-                    if (response["ErrCode"].ToString().Equals("1"))
+                    if (!isCommented)
                     {
-                        CommentLstOfStore.Add(comment);
-                        var list = CommentLstOfStore.OrderByDescending(x => x.CommentDate).ToList();
-                        CommentLstOfStore.Clear();
-                        for (int i = 0; i < 4; i++)
-                        {
-                            CommentLstOfStore.Add(list[i]);
+                        isCommented = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("Comments", body, HttpMethod.Post, null);
+                        JObject response = JObject.Parse(result.ToString());
+                        if (response["ErrCode"].ToString().Equals("1"))
+                        {                            
+                            string lastId = "-1";
+                            if (!inKios)
+                                lastId = CommentLstOfStore.Max(x => x.Id).ToString();
+                            IDictionary<string, string> param = new Dictionary<string, string>
+                            {
+                                {"storeId" , storeId.ToString()},
+                                {"commentId" , lastId},
+                                {"type" , TYPE.OLD.ToString()}
+                            };
+                            if (!inKios)
+                                await SendData(TYPEGET.START, TYPE.OLD, param);
+                            else
+                                await SendData(TYPEGET.MORE, TYPE.NEW, param);
                         }
                     }
+                    isCommented = false;
                 }
             }
             catch (Exception ex)
             {
+                isCommented = false;
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }            
         }
-
+                
     }
 }

@@ -177,6 +177,7 @@
         </Style>
     </Page.Resources>
 
+    <!--<ScrollViewer HorizontalScrollMode="Disabled">-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
@@ -251,4 +252,5 @@
             </Pivot>
         </Grid>
     </Grid>
+    <!--</ScrollViewer>-->
 </Page>

@@ -5,7 +5,7 @@ namespace PayBay.Model
 {
 	public class AdvertiseItem : BaseViewModel
 	{
-        private int _id;
+        private int _saleId;
         private string _title;
         private string _describes;
         private DateTime _startDate;
@@ -45,16 +45,16 @@ namespace PayBay.Model
 			}
 		}
 
-        public int Id
+        public int SaleId
         {
             get
             {
-                return _id;
+                return _saleId;
             }
 
             set
             {
-                _id = value;
+                _saleId = value;
                 OnPropertyChanged();
             }
         }

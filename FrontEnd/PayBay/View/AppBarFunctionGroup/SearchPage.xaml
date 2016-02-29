@@ -11,7 +11,8 @@
 		<DataTemplate x:Key="itemListMarket">
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        BorderThickness="2,2,2,2"                                                
+                        BorderThickness="2,2,2,2"    
+                        Margin="0,5,0,5"
                         BorderBrush="{StaticResource LightBlueBrush}">
                 <Image Source="{Binding Image}" 
                        Width="107" 
@@ -28,7 +29,7 @@
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="itemListProduct">
+        <DataTemplate x:Key="itemListSales">
             <StackPanel Orientation="Horizontal"
                                                 HorizontalAlignment="Center"
                                                 BorderThickness="2,2,2,2"
@@ -41,10 +42,14 @@
                 <StackPanel Orientation="Vertical"
                                                     HorizontalAlignment="Stretch"
                                                     Width="280">
-                    <TextBlock Text="{Binding ProductName}"
+                    <TextBlock Text="{Binding Title}"
                                                        Foreground="{StaticResource LightBlueBrush}"/>
-                    <TextBlock Text="{Binding UnitPrice}"/>
-                    <TextBlock Text="{Binding StoreName}" Foreground="{StaticResource RedBrush}"/>
+                    <TextBlock Text="{Binding Describes}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding StartDate}" Foreground="{StaticResource RedBrush}"/>
+                        <TextBlock>-</TextBlock>
+                        <TextBlock Text="{Binding EndDate}" Foreground="{StaticResource RedBrush}"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -550,7 +555,7 @@
 
                     </Grid>
                 </PivotItem>
-                <PivotItem Margin="0" Header="PRODUCTS">
+                <PivotItem Margin="0" Header="SALES">
                     <!--<PivotItem.Header>
                         <TextBlock Text="PRODUCTS"
                                    Foreground="White"
@@ -596,7 +601,7 @@
                                      Grid.Column="0" 
                                      Grid.ColumnSpan="2" 
                                      Margin="0,0,35,-2"
-                                     x:Name="txtSearchProduct"
+                                     x:Name="txtSearchSale"
                                      />
                             <Button x:Name="btSearchProduct" 
                     	            Height="31" 
@@ -610,18 +615,18 @@
                                        VerticalAlignment="Center"/>
                             </Button>
                         </Grid>
-                        <ScrollViewer Name="scrollvProduct"
+                        <ScrollViewer Name="scrollvSale"
                                       Grid.Row="1"
                                       Grid.ColumnSpan="2" 
 									  HorizontalAlignment="Stretch"
-                                      DataContext="{Binding Source={StaticResource Locator},Path=ProductVm}"
-                                      ViewChanged="scrollvProduct_ViewChanged">
-                            <ListView x:Name="productListBox"                                     
+                                      DataContext="{Binding Source={StaticResource Locator},Path=AdvertiseVm}"
+                                      ViewChanged="scrollvSale_ViewChanged">
+                            <ListView x:Name="lvSale"                                     
                                      HorizontalAlignment="Stretch" 
                                      VerticalAlignment="Top"                                      
-                                     ItemsSource="{Binding ProductList}"
+                                     ItemsSource="{Binding SaleList}"
                                      Background="White"
-                                     ItemTemplate="{StaticResource itemListProduct}" >
+                                     ItemTemplate="{StaticResource itemListSales}" >
 								<ListView.ItemContainerStyle>
 									<Style TargetType="ListViewItem">
 										<Setter Property="HorizontalContentAlignment" Value="Stretch"/>

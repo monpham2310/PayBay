@@ -17,6 +17,7 @@ namespace PayBay.ViewModel.ProductGroup
         private Product _selectedProduct;
         private ObservableCollection<Product> _productsOfStore;
         private ObservableCollection<Product> _productList;
+        private static bool isResponsed = false;
                 
         #region Property with calling to PropertyChanged
         public Product SelectedProduct
@@ -64,7 +65,7 @@ namespace PayBay.ViewModel.ProductGroup
         {
             MediateClass.ProductVM = this;
             InitializeProperties();
-            InitializeData();
+            //InitializeData();
         }
 
         private void InitializeProperties()
@@ -77,97 +78,161 @@ namespace PayBay.ViewModel.ProductGroup
             await LoadMoreProduct(TYPEGET.START);
         }      
 
-        public async Task LoadMoreProduct(TYPEGET type)
+        public async Task LoadMoreProduct(TYPEGET type, TYPE isOld=0)
         {
             string lastId = "";
             if (type == TYPEGET.MORE)
-                lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
-            else
-                lastId = "-1";
-            IDictionary<string, string> param = new Dictionary<string, string>
             {
-                {"id" , lastId}                
-            };
-            try
-            {
-                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                if (ProductList.Count != 0)
                 {
-                    JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                    JArray products = JArray.Parse(result.ToString());
-                    if (type == TYPEGET.MORE)
-                    {
-                        ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
-
-                        foreach (var item in moreProduct)
-                        {
-                            ProductList.Add(item);
-                        }
-                    }
+                    if (isOld == TYPE.OLD)
+                        lastId = ProductList.Min(x => x.ProductId).ToString();
                     else
-                        ProductList = products.ToObject<ObservableCollection<Product>>();
+                        lastId = ProductList.Max(x => x.ProductId).ToString();
                 }
             }
-            catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
-        }
-
-        public async Task LoadMoreProduct(string name, TYPEGET type)
-        {
-            string lastId = "";
-            if (type == TYPEGET.MORE)
-                lastId = ProductList[ProductList.Count - 1].ProductId.ToString();
             else
                 lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId},
-                { "name" , name }
+                {"type" , isOld.ToString()}
             };
-            try
-            {
-                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
-                {
-                    JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                    JArray products = JArray.Parse(result.ToString());
-                    if (type == TYPEGET.MORE)
-                    {
-                        ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
-
-                        foreach (var item in moreProduct)
-                        {
-                            ProductList.Add(item);
-                        }
-                    }
-                    else
-                        ProductList = products.ToObject<ObservableCollection<Product>>();
-                }
-            }
-            catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
+            if(lastId != "")
+                await SendData(type, isOld, param);         
         }
 
-        public async Task GetProductsOfStore(int storeId)
+        public async void LoadMoreProduct(string name, TYPEGET type, TYPE isOld=0)
         {
+            string lastId = "";
+            if (type == TYPEGET.MORE)
+            {
+                if (ProductList.Count != 0)
+                {
+                    if (isOld == TYPE.OLD)
+                        lastId = ProductList.Min(x => x.ProductId).ToString();
+                    else
+                        lastId = ProductList.Max(x => x.ProductId).ToString();
+                }
+            }
+            else
+                lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
-                {"storeId" , storeId.ToString()}
+                {"id" , lastId},
+                {"name" , name},
+                {"type" , isOld.ToString()}
             };
+            if(lastId != "")
+                await SendData(type, isOld, param);          
+        }
+                
+        public async void GetProductsOfStore(int storeId, TYPEGET typeGet, TYPE type=0)
+        {
+            string lastId = "";
+            if (typeGet == TYPEGET.MORE)
+            {
+                if (ProductsOfStore.Count != 0)
+                {
+                    if (type == TYPE.OLD)
+                        lastId = ProductsOfStore.Min(x => x.ProductId).ToString();
+                    else
+                        lastId = ProductsOfStore.Max(x => x.ProductId).ToString();
+                }
+            }
+            else
+                lastId = "-1";
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"storeId" , storeId.ToString()},
+                {"productId" , lastId},
+                {"type" , type.ToString()}
+            };
+            if(lastId != "")
+                await PassDataOfStore(typeGet, type, param);
+        }
+
+        private async Task SendData(TYPEGET typeGet, TYPE type, IDictionary<string, string> param)
+        {
             try
             {
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
-                    JArray response = JArray.Parse(result.ToString());
-
-                    ProductsOfStore = response.ToObject<ObservableCollection<Product>>();
+                    if (!isResponsed)
+                    {
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                        JArray products = JArray.Parse(result.ToString());
+                        if (typeGet == TYPEGET.MORE)
+                        {
+                            ObservableCollection<Product> moreProduct = products.ToObject<ObservableCollection<Product>>();
+                            if (type == TYPE.OLD)
+                            {
+                                foreach (var item in moreProduct)
+                                {
+                                    ProductList.Add(item);
+                                }
+                            }
+                            else {
+                                for (int i = 0; i < moreProduct.Count; i++)
+                                {
+                                    ProductList.Insert(i, moreProduct[i]);
+                                }
+                            }
+                        }
+                        else
+                            ProductList = products.ToObject<ObservableCollection<Product>>();
+                        isResponsed = false;
+                    }
                 }
             }
             catch (Exception ex)
             {
+                isResponsed = false;
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+        }
+
+        private async Task PassDataOfStore(TYPEGET typeGet, TYPE type, IDictionary<string, string> param)
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (!isResponsed)
+                    {
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
+                        JArray response = JArray.Parse(result.ToString());
+                        if (typeGet == TYPEGET.START)
+                        {
+                            ProductsOfStore = response.ToObject<ObservableCollection<Product>>();
+                        }
+                        else
+                        {
+                            ObservableCollection<Product> more = response.ToObject<ObservableCollection<Product>>();
+                            if (type == TYPE.OLD)
+                            {
+                                foreach (var item in more)
+                                {
+                                    ProductsOfStore.Add(item);
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < more.Count; i++)
+                                {
+                                    ProductsOfStore.Insert(i, more[i]);
+                                }
+                            }
+                        }
+                        isResponsed = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                isResponsed = false;
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }

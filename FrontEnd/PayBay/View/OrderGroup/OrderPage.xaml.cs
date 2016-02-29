@@ -28,48 +28,30 @@ namespace PayBay.View.OrderGroup
             this.InitializeComponent();
         }
 
-        public static T FindVisualChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-        {
-            if (parent == null)
-                return null;
-
-            T foundChild = null;
-
-            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childrenCount; i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                T childType = child as T;
-                if (childType == null)
-                {
-                    foundChild = FindVisualChild<T>(child, childName);
-
-                    if (foundChild != null) break;
-                }
-                else if (!string.IsNullOrEmpty(childName))
-                {
-                    var frameworkElement = child as FrameworkElement;
-                    if (frameworkElement != null && frameworkElement.Name == childName)
-                    {
-                        foundChild = (T)child;
-                        break;
-                    }
-                }
-                else
-                {
-                    foundChild = (T)child;
-                    break;
-                }
-            }
-
-            return foundChild;
-        }
-
         public void pivotOrder_SelectionChanged(object sender,SelectionChangedEventArgs e)
         {
-            //ProgressBar progbar = FindVisualChild<ProgressBar>(pivotstyleorder, "progressBarOrder");
-            //progbar.Value -= 10;
-            
+            ProgressBar progbar = ((ProgressBar)VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(pivotOrder, 0), 1), 0), 0), 0), 0), 0), 1), 0), 0), 0));
+
+            switch(pivotOrder.SelectedIndex)
+            {
+                case 0:
+                    progbar.Value = 0;
+                    break;
+                case 1:
+                    progbar.Value = 33.3f;
+                    break;
+                case 2:
+                    progbar.Value = 66.6f;
+                    break;
+                case 3:
+                    progbar.Value = 100;
+                    break;
+                default:
+                    progbar.Value = 0;
+                    break;
+            }
+
+
         }
     }
 }

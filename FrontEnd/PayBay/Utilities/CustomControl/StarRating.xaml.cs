@@ -237,10 +237,10 @@ namespace PayBay.Utilities.CustomControl
 			}
 		}
 
-		private Double GetStarPosition(Double pointerPos)
-		{
+		//private Double GetStarPosition(Double pointerPos)
+		//{
 
-		}
+		//}
 		#endregion
 
 		private void spStars_Tapped(object sender, TappedRoutedEventArgs e)

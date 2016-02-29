@@ -70,8 +70,7 @@ namespace PayBay.ViewModel.AccountGroup
                 }
             }
             catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            {                
                 return false;
             }
             return true;               

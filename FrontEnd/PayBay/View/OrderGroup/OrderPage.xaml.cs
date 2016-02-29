@@ -30,9 +30,14 @@ namespace PayBay.View.OrderGroup
 
         public void pivotOrder_SelectionChanged(object sender,SelectionChangedEventArgs e)
         {
+            if (e.AddedItems[0].Equals(PivotItem1))
+            {
+                pivotOrder.SelectedIndex = 0;
+            }
+
             ProgressBar progbar = ((ProgressBar)VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(pivotOrder, 0), 1), 0), 0), 0), 0), 0), 1), 0), 0), 0));
 
-            switch(pivotOrder.SelectedIndex)
+            switch (pivotOrder.SelectedIndex)
             {
                 case 0:
                     progbar.Value = 0;
@@ -50,7 +55,6 @@ namespace PayBay.View.OrderGroup
                     progbar.Value = 0;
                     break;
             }
-
 
         }
     }

@@ -11,6 +11,7 @@ namespace PayBayService
     public static class WebApiConfig
     {
         public static ApiServices Services;
+
         public static void Register()
         {
             // Use this class to set configuration options for your mobile service
@@ -38,27 +39,15 @@ namespace PayBayService
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
-
-            //Database.SetInitializer(new MobileServiceInitializer());
+            //options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
+                        
         }
     }
 
     public class MobileServiceInitializer : DropCreateDatabaseIfModelChanges<PayBayDatabaseEntities>
     {
         protected override void Seed(PayBayDatabaseEntities context)
-        {
-            //List<TodoItem> todoItems = new List<TodoItem>
-            //{
-            //    new TodoItem { Id = Guid.NewGuid().ToString(), Text = "First item", Complete = false },
-            //    new TodoItem { Id = Guid.NewGuid().ToString(), Text = "Second item", Complete = false },
-            //};
-
-            //foreach (TodoItem todoItem in todoItems)
-            //{
-            //    context.Set<TodoItem>().Add(todoItem);
-            //}
-
+        {            
             base.Seed(context);
         }
     }

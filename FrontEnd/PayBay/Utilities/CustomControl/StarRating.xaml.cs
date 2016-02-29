@@ -202,10 +202,11 @@ namespace PayBay.Utilities.CustomControl
 			for (int i = 0; i < starRating.Maximum; i++)
 			{
 				Star star = new Star();
+				star.Tag = i;
 				star.StarBackground = starRating.StarBackground;
 				star.StarForeground = starRating.StarForeground;
 				star.StarOutlineColor = starRating.StarOutlineColor;
-				star.Value = 0.0;
+				star.Value = value;
 
 				starRating.spStars.Children.Insert(i, star);
 			}
@@ -221,10 +222,6 @@ namespace PayBay.Utilities.CustomControl
 
 			foreach (Star star in starRating.spStars.Children)
 			{
-				star.StarBackground = starRating.StarBackground;
-				star.StarForeground = starRating.StarForeground;
-				star.StarOutlineColor = starRating.StarOutlineColor;
-
 				if (value > 1)
 					star.Value = 1.0;
 				else if (value > 0)
@@ -238,6 +235,11 @@ namespace PayBay.Utilities.CustomControl
 
 				value -= 1.0;
 			}
+		}
+
+		private Double GetStarPosition(Double pointerPos)
+		{
+
 		}
 		#endregion
 

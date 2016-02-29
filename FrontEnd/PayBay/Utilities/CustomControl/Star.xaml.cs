@@ -61,7 +61,6 @@ namespace PayBay.Utilities.CustomControl
 
         #endregion
 
-
         #region StarBackground
         /// <summary>
         /// StarBackground Dependency Property
@@ -155,7 +154,7 @@ namespace PayBay.Utilities.CustomControl
 		/// </summary>
 		public static readonly DependencyProperty ValueProperty =
 			DependencyProperty.Register("Value", typeof(Double), typeof(Star),
-				new PropertyMetadata((Double)(-1.0), OnValueChanged));
+				new PropertyMetadata((Double)(0.0), OnValueChanged));
 
 		/// <summary>
 		/// Gets or sets the Value property.  
@@ -176,7 +175,7 @@ namespace PayBay.Utilities.CustomControl
 			CoerceValue(star, e.NewValue);
 			if (star.Value == 0.0)
 			{
-				star.starForeground.Fill = new SolidColorBrush(Windows.UI.Colors.LightGray);
+				star.starForeground.Fill = star.StarBackground;
 			}
 			else
 			{

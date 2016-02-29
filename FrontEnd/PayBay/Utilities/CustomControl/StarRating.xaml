@@ -14,7 +14,6 @@
 					Orientation="Horizontal"
 					Tapped="spStars_Tapped" 
 					PointerMoved="spStars_PointerMoved" 
-                    PointerExited="spStars_PointerExited" 
                     SizeChanged="spStars_SizeChanged"/>
 	</Grid>
 </UserControl>

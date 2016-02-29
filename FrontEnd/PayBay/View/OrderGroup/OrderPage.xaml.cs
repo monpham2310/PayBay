@@ -27,5 +27,31 @@ namespace PayBay.View.OrderGroup
         {
             this.InitializeComponent();
         }
+
+        public void pivotOrder_SelectionChanged(object sender,SelectionChangedEventArgs e)
+        {
+            ProgressBar progbar = ((ProgressBar)VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(pivotOrder, 0), 1), 0), 0), 0), 0), 0), 1), 0), 0), 0));
+
+            switch(pivotOrder.SelectedIndex)
+            {
+                case 0:
+                    progbar.Value = 0;
+                    break;
+                case 1:
+                    progbar.Value = 33.3f;
+                    break;
+                case 2:
+                    progbar.Value = 66.6f;
+                    break;
+                case 3:
+                    progbar.Value = 100;
+                    break;
+                default:
+                    progbar.Value = 0;
+                    break;
+            }
+
+
+        }
     }
 }

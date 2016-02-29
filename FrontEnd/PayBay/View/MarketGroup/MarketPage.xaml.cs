@@ -41,7 +41,9 @@ namespace PayBay.View.MarketGroup
         }
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)
-        {            
+        {
+            if(MediateClass.KiotVM != null)
+                MediateClass.KiotVM.LoadMoreStore(MarketVm.SelectedMarket.MarketId, TYPEGET.START);    
             Frame.Navigate(typeof(KiosListPage));
         }
 

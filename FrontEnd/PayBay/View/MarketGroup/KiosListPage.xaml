@@ -127,7 +127,7 @@
             </Grid>
         </SplitView.Content>
         <SplitView.Pane>
-            <ScrollViewer HorizontalScrollMode="Auto">
+            <ScrollViewer Name="scrvSliderOfStore" HorizontalScrollMode="Auto" ViewChanged="scrvSliderOfStore_ViewChanged">
                 <Grid Background="#4F81BC">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -258,12 +258,14 @@
 
                     </Grid>
                     <Grid Grid.Row="1">
+                            <ScrollViewer Name="scrollvProduct"
+                                          DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+                                          >
                             <ListView x:Name="listviewProductList"
-                                  ItemTemplate="{StaticResource productItemTemplate}"
-                                  DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+                                  ItemTemplate="{StaticResource productItemTemplate}"                                  
                                   ItemsSource="{Binding ProductsOfStore}">
-
                             </ListView>
+                            </ScrollViewer>
                     </Grid>
                     <Grid Grid.Row="2">
 							<HyperlinkButton x:Name="linkSeeProducts" 
@@ -319,13 +321,15 @@
                             </Button>
                         </Grid>
                     <Grid Grid.Row="1">
-                        <ListView ItemTemplate="{StaticResource commentItemTemplate}"
-                                  ItemsSource="{Binding CommentLstOfStore}"
-                                  DataContext="{Binding Source={StaticResource Locator},Path=CommentVm}"
-                                  Margin="0,5,0,0"
-                                  Name="lvComments">
-                                    
-                        </ListView>
+                        <ScrollViewer Name="scrollvComment"
+                                      DataContext="{Binding Source={StaticResource Locator},Path=CommentVm}"
+                                      >
+                            <ListView ItemTemplate="{StaticResource commentItemTemplate}"
+                                      ItemsSource="{Binding CommentLstOfStore}"                                  
+                                      Margin="0,5,0,0"
+                                      Name="lvComments">                                    
+                            </ListView>
+                        </ScrollViewer>
                     </Grid>
                     <Grid Grid.Row="2">
 							<HyperlinkButton x:Name="linkSeeComments" 

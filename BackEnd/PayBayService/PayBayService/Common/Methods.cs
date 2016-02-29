@@ -19,16 +19,20 @@ using System.Web.Http;
 
 namespace PayBayService.Common
 {
+
+    public enum TYPE
+    {
+        OLD = 0,
+        NEW = 1
+    };
+
     public class Methods
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
 
         SqlConnection cnn;
         SqlCommand cmd;
-        SqlDataAdapter da;
-
-        public static ApiServices Services = new ApiServices();
-        public HttpConfiguration config = new HttpConfiguration();
+        SqlDataAdapter da;        
 
         public static string err = "";
 
@@ -45,8 +49,7 @@ namespace PayBayService.Common
         }
 
         private Methods()
-        {
-            config.Services
+        {            
         }
 
         /// <summary>

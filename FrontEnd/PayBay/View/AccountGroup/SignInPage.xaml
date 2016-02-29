@@ -67,6 +67,7 @@
 							KeyDown="TextBox_KeyDown"/>
 			</Grid>
 			<Button Content="SIGN IN"
+                    Name="btSignin"
 					Margin="20,0"
 					Height="50"
 					FontWeight="Bold"

@@ -23,13 +23,20 @@ namespace PayBayService.Controllers
                 
         // GET: api/Markets/5
         [ResponseType(typeof(Market))]
-        public HttpResponseMessage GetMoreMarket(int id)
+        public HttpResponseMessage GetMoreMarket(int id, TYPE type)
         {
             JArray result = new JArray();
             try
             {
                 var marketId = new SqlParameter("@MarketId", id);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
+                if (type == TYPE.OLD)
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
+                }
+                else
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
+                }
             }
             catch (Exception ex)
             {
@@ -41,14 +48,21 @@ namespace PayBayService.Controllers
 
         // GET: api/Markets/BenThanh
         [ResponseType(typeof(Market))]
-        public HttpResponseMessage GetMarket(int id, string name)
+        public HttpResponseMessage GetMarket(int id, string name, TYPE type)
         {
             JArray result = new JArray();
             try
             {
                 var marketId = new SqlParameter("@MarketId", id);
                 var marketName = new SqlParameter("@MarketName", name);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
+                if (type == TYPE.OLD)
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
+                }
+                else
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
+                }
             }
             catch (Exception ex)
             {

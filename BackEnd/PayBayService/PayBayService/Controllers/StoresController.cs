@@ -29,7 +29,7 @@ namespace PayBayService.Controllers
 
         // GET: api/Stores/5
         [ResponseType(typeof(Store))]
-        public HttpResponseMessage FindStore(string name,int markId, int storeId)
+        public HttpResponseMessage FindStore(string name,int markId, int storeId, TYPE type)
         {
             JArray result = new JArray();
             try
@@ -37,7 +37,10 @@ namespace PayBayService.Controllers
                 var storeName = new SqlParameter("@StoreName", name);
                 var marId = new SqlParameter("@MarketID", markId);
                 var storeid = new SqlParameter("@StoreId", storeId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_FindStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
+                if(type == TYPE.OLD)
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_FindStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
+                else
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_FindNewStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
             }
             catch (Exception ex)
             {
@@ -48,14 +51,17 @@ namespace PayBayService.Controllers
 
         // GET: api/Stores/MarketID
         [ResponseType(typeof(Store))]
-        public HttpResponseMessage GetStoreOfMarket(int marketId, int storeId)
+        public HttpResponseMessage GetStoreOfMarket(int marketId, int storeId, TYPE type)
         {
             JArray result = new JArray();
             try
             {
                 var market = new SqlParameter("@MarketID", marketId);
                 var store = new SqlParameter("@StoreID", storeId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
+                if(type == TYPE.OLD)
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
+                else
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
             }
             catch (Exception ex)
             {

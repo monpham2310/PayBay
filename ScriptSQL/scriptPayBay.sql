@@ -627,13 +627,7 @@ as
 	select max(StoreID)
 	from paybayservice.Stores
 
-alter proc paybayservice.sp_GetProductWithName --'B'
-@ProductId int,
-@ProductName nvarchar(100)
-as
-	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
-	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
-	where ProductId > @ProductId and ProductName like N'%'+@ProductName+N'%'
+
 
 alter proc paybayservice.sp_GetMarketWithName --0,'Ba'
 @MarketId int,
@@ -643,7 +637,7 @@ as
 	from paybayservice.Markets
 	where MarketId > @MarketId and MarketName like N'%'+@MarketName+N'%'
 
-alter proc paybayservice.sp_FindStore 'Ba',1,-1
+alter proc paybayservice.sp_FindStore --'Ba',1,-1
 @StoreName nvarchar(100),
 @MarketID int,
 @StoreId int
@@ -659,12 +653,6 @@ as
 	from paybayservice.Markets
 	where MarketId > @MarketId
 
-alter proc paybayservice.sp_GetMoreProduct --0
-@ProductId int
-as
-	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
-	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
-	where ProductId > @ProductId
 
 create proc paybayservice.sp_UserRate
 @UserId int,
@@ -683,3 +671,141 @@ as
 			where UserID=@UserId and StoreID=@StoreId
 		end
 	commit
+
+alter proc paybayservice.sp_LoadAllSale --0,1
+@SaleId int,
+@isRequired bit
+as
+if(@SaleId <> -1)
+begin
+	select top 5 SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,a.SasQuery
+	from paybayservice.SaleInfo a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where SaleId < @SaleId and isRequired = @isRequired and EndDate >= convert(date,getdate())
+	order by SaleId desc
+end
+else
+begin
+	select top 5 SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,a.SasQuery
+	from paybayservice.SaleInfo a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where isRequired = @isRequired and EndDate >= convert(date,getdate())
+	order by SaleId desc
+end
+
+alter proc paybayservice.sp_GetMoreProduct --0
+@ProductId int
+as
+if(@ProductId <> -1)
+begin
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID	
+	where ProductId < @ProductId
+	order by ProductId desc
+end
+else
+begin
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID	
+	order by ProductId desc
+end
+
+alter proc paybayservice.sp_GetProductWithName --'B'
+@ProductId int,
+@ProductName nvarchar(100)
+as
+if(@ProductId <> -1)
+begin
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where ProductId < @ProductId and ProductName like N'%'+@ProductName+N'%'
+	order by ProductId desc
+end
+else
+begin
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where ProductName like N'%'+@ProductName+N'%'
+	order by ProductId desc
+end
+
+create proc paybayservice.sp_LoadNewSale
+@SaleId int,
+@isRequired bit
+as
+	select top 5 SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,a.SasQuery
+	from paybayservice.SaleInfo a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where SaleId > @SaleId and isRequired = @isRequired and EndDate >= convert(date,getdate())
+	order by SaleId desc
+
+alter proc paybayservice.sp_LoadNewProduct
+@ProductId int
+as
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where ProductId > @ProductId
+	order by ProductId desc
+
+create proc paybayservice.sp_LoadNewProductWithName
+@ProductId int,
+@ProductName nvarchar(100)
+as
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,UnitPrice,NumberOf,Unit,a.StoreID,StoreName,ImportDate,SalePrice,a.SasQuery
+	from paybayservice.Products a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where ProductId > @ProductId and ProductName like N'%'+@ProductName+N'%'
+	order by ProductId desc
+
+create proc paybayservice.sp_LoadNewSaleWithTitle
+@SaleId int,
+@SaleName nvarchar(200),
+@isRequired bit
+as
+	select top 5 SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,a.SasQuery
+	from paybayservice.SaleInfo a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where SaleId > @SaleId and isRequired = @isRequired and EndDate >= convert(date,getdate())
+			and Title like N'%'+@SaleName+N'%'
+	order by SaleId desc
+
+alter proc paybayservice.sp_LoadAllSaleWithTitle --0,'G',1
+@SaleId int,
+@SaleName nvarchar(200),
+@isRequired bit
+as
+if(@SaleId <> -1)
+begin
+	select top 5 SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,a.SasQuery
+	from paybayservice.SaleInfo a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where SaleId < @SaleId and isRequired = @isRequired and EndDate >= convert(date,getdate()) and Title like N'%'+@SaleName+N'%'
+	order by SaleId desc
+end
+else
+begin
+	select top 5 SaleId,Title,a.Image,Describes,StartDate,EndDate,a.StoreID,StoreName,a.SasQuery
+	from paybayservice.SaleInfo a join paybayservice.Stores b on a.StoreID=b.StoreID
+	where isRequired = @isRequired and EndDate >= convert(date,getdate()) and Title like N'%'+@SaleName+N'%'
+	order by SaleId desc
+end
+
+create proc paybayservice.sp_GetNewMarketWithName
+@MarketId int,
+@MarketName nvarchar(100)
+as
+	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery,Longitute,Latitute
+	from paybayservice.Markets
+	where MarketId > @MarketId and MarketName like N'%'+@MarketName+N'%'
+	order by MarketId desc
+
+create proc paybayservice.sp_GetNewMarket
+@MarketId int
+as
+	select top 5 MarketId,MarketName,Address,Phone,Image,SasQuery,Longitute,Latitute
+	from paybayservice.Markets
+	where MarketId > @MarketId
+	order by MarketId desc
+
+create proc paybayservice.sp_GetNewProductOfStore
+@StoreId int,
+@ProductId int
+as
+	select top 5 row_number() over (order by (select 1)) as STT, ProductId,ProductName,Image,UnitPrice,NumberOf,Unit,StoreID,ImportDate,SalePrice,SasQuery
+	from paybayservice.Products
+	where StoreID=@StoreID and ProductId > @ProductId
+	order by ProductId desc

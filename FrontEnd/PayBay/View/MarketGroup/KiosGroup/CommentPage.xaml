@@ -62,15 +62,32 @@
 
 	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
+			<RowDefinition Height="50"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
 		<TextBox PlaceholderText="Write your comment..."
-				 TextWrapping="Wrap"/>
+				 TextWrapping="Wrap"
+                 Name="txtComment"/>
 
-		<ScrollViewer Grid.Row="1"
-					  Margin="0,10,0,0">
+        <Button x:Name="btSend" 
+                Height="31" 
+                Width="35"
+                VerticalAlignment="Stretch"
+                Background="#EBEBEB"
+                HorizontalAlignment="Right"
+                Grid.Column="1"
+                Margin="0,0,10,0"
+                Click="btSend_Click">
+            <Image Source="ms-appx:///Assets/Button/ForwardIcon.PNG" 
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"/>
+        </Button>
+
+        <ScrollViewer Grid.Row="1"
+					  Margin="0,10,0,0"
+                      Name="scrollvComentLst"
+                      ViewChanged="ScrollViewer_ViewChanged">
 			<ListView SelectionMode="None"
 					  ItemsSource="{Binding CommentLstOfStore}">
 				<ListView.ItemContainerStyle>
@@ -104,13 +121,14 @@
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*"/>
-										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="80"/>
 									</Grid.ColumnDefinitions>
 
 									<TextBlock Text="{Binding Username}" 
 										   FontWeight="Bold"/>
 									<TextBlock Text="{Binding CommentDate}"
-										   Grid.Column="1"
+										   Grid.Column="1"         
+                                           FontSize="8"                                           
 										   Foreground="{StaticResource GrayBrush}"
 										   HorizontalAlignment="Right"/>
 								</Grid>

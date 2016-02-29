@@ -177,6 +177,7 @@
         </Style>
     </Page.Resources>
 
+    <!--<ScrollViewer HorizontalScrollMode="Disabled">-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
@@ -221,11 +222,11 @@
                     <StackPanel Orientation="Horizontal" 
 								HorizontalAlignment="Center"   
 								Margin="5,0,0,0">
-						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="20" Width="20"/>
-						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="20" Width="20"/>
-						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="20" Width="20"/>
-						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="20" Width="20"/>
-						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="20" Width="20"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="15" Width="15"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="15" Width="15"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="15" Width="15"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="15" Width="15"/>
+						<Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="15" Width="15"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -251,4 +252,5 @@
             </Pivot>
         </Grid>
     </Grid>
+    <!--</ScrollViewer>-->
 </Page>

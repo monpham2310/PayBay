@@ -26,7 +26,7 @@ namespace PayBay.View.AccountGroup
 	/// </summary>
 	public sealed partial class SignInPage : Page
 	{
-        public UserInfoViewModel Vm => (UserInfoViewModel)DataContext;
+        public UserInfoViewModel Vm => (UserInfoViewModel)DataContext;       
                 
 		public SignInPage()
 		{
@@ -41,12 +41,14 @@ namespace PayBay.View.AccountGroup
 			{
 				try
 				{
-					await Vm.LoginAccount(mail, password);
+                    btSignin.IsEnabled = false;           
+					bool check = await Vm.LoginAccount(mail, password);
 					((Popup)Frame.Parent).IsOpen = false;
 
 					MediateClass.StartPage.UserLoginSucceed();
-					
-					await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+					if(check)
+					    await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+                    btSignin.IsEnabled = true;
 				}
 				catch (Exception ex)
 				{

@@ -50,7 +50,7 @@ namespace PayBay.ViewModel.AccountGroup
             MediateClass.UserVM = this;
         }
                 
-        public async Task LoginAccount(string mail,string password)
+        public async Task<bool> LoginAccount(string mail,string password)
         {            
             byte[] pwd = Functions.GetBytes(password);
             Account account = new Account(mail, pwd);
@@ -71,7 +71,9 @@ namespace PayBay.ViewModel.AccountGroup
             catch (Exception ex)
             {
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }                    
+                return false;
+            }
+            return true;               
         }
 
     }

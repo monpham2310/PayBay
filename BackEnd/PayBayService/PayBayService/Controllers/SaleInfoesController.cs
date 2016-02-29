@@ -38,15 +38,55 @@ namespace PayBayService.Controllers
 
         // GET: api/SaleInfoes/5
         [ResponseType(typeof(SaleInfo))]
-        public async Task<IHttpActionResult> GetSaleInfo(int id)
+        public HttpResponseMessage GetSaleInfo(int id, TYPE type)
         {
-            SaleInfo saleInfo = await db.SaleInfoes.FindAsync(id);
-            if (saleInfo == null)
+            JArray result = new JArray();
+            try
             {
-                return NotFound();
+                var saleId = new SqlParameter("@SaleId", id);
+                var required = new SqlParameter("@isRequired", true);
+                if (type == TYPE.OLD)
+                {                                     
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadAllSale", CommandType.StoredProcedure, ref Methods.err, saleId, required);
+                }
+                else
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadNewSale", CommandType.StoredProcedure, ref Methods.err, saleId, required);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
-            return Ok(saleInfo);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // GET: api/SaleInfoes/5
+        [ResponseType(typeof(SaleInfo))]
+        public HttpResponseMessage GetSaleInfo(int id, string title, TYPE type)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var saleId = new SqlParameter("@SaleId", id);
+                var saleName = new SqlParameter("@SaleName", title);
+                var required = new SqlParameter("@isRequired", true);
+                if (type == TYPE.OLD)
+                {                                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadAllSaleWithTitle", CommandType.StoredProcedure, ref Methods.err, saleId, saleName, required);
+                }
+                else
+                {                    
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadNewSaleWithTitle", CommandType.StoredProcedure, ref Methods.err, saleId, saleName, required);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // GET: api/SaleInfoes/KM

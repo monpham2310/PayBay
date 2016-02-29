@@ -17,15 +17,14 @@ namespace PayBay.Services.MobileServices.PaybayNotification
             {
                 var channel = await Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
 
-                var hub = new NotificationHub("paybaynotification",
-                    "Endpoint=sb://paybay.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=9OM2zW2+YOksKqnCdLrv387FWy1b4SfUFWUiuJM5edk=");
-
-                // Create a new registration for a native MPNS notification.
-                var result =
-                    await hub.RegisterNativeAsync(
-                    channel.Uri.ToString());
+                //var hub = new NotificationHub("paybaynotification",
+                //    "Endpoint=sb://paybay.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=9OM2zW2+YOksKqnCdLrv387FWy1b4SfUFWUiuJM5edk=");
+                                
+                //var result =
+                //    await hub.RegisterNativeAsync(
+                //    channel.Uri.ToString());
              
-                //await App.MobileService.GetPush().RegisterNativeAsync(channel.Uri);
+                await App.MobileService.GetPush().RegisterNativeAsync(channel.Uri);
             }
             catch (Exception exception)
             {

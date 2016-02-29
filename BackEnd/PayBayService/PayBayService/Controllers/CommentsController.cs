@@ -22,6 +22,7 @@ namespace PayBayService.Controllers
     public class CommentsController : ApiController
     {
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
+
         
         // GET: api/Comments
         public IQueryable<Comment> GetComments()
@@ -45,13 +46,21 @@ namespace PayBayService.Controllers
 
         // GET: api/Comments/Store
         [ResponseType(typeof(Comment))]
-        public HttpResponseMessage GetCommentOfStore(int storeId)
+        public HttpResponseMessage GetCommentOfStore(int storeId, int commentId, TYPE type)
         {
             JArray result = new JArray();
             try
             {
                 var id = new SqlParameter("@StoreID", storeId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_ViewCommentOfStore", CommandType.StoredProcedure, ref Methods.err, id);
+                var comment = new SqlParameter("@CommentId", commentId);
+                if (type == TYPE.OLD)
+                {
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_ViewCommentOfStore", CommandType.StoredProcedure, ref Methods.err, id, comment);
+                }
+                else
+                {
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_ViewNewCmtOfStore", CommandType.StoredProcedure, ref Methods.err, id, comment);
+                }
             }
             catch (Exception ex)
             {
@@ -107,7 +116,7 @@ namespace PayBayService.Controllers
             db.Comments.Add(comment);
             await db.SaveChangesAsync();
             
-            await PushHelper.SendToastAsync(Services, comment.UserID.ToString(), comment.Content);
+            //await PushHelper.SendToastAsync(WebApiConfig.Services, comment.UserID.ToString(), comment.Content);
 
             result = Methods.CustomResponseMessage(1, "Add Comment is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);                        

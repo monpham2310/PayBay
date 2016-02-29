@@ -20,7 +20,7 @@ namespace PayBay.View.MarketGroup.KiosGroup
 {
     public sealed partial class KiosPage : Page
     {
-        private KiosViewModel KiosVm => (KiosViewModel)DataContext;
+        private KiosViewModel KiosVm => (KiosViewModel)DataContext;        
 
         public KiosPage()
         {

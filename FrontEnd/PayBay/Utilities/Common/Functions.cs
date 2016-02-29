@@ -18,6 +18,12 @@ namespace PayBay.Utilities.Common
         MORE = 1
     };
 
+    public enum TYPE
+    {
+        OLD = 0,
+        NEW = 1
+    };
+
     public class Functions
     {                
         private static Functions m_Instance = null;

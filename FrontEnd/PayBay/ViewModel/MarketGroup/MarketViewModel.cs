@@ -17,6 +17,7 @@ namespace PayBay.ViewModel.MarketGroup
 
         private Market _selectedMarket;
         private ObservableCollection<Market> _marketItemList;
+        private static bool isResponsed = false;
 
         #region Property with calling to PropertyChanged
         public Market SelectedMarket
@@ -65,78 +66,99 @@ namespace PayBay.ViewModel.MarketGroup
         /// <summary>
         /// Initialize market
         /// </summary>
-        private async void InitializeData()
+        private void InitializeData()
         {
-            await LoadMoreMarket(TYPEGET.START);
+            LoadMoreMarket(TYPEGET.START);
         }
                 
-        public async Task LoadMoreMarket(TYPEGET type)
+        public async void LoadMoreMarket(TYPEGET type, TYPE isOld = 0)
         {
             string lastId = "";
             if (type == TYPEGET.MORE)
-                lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
-            else
-                lastId = "-1";
-            IDictionary<string, string> param = new Dictionary<string, string>
             {
-                {"id" , lastId}
-            };
-            try {
-                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                if (MarketItemList.Count != 0)
                 {
-                    JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
-                    JArray markets = JArray.Parse(result.ToString());
-                    if (type == TYPEGET.MORE)
-                    {
-                        ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
-
-                        foreach (var item in moreMarket)
-                        {
-                            MarketItemList.Add(item);
-                        }
-                    }
+                    if (isOld == TYPE.OLD)
+                        lastId = MarketItemList.Min(x => x.MarketId).ToString();
                     else
-                        MarketItemList = markets.ToObject<ObservableCollection<Market>>();
+                        lastId = MarketItemList.Max(x => x.MarketId).ToString();
                 }
             }
-            catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
-        }
-
-        public async Task LoadMoreMarket(string name, TYPEGET type)
-        {
-            string lastId = "";
-            if (type == TYPEGET.MORE)
-                lastId = MarketItemList[MarketItemList.Count - 1].MarketId.ToString();
             else
                 lastId = "-1";
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId},
-                { "name" , name }
+                {"type" , isOld.ToString()}
             };
+            if(lastId != "")
+                await SendData(type, isOld, param);
+        }
+
+        public async void LoadMoreMarket(string name, TYPEGET type, TYPE isOld = 0)
+        {
+            string lastId = "";
+            if (type == TYPEGET.MORE)
+            {
+                if (MarketItemList.Count != 0)
+                {
+                    if (isOld == TYPE.OLD)
+                        lastId = MarketItemList.Min(x => x.MarketId).ToString();
+                    else
+                        lastId = MarketItemList.Max(x => x.MarketId).ToString();
+                }
+            }
+            else
+                lastId = "-1";
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"id" , lastId},
+                {"name" , name},
+                {"type" , isOld.ToString()}
+            };
+            if(lastId != "")
+                await SendData(type, isOld, param);
+        }
+
+        private async Task SendData(TYPEGET typeGet, TYPE type, IDictionary<string, string> param)
+        {
             try
             {
-                JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
-                JArray markets = JArray.Parse(result.ToString());
-                if (type == TYPEGET.MORE)
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    ObservableCollection<Market> moreMarket = markets.ToObject<ObservableCollection<Market>>();
-
-                    foreach (var item in moreMarket)
+                    if (!isResponsed)
                     {
-                        MarketItemList.Add(item);
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
+                        JArray response = JArray.Parse(result.ToString());
+                        if (typeGet == TYPEGET.MORE)
+                        {
+                            ObservableCollection<Market> data = response.ToObject<ObservableCollection<Market>>();
+                            if (type == TYPE.OLD)
+                            {
+                                foreach (var item in data)
+                                {
+                                    MarketItemList.Add(item);
+                                }
+                            }
+                            else {
+                                for (int i = 0; i < data.Count; i++)
+                                {
+                                    MarketItemList.Insert(i, data[i]);
+                                }
+                            }
+                        }
+                        else
+                            MarketItemList = response.ToObject<ObservableCollection<Market>>();
+                        isResponsed = false;
                     }
                 }
-                else
-                    MarketItemList = markets.ToObject<ObservableCollection<Market>>();
             }
             catch (Exception ex)
             {
+                isResponsed = false;
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
+            }
         }
 
     }

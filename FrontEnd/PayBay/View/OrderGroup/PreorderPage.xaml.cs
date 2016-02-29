@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel;
+using PayBay.ViewModel.ProductGroup;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -119,9 +120,12 @@ namespace PayBay.View.OrderGroup
     public sealed partial class PreorderPage : UserControl
     {
 
+        private ProductViewModel ProductVm => (ProductViewModel)DataContext;
+
         public PreorderPage()
         {
             this.InitializeComponent();
+            
         }
     }
 }

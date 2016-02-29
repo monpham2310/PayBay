@@ -22,6 +22,19 @@ namespace PayBay.Model
         private string _sasQuery;
         private string _storeName;
 
+        private string _orderUnit = "0";
+
+        public string OrderUnit
+        {
+            get { return _orderUnit; }
+            set
+            {
+                if (value == _orderUnit) return;
+                _orderUnit = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string ProductName
         {
             get { return _productName; }

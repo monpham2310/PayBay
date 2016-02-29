@@ -56,7 +56,8 @@
 				</Grid>
 
 				<ScrollViewer Grid.Row="1" Name="scrollvProductLst" ViewChanged="scrollvProductLst_ViewChanged">
-					<ListView ItemsSource="{Binding ProductsOfStore}">
+					<ListView ItemsSource="{Binding ProductsOfStore}"
+                              x:Name="listViewProductsOfStore">
 						<ListView.ItemContainerStyle>
 							<Style TargetType="ListViewItem">
 								<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -94,7 +95,7 @@
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>
 									<TextBox Grid.Column="4" 
-											 Text="0"
+											 Text="{Binding OrderUnit, Mode=TwoWay}"
 											 TextAlignment="Center"
 											 HorizontalAlignment="Center" 
 											 VerticalAlignment="Center" 
@@ -118,6 +119,7 @@
 				Style="{StaticResource RoundedButtonStyle}"
 				Foreground="{StaticResource WhiteBrush}"
 				Background="{StaticResource LightBlueBrush}"
-				HorizontalAlignment="Stretch"/>
+				HorizontalAlignment="Stretch"
+                Click="checkBtn_Click"/>
 	</Grid>
 </UserControl>

@@ -57,6 +57,8 @@ namespace PayBay.Utilities.CustomControl
             {
                 Rect = new Rect(0, 0, newSize, newSize)
             };
+
+			ClipForeground(star);
         }
 
         #endregion
@@ -67,7 +69,7 @@ namespace PayBay.Utilities.CustomControl
         /// </summary>
         public static readonly DependencyProperty StarBackgroundProperty =
 			DependencyProperty.Register("StarBackground", typeof(SolidColorBrush), typeof(Star),
-				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.Transparent), OnStarBackgroundChanged));
+				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.Gray), OnStarBackgroundChanged));
 
 		/// <summary>
 		/// Gets or sets the StarBackground property
@@ -94,14 +96,14 @@ namespace PayBay.Utilities.CustomControl
 
 		#region StarForeground
 		/// <summary>
-		/// StarBackground Dependency Property
+		/// StarForeground Dependency Property
 		/// </summary>
 		public static readonly DependencyProperty StarForegroundProperty =
 			DependencyProperty.Register("StarForeground", typeof(SolidColorBrush), typeof(Star),
-				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.LightGray), OnStarForegroundChanged));
+				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.Transparent), OnStarForegroundChanged));
 
 		/// <summary>
-		/// Gets or sets the StarBackground property
+		/// Gets or sets the StarForeground property
 		/// </summary>
 		public SolidColorBrush StarForeground
 		{
@@ -110,13 +112,13 @@ namespace PayBay.Utilities.CustomControl
 		}
 
 		/// <summary>
-		/// Handles changes to the StarBackground property
+		/// Handles changes to the StarForeground property
 		/// </summary>
 		/// <param name="d"></param>
 		/// <param name="e"></param>
 		public static void OnStarForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			((Star) d).starForeground.Fill = (SolidColorBrush)e.NewValue;
+			((Star)d).starForeground.Fill = (SolidColorBrush)e.NewValue;
 		}
 		#endregion
 
@@ -170,76 +172,27 @@ namespace PayBay.Utilities.CustomControl
 		/// </summary>
 		private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			Star star = (Star)d;
-
-			CoerceValue(star, e.NewValue);
-			if (star.Value == 0.0)
-			{
-				star.starForeground.Fill = star.StarBackground;
-			}
-			else
-			{
-				star.starForeground.Fill = star.StarForeground;
-			}
-            
-			Int32 marginLeftOffset = (Int32)(star.Value * (Double)star.StarSize);
-            star.vbForeground.Clip = new RectangleGeometry { Rect = new Rect(0, 0, marginLeftOffset, star.StarSize) };
+			Star star = d as Star;
+			star.Value = Math.Min(1, Math.Max(0, (double)e.NewValue));
+			ClipForeground(star);
 		}
+		#endregion
 
-		/// <summary>
-		/// Coerces the Value value.
-		/// </summary>
-		private static void CoerceValue(Star star, object value)
+		private static void ClipForeground(DependencyObject d)
 		{
-			Double currentValue = (Double)value;
-
-			if (currentValue < star.Minimum)
-				currentValue = star.Minimum;
-
-			if (currentValue > star.Maximum)
-				currentValue = star.Maximum;
+			Star star = d as Star;
+			Int32 marginLeftOffset = (Int32)(star.Value * star.StarSize);
+			star.vbForeground.Clip = new RectangleGeometry { Rect = new Rect(0, 0, marginLeftOffset, star.StarSize) };
 		}
+
+		#region Eventhandling
 
 		#endregion
 
-		#region Maximum
-
-		/// <summary>
-		/// Maximum Dependency Property
-		/// </summary>
-		public static readonly DependencyProperty MaximumProperty =
-			DependencyProperty.Register("Maximum", typeof(Double),
-				typeof(Star), new PropertyMetadata((Double)1.0));
-
-		/// <summary>
-		/// Gets or sets the Maximum property.  
-		/// </summary>
-		public Double Maximum
+		private void Star_Loaded(object sender, RoutedEventArgs e)
 		{
-			get { return (Double)GetValue(MaximumProperty); }
-			set { SetValue(MaximumProperty, value); }
+			Star star = sender as Star;
+			star.StarSize = star.ActualHeight;
 		}
-
-		#endregion
-
-		#region Minimum
-
-		/// <summary>
-		/// Minimum Dependency Property
-		/// </summary>
-		public static readonly DependencyProperty MinimumProperty =
-			DependencyProperty.Register("Minimum", typeof(Double),
-				typeof(Star), new PropertyMetadata((Double)0.0));
-
-		/// <summary>
-		/// Gets or sets the Minimum property.  
-		/// </summary>
-		public Double Minimum
-		{
-			get { return (Double)GetValue(MinimumProperty); }
-			set { SetValue(MinimumProperty, value); }
-		}
-
-		#endregion
 	}
 }

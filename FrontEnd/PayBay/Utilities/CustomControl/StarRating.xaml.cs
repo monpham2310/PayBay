@@ -143,7 +143,7 @@ namespace PayBay.Utilities.CustomControl
 		/// </summary>
 		private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			StarRating starRating = (StarRating)d;
+			StarRating starRating = d as StarRating;
 			RefreshStar(starRating, e.NewValue);
 		}
 		#endregion
@@ -257,6 +257,7 @@ namespace PayBay.Utilities.CustomControl
 
         private void spStars_PointerExited(object sender, PointerRoutedEventArgs e)
         {
+			
             RefreshStar(this, Value);
         }
 

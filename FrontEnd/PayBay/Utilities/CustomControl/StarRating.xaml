@@ -12,8 +12,8 @@
     <Grid>
 		<StackPanel x:Name="spStars" 
 					Orientation="Horizontal"
-					Tapped="spStars_Tapped" 
-					PointerMoved="spStars_PointerMoved" 
-                    SizeChanged="spStars_SizeChanged"/>
+					Tapped="spStars_Tapped"
+					PointerMoved="spStars_PointerMoved"
+					PointerExited="spStars_PointerExited"/>
 	</Grid>
 </UserControl>

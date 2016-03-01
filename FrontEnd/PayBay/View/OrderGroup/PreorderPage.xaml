@@ -40,8 +40,8 @@
         <Grid Grid.Row="1">
             <StackPanel>
                 <ListView x:Name="listViewPreorder"
-                  DataContext="{Binding Source={StaticResource Locator}, Path=FakeVm}"
-                  ItemsSource="{Binding FakeList}" >
+                  DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+                  ItemsSource="{Binding ProductOrderList}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="{Binding ActualWidth, ElementName=listViewPreorder}" 
@@ -52,10 +52,10 @@
                                     <ColumnDefinition  />
                                     <ColumnDefinition  />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Id}" HorizontalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="{Binding ProductName}" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" Text="{Binding Price}" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="3" Text="{Binding Amount}" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="0" Text="{Binding ProductUnit.STT}" HorizontalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding ProductUnit.ProductName}" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="{Binding ProductUnit.UnitPrice}" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="3" Text="{Binding OrderUnit}" HorizontalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

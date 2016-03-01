@@ -5,6 +5,7 @@
     xmlns:local="using:PayBay"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:order="using:PayBay.View.OrderGroup"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -393,27 +394,31 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot Style="{StaticResource PivotStyleOrderPage}"
-               SelectionChanged="pivotOrder_SelectionChanged">
-            <PivotItem>
+               SelectionChanged="pivotOrder_SelectionChanged"
+               x:Name="pivotOrder">
+            <PivotItem x:Name="PivotItem1">
                 <PivotItem.Header>
                     <TextBlock Text="Pre-order"
                                TextAlignment="Center"/>
                 </PivotItem.Header>
+                <PivotItem>
+                    <order:PreorderPage/>
+                </PivotItem>
             </PivotItem>
-            <PivotItem>
+            <PivotItem x:Name="PivotItem2">
                 <PivotItem.Header>
                     <TextBlock Text="Product&#x0a;Information"
                                TextAlignment="Center"/>
                 </PivotItem.Header>
             </PivotItem>
-            <PivotItem>
+            <PivotItem x:Name="PivotItem3">
                 <PivotItem.Header>
                     <TextBlock Text="Delivery &amp;&#x0a; Payment Terms"
                                TextAlignment="Center"/>
 
                 </PivotItem.Header>
             </PivotItem>
-            <PivotItem>
+            <PivotItem x:Name="PivotItem4">
                 <PivotItem.Header>
                     <TextBlock Text="Confirm&#x0a;Order"
                                TextAlignment="Center"/>

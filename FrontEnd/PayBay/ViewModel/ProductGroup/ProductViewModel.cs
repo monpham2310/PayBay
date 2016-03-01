@@ -12,14 +12,47 @@ using PayBay.Utilities.Common;
 
 namespace PayBay.ViewModel.ProductGroup
 {
+
+    public class ProductUnitOrder
+    {
+        private Product _productUnit;
+        private int _orderUnit;
+        public ProductUnitOrder(Product product, int order)
+        {
+            _productUnit = product;
+            _orderUnit = order;
+        }
+
+        public Product ProductUnit { get { return _productUnit; } }
+        public int OrderUnit { get { return _orderUnit; } }
+
+    }
+
     public class ProductViewModel : BaseViewModel
     {
+
+
         private Product _selectedProduct;
         private ObservableCollection<Product> _productsOfStore;
         private ObservableCollection<Product> _productList;
         private static bool isResponsed = false;
-                
+
+        //List for order purpose
+        private ObservableCollection<ProductUnitOrder> _productOrderList;
+        //
+
         #region Property with calling to PropertyChanged
+        public ObservableCollection<ProductUnitOrder> ProductOrderList
+        {
+            get { return _productOrderList; }
+            set
+            {
+                if (Equals(value, _productOrderList)) return;
+                _productOrderList = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Product SelectedProduct
         {
             get { return _selectedProduct; }
@@ -71,11 +104,12 @@ namespace PayBay.ViewModel.ProductGroup
         private void InitializeProperties()
         {
             ProductList = new ObservableCollection<Product>();
+            ProductOrderList = new ObservableCollection<ProductUnitOrder>();
         }
 
         private async void InitializeData()
         {
-            await LoadMoreProduct(TYPEGET.START);
+            await LoadMoreProduct(TYPEGET.START);        
         }      
 
         public async Task LoadMoreProduct(TYPEGET type, TYPE isOld=0)

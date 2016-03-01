@@ -9,44 +9,64 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <UserControl.Resources>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="ListViewHeaders" >
+        <Grid x:Name="ListViewHeaders" Grid.Row="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition  />
                 <ColumnDefinition  />
                 <ColumnDefinition  />
                 <ColumnDefinition  />
-                <ColumnDefinition  />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Title Col 1" />
-            <TextBlock Grid.Column="1" Text="Title Col 2" />
-            <TextBlock Grid.Column="2" Text="Title Col 3" />
-            <TextBlock Grid.Column="3" Text="Title Col 4" />
-            <TextBlock Grid.Column="4" Text="Title Col 5" />
+            <TextBlock Grid.Column="0" 
+                       Text="No." 
+                       HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" 
+                       Text="Product" 
+                       HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="2" 
+                       Text="Price"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="3" 
+                       Text="Amount"
+                       HorizontalAlignment="Center"/>
         </Grid>
-        <ListView x:Name="myTable" Grid.Row="1" ItemsSource="{Binding SomeCollection}" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="{Binding ElementName=myTable, Path=ActualWidth}" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition  />
-                            <ColumnDefinition  />
-                            <ColumnDefinition  />
-                            <ColumnDefinition  />
-                            <ColumnDefinition  />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding ItemProperty1}" />
-                        <TextBlock Grid.Column="1" Text="{Binding ItemProperty2}" />
-                        <TextBlock Grid.Column="2" Text="{Binding ItemProperty3}" />
-                        <TextBlock Grid.Column="3" Text="{Binding ItemProperty4}" />
-                        <TextBlock Grid.Column="4" Text="{Binding ItemProperty5}" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid Grid.Row="1">
+            <StackPanel>
+                <ListView x:Name="listViewPreorder"
+                  DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+                  ItemsSource="{Binding ProductOrderList}" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="{Binding ActualWidth, ElementName=listViewPreorder}" 
+                          HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                    <ColumnDefinition  />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding ProductUnit.STT}" HorizontalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding ProductUnit.ProductName}" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="{Binding ProductUnit.UnitPrice}" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="3" Text="{Binding OrderUnit}" HorizontalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Content="Negotiate"
+                    Background="{StaticResource LightBlueBrush}"
+                    HorizontalAlignment="Right"
+                    Foreground="White" Margin="0,0,10,0"/>
+            </StackPanel>
+
+        </Grid>
+
     </Grid>
 </UserControl>

@@ -65,11 +65,13 @@ namespace PayBay.View.OrderGroup
             return foundChild;
         }
 
-        public void pivotOrder_SelectionChanged(object sender,SelectionChangedEventArgs e)
-        {
-            //ProgressBar progbar = FindVisualChild<ProgressBar>(pivotstyleorder, "progressBarOrder");
-            //progbar.Value -= 10;
-            
-        }
+		public void pivotOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			//ProgressBar progbar = FindVisualChild<ProgressBar>(pivotstyleorder, "progressBarOrder");
+			//progbar.Value -= 10;
+			Pivot pivot = sender as Pivot;
+
+			(VisualTreeHelper.GetChild((VisualTreeHelper.GetChild(pivot.Template, 0) as ControlTemplate), 0) as Grid).Height = 2;
+		}
     }
 }

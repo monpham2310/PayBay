@@ -15,11 +15,16 @@
                      StarBackground="Gray"
                      Value="0.7"/>-->
         <custom:StarRating Maximum="5"
-                           Value="2.5"
+                           Value="3.4"
                            StarForeground="Yellow"
                            StarBackground="Gray"
                            Height="50"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
-    </Grid>
+		<!--<custom:Star HorizontalAlignment="Stretch"
+					 VerticalAlignment="Stretch" 
+					 StarForeground="Yellow"
+					 StarBackground="Gray"
+					 Value="0.5"/>-->
+	</Grid>
 </Page>

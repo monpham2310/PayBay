@@ -21,15 +21,13 @@ namespace PayBay.Model
         private float _salePrice;
         private string _sasQuery;
         private string _storeName;
+        private int _orderUnit = 0;
 
-        private string _orderUnit = "0";
-
-        public string OrderUnit
+        public int OrderUnit
         {
             get { return _orderUnit; }
             set
-            {
-                if (value == _orderUnit) return;
+            {                
                 _orderUnit = value;
                 OnPropertyChanged();
             }

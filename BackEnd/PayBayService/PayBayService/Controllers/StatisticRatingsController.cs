@@ -28,6 +28,26 @@ namespace PayBayService.Controllers
 
         // GET: api/StatisticRatings/5
         [ResponseType(typeof(StatisticRating))]
+        public HttpResponseMessage GetStatisticRating(int userId, int storeId)
+        {
+            JObject result = new JObject();
+            try
+            {
+                var user = new SqlParameter("@UserId", userId);
+                var store = new SqlParameter("@StoreId", storeId);
+                var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStarRated", CommandType.StoredProcedure, ref Methods.err, user, store);
+                result = response[0].ToObject<JObject>();
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // GET: api/StatisticRatings/5
+        [ResponseType(typeof(StatisticRating))]
         public async Task<IHttpActionResult> GetStatisticRating(int id)
         {
             StatisticRating statisticRating = await db.StatisticRatings.FindAsync(id);
@@ -77,24 +97,19 @@ namespace PayBayService.Controllers
         // POST: api/StatisticRatings
         [ResponseType(typeof(StatisticRating))]
         public HttpResponseMessage PostStatisticRating(StatisticRating statisticRating)
-        {
-            bool result = false;
+        {            
             JObject response = new JObject();
             try
             {
                 var userId = new SqlParameter("@UserId", statisticRating.UserID);
                 var storeId = new SqlParameter("@StoreId", statisticRating.StoreID);
                 var rate = new SqlParameter("@Rate", statisticRating.RateOfUser);
-                result = Methods.GetInstance().ExecNonQuery("paybayservice.sp_UserRate",CommandType.StoredProcedure,ref Methods.err, userId, storeId, rate);
-                if (result)
-                {
-                    response = Methods.CustomResponseMessage(1, "Rate is successful!");                    
-                }
+                var result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UserRate",CommandType.StoredProcedure,ref Methods.err, userId, storeId, rate);
+                response = result[0].ToObject<JObject>();
             }
             catch (Exception ex)
-            {
-                response = Methods.CustomResponseMessage(1, ex.Message.ToString());
-                return Request.CreateResponse(HttpStatusCode.BadRequest, response);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }

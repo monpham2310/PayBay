@@ -82,17 +82,17 @@ namespace PayBay.View.MarketGroup.KiosGroup
 
         private void checkBtn_Click(object sender, RoutedEventArgs e)
         {
+            ProductVm.ProductOrderList.Clear();
             foreach (Product product in listViewProductsOfStore.Items)
             {
-                if (Int32.Parse(product.OrderUnit) > 0)
-                {
-                    ProductUnitOrder unitOrder = new ProductUnitOrder(product, Int32.Parse(product.OrderUnit));
-                    ProductVm.ProductOrderList.Add(unitOrder);
+                if (product.OrderUnit > 0 && product.OrderUnit <= product.NumberOf)
+                {                    
+                    ProductVm.ProductOrderList.Add(product);
                 }
             }
 
             if (ProductVm.ProductOrderList.Count > 0)
-                ((Frame)Window.Current.Content).Navigate(typeof(OrderPage));
+                MediateClass.KiosPage.Frame.Navigate(typeof(OrderPage));
         }
     }
 }

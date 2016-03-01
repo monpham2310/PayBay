@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel.MarketGroup;
+using PayBay.Utilities.Common;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -20,11 +21,12 @@ namespace PayBay.View.MarketGroup.KiosGroup
 {
     public sealed partial class KiosPage : Page
     {
-        private KiosViewModel KiosVm => (KiosViewModel)DataContext;        
+        private KiosViewModel KiosVm => (KiosViewModel)DataContext;       
 
         public KiosPage()
         {
             this.InitializeComponent();
+            MediateClass.KiosPage = this;
         }
     }
 }

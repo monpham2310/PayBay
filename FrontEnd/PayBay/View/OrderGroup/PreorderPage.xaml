@@ -25,7 +25,7 @@
                 <ColumnDefinition  />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" 
-                       Text="No." 
+                       Text="ID." 
                        HorizontalAlignment="Center"/>
             <TextBlock Grid.Column="1" 
                        Text="Product" 
@@ -38,24 +38,51 @@
                        HorizontalAlignment="Center"/>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel>
-                <ListView x:Name="listViewPreorder"
-                  DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
-                  ItemsSource="{Binding ProductOrderList}" >
+            <StackPanel>                
+                <ListView ItemsSource="{Binding ProductOrderList}"
+                          DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+                          x:Name="listViewPreorder">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="{Binding ActualWidth, ElementName=listViewPreorder}" 
-                          HorizontalAlignment="Center">
+                            <Grid Margin="-10,0"
+									  BorderThickness="0,1,0,0"
+									  BorderBrush="{StaticResource GrayBrush}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition  />
-                                    <ColumnDefinition  />
-                                    <ColumnDefinition  />
-                                    <ColumnDefinition  />
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="1.8*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding ProductUnit.STT}" HorizontalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="{Binding ProductUnit.ProductName}" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" Text="{Binding ProductUnit.UnitPrice}" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="3" Text="{Binding OrderUnit}" HorizontalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="0"
+											   Text="{Binding ProductId}"
+											   VerticalAlignment="Center"
+											   HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" 
+											   Text="{Binding ProductName}"
+											   VerticalAlignment="Center"
+											   HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" 
+											   Text="{Binding UnitPrice}"
+											   VerticalAlignment="Center"
+											   HorizontalAlignment="Center"/>                                
+                                <TextBlock Grid.Column="4" 
+											 Text="{Binding OrderUnit, Mode=TwoWay}"
+											 TextAlignment="Center"
+											 HorizontalAlignment="Center" 
+											 VerticalAlignment="Center" 
+											 MinWidth="40"
+											 MinHeight="20"
+											 Margin="0,6,0,0"
+											 Height="30"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

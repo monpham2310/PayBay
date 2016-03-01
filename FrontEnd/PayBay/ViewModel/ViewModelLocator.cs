@@ -59,8 +59,6 @@ namespace PayBay.ViewModel
             SimpleIoc.Default.Register<KiosViewModel>();
             SimpleIoc.Default.Register<CommentViewModel>();
             SimpleIoc.Default.Register<RatingViewModel>();
-
-            SimpleIoc.Default.Register<FakeDataVm>();
         }
 
         //TODO: Register to use ViewModel here, syntax as below
@@ -72,9 +70,7 @@ namespace PayBay.ViewModel
         public KiosViewModel KiosVm => ServiceLocator.Current.GetInstance<KiosViewModel>();
         public CommentViewModel CommentVm => ServiceLocator.Current.GetInstance<CommentViewModel>();
         public RatingViewModel RatingVm => ServiceLocator.Current.GetInstance<RatingViewModel>();
-
-        public FakeDataVm FakeVm => ServiceLocator.Current.GetInstance<FakeDataVm>();
-
+              
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

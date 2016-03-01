@@ -227,7 +227,7 @@ namespace PayBay.ViewModel.StartGroup
         /// </summary>
         /// <param name="frame"></param>
         /// <param name="func"></param>
-        public async void NavigateToFunction(Frame frame, MenuFunc func)
+        public void NavigateToFunction(Frame frame, MenuFunc func)
         {
             switch (func)
             {

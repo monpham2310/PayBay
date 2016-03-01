@@ -39,7 +39,7 @@
 					</Grid.ColumnDefinitions>
 
 					<TextBlock Grid.Column="0" 
-							   Text="ID"
+							   Text="ID."
 							   HorizontalAlignment="Center"/>
 					<TextBlock Grid.Column="1" 
 							   Text="Product"
@@ -48,7 +48,7 @@
 							   Text="Price"
 							   HorizontalAlignment="Center"/>
 					<TextBlock Grid.Column="3" 
-							   Text="Status"
+							   Text="Remain"
 							   HorizontalAlignment="Center"/>
 					<TextBlock Grid.Column="4" 
 							   Text="Order"

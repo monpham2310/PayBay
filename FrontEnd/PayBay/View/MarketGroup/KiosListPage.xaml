@@ -120,7 +120,7 @@
                         <GridView x:Name="gridviewKiosList"                      
                               ItemsSource="{Binding KiosList}"
                               ItemTemplate="{StaticResource kiosItemTemplate}"
-                              SelectionChanged="kiosItem_SelectionChanged">
+                                  Tapped="kiosItem_Tapped">
                         </GridView>
                     </ScrollViewer>
                 </Grid>

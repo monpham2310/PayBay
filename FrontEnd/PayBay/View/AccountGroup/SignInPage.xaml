@@ -84,7 +84,7 @@
 		</Grid>
 
 		<ProgressRing x:Name="pgrAccount"
-					  Width="150"
-					  Height="150"/>
+					  Width="60"
+					  Height="60"/>
 	</Grid>
 </Page>

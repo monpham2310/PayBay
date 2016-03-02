@@ -16,7 +16,7 @@ namespace PayBay.Model
         private string _username;
         private string _avatar;
         private string _content;
-        private double _rated;
+        private double? _rated;
 
         public int Id
         {
@@ -116,7 +116,7 @@ namespace PayBay.Model
             }
         }
 
-        public double Rated
+        public double? Rated
         {
             get
             {

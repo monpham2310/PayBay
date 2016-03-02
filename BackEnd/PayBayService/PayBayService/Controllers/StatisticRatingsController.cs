@@ -36,8 +36,8 @@ namespace PayBayService.Controllers
                 var user = new SqlParameter("@UserId", userId);
                 var store = new SqlParameter("@StoreId", storeId);
                 var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStarRated", CommandType.StoredProcedure, ref Methods.err, user, store);
-                result = response[0].ToObject<JObject>();
-
+                if(response.Count != 0)
+                    result = response[0].ToObject<JObject>();
             }
             catch (Exception ex)
             {

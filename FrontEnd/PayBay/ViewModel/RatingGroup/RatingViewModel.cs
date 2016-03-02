@@ -32,10 +32,11 @@ namespace PayBay.ViewModel.RatingGroup
         public RatingViewModel()
         {
             MediateClass.RateVm = this;
+            _rate = new Rating();
             LoadStarRated();
         }
 
-        private async void LoadStarRated()
+        public async void LoadStarRated()
         {
             int user = MediateClass.UserVM.UserInfo.UserId;
             int store = MediateClass.KiotVM.SelectedStore.StoreId;
@@ -109,6 +110,6 @@ namespace PayBay.ViewModel.RatingGroup
             }    
                    
         }
-
+                
     }
 }

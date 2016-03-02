@@ -51,7 +51,7 @@
 					   Margin="10,10,20,0"
 					   Height="35"
 					   Width="35"
-					   Source="/Assets/Icon/location_icon.png"/>
+					   Source="/Assets/Icon/phone_icon.png"/>
 				<Image Grid.Row="1" 
 					   Margin="10,10,20,0"
 					   Height="30"

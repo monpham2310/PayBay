@@ -43,11 +43,10 @@ namespace PayBay.View.AccountGroup
                 btSignin.IsEnabled = false;           
 				bool check = await Vm.LoginAccount(mail, password);
 				((Popup)Frame.Parent).IsOpen = false;
-
-                //PaybayPushClient.UploadChannel();
-                
+                                                
                 if (check)
                 {
+                    PaybayPushClient.UploadChannel();
                     await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
                     MediateClass.StartPage.UserLoginSucceed();
                 }

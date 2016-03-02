@@ -101,7 +101,7 @@ namespace PayBay
             }
 
             //Register device
-            PaybayPushClient.UploadChannel();
+            //PaybayPushClient.UploadChannel();
 
             // Ensure the current window is active
             Window.Current.Activate();                        

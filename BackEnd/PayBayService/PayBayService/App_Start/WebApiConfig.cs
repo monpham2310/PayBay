@@ -39,7 +39,7 @@ namespace PayBayService
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
+            options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
                         
         }
     }

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.WindowsAzure.Mobile.Service;
+using Microsoft.WindowsAzure.Mobile.Service.Notifications;
+using Microsoft.WindowsAzure.Mobile.Service.Security;
 using Microsoft.ServiceBus.Notifications;
 using System.Configuration;
 
@@ -27,13 +29,7 @@ namespace PayBayService.Services.MobileServices
                              "</toast>"
             };
             try
-            {
-                // Get the logged-in user.
-                //var currentUser = this.User as ServiceUser;
-
-                // Use a tag to only send the notification to the logged-in user.
-                //var result = await services.Push.SendAsync(message, currentUser.Id);
-
+            {                
                 var result = await services.Push.SendAsync(message);
                 services.Log.Info(result.State.ToString());                                
             }

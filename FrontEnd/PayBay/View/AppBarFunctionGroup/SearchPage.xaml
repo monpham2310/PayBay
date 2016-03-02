@@ -46,9 +46,9 @@
                                                        Foreground="{StaticResource LightBlueBrush}"/>
                     <TextBlock Text="{Binding Describes}"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding StartDate}" Foreground="{StaticResource RedBrush}"/>
+                        <TextBlock Text="{Binding StartDate}" FontSize="12" Foreground="{StaticResource RedBrush}"/>
                         <TextBlock>-</TextBlock>
-                        <TextBlock Text="{Binding EndDate}" Foreground="{StaticResource RedBrush}"/>
+                        <TextBlock Text="{Binding EndDate}" FontSize="12" Foreground="{StaticResource RedBrush}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

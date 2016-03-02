@@ -194,10 +194,10 @@
 			</AppBarButton>
 
             <Image Grid.Column="1"
-                   Width="48"
+                   Width="45"
                    Height="48"
                    HorizontalAlignment="Center"
-                   Source="/Assets/Logo/icon.jpg"                   
+                   Source="/Assets/Icon.png"                   
                 />
 
             <TextBlock Grid.Column="2"

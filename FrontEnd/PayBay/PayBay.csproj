@@ -225,29 +225,20 @@
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\ForwardIcon.PNG" />
     <Content Include="Assets\Button\Hamburger.png" />
-    <Content Include="Assets\Logo\icon.jpg" />
-    <Content Include="Assets\Logo\SplashScreen.scale-100.png" />
-    <Content Include="Assets\Logo\SplashScreen.scale-125.png" />
-    <Content Include="Assets\Logo\SplashScreen.scale-150.png" />
-    <Content Include="Assets\Logo\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Logo\Square150x150Logo.png" />
-    <Content Include="Assets\Logo\Square150x150Logo.scale-100.png" />
-    <Content Include="Assets\Logo\Square150x150Logo.scale-125.png" />
-    <Content Include="Assets\Logo\Square150x150Logo.scale-150.png" />
-    <Content Include="Assets\Logo\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Logo\Square150x150Logo.scale-400.png" />
-    <Content Include="Assets\Logo\Square310x310Logo.png" />
-    <Content Include="Assets\Logo\Square310x310Logo.scale-100.png" />
-    <Content Include="Assets\Logo\Square310x310Logo.scale-125.png" />
-    <Content Include="Assets\Logo\Square310x310Logo.scale-150.png" />
-    <Content Include="Assets\Logo\Square310x310Logo.scale-200.png" />
-    <Content Include="Assets\Logo\Square310x310Logo.scale-400.png" />
-    <Content Include="Assets\Logo\Square71x71Logo.scale-100.png" />
-    <Content Include="Assets\Logo\StoreLogo.scale-100.png" />
-    <Content Include="Assets\Logo\StoreLogo.scale-125.png" />
-    <Content Include="Assets\Logo\StoreLogo.scale-150.png" />
-    <Content Include="Assets\Logo\StoreLogo.scale-200.png" />
-    <Content Include="Assets\Logo\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Icon.png" />
+    <Content Include="Assets\Icon\about_icon.png" />
+    <Content Include="Assets\Icon\call_icon.png" />
+    <Content Include="Assets\Icon\clock_icon.png" />
+    <Content Include="Assets\Icon\dollar_icon.png" />
+    <Content Include="Assets\Icon\favourite_icon.png" />
+    <Content Include="Assets\Icon\feedback_icon.png" />
+    <Content Include="Assets\Icon\function_icon.png" />
+    <Content Include="Assets\Icon\home_icon.png" />
+    <Content Include="Assets\Icon\inbox_icon.png" />
+    <Content Include="Assets\Icon\location_icon.png" />
+    <Content Include="Assets\Icon\logout_icon.png" />
+    <Content Include="Assets\Icon\mypaybay_icon.png" />
+    <Content Include="Assets\Icon\setting_icon.png" />
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Market\ChoBenThanh\Main.jpg" />
@@ -450,6 +441,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

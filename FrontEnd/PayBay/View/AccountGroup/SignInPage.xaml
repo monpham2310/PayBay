@@ -14,20 +14,21 @@
 	</Page.Resources>
 
 	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="48"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
+		<Grid x:Name="gridAccount">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="48"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
 
-		<Grid Grid.Row="0"
+			<Grid Grid.Row="0"
 			  Background="{StaticResource LightBlueBrush}">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
 
-			<HyperlinkButton x:Name="ExitHyperlinkButton" Grid.Column="0"
+				<HyperlinkButton x:Name="ExitHyperlinkButton" Grid.Column="0"
 							 FontFamily="Segoe MDL2 Assets"
 							 Content="&#xE711;"
 							 FontSize="20"
@@ -37,36 +38,36 @@
 							 HorizontalAlignment="Center" 
 							 VerticalAlignment="Center" 
 							 Click="ExitHyperlinkButton_Click"/>
-			<TextBlock Grid.Column="1"
+				<TextBlock Grid.Column="1"
 					   Text="Sign In"
 					   VerticalAlignment="Center"
 					   FontSize="20"
 					   Margin="10,0"
 					   Foreground="{StaticResource WhiteBrush}" 
 					   FontWeight="SemiBold"/>
-			<HyperlinkButton Grid.Column="2"
+				<HyperlinkButton Grid.Column="2"
 							 Content="JOIN FREE"
 							 FontSize="20"
 							 Margin="10,0"
 							 VerticalAlignment="Center"
 							 Foreground="{StaticResource WhiteBrush}"
 							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}" Click="HyperlinkButton_Click"/>
-		</Grid>
+			</Grid>
 
-		<StackPanel Grid.Row="1">
-			<Grid Margin="20,20">
-				<TextBox x:Name="EmailTextBox"
+			<StackPanel Grid.Row="1">
+				<Grid Margin="20,20">
+					<TextBox x:Name="EmailTextBox"
 						 BorderThickness="0,0,0,2" 
 						 PlaceholderText="Your Email Address"
 						 />
-			</Grid>
-			<Grid Margin="20,20">
-				<PasswordBox x:Name="PasswordBox" 
+				</Grid>
+				<Grid Margin="20,20">
+					<PasswordBox x:Name="PasswordBox" 
 							BorderThickness="0,0,0,2"                         
 							PlaceholderText="Enter your password" 
 							/>
-			</Grid>
-			<Button Content="SIGN IN"
+				</Grid>
+				<Button Content="SIGN IN"
                     Name="btSignin"
 					Margin="20,0"
 					Height="50"
@@ -75,11 +76,15 @@
                     Click="Button_Click"
 					Background="{StaticResource LightBlueBrush}"
 					Foreground="{StaticResource WhiteBrush}"/>
-			<HyperlinkButton Margin="20,0"
+				<HyperlinkButton Margin="20,0"
 							 Content="Forgot Password?"
 							 Foreground="{StaticResource BlueBrush}"
 							 HorizontalAlignment="Right"/>
-		</StackPanel>
-		
+			</StackPanel>
+		</Grid>
+
+		<ProgressRing x:Name="pgrAccount"
+					  Width="150"
+					  Height="150"/>
 	</Grid>
 </Page>

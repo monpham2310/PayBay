@@ -59,6 +59,10 @@ namespace PayBay.View.AccountGroup
 			{
 				await new MessageDialog("Please type your email and your password!", "Notification").ShowAsync();
 			}
+
+			pgrAccount.IsActive = false;
+			gridAccount.IsHitTestVisible = true;
+			gridAccount.Opacity = 1.0;
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -73,6 +77,9 @@ namespace PayBay.View.AccountGroup
         
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+			pgrAccount.IsActive = true;
+			gridAccount.IsHitTestVisible = false;
+			gridAccount.Opacity = 0.7;
 			Login();
         }
 

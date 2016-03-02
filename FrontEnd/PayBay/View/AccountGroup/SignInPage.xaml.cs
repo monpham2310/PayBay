@@ -1,4 +1,5 @@
-﻿using PayBay.Utilities.Common;
+﻿using PayBay.Services.MobileServices.PaybayNotification;
+using PayBay.Utilities.Common;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using System;
@@ -38,22 +39,21 @@ namespace PayBay.View.AccountGroup
 			string mail = EmailTextBox.Text;
 			string password = PasswordBox.Password;
 			if (mail != "" && password != "")
-			{
-				try
-				{
-                    btSignin.IsEnabled = false;           
-					bool check = await Vm.LoginAccount(mail, password);
-					((Popup)Frame.Parent).IsOpen = false;
+			{				
+                btSignin.IsEnabled = false;           
+				bool check = await Vm.LoginAccount(mail, password);
+				((Popup)Frame.Parent).IsOpen = false;
 
-					MediateClass.StartPage.UserLoginSucceed();
-					if(check)
-					    await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
-                    btSignin.IsEnabled = true;
-				}
-				catch (Exception ex)
-				{
-					await new MessageDialog("Login is NOT successful!\nMaybe wrong email or password,please try again!", "Notification!").ShowAsync();
-				}
+                //PaybayPushClient.UploadChannel();
+                
+                if (check)
+                {
+                    await new MessageDialog("Login is successful!", "Notification!").ShowAsync();
+                    MediateClass.StartPage.UserLoginSucceed();
+                }
+                else
+                    await new MessageDialog("Login is NOT successful!\nMaybe wrong email or password,please try again!", "Notification!").ShowAsync();
+                btSignin.IsEnabled = true;				
 			}
 			else
 			{

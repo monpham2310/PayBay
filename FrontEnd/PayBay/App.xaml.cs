@@ -100,6 +100,7 @@ namespace PayBay
                 await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
             }
 
+            //Register device
             PaybayPushClient.UploadChannel();
 
             // Ensure the current window is active

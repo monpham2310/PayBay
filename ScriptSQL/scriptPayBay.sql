@@ -654,7 +654,7 @@ as
 	where MarketId > @MarketId
 
 
-create proc paybayservice.sp_UserRate
+alter proc paybayservice.sp_UserRate
 @UserId int,
 @StoreId int,
 @Rate float
@@ -669,7 +669,15 @@ as
 			update paybayservice.StatisticRating
 			set RateOfUser = @Rate
 			where UserID=@UserId and StoreID=@StoreId
-		end
+		end			
+		declare @Rated int,@count int
+		select @count=count(*),@Rated=sum(RateOfUser) from paybayservice.StatisticRating where StoreId = 1
+		
+		update paybayservice.Stores
+		set Rate = @Rated/@count
+		where StoreId = @StoreId
+
+		select StoreId,Rate from paybayservice.Stores where StoreId = @StoreId
 	commit
 
 alter proc paybayservice.sp_LoadAllSale --0,1
@@ -809,3 +817,34 @@ as
 	from paybayservice.Products
 	where StoreID=@StoreID and ProductId > @ProductId
 	order by ProductId desc
+
+alter proc paybayservice.sp_ViewNewCmtOfStore 1,-1
+@StoreID int,
+@CommentId int
+as
+	declare @table table (Id int,CommentDate datetime,StoreID int,UserID int,Username nvarchar(30),Avatar nvarchar(max),Content nvarchar(max),Rated float)
+	declare @Id int,@CommentDate datetime,@Store int,@UserID int,@Username nvarchar(30),@Avatar nvarchar(max),@Content nvarchar(max)
+	declare cCursor cursor for select top 5 Id,CommentDate,StoreID,a.UserID,b.Username,b.Avatar,Content
+								from paybayservice.Comments a inner join paybayservice.Users b on a.UserID=b.UserID
+								where StoreID=@StoreID and Id > @CommentId
+								order by Id desc
+	open cCursor
+	fetch next from cCursor into @Id,@CommentDate,@Store,@UserID,@Username,@Avatar,@Content
+	while @@fetch_status = 0
+	begin
+		declare @Rated float
+		set @Rated = (select RateOfUser from paybayservice.StatisticRating where UserID = @UserID and StoreID = @StoreID)
+		insert into @table select @Id,@CommentDate,@Store,@UserID,@Username,@Avatar,@Content,@Rated
+		fetch next from cCursor into @Id,@CommentDate,@Store,@UserID,@Username,@Avatar,@Content
+	end
+	close cCursor
+	deallocate cCursor
+	select Id,CommentDate,StoreID,UserID,Username,Avatar,Content,Rated from @table as VariableTable
+
+create proc paybayservice.sp_GetStarRated 8,1
+@UserId int,
+@StoreId int
+as
+	select ID,UserID,StoreID,RateOfUser
+	from paybayservice.StatisticRating
+	where UserID=@UserId and StoreID=@StoreId

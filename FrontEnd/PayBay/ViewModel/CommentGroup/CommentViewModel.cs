@@ -107,7 +107,7 @@ namespace PayBay.ViewModel.CommentGroup
             }
         }
 
-        public async Task UserComment(string content,int storeId, TYPEGET type, bool inKios=false)
+        public async Task UserComment(string content, int storeId, TYPEGET type, bool inKios=false)
         {
             UserInfo currentUser = MediateClass.UserVM.UserInfo;
             Comment comment = new Comment();

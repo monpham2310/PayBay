@@ -17,19 +17,19 @@ using Windows.UI.Xaml.Navigation;
 
 namespace PayBay.Utilities.CustomControl
 {
-	public sealed partial class StarRating : UserControl
+	public sealed partial class StarRating : UserControl 
 	{
 		public StarRating()
 		{
 			this.InitializeComponent();
 		}
+                
+        #region StarBackground
 
-		#region StarBackground
-
-		/// <summary>
-		/// StarBackground Dependency Property
-		/// </summary>
-		public static readonly DependencyProperty StarBackgroundProperty =
+        /// <summary>
+        /// StarBackground Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty StarBackgroundProperty =
 			DependencyProperty.Register("StarBackground", typeof(SolidColorBrush), typeof(StarRating), 
 				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.Transparent), OnStarBackgroundChanged));
 
@@ -236,11 +236,7 @@ namespace PayBay.Utilities.CustomControl
 				value -= 1.0;
 			}
 		}
-
-		//private Double GetStarPosition(Double pointerPos)
-		//{
-
-		//}
+        		
 		#endregion
 
 		private void spStars_Tapped(object sender, TappedRoutedEventArgs e)

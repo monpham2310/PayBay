@@ -37,7 +37,7 @@ namespace PayBay.View.OrderGroup
 
             ProgressBar progbar = ((ProgressBar)VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(pivotOrder, 0), 1), 0), 0), 0), 0), 0), 1), 0), 0), 0));
 
-            switch(pivotOrder.SelectedIndex)
+            switch (pivotOrder.SelectedIndex)
             {
                 case 0:
                     progbar.Value = 0;

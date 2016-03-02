@@ -79,10 +79,9 @@ namespace PayBay.View.MarketGroup
                     KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
                     int selectedId = KiosVm.SelectedStore.StoreId;
                     MediateClass.ProductVM.GetProductsOfStore(selectedId, TYPEGET.START);
-                    MediateClass.CommentVM.GetCommentOfStore(selectedId, TYPEGET.START);
+                    MediateClass.CommentVM.GetCommentOfStore(selectedId, TYPEGET.START);                    
                 }
-            }
-            txtComment.Text = "";
+            }            
         }
 
         //private void btnStar1_Click(object sender, RoutedEventArgs e)

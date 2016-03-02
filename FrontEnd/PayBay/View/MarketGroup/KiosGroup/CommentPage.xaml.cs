@@ -1,5 +1,6 @@
 ﻿using PayBay.Utilities.Common;
 using PayBay.ViewModel.CommentGroup;
+using PayBay.ViewModel.RatingGroup;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,8 @@ namespace PayBay.View.MarketGroup.KiosGroup
 {
 	public sealed partial class CommentPage : UserControl
 	{
-        private CommentViewModel CommentVm => (CommentViewModel)DataContext;
+        private CommentViewModel CommentVm => (CommentViewModel)scrollvComentLst.DataContext;
+        private RatingViewModel RateVm => (RatingViewModel)starRating.DataContext;
 
 		public CommentPage()
 		{
@@ -48,6 +50,16 @@ namespace PayBay.View.MarketGroup.KiosGroup
             {
                 if(CommentVm != null)
                     CommentVm.GetCommentOfStore(storeId, TYPEGET.MORE, TYPE.NEW);
+            }
+        }
+
+        private async void starrRating_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            double rated = starRating.Value;
+
+            if (RateVm != null)
+            {
+                await RateVm.PostRate(rated);
             }
         }
     }

@@ -397,7 +397,7 @@
                SelectionChanged="pivotOrder_SelectionChanged"
                x:Name="pivotOrder">
             <PivotItem x:Name="PivotItem1">
-                <PivotItem.Header>
+                    <PivotItem.Header>
                     <TextBlock Text="Pre-order"
                                TextAlignment="Center"/>
                 </PivotItem.Header>

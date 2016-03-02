@@ -12,7 +12,7 @@ namespace PayBay.Model
         private int _id;
         private int _userId;
         private int _storeId;
-        private float _rate;
+        private double _rateOfUser;
 
         public int Id
         {
@@ -56,17 +56,28 @@ namespace PayBay.Model
             }
         }
 
-        public float Rate
+        public double RateOfUser
         {
             get
             {
-                return _rate;
+                return _rateOfUser;
             }
 
             set
             {
-                _rate = value;
+                _rateOfUser = value;
+                OnPropertyChanged();
             }
         }
+
+        public Rating() { }
+
+        public Rating(int user, int store, double rated)
+        {
+            _userId = user;
+            _storeId = store;
+            _rateOfUser = rated;
+        }
+
     }
 }

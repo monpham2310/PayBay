@@ -163,7 +163,7 @@ namespace PayBay.View.StartGroup
 			asbSearch.IsEnabled = false;
 		}
 
-        private void isLoginControl(bool visibility)
+        public void isLoginControl(bool visibility)
         {
             bool isLogin = visibility;
             bool isNotLogin = !visibility;
@@ -183,8 +183,8 @@ namespace PayBay.View.StartGroup
                 if (MediateClass.UserVM.UserInfo.Avatar == null)
 				{
                     MediateClass.UserVM.UserInfo.Avatar = "/Assets/Square150x150Logo.scale-100.png";
-				}
-			}
+				}                
+            }
 		}
 
 		private void SearchButton_Click(object sender, RoutedEventArgs e)

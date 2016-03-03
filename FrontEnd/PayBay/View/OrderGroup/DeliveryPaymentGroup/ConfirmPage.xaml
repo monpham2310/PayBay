@@ -13,59 +13,11 @@
         <Grid Background="White"
               Padding="10, 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="140"/>
                 <RowDefinition Height="170"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
             <Grid Grid.Row="0"
-              BorderBrush="LightGray"
-              BorderThickness="0,0,0,1"
-              Padding="10,0">
-                <StackPanel>
-                    <TextBlock Text="Product Information"
-                           FontSize="18"
-                           VerticalAlignment="Center"
-                           Height="30"/>
-                    <FlipView Background="White"
-                              x:Name="flipViewProductList">
-                        <FlipView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock TextWrapping="WrapWholeWords">
-                    <Run Text="Product Name: " 
-                         Foreground="#FF969494" />
-                    <Run Text="{Binding ProductName}" 
-                         x:Name="tblProductName"/>
-                                    </TextBlock>
-                                    <TextBlock>
-                    <Run Text="Unit Price " 
-                         Foreground="#FF969494" />
-                    <Run Text="{Binding UnitPrice}" 
-                         x:Name="tblUnitPrice"/>
-                                    </TextBlock>
-                                    <TextBlock>
-                    <Run Text="Quantity: " 
-                         Foreground="#FF969494" />
-                    <Run Text="{Binding OrderUnit}" 
-                         x:Name="tblOrderUnit"/>
-                                    </TextBlock>
-                                    <TextBlock>
-                    <Run Text="Total Product Price: " 
-                         Foreground="#FF969494" />
-                    <Run Text="1.00 USD"                    
-                         x:Name="tblTotalPrice" 
-                         Foreground="#FFE47540"/>
-                                    </TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-
-                        </FlipView.ItemTemplate>
-                    
-                    </FlipView>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="1"
               BorderBrush="LightGray"
               BorderThickness="0,0,0,1"
               Padding="10,0">
@@ -111,7 +63,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="2"
+            <Grid Grid.Row="1"
               BorderBrush="LightGray"
               BorderThickness="0,0,0,1"
               Padding="10,0">

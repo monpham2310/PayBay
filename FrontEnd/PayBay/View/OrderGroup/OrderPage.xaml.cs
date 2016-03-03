@@ -43,13 +43,10 @@ namespace PayBay.View.OrderGroup
                     progbar.Value = 0;
                     break;
                 case 1:
-                    progbar.Value = 33.3f;
+                    progbar.Value = 50f;
                     break;
                 case 2:
-                    progbar.Value = 66.6f;
-                    break;
-                case 3:
-                    progbar.Value = 100;
+                    progbar.Value = 100f;
                     break;
                 default:
                     progbar.Value = 0;

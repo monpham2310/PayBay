@@ -185,6 +185,9 @@
     <Compile Include="View\OrderGroup\DeliveryPaymentGroup\ConfirmPage.xaml.cs">
       <DependentUpon>ConfirmPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OrderGroup\DeliveryPaymentGroup\DeliveryPaymentPage.xaml.cs">
+      <DependentUpon>DeliveryPaymentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OrderGroup\OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,7 @@
     <Content Include="Assets\Icon\mypaybay_icon.png" />
     <Content Include="Assets\Icon\phone_icon.png" />
     <Content Include="Assets\Icon\setting_icon.png" />
+    <Content Include="Assets\Icon\TradeLogo.png" />
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Rating\emptystar.png" />
@@ -372,6 +376,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderGroup\DeliveryPaymentGroup\ConfirmPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderGroup\DeliveryPaymentGroup\DeliveryPaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

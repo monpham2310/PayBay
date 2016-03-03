@@ -412,6 +412,9 @@
                                TextAlignment="Center"/>
 
                 </PivotItem.Header>
+                <PivotItem>
+                    <delpay:DeliveryPaymentPage/>
+                </PivotItem>
             </PivotItem>
             <PivotItem x:Name="PivotItem3">
                 <PivotItem.Header>

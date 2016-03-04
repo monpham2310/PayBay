@@ -182,6 +182,9 @@
     <Compile Include="View\MiddleFunctionGroup\AboutUsPage.xaml.cs">
       <DependentUpon>AboutUsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MiddleFunctionGroup\EmailPage.xaml.cs">
+      <DependentUpon>EmailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MiddleFunctionGroup\FreeCallPage.xaml.cs">
       <DependentUpon>FreeCallPage.xaml</DependentUpon>
     </Compile>
@@ -247,8 +250,10 @@
     <Content Include="Assets\Icon\inbox_icon.png" />
     <Content Include="Assets\Icon\location_icon.png" />
     <Content Include="Assets\Icon\logout_icon.png" />
+    <Content Include="Assets\Icon\mail_icon.png" />
     <Content Include="Assets\Icon\mypaybay_icon.png" />
     <Content Include="Assets\Icon\phone_icon.png" />
+    <Content Include="Assets\Icon\phone_icon_blue.png" />
     <Content Include="Assets\Icon\setting_icon.png" />
     <Content Include="Assets\Icon\TradeLogo.png" />
     <Content Include="Assets\lol.jpg" />
@@ -376,6 +381,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MiddleFunctionGroup\AboutUsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MiddleFunctionGroup\EmailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

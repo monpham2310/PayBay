@@ -235,7 +235,7 @@
 						Padding="10,25,0,0"
 						BorderThickness="1,0,0,0"
 						BorderBrush="{StaticResource LightGrayBrush}">
-                <HyperlinkButton Content="Call"/>
+                <HyperlinkButton Content="Call" Name="btCallStore" Click="btCallStore_Click"/>
                 <HyperlinkButton Content="Inbox"/>
                 <HyperlinkButton Content="Check List"/>
             </StackPanel>

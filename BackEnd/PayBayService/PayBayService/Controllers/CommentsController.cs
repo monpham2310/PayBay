@@ -117,9 +117,9 @@ namespace PayBayService.Controllers
             db.Comments.Add(comment);
             await db.SaveChangesAsync();
 
-            var currentUser = this.User as ServiceUser;
+            //var currentUser = this.User as ServiceUser;
 
-            await PushHelper.SendToastAsync(WebApiConfig.Services, comment.UserID.ToString(), comment.Content, currentUser.Id);
+            await PushHelper.SendToastAsync(WebApiConfig.Services, comment.UserID.ToString(), comment.Content);
 
             result = Methods.CustomResponseMessage(1, "Add Comment is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);                        

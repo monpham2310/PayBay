@@ -25,9 +25,12 @@ namespace PayBay.View.OrderGroup
     {
         public OrderPage()
         {
-            this.InitializeComponent();
+            if (MediateClass.OrderVM != null)
+                MediateClass.OrderVM.InitializeBill();
+            MediateClass.OrderPage = this;
+            this.InitializeComponent();            
         }
-
+                
         public void pivotOrder_SelectionChanged(object sender,SelectionChangedEventArgs e)
         {
             if (e.AddedItems[0].Equals(PivotItem1))
@@ -54,5 +57,20 @@ namespace PayBay.View.OrderGroup
             }
 
         }
+
+        public void ShowProgressBar()
+        {
+            pgrBill.IsActive = true;
+            gridOrder.IsHitTestVisible = false;
+            gridOrder.Opacity = 0.7;
+        }
+
+        public void HiddenProgressBar()
+        {
+            pgrBill.IsActive = false;
+            gridOrder.IsHitTestVisible = true;
+            gridOrder.Opacity = 1.0;
+        }
+
     }
 }

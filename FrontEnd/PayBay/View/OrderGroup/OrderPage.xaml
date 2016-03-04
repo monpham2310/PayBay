@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:order="using:PayBay.View.OrderGroup"
     xmlns:delpay="using:PayBay.View.OrderGroup.DeliveryPaymentGroup"
+    DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -393,7 +394,8 @@
 
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          Name="gridOrder">
         <Pivot Style="{StaticResource PivotStyleOrderPage}"
                SelectionChanged="pivotOrder_SelectionChanged"
                x:Name="pivotOrder">
@@ -426,5 +428,8 @@
                 </PivotItem>
             </PivotItem>
         </Pivot>
+        <ProgressRing x:Name="pgrBill"
+					  Width="50"
+					  Height="50"/>
     </Grid>
 </Page>

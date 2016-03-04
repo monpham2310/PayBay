@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PayBay.Utilities.Common;
+using PayBay.ViewModel.OrderGroupViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +21,22 @@ namespace PayBay.View.OrderGroup.DeliveryPaymentGroup
 {
     public sealed partial class ConfirmPage : UserControl
     {
+        private OrderViewModel OrderVm => (OrderViewModel)DataContext;
+
         public ConfirmPage()
         {
             this.InitializeComponent();
+        }
+
+        private async void btSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            MediateClass.OrderPage.ShowProgressBar();     
+            if (OrderVm != null)
+            {
+                await OrderVm.SubmitBill();
+            }
+            MediateClass.OrderPage.HiddenProgressBar();
+            MediateClass.OrderPage.Frame.GoBack();
         }
     }
 }

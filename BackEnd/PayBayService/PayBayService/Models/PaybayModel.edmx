@@ -15,8 +15,11 @@
           <Property Name="TotalPrice" Type="float" />
           <Property Name="ReducedPrice" Type="float" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="isShiped" Type="bit" />
           <Property Name="Note" Type="nvarchar" MaxLength="30" />
+          <Property Name="ShipMethod" Type="nvarchar" MaxLength="50" />
+          <Property Name="TradeTerm" Type="nvarchar" MaxLength="10" />
+          <Property Name="AgreeredShippingDate" Type="nvarchar" MaxLength="100" />
+          <Property Name="ShippingDate" Type="date" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -178,8 +181,11 @@
           <Property Name="TotalPrice" Type="Double" />
           <Property Name="ReducedPrice" Type="Double" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="isShiped" Type="Boolean" />
           <Property Name="Note" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ShipMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TradeTerm" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AgreeredShippingDate" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -341,8 +347,11 @@
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="ReducedPrice" ColumnName="ReducedPrice" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="isShiped" ColumnName="isShiped" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ShipMethod" ColumnName="ShipMethod" />
+                <ScalarProperty Name="TradeTerm" ColumnName="TradeTerm" />
+                <ScalarProperty Name="AgreeredShippingDate" ColumnName="AgreeredShippingDate" />
+                <ScalarProperty Name="ShippingDate" ColumnName="ShippingDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

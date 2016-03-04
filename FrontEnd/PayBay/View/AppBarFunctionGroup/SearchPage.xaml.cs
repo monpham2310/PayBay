@@ -32,10 +32,15 @@ namespace PayBay.View.AppBarFunctionGroup
         public SearchPage()
         {
             InitializeComponent();
-			//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            this.Loaded += Page_Loaded;
 		}
-                
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            SaleVm.LoadMoreSale(TYPEGET.START);
+        }
+
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();

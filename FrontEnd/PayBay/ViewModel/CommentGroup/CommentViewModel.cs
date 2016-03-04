@@ -95,15 +95,17 @@ namespace PayBay.ViewModel.CommentGroup
                                     CommentLstOfStore.Insert(i, more[i]);
                                 }
                             }
-                        }
-                        isResponsed = false;
+                        }                        
                     }
                 }
             }
             catch (Exception ex)
+            {                
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+            finally
             {
                 isResponsed = false;
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
 
@@ -145,15 +147,17 @@ namespace PayBay.ViewModel.CommentGroup
                             else
                                 await SendData(TYPEGET.MORE, TYPE.NEW, param);
                         }
-                    }
-                    isCommented = false;
+                    }                    
                 }
             }
             catch (Exception ex)
+            {                
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+            finally
             {
                 isCommented = false;
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
-            }            
+            }   
         }
                 
     }

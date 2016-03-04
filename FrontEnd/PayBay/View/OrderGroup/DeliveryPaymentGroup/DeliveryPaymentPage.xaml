@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="600"
+    DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}"
     d:DesignWidth="400">
     <ScrollViewer>
         <Grid Background="White"
@@ -31,7 +32,9 @@
                                Margin="12,0,0,0"/>
                         <ComboBox BorderThickness="0,0,0,1.5"
                               BorderBrush="Gray"
-                              HorizontalAlignment="Stretch">
+                              HorizontalAlignment="Stretch"
+                              Name="cbShipMethod"
+                              SelectionChanged="cbShipMethod_SelectionChanged">
                             <ComboBoxItem Content="Sea Freight" 
                                       IsSelected="True"
                                       HorizontalContentAlignment="Left"/>
@@ -52,11 +55,13 @@
                                Margin="12,0,0,0"/>
                         <ComboBox BorderThickness="0,0,0,1.5"
                               BorderBrush="Gray"
-                              HorizontalAlignment="Stretch">
-                            <ComboBoxItem Content="Cash" 
+                                  Name="cbTradeTerm"
+                              HorizontalAlignment="Stretch"
+                                  SelectionChanged="cbTradeTerm_SelectionChanged">
+                            <ComboBoxItem Tag="1" Content="Cash" 
                                       IsSelected="True"
                                       HorizontalContentAlignment="Left"/>
-                            <ComboBoxItem Content="Card"
+                            <ComboBoxItem Tag="2" Content="Card"
                                       HorizontalContentAlignment="Left"/>
                         </ComboBox>
                     </StackPanel>
@@ -70,15 +75,17 @@
                            Margin="12,0,0,0"/>
                     <ComboBox BorderThickness="0,0,0,1.5"
                               BorderBrush="Gray"
-                              HorizontalAlignment="Stretch">
-                        <ComboBoxItem Content="Ship 1 day(s) after supplier receives initial payment" 
+                              Name="cbAgreeShip"
+                              HorizontalAlignment="Stretch"
+                              SelectionChanged="cbAgreeShip_SelectionChanged">
+                        <ComboBoxItem Tag="1" Content="Ship 1 day(s) after supplier receives initial payment" 
                                       IsSelected="True"/>
-                        <ComboBoxItem Content="Ship 2 day(s) after supplier receives initial payment"/>
-                        <ComboBoxItem Content="Ship 3 day(s) after supplier receives initial payment"/>
-                        <ComboBoxItem Content="Ship 4 day(s) after supplier receives initial payment"/>
-                        <ComboBoxItem Content="Ship 5 day(s) after supplier receives initial payment"/>
-                        <ComboBoxItem Content="Ship 6 day(s) after supplier receives initial payment"/>
-                        <ComboBoxItem Content="Ship 7 day(s) after supplier receives initial payment"/>
+                        <ComboBoxItem Tag="2" Content="Ship 2 day(s) after supplier receives initial payment"/>
+                        <ComboBoxItem Tag="3" Content="Ship 3 day(s) after supplier receives initial payment"/>
+                        <ComboBoxItem Tag="4" Content="Ship 4 day(s) after supplier receives initial payment"/>
+                        <ComboBoxItem Tag="5" Content="Ship 5 day(s) after supplier receives initial payment"/>
+                        <ComboBoxItem Tag="6" Content="Ship 6 day(s) after supplier receives initial payment"/>
+                        <ComboBoxItem Tag="7" Content="Ship 7 day(s) after supplier receives initial payment"/>
                     </ComboBox>
                 </StackPanel>
             </Grid>
@@ -91,8 +98,9 @@
                                    x:Name="tblInitPay"/>
                     <Grid>
                         <TextBox BorderThickness="0,0,0,1.5"
-                             BorderBrush="Gray"
-                             Text="0"
+                                 BorderBrush="Gray"
+                                 Text="{Binding BillOfUser.TotalPrice}"
+                                 IsEnabled="False"
                                  x:Name="tbxInitPay"
                                  GotFocus="tbxInitPay_GotFocus"
                                  LostFocus="tbxInitPay_LostFocus"/>
@@ -105,13 +113,14 @@
               Padding="10, 0">
                 <StackPanel>
                     <TextBlock Text="Balance Payment" 
-                           Foreground="#FF969494"
-                           Margin="12,0,0,0"
-                                   x:Name="tblBalPay"/>
+                               Foreground="#FF969494"
+                               Margin="12,0,0,0"
+                               x:Name="tblBalPay"/>
                     <Grid>
                         <TextBox BorderThickness="0,0,0,1.5"
-                             BorderBrush="Gray"
-                             Text="0"
+                                 BorderBrush="Gray"
+                                 Text="{Binding BillOfUser.ReducedPrice}"
+                                 IsEnabled="False"
                                  x:Name="tbxBalPay"
                                  GotFocus="tbxBalPay_GotFocus"
                                  LostFocus="tbxBalPay_LostFocus"/>

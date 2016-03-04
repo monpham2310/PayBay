@@ -28,5 +28,10 @@ namespace PayBay.View.MarketGroup.KiosGroup
             this.InitializeComponent();
             MediateClass.KiosPage = this;
         }
+
+        private void btCallStore_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
+        }
     }
 }

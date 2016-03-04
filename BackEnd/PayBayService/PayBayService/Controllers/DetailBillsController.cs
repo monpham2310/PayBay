@@ -13,6 +13,7 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.Common;
 using System.Data.SqlClient;
+using System.Collections.ObjectModel;
 
 namespace PayBayService.Controllers
 {
@@ -100,9 +101,10 @@ namespace PayBayService.Controllers
 
         // POST: api/DetailBills
         [ResponseType(typeof(HttpResponseMessage))]
-        public HttpResponseMessage PostDetailBill(DetailBill detailBill)
+        public HttpResponseMessage PostDetailBill(ObservableCollection<DetailBill> detailBill)
         {
-            JArray result = new JArray();
+            JObject result = new JObject();
+            bool check = false;
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
@@ -110,13 +112,21 @@ namespace PayBayService.Controllers
 
             try
             {
-                var bill = new SqlParameter("@BillID", detailBill.BillID);
-                var product = new SqlParameter("@ProductID", detailBill.ProductID);
-                var numberof = new SqlParameter("@NumberOf", detailBill.NumberOf);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_InsertDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product, numberof);
+                foreach (DetailBill item in detailBill)
+                {
+                    var bill = new SqlParameter("@BillID", item.BillID);
+                    var product = new SqlParameter("@ProductID", item.ProductID);
+                    var numberof = new SqlParameter("@NumberOf", item.NumberOf);
+                    check = Methods.GetInstance().ExecNonQuery("paybayservice.sp_InsertDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product, numberof);
+                }
+                if (check)
+                    result = Methods.CustomResponseMessage(1, "Insert is successful!");
+                else
+                    result = Methods.CustomResponseMessage(0, "Insert is not successful!");
             }
             catch (Exception ex)
             {
+                result = Methods.CustomResponseMessage(0, "Insert not successful!");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
             

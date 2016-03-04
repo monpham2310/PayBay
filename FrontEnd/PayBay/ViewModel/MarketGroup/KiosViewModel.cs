@@ -166,15 +166,17 @@ namespace PayBay.ViewModel.MarketGroup
                             }
                         }
                         else
-                            KiosList = response.ToObject<ObservableCollection<Kios>>();
-                        isResponsed = false;
+                            KiosList = response.ToObject<ObservableCollection<Kios>>();                        
                     }
                 }
             }
             catch (Exception ex)
+            {                
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+            finally
             {
                 isResponsed = false;
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
 

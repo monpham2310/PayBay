@@ -20,8 +20,8 @@ namespace PayBayService
 
             #region LoginProvider
                         
-            options.LoginProviders.Remove(typeof(FacebookLoginProvider));
-            options.LoginProviders.Add(typeof(FacebookLoginAuthenticationProvider));           
+            //options.LoginProviders.Remove(typeof(FacebookLoginProvider));
+            //options.LoginProviders.Add(typeof(FacebookLoginAuthenticationProvider));           
             
             #endregion
 
@@ -31,9 +31,7 @@ namespace PayBayService
             // To display errors in the browser during development, uncomment the following
             // line. Comment it out again when you deploy your service for production use.
             // config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;          
-                                              
-            options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
-
+             
             Services = new ApiServices(config);
 
             config.Formatters.JsonFormatter.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Include;
@@ -49,6 +47,7 @@ namespace PayBayService
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
             config.SetIsHosted(true);
 
         }

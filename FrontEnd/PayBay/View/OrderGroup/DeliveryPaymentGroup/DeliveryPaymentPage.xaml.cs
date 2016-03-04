@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PayBay.Utilities.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,6 +43,28 @@ namespace PayBay.View.OrderGroup.DeliveryPaymentGroup
         private void tbxBalPay_LostFocus(object sender, RoutedEventArgs e)
         {
             tblBalPay.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(0xFF, 0x96, 0x94, 0x94));
+        }
+                
+        private void cbTradeTerm_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MediateClass.OrderVM != null)
+                MediateClass.OrderVM.BillOfUser.TradeTerm = ((ComboBoxItem)cbTradeTerm.SelectedValue).Content.ToString();
+        }
+
+        private void cbAgreeShip_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MediateClass.OrderVM != null)
+            {
+                MediateClass.OrderVM.BillOfUser.AgreeredShippingDate = ((ComboBoxItem)cbAgreeShip.SelectedValue).Content.ToString();
+                int addDay = Convert.ToInt32(cbAgreeShip.SelectedIndex);
+                MediateClass.OrderVM.BillOfUser.ShipDate = DateTime.Now.AddDays(addDay + 1);
+            }
+        }
+
+        private void cbShipMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MediateClass.OrderVM != null)
+                MediateClass.OrderVM.BillOfUser.ShipMethod = ((ComboBoxItem)cbShipMethod.SelectedValue).Content.ToString();
         }
     }
 }

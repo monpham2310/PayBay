@@ -81,12 +81,12 @@ namespace PayBay.View.MarketGroup.KiosGroup
         }
 
         private void checkBtn_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             ProductVm.ProductOrderList.Clear();
             foreach (Product product in listViewProductsOfStore.Items)
             {
                 if (product.OrderUnit > 0 && product.OrderUnit <= product.NumberOf)
-                {                    
+                {                                    
                     ProductVm.ProductOrderList.Add(product);
                 }
             }

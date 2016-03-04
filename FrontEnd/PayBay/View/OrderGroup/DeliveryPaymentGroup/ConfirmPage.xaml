@@ -7,17 +7,54 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="600"
+    DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}"
     d:DesignWidth="400">
 
     <ScrollViewer>
         <Grid Background="White"
               Padding="10, 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="170"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="150"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0"
+              BorderBrush="LightGray"
+              BorderThickness="0,0,0,1"
+              Padding="10,0">
+                <StackPanel>
+                    <TextBlock Text="Bill Infomation"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           Height="30"/>
+                    <!--<FlipView>-->
+                    <StackPanel>
+                        <TextBlock>
+                    <Run Text="Store Name: " 
+                         Foreground="#FF969494" />
+                    <Run Text="{Binding BillOfUser.StoreName}" 
+                         />
+                        </TextBlock>
+                        <TextBlock>
+                    <Run Text="Owner: " 
+                         Foreground="#FF969494" />
+                    <Run Text="{Binding BillOfUser.UserName}" 
+                         />
+                        </TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords">
+                    <Run Text="Created Date: " 
+                         Foreground="#FF969494" />
+                    <Run Text="{Binding BillOfUser.CreatedDate}" 
+                         />
+                        </TextBlock>                        
+                    </StackPanel>
+                    <!--</FlipView>-->
+                </StackPanel>
+            </Grid>
+            
+            <Grid Grid.Row="1"
               BorderBrush="LightGray"
               BorderThickness="0,0,0,1"
               Padding="10,0">
@@ -31,31 +68,37 @@
                         <TextBlock>
                     <Run Text="Shipping Method: " 
                          Foreground="#FF969494" />
-                    <Run Text="Sea Freight" 
+                    <Run Text="{Binding BillOfUser.ShipMethod}" 
                          x:Name="tblShipMethod"/>
                         </TextBlock>
                         <TextBlock>
                     <Run Text="Trade Terms: " 
                          Foreground="#FF969494" />
-                    <Run Text="FOB" 
+                    <Run Text="{Binding BillOfUser.TradeTerm}" 
                          x:Name="tblTradeTerms"/>
                         </TextBlock>
                         <TextBlock TextWrapping="WrapWholeWords">
                     <Run Text="Agreed Shipping Date: " 
                          Foreground="#FF969494" />
-                    <Run Text="Ship 1 day(s) after supplier receives initial payment" 
+                    <Run Text="{Binding BillOfUser.AgreeredShippingDate}" 
+                         x:Name="tblAgreeDate"/>
+                        </TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords">
+                    <Run Text="Ship Date: " 
+                         Foreground="#FF969494" />
+                    <Run Text="{Binding BillOfUser.ShipDate}" 
                          x:Name="tblShipDate"/>
                         </TextBlock>
                         <TextBlock>
-                    <Run Text="Initial Payment: " 
+                    <Run Text="Total Payment: " 
                          Foreground="#FF969494" />
-                    <Run Text="1 USD" 
+                    <Run Text="{Binding BillOfUser.TotalPrice}" 
                          x:Name="tblInitPay"/>
                         </TextBlock>
                         <TextBlock>
-                    <Run Text="Balance Payment: " 
+                    <Run Text="Reduced Payment: " 
                          Foreground="#FF969494" />
-                    <Run Text="0 USD" 
+                    <Run Text="{Binding BillOfUser.ReducedPrice}" 
                          x:Name="tblBalPay"/>
                         </TextBlock>
                     </StackPanel>
@@ -63,12 +106,12 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="1"
+            <Grid Grid.Row="2"
               BorderBrush="LightGray"
               BorderThickness="0,0,0,1"
               Padding="10,0">
-                <StackPanel>
-                    <TextBlock Text="Contact Information"
+                <StackPanel DataContext="{Binding Source={StaticResource Locator}, Path=AccountVm}">
+                    <TextBlock Text="User Information"
                            FontSize="18"
                            VerticalAlignment="Center"
                            Height="30"/>
@@ -77,38 +120,46 @@
                         <TextBlock>
                     <Run Text="Name: " 
                          Foreground="#FF969494" />
-                    <Run Text="Hung Doan" 
+                    <Run Text="{Binding UserInfo.Username}" 
                          x:Name="tblContactName"/>
-                        </TextBlock>
-                        <TextBlock>
-                    <Run Text="Company Name: " 
-                         Foreground="#FF969494" />
-                    <Run Text="Ree" 
-                         x:Name="tblContactCompany"/>
-                        </TextBlock>
+                        </TextBlock>                        
                         <TextBlock TextWrapping="WrapWholeWords">
-                    <Run Text="Agreed Shipping Date: " 
+                    <Run Text="Email: " 
                          Foreground="#FF969494" />
-                    <Run Text="dvh.viethung0905@gmail.com" 
+                    <Run Text="{Binding UserInfo.Email}" 
                          x:Name="tblContactEmail"/>
                         </TextBlock>
-                        <TextBlock>
-                    <Run Text="Telephone Number: " 
+                        <TextBlock TextWrapping="WrapWholeWords">
+                    <Run Text="Address: " 
                          Foreground="#FF969494" />
-                    <Run Text="8-7000-0938175143" 
-                         x:Name="tblTelephone"/>
+                    <Run Text="{Binding UserInfo.Address}" 
+                         x:Name="tblAddress"/>
                         </TextBlock>
                         <TextBlock>
                     <Run Text="Mobile Number: " 
                          Foreground="#FF969494" />
-                    <Run Text="70 707040463" 
+                    <Run Text="{Binding UserInfo.Phone}" 
                          x:Name="tblMobile"/>
                         </TextBlock>
                     </StackPanel>
                     <!--</FlipView>-->
                 </StackPanel>
             </Grid>
-        </Grid>
-    </ScrollViewer>
+            <Grid Grid.Row="3"
+                  BorderBrush="LightGray"
+                  BorderThickness="0,0,0,1"
+                  Padding="10,0">
+
+                <Button Content="Submit"
+                        Name="btSubmit"
+                        Background="{StaticResource LightBlueBrush}"
+                        HorizontalAlignment="Right"
+                        Foreground="White" 
+                        Margin="0,10,10,0"
+                        Click="btSubmit_Click"/>
+
+            </Grid>            
+        </Grid>        
+    </ScrollViewer>    
     
 </UserControl>

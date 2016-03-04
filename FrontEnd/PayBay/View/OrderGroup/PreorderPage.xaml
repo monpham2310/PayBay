@@ -23,6 +23,7 @@
                 <ColumnDefinition  />
                 <ColumnDefinition  />
                 <ColumnDefinition  />
+                <ColumnDefinition  />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" 
                        Text="ID." 
@@ -35,6 +36,9 @@
                        HorizontalAlignment="Center"/>
             <TextBlock Grid.Column="3" 
                        Text="Amount"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="4" 
+                       Text="Unit"
                        HorizontalAlignment="Center"/>
         </Grid>
         <Grid Grid.Row="1">
@@ -74,8 +78,8 @@
 											   Text="{Binding UnitPrice}"
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>                                
-                                <TextBlock Grid.Column="4" 
-											 Text="{Binding OrderUnit, Mode=TwoWay}"
+                                <TextBlock Grid.Column="3" 
+											 Text="{Binding OrderUnit}"
 											 TextAlignment="Center"
 											 HorizontalAlignment="Center" 
 											 VerticalAlignment="Center" 
@@ -83,35 +87,47 @@
 											 MinHeight="20"
 											 Margin="0,6,0,0"
 											 Height="30"/>
+                                <TextBlock Grid.Column="4" 
+										    Text="{Binding Unit}"
+										    VerticalAlignment="Center"
+										    HorizontalAlignment="Center"/>
+
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <TextBlock HorizontalAlignment="Right"
-                           Margin="0,0,10,0">
-                    <Run Text="Total product price: " 
-                         FontSize="16"/>
-                    <Run Text="0.00 USD" 
-                         FontSize="20" 
-                         Foreground="#FFF45454"/>
-                </TextBlock>
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-                            Margin="0,10,10,0">
-                    <TextBlock Text="Discount: " 
+                <StackPanel DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}">
+                    <TextBlock HorizontalAlignment="Right"
                                Margin="0,0,10,0"
-                               VerticalAlignment="Center"/>
-                    <Border BorderThickness="1" 
-                            BorderBrush="Gray" 
-                            CornerRadius="8">
-                        <TextBox BorderThickness="0"
-                                 x:Name="tbxDiscount"/>
-                    </Border>
+                               >
+                        <Run Text="Total product price: " 
+                             FontSize="16"/>
+                        <Run Text="{Binding BillOfUser.TotalPrice}" 
+                             FontSize="20" 
+                             Foreground="#FFF45454"/>
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0,10,10,0"
+                                >
+                        <TextBlock Text="Discount: " 
+                                   Margin="0,0,10,0"
+                                   VerticalAlignment="Center"/>
+                        <Border BorderThickness="1" 
+                                BorderBrush="Gray" 
+                                CornerRadius="8">
+                            <TextBox BorderThickness="0"
+                                     x:Name="tbxDiscount"
+                                     Text="{Binding BillOfUser.ReducedPrice, Mode=TwoWay}"/>
+                        </Border>
+                    </StackPanel>
                 </StackPanel>
-                <Button Content="Negotiate"
-                    Background="{StaticResource LightBlueBrush}"
-                    HorizontalAlignment="Right"
-                    Foreground="White" 
+                <Button Content="Call"
+                        Name="btCallNegotiation"
+                        Background="{StaticResource LightBlueBrush}"
+                        HorizontalAlignment="Right"
+                        Foreground="White" 
+                        Click="btCallNegotiation_Click"
                         Margin="0,10,10,0"/>
             </StackPanel>
 

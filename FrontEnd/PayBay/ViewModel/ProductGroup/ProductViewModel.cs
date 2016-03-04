@@ -22,7 +22,7 @@ namespace PayBay.ViewModel.ProductGroup
         //List for order purpose
         private ObservableCollection<Product> _productOrderList;
         //
-
+        
         #region Property with calling to PropertyChanged
         public ObservableCollection<Product> ProductOrderList
         {
@@ -196,15 +196,17 @@ namespace PayBay.ViewModel.ProductGroup
                             }
                         }
                         else
-                            ProductList = products.ToObject<ObservableCollection<Product>>();
-                        isResponsed = false;
+                            ProductList = products.ToObject<ObservableCollection<Product>>();                        
                     }
                 }
             }
             catch (Exception ex)
+            {                
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+            finally
             {
                 isResponsed = false;
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
 
@@ -240,15 +242,17 @@ namespace PayBay.ViewModel.ProductGroup
                                     ProductsOfStore.Insert(i, more[i]);
                                 }
                             }
-                        }
-                        isResponsed = false;
+                        }                        
                     }
                 }
             }
             catch (Exception ex)
+            {                
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+            finally
             {
                 isResponsed = false;
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
 

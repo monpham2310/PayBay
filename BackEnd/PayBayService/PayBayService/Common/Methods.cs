@@ -31,9 +31,9 @@ namespace PayBayService.Common
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
 
-        SqlConnection cnn;
-        SqlCommand cmd;
-        SqlDataAdapter da;        
+        //SqlConnection cnn;
+        //SqlCommand cmd;
+        //SqlDataAdapter da;        
 
         public static string err = "";
 
@@ -79,14 +79,14 @@ namespace PayBayService.Common
         public bool ExecNonQuery(string sql, CommandType ct, ref string err, params SqlParameter[] param)
         {
             bool result = false;
-            using (cnn = new SqlConnection(connectionString))
+            using (SqlConnection cnn = new SqlConnection(connectionString))
             {
                 try
                 {
                     if (cnn.State == ConnectionState.Open)
                         cnn.Close();
                     cnn.Open();
-                    cmd = new SqlCommand(sql, cnn);
+                    SqlCommand cmd = new SqlCommand(sql, cnn);
                     cmd.CommandType = ct;
                     cmd.CommandTimeout = 6000;
                     cmd.Parameters.Clear();
@@ -128,14 +128,14 @@ namespace PayBayService.Common
             DataTable dt = new DataTable();
             JArray result = new JArray();
             string json = "";
-            using (cnn = new SqlConnection(connectionString))
+            using (SqlConnection cnn = new SqlConnection(connectionString))
             {
                 try
                 {
                     if (cnn.State == ConnectionState.Open)
                         cnn.Close();
                     cnn.Open();
-                    cmd = new SqlCommand(sql, cnn);
+                    SqlCommand cmd = new SqlCommand(sql, cnn);
                     cmd.CommandType = ct;
                     cmd.CommandTimeout = 6000;
                     cmd.Parameters.Clear();
@@ -145,7 +145,7 @@ namespace PayBayService.Common
                             cmd.Parameters.Add(p);
                     }
 
-                    da = new SqlDataAdapter(cmd);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
                     json = JsonConvert.SerializeObject(dt);
                     result = JArray.Parse(json);
@@ -175,14 +175,14 @@ namespace PayBayService.Common
         public object GetValue(string sql, CommandType ct, ref string err, params SqlParameter[] param)
         {
             object result = null;
-            using (cnn = new SqlConnection(connectionString))
+            using (SqlConnection cnn = new SqlConnection(connectionString))
             {
                 try
                 {
                     if (cnn.State == ConnectionState.Open)
                         cnn.Close();
                     cnn.Open();
-                    cmd = new SqlCommand(sql, cnn);
+                    SqlCommand cmd = new SqlCommand(sql, cnn);
                     cmd.CommandType = ct;
                     cmd.CommandTimeout = 6000;
                     cmd.Parameters.Clear();

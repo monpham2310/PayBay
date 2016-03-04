@@ -23,6 +23,7 @@ using PayBay.ViewModel.CommentGroup;
 using PayBay.ViewModel.RatingGroup;
 
 using PayBay.View.OrderGroup;
+using PayBay.ViewModel.OrderGroupViewModel;
 
 namespace PayBay.ViewModel
 {
@@ -59,6 +60,7 @@ namespace PayBay.ViewModel
             SimpleIoc.Default.Register<KiosViewModel>();
             SimpleIoc.Default.Register<CommentViewModel>();
             SimpleIoc.Default.Register<RatingViewModel>();
+            SimpleIoc.Default.Register<OrderViewModel>();
         }
 
         //TODO: Register to use ViewModel here, syntax as below
@@ -70,7 +72,8 @@ namespace PayBay.ViewModel
         public KiosViewModel KiosVm => ServiceLocator.Current.GetInstance<KiosViewModel>();
         public CommentViewModel CommentVm => ServiceLocator.Current.GetInstance<CommentViewModel>();
         public RatingViewModel RatingVm => ServiceLocator.Current.GetInstance<RatingViewModel>();
-              
+        public OrderViewModel OrderVm => ServiceLocator.Current.GetInstance<OrderViewModel>();
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel;
 using PayBay.ViewModel.ProductGroup;
+using PayBay.Utilities.Common;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -30,7 +31,9 @@ namespace PayBay.View.OrderGroup
             this.InitializeComponent();                 
         }
 
-
-
+        private void btCallNegotiation_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(MediateClass.KiotVM.SelectedStore.Phone, MediateClass.KiotVM.SelectedStore.StoreName);
+        }
     }
 }

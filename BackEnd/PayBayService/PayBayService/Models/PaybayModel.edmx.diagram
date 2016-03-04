@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="59e3f28936fe4fd990d88427f9b872ff" Name="Diagram1">
+      <Diagram DiagramId="874c2ffad4224b2a9174c77eb8ae636e" Name="Diagram1">
         <EntityTypeShape EntityType="PayBayDatabaseModel.Bill" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.Comment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.DetailBill" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />

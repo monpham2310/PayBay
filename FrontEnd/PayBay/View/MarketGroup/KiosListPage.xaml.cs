@@ -192,12 +192,13 @@ namespace PayBay.View.MarketGroup
 
         private void scrvSliderOfStore_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
+            int storeId = KiosVm.SelectedStore.StoreId;
             if (scrollvProduct.VerticalOffset == 0)
             {
                 if (ProductVm != null && KiosVm != null && CommentVm != null)
                 {
-                    ProductVm.GetProductsOfStore(KiosVm.SelectedStore.StoreId, TYPEGET.START);
-                    CommentVm.GetCommentOfStore(KiosVm.SelectedStore.StoreId, TYPEGET.START);
+                    ProductVm.GetProductsOfStore(storeId, TYPEGET.START);
+                    CommentVm.GetCommentOfStore(storeId, TYPEGET.START);
                 }
             }
             else if (scrollvComment.VerticalOffset >= scrollvStore.ScrollableHeight)

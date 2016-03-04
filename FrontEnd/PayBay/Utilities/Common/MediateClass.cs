@@ -1,9 +1,11 @@
 ﻿using PayBay.View.MarketGroup.KiosGroup;
+using PayBay.View.OrderGroup;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using PayBay.ViewModel.CommentGroup;
 using PayBay.ViewModel.HomePageGroup;
 using PayBay.ViewModel.MarketGroup;
+using PayBay.ViewModel.OrderGroupViewModel;
 using PayBay.ViewModel.ProductGroup;
 using PayBay.ViewModel.RatingGroup;
 using PayBay.ViewModel.StartGroup;
@@ -27,5 +29,7 @@ namespace PayBay.Utilities.Common
         public static AdvertiseViewModel AdvertiseVM;
         public static KiosPage KiosPage;
         public static RatingViewModel RateVm;
+        public static OrderViewModel OrderVM;
+        public static OrderPage OrderPage;
     }
 }

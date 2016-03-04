@@ -87,6 +87,15 @@ create table paybayservice.Bills (
 	Note nvarchar(30)
 );
 
+alter table paybayservice.Bills add ShipMethod nvarchar(50)
+alter table paybayservice.Bills add TradeTerm nvarchar(10)
+alter table paybayservice.Bills add AgreeredShippingDate nvarchar(100)
+alter table paybayservice.Bills add ShippingDate date
+
+exec sp_rename 'paybayservice.Bills.ShipingDate','AgreeredShippingDate','COLUMN'
+
+alter table paybayservice.Bills drop column isShiped
+
 alter table paybayservice.Bills add isShiped bit
 alter table paybayservice.Bills add Note nvarchar(30)
 

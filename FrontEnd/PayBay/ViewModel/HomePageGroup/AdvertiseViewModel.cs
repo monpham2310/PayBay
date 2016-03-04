@@ -85,7 +85,7 @@ namespace PayBay.ViewModel.HomePageGroup
             MediateClass.AdvertiseVM = this;
 			InitializeProperties();
             InitializeDataFromDB();
-            LoadMoreSale(TYPEGET.START);
+            //LoadMoreSale(TYPEGET.START);
         }
 
 		/// <summary>
@@ -229,15 +229,17 @@ namespace PayBay.ViewModel.HomePageGroup
                             }
                         }
                         else
-                            SaleList = sales.ToObject<ObservableCollection<AdvertiseItem>>();
-                        isResponsed = false;
+                            SaleList = sales.ToObject<ObservableCollection<AdvertiseItem>>();                        
                     }
                 }
             }
             catch (Exception ex)
+            {                
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+            finally
             {
                 isResponsed = false;
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
                 

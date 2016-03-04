@@ -118,6 +118,9 @@
     <Compile Include="Utilities\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
     <Compile Include="Utilities\Converters\RatingToStarConverter.cs" />
+    <Compile Include="Utilities\CustomControl\Blank.xaml.cs">
+      <DependentUpon>Blank.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\CustomControl\Star.xaml.cs">
       <DependentUpon>Star.xaml</DependentUpon>
     </Compile>
@@ -228,6 +231,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BlankPage.png" />
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\ForwardIcon.PNG" />
     <Content Include="Assets\Button\Hamburger.png" />
@@ -315,6 +319,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Utilities\CustomControl\Blank.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utilities\CustomControl\Star.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

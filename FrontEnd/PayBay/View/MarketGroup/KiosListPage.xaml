@@ -227,7 +227,8 @@
                         <Button Background="#4B82BB"
                                 HorizontalAlignment="Stretch"
                                 Name="btSendMessage"
-                                Grid.ColumnSpan="2">
+                                Grid.ColumnSpan="2"
+                                Click="btMessage_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <Grid Grid.Column="0">
                                 <TextBlock Text="Message"

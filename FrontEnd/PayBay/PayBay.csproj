@@ -218,6 +218,9 @@
     <Compile Include="View\StartGroup\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\BlankPage.xaml.cs">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\InboxPage.xaml.cs">
       <DependentUpon>InboxPage.xaml</DependentUpon>
     </Compile>
@@ -439,6 +442,10 @@
     <Page Include="View\StartGroup\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\BlankPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\TopFunctionGroup\InboxPage.xaml">
       <SubType>Designer</SubType>

@@ -173,7 +173,94 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-	</Page.Resources>
+        <!-- Default style for Windows.UI.Xaml.Controls.Button -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="8,4,8,4" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          Content="{TemplateBinding Content}"
+                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Padding="{TemplateBinding Padding}"
+                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                          AutomationProperties.AccessibilityView="Raw"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
 	<ScrollViewer HorizontalScrollMode="Disabled" >
 		<VisualStateManager.VisualStateGroups>
@@ -264,9 +351,10 @@
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
-                            x:Name="btnMarketSupermarket">
+                            x:Name="btnMarketSupermarket"
+                            Click="ToBlankPage">
                         <StackPanel>
-                            <TextBlock Text="Market &amp; Supermarket"
+                            <TextBlock Text="Market"
                                    FontSize="12"
                                    TextWrapping="Wrap"
                                        HorizontalAlignment="Center"
@@ -285,16 +373,17 @@
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
-                            x:Name="btnShopMall">
+                            x:Name="btnShopMall"
+                            Click="ToBlankPage">
                         
                         <StackPanel>
-                            <TextBlock Text="Shop &amp; Mall"
+                            <TextBlock Text="Supermarket &amp; Mall"
                                    FontSize="12"
                                        HorizontalAlignment="Center"
                                    TextWrapping="Wrap"
                                    Foreground="Gray"/>
                             <Image Source="ms-appx:///Assets/Icon/ShopMall.png" 
-                                   Margin="0,26,0,0"
+                                   Margin="0,0,0,0"
                                    VerticalAlignment="Bottom"/>
                         </StackPanel>
 					</Button>
@@ -307,10 +396,11 @@
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
-                            x:Name="btnVillageFarmer">
+                            x:Name="btnVillageFarmer"
+                            Click="ToBlankPage">
                         
                         <StackPanel>
-                            <TextBlock Text="Village &amp; Farmer"
+                            <TextBlock Text="Seller"
                                    FontSize="12"
                                    TextWrapping="Wrap"
                                        HorizontalAlignment="Center"
@@ -321,25 +411,28 @@
                         </StackPanel>
 					</Button>
 				</Grid>
-				<Grid Grid.Column="3"
+                <Grid Grid.Column="3"
 					  SizeChanged="Grid_SizeChanged">
-					<Button Background="White"
+                    <Button Background="White"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
-                            x:Name="btnAllSaleOff">
-                        <StackPanel>
+                            x:Name="btnAllSaleOff"
+                            Click="ToBlankPage">
+                        <StackPanel x:Name="stackPanelAllSaleOff">
                             <TextBlock Text="All Sale Off"
                                    FontSize="12"
                                        HorizontalAlignment="Center"
                                    TextWrapping="Wrap"
                                    Foreground="Gray"/>
-                            <Image Source="ms-appx:///Assets/Icon/AllSaleOff.png" 
-                                   Margin="0,20,0,0"
-                                   VerticalAlignment="Bottom"/>
+                            <TextBlock FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xE71D;"
+                                       FontSize="50"
+                                       Margin="0,30,0,0"
+                                       />
                         </StackPanel>
-					</Button>
-				</Grid>
+                    </Button>
+                </Grid>
 			</Grid>
 			<Grid Grid.Row="2" 
                   BorderBrush="Gray"
@@ -357,7 +450,8 @@
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
-                            x:Name="btnMostPopular">
+                            x:Name="btnMostPopular"
+                            Click="ToBlankPage">
                         <StackPanel>
                             <TextBlock Text="MOST POPULAR"
                                    FontSize="18"
@@ -375,7 +469,8 @@
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
-                            x:Name="btnNewThisMonth">
+                            x:Name="btnNewThisMonth"
+                            Click="ToBlankPage">
                         <StackPanel>
                             <TextBlock Text="NEW THIS MONTH"
                                    FontSize="18"
@@ -389,15 +484,22 @@
 			</Grid>
 			<Grid Grid.Row="4">
                 <Button Background="White"
-                        x:Name="btnEditorChoice">
+                        x:Name="btnEditorChoice"
+                        Click="ToBlankPage">
                     <Image Source="ms-appx:///Assets/Icon/EditorChoice.png" />
                 </Button>
             </Grid>
 			<Grid Grid.Row="5">
-				<Button Background="White"
-                        x:Name="btnWeeklyDeals">
+                <Button Background="White"
+                        x:Name="btnWeeklyDeals"
+                        Click="ToBlankPage">
                     <Image Source="ms-appx:///Assets/Icon/WeeklyDeals.png"/>
                 </Button>
+                <TextBlock Text="WEEKLY DEALS" 
+                           FontFamily="Segoe UI Light" 
+                           Foreground="{StaticResource LightBlueBrush}" 
+                           Margin="20,5,0,0" FontSize="16.667"
+                           />
 			</Grid>
 		</Grid>
 	</ScrollViewer>

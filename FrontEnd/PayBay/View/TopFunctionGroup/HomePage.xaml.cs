@@ -66,7 +66,12 @@ namespace PayBay.View.TopFunctionGroup
             
         }
 
-		private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        private void ToBlankPage(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MyFavoritesPage));
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(Function1Page));
 		}

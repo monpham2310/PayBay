@@ -27,7 +27,12 @@ namespace PayBay.Model
             set
             {
                 if (value == null)
-                    value = "/Assets/lol.jpg";
+                {
+                    if (_storeId % 2 == 0)
+                        value = "/Assets/lol1.png";
+                    else
+                        value = "/Assets/lol2.png";
+                }
                 _image = value;
                 OnPropertyChanged();
             }

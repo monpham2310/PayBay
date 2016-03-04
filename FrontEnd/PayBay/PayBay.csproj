@@ -271,6 +271,8 @@
     <Content Include="Assets\Icon\VillageFarmer.png" />
     <Content Include="Assets\Icon\WeeklyDeals.png" />
     <Content Include="Assets\lol.jpg" />
+    <Content Include="Assets\lol1.PNG" />
+    <Content Include="Assets\lol2.PNG" />
     <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Rating\emptystar.png" />
     <Content Include="Assets\Rating\fullstar.png" />

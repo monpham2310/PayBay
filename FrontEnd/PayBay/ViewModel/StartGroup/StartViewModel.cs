@@ -350,7 +350,7 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.Inbox:
 				{
-					frame.Navigate(typeof(OrderPage));
+					frame.Navigate(typeof(MyFavoritesPage));
 					break;
 				}
 				case MenuFunc.MyPayBay:

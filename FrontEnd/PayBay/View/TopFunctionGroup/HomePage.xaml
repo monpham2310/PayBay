@@ -211,14 +211,15 @@
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="12"/>
 				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="180"/>
-				<RowDefinition Height="145"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 
 			<Grid Grid.Row="0">
 				<FlipView ItemsSource="{Binding AdvertiseItemList}"
 						  SelectedItem="{Binding SelectedAd, Mode=TwoWay}" 
-						  Style="{StaticResource BigNavigatorFlipViewStyle}" >
+						  Style="{StaticResource BigNavigatorFlipViewStyle}"
+                          x:Name="flipViewAdvertise">
 					<FlipView.ItemTemplate>
 						<DataTemplate>
 							<Image Source="{Binding Image}"
@@ -264,11 +265,17 @@
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
                             x:Name="btnMarketSupermarket">
-						<TextBlock Text="Market &amp; Supermarket"
+                        <StackPanel>
+                            <TextBlock Text="Market &amp; Supermarket"
                                    FontSize="12"
                                    TextWrapping="Wrap"
+                                       HorizontalAlignment="Center"
                                    Foreground="Gray"/>
-					</Button>
+                            <Image Source="ms-appx:///Assets/Icon/MarketAndSupermarket.png" 
+                                   Margin="0,10,0,0"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                    </Button>
 				</Grid>
 				<Grid Grid.Column="1" 
                       BorderThickness="0,0,1,0"
@@ -279,10 +286,17 @@
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
                             x:Name="btnShopMall">
-						<TextBlock Text="Shop &amp; Mall"
+                        
+                        <StackPanel>
+                            <TextBlock Text="Shop &amp; Mall"
                                    FontSize="12"
+                                       HorizontalAlignment="Center"
                                    TextWrapping="Wrap"
                                    Foreground="Gray"/>
+                            <Image Source="ms-appx:///Assets/Icon/ShopMall.png" 
+                                   Margin="0,26,0,0"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
 					</Button>
 				</Grid>
 				<Grid Grid.Column="2" 
@@ -294,10 +308,17 @@
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
                             x:Name="btnVillageFarmer">
-						<TextBlock Text="Village &amp; Farmer"
+                        
+                        <StackPanel>
+                            <TextBlock Text="Village &amp; Farmer"
                                    FontSize="12"
                                    TextWrapping="Wrap"
+                                       HorizontalAlignment="Center"
                                    Foreground="Gray"/>
+                            <Image Source="ms-appx:///Assets/Icon/VillageFarmer.png" 
+                                   Margin="0,18,0,0"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
 					</Button>
 				</Grid>
 				<Grid Grid.Column="3"
@@ -307,10 +328,16 @@
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
                             x:Name="btnAllSaleOff">
-						<TextBlock Text="All Sale OFF"
+                        <StackPanel>
+                            <TextBlock Text="All Sale Off"
                                    FontSize="12"
+                                       HorizontalAlignment="Center"
                                    TextWrapping="Wrap"
                                    Foreground="Gray"/>
+                            <Image Source="ms-appx:///Assets/Icon/AllSaleOff.png" 
+                                   Margin="0,20,0,0"
+                                   VerticalAlignment="Bottom"/>
+                        </StackPanel>
 					</Button>
 				</Grid>
 			</Grid>
@@ -331,10 +358,15 @@
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
                             x:Name="btnMostPopular">
-						<TextBlock Text="MOST POPULAR"
+                        <StackPanel>
+                            <TextBlock Text="MOST POPULAR"
                                    FontSize="18"
                                    TextWrapping="Wrap"
                                    Foreground="Gray"/>
+                            <Image Source="ms-appx:///Assets/Icon/HotProducts.jpg" 
+                                   Margin="0,30,0,0"/>
+                        </StackPanel>
+
 					</Button>
 				</Grid>
 				<Grid Grid.Column="1"
@@ -344,35 +376,28 @@
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Top"
                             x:Name="btnNewThisMonth">
-						<TextBlock Text="NEW THIS MONTH"
+                        <StackPanel>
+                            <TextBlock Text="NEW THIS MONTH"
                                    FontSize="18"
                                    TextWrapping="Wrap"
                                    Foreground="Gray"/>
-					</Button>
+                            <Image Source="ms-appx:///Assets/Icon/NewProducts.jpg"
+                                   Margin="0,30,0,0"/>
+                        </StackPanel>
+                    </Button>
 				</Grid>
 			</Grid>
 			<Grid Grid.Row="4">
-				<FlipView ItemsSource="{Binding SaleList2}"
-                          x:Name="flipViewPaidSaleSmall">
-					<FlipView.ItemTemplate>
-						<DataTemplate>
-							<Image Source="{Binding ImagePath}"
-								   Stretch="Fill" />
-						</DataTemplate>
-					</FlipView.ItemTemplate>
-				</FlipView>
-			</Grid>
+                <Button Background="White"
+                        x:Name="btnEditorChoice">
+                    <Image Source="ms-appx:///Assets/Icon/EditorChoice.png" />
+                </Button>
+            </Grid>
 			<Grid Grid.Row="5">
-				<Button Background="Gray"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Top"
+				<Button Background="White"
                         x:Name="btnWeeklyDeals">
-					<TextBlock Text="WEEKLY DEALS"
-                                   FontSize="15"
-                                   TextWrapping="Wrap"
-                                   Foreground="White"/>
-				</Button>
+                    <Image Source="ms-appx:///Assets/Icon/WeeklyDeals.png"/>
+                </Button>
 			</Grid>
 		</Grid>
 	</ScrollViewer>

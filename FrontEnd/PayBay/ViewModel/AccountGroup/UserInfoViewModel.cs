@@ -47,7 +47,7 @@ namespace PayBay.ViewModel.AccountGroup
         }
                 
         public UserInfoViewModel()
-        {
+        {            
             MediateClass.UserVM = this;
         }
                 
@@ -56,6 +56,7 @@ namespace PayBay.ViewModel.AccountGroup
             byte[] pwd = Functions.GetBytes(password);
             Account account = new Account(mail, pwd);
             JToken body = JToken.FromObject(account);
+            _userInfo = new UserInfo();
             IDictionary<string, string> argument = new Dictionary<string, string>
             {
                 {"type" , "Test"}
@@ -66,7 +67,9 @@ namespace PayBay.ViewModel.AccountGroup
                 {
                     var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
                     JObject user = JObject.Parse(result.ToString());
-                    UserInfo = user.ToObject<UserInfo>();                    
+                    UserInfo = user.ToObject<UserInfo>();
+                    MediateClass.StartVM.EnableFunction(UserInfo.TypeId);
+                    PaybayPushClient.UploadChannel();
                 }
             }
             catch (Exception ex)
@@ -74,6 +77,37 @@ namespace PayBay.ViewModel.AccountGroup
                 return false;
             }
             return true;               
+        }
+
+        public async Task ResetPasswordOfUser(string email)
+        {
+            string newPass = "abcdXYZ123";
+            byte[] newPwd = Functions.GetBytes(newPass);
+
+            Account account = new Account(email, newPwd, newPass);
+            JToken body = JToken.FromObject(account);
+
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"code" , "1"}
+            };
+
+            try
+            {
+                var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Put, param);
+                if (result["ErrCode"].ToString().Equals("1"))
+                {
+                    await new MessageDialog("Reset password is successful.Please check your email!", "Notification!").ShowAsync();
+                }
+                else
+                {
+                    await new MessageDialog("Email is NOT exists!Please check again!", "Notification!").ShowAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
         }
 
     }

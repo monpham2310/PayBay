@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -44,7 +45,7 @@ namespace PayBayService.Common
         public static Methods GetInstance()
         {
             if (m_Instance == null)
-                return new Methods();
+                return m_Instance = new Methods();
             return m_Instance;
         }
 
@@ -280,6 +281,40 @@ namespace PayBayService.Common
                 containnerName, _resname + objectId + ".jpg");
 
             return blob;            
+        }
+
+        public async Task<bool> SendMail(string email,string newPwd)
+        {
+            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+            string msg = string.Format("<p>HI {0}!!!</p><p>Your new password is: {1}</p><p>Thank you for using our app!</p>", email, newPwd);
+            var message = new MailMessage();
+            message.To.Add(new MailAddress(email));  // replace with valid value 
+            message.From = new MailAddress("paybayservice@outlook.com.vn");  // replace with valid value
+            message.Subject = "Reset Your Password";
+            message.Body = string.Format(body, "Paybay Group", "paybayservice@outlook.com.vn", msg);
+            message.IsBodyHtml = true;
+            message.Priority = MailPriority.High;
+            try {
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "paybayservice@outlook.com.vn",  // replace with valid value
+                        Password = "paybayteam@"  // replace with valid value
+                    };
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp-mail.outlook.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;                    
+                    await smtp.SendMailAsync(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
 
     }

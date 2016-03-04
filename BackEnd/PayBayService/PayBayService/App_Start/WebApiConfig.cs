@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Web.Http;
 using PayBayService.Models;
 using Microsoft.WindowsAzure.Mobile.Service;
+using Microsoft.WindowsAzure.Mobile.Service.Security.Providers;
 
 namespace PayBayService
 {
@@ -17,12 +18,21 @@ namespace PayBayService
             // Use this class to set configuration options for your mobile service
             ConfigOptions options = new ConfigOptions();
 
+            #region LoginProvider
+                        
+            options.LoginProviders.Remove(typeof(FacebookLoginProvider));
+            options.LoginProviders.Add(typeof(FacebookLoginAuthenticationProvider));           
+            
+            #endregion
+
             // Use this class to set WebAPI configuration options
             HttpConfiguration config = ServiceConfig.Initialize(new ConfigBuilder(options));
 
             // To display errors in the browser during development, uncomment the following
             // line. Comment it out again when you deploy your service for production use.
             // config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;          
+                                              
+            options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
 
             Services = new ApiServices(config);
 
@@ -39,8 +49,8 @@ namespace PayBayService
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
-                        
+            config.SetIsHosted(true);
+
         }
     }
 

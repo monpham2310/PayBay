@@ -11,6 +11,7 @@ namespace PayBay.Model
     {
         private string mail;
         private byte[] password;
+        private string pwd;
 
         public string Email
         {
@@ -40,10 +41,31 @@ namespace PayBay.Model
             }
         }
 
+        public string Pwd
+        {
+            get
+            {
+                return pwd;
+            }
+
+            set
+            {
+                pwd = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Account(string email, byte[] pwd)
         {
             Email = email;
             Password = pwd;
+        }
+
+        public Account(string email, byte[] pwd, string pass)
+        {
+            Email = email;
+            Password = pwd;
+            Pwd = pass;
         }
     }
 }

@@ -46,17 +46,22 @@ namespace PayBayService.Controllers
         public HttpResponseMessage PostLogin(Account account, string type)
         {
             JArray result = new JArray();
-            if (!AccountExists(account.Email, account.Password))
-            {
-                var error = Methods.CustomResponseMessage(0, "Login isn't successful!");
-                result.Add(error);            
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            JObject body = new JObject();      
+            if (account != null)
+            {                
+                var uid = new SqlParameter("@Email", account.Email);
+                var pwd = new SqlParameter("@Pass", account.Password);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);
+                if (result.Count > 0)
+                {
+                    body = result[0].ToObject<JObject>();
+                }
+                else
+                {
+                    body = Methods.CustomResponseMessage(0, "Login isn't successful!");                    
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, body);
+                }                
             }
-
-            var uid = new SqlParameter("@Email", account.Email);
-            var pwd = new SqlParameter("@Pass", account.Password);
-            result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);
-            JObject body = (JObject)result[0];     
             return Request.CreateResponse(HttpStatusCode.OK, body);
         }
 
@@ -90,6 +95,34 @@ namespace PayBayService.Controllers
             }
 
             result = JObject.FromObject(user);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // PUT: api/Users/{account}
+        [ResponseType(typeof(User))]
+        public async Task<HttpResponseMessage> PutAccount(Account account,int code)
+        {
+            JObject result = new JObject();
+            try
+            {
+                var email = new SqlParameter("@Email", account.Email);
+                var pass = new SqlParameter("@Pass", account.Password);
+                bool check = Methods.GetInstance().ExecNonQuery("paybayservice.sp_ResetPassword",CommandType.StoredProcedure,ref Methods.err, email, pass);
+                if (check)
+                {
+                    //TODO: send mail
+                    await Methods.GetInstance().SendMail(account.Email, account.Pwd);
+                    result = Methods.CustomResponseMessage(1, "Reset pass is successful!");                    
+                }
+                else
+                {
+                    result = Methods.CustomResponseMessage(0, "Reset pass is NOT successful!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

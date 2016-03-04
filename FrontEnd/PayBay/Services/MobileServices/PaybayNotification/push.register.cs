@@ -36,6 +36,7 @@ namespace PayBay.Services.MobileServices.PaybayNotification
                 }
 
                 await App.MobileService.GetPush().RegisterNativeAsync(channel.Uri);
+                
             }
             catch (Exception exception)
             {

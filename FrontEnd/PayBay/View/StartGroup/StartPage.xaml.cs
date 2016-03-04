@@ -119,26 +119,11 @@ namespace PayBay.View.StartGroup
 		private void TopFunctionsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (TopFunctionsListView.SelectedIndex != -1)
-			{
-				MiddleFunctionsListView.SelectedIndex = -1;
+			{				
 				BottomListView.SelectedIndex = -1;
 			}
 		}
-
-		/// <summary>
-		/// To deselect the top and bottom listview
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MiddleFunctionsListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (MiddleFunctionsListView.SelectedIndex != -1)
-			{
-				TopFunctionsListView.SelectedIndex = -1;
-				BottomListView.SelectedIndex = -1;
-			}
-		}
-
+        		
 		/// <summary>
 		/// To deselect the top and middle listview
 		/// </summary>
@@ -148,8 +133,7 @@ namespace PayBay.View.StartGroup
 		{
 			if (BottomListView.SelectedIndex != -1)
 			{
-				TopFunctionsListView.SelectedIndex = -1;
-				MiddleFunctionsListView.SelectedIndex = -1;
+				TopFunctionsListView.SelectedIndex = -1;				
 			}
 		}
 

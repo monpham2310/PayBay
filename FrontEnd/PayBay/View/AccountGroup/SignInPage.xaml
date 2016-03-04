@@ -78,13 +78,25 @@
 					Foreground="{StaticResource WhiteBrush}"/>
 				<HyperlinkButton Margin="20,0"
 							 Content="Forgot Password?"
+                             Name="btForgotPass"
 							 Foreground="{StaticResource BlueBrush}"
-							 HorizontalAlignment="Right"/>
-			</StackPanel>
+							 HorizontalAlignment="Right"
+                             Click="btForgotPass_Click"/>
+
+                <!--<Button Content="SIGN IN FB"
+                    Name="btLoginFb"
+					Margin="20,0"
+					Height="50"
+					FontWeight="Bold"
+					HorizontalAlignment="Stretch"
+                    Click="btLoginFb_Click"
+					Background="{StaticResource LightBlueBrush}"
+					Foreground="{StaticResource WhiteBrush}"/>-->
+            </StackPanel>
 		</Grid>
 
 		<ProgressRing x:Name="pgrAccount"
-					  Width="60"
-					  Height="60"/>
+					  Width="50"
+					  Height="50"/>
 	</Grid>
 </Page>

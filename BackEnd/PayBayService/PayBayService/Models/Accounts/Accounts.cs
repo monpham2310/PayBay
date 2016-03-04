@@ -9,5 +9,6 @@ namespace PayBayService.Models.Accounts
     {
         public string Email { get; set; }
         public byte[] Password { get; set; }
+        public string Pwd { get; set; }
     }
 }

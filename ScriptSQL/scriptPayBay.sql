@@ -848,3 +848,18 @@ as
 	select ID,UserID,StoreID,RateOfUser
 	from paybayservice.StatisticRating
 	where UserID=@UserId and StoreID=@StoreId
+
+create proc paybayservice.sp_ResetPassword
+@Email nvarchar(30),
+@Pass varbinary(max)
+as
+	begin tran resetPass
+		if exists (select 1 from paybayservice.Users where Email=@Email)
+		begin
+			update paybayservice.Users
+			set Pass=@Pass
+			where Email=@Email
+		end
+		if(@@Error > 0)
+			rollback tran
+	commit

@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace PayBay.Model
 {
+    public enum USERTYPE
+    {
+        GUEST = 0,
+        ADMIN = 1,
+        STOREOWNER = 2,
+        USER = 3
+    };
+
     public class UserInfo : BaseViewModel
     {
         private int _userId;

@@ -290,7 +290,8 @@
 								        Height="60"
 								        HorizontalAlignment="Left"
 								        Margin="20,10,0,0"                                         
-                                        Name="AvatarEllipse" >
+                                        Name="AvatarEllipse" 
+                                        Visibility="Visible">
                                             <Ellipse.Fill>
                                                 <ImageBrush ImageSource="/Assets/lol.jpg" />
                                             </Ellipse.Fill>
@@ -310,7 +311,8 @@
                                     <StackPanel Orientation="Horizontal" Margin="10,0">
 							            <HyperlinkButton Name="SignInButton"                                              
 											     Content="Sign in | Join Free"
-											     Click="SignInButton_Click"                                             
+											     Click="SignInButton_Click" 
+                                                 Visibility="Visible"
 											     Foreground="{StaticResource GrayBrush}"/>
                                         <HyperlinkButton Name="UserInfoViewButton" 
                                                  Visibility="Collapsed"                                                 
@@ -345,17 +347,7 @@
                                   SelectionChanged="TopFunctionsListView_OnSelectionChanged"
                                   SelectionMode="Single" />
 					</StackPanel>
-
-					<StackPanel Grid.Row="2">
-						<ListView x:Name="MiddleFunctionsListView"
-                                  VerticalAlignment="Center"
-                                  ItemContainerStyle="{StaticResource ListViewItemStyle}"
-                                  ItemTemplate="{StaticResource MenuListItemDataTemplate}"
-                                  ItemsSource="{x:Bind Vm.MiddleFunctionItemList, Mode=OneWay}"
-                                  SelectionChanged="MiddleFunctionsListView_OnSelectionChanged"
-                                  SelectionMode="Single" />
-					</StackPanel>
-
+					
 					<StackPanel Grid.Row="3">
 						<Rectangle Height="1" Fill="{StaticResource GrayBrush}" />
 						<ListView x:Name="BottomListView"

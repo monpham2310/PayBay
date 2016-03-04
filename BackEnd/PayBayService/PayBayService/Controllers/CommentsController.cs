@@ -16,14 +16,15 @@ using System.Data.SqlClient;
 using PayBayService.Services.MobileServices;
 using Microsoft.WindowsAzure.Mobile.Service;
 using Microsoft.ServiceBus.Notifications;
+using Microsoft.WindowsAzure.Mobile.Service.Security;
 
 namespace PayBayService.Controllers
 {
+    //[AuthorizeLevel(AuthorizationLevel.User)]
     public class CommentsController : ApiController
     {
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
-
-        
+                
         // GET: api/Comments
         public IQueryable<Comment> GetComments()
         {
@@ -115,8 +116,10 @@ namespace PayBayService.Controllers
 
             db.Comments.Add(comment);
             await db.SaveChangesAsync();
-            
-            await PushHelper.SendToastAsync(WebApiConfig.Services, comment.UserID.ToString(), comment.Content);
+
+            var currentUser = this.User as ServiceUser;
+
+            await PushHelper.SendToastAsync(WebApiConfig.Services, comment.UserID.ToString(), comment.Content, currentUser.Id);
 
             result = Methods.CustomResponseMessage(1, "Add Comment is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);                        

@@ -29,7 +29,7 @@ namespace PayBay.View.MiddleFunctionGroup
 
 		private void btnPhone_Click(object sender, RoutedEventArgs e)
 		{
-            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI("01268673096", "Admin");
+            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI("+84938175143", "Admin");
         }
 
 		private void btnEmail_Click(object sender, RoutedEventArgs e)

@@ -205,11 +205,11 @@ namespace PayBay.View.MarketGroup
             int storeId = KiosVm.SelectedStore.StoreId;
             if (scrollvProduct.VerticalOffset == 0)
             {
-                if (ProductVm != null && KiosVm != null && CommentVm != null)
-                {
-                    ProductVm.GetProductsOfStore(storeId, TYPEGET.START);
-                    CommentVm.GetCommentOfStore(storeId, TYPEGET.START);
-                }
+                //if (ProductVm != null && KiosVm != null && CommentVm != null)
+                //{
+                //    ProductVm.GetProductsOfStore(storeId, TYPEGET.START);
+                //    CommentVm.GetCommentOfStore(storeId, TYPEGET.START);
+                //}
             }
             else if (scrollvComment.VerticalOffset >= scrollvStore.ScrollableHeight)
             {

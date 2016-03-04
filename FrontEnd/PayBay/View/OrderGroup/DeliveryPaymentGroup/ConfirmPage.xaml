@@ -1,0 +1,114 @@
+﻿<UserControl
+    x:Class="PayBay.View.OrderGroup.DeliveryPaymentGroup.ConfirmPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PayBay.View.OrderGroup.DeliveryPaymentGroup"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="400">
+
+    <ScrollViewer>
+        <Grid Background="White"
+              Padding="10, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+              BorderBrush="LightGray"
+              BorderThickness="0,0,0,1"
+              Padding="10,0">
+                <StackPanel>
+                    <TextBlock Text="Delivery &amp; Payment Terms"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           Height="30"/>
+                    <!--<FlipView>-->
+                    <StackPanel>
+                        <TextBlock>
+                    <Run Text="Shipping Method: " 
+                         Foreground="#FF969494" />
+                    <Run Text="Sea Freight" 
+                         x:Name="tblShipMethod"/>
+                        </TextBlock>
+                        <TextBlock>
+                    <Run Text="Trade Terms: " 
+                         Foreground="#FF969494" />
+                    <Run Text="FOB" 
+                         x:Name="tblTradeTerms"/>
+                        </TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords">
+                    <Run Text="Agreed Shipping Date: " 
+                         Foreground="#FF969494" />
+                    <Run Text="Ship 1 day(s) after supplier receives initial payment" 
+                         x:Name="tblShipDate"/>
+                        </TextBlock>
+                        <TextBlock>
+                    <Run Text="Initial Payment: " 
+                         Foreground="#FF969494" />
+                    <Run Text="1 USD" 
+                         x:Name="tblInitPay"/>
+                        </TextBlock>
+                        <TextBlock>
+                    <Run Text="Balance Payment: " 
+                         Foreground="#FF969494" />
+                    <Run Text="0 USD" 
+                         x:Name="tblBalPay"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <!--</FlipView>-->
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1"
+              BorderBrush="LightGray"
+              BorderThickness="0,0,0,1"
+              Padding="10,0">
+                <StackPanel>
+                    <TextBlock Text="Contact Information"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           Height="30"/>
+                    <!--<FlipView>-->
+                    <StackPanel>
+                        <TextBlock>
+                    <Run Text="Name: " 
+                         Foreground="#FF969494" />
+                    <Run Text="Hung Doan" 
+                         x:Name="tblContactName"/>
+                        </TextBlock>
+                        <TextBlock>
+                    <Run Text="Company Name: " 
+                         Foreground="#FF969494" />
+                    <Run Text="Ree" 
+                         x:Name="tblContactCompany"/>
+                        </TextBlock>
+                        <TextBlock TextWrapping="WrapWholeWords">
+                    <Run Text="Agreed Shipping Date: " 
+                         Foreground="#FF969494" />
+                    <Run Text="dvh.viethung0905@gmail.com" 
+                         x:Name="tblContactEmail"/>
+                        </TextBlock>
+                        <TextBlock>
+                    <Run Text="Telephone Number: " 
+                         Foreground="#FF969494" />
+                    <Run Text="8-7000-0938175143" 
+                         x:Name="tblTelephone"/>
+                        </TextBlock>
+                        <TextBlock>
+                    <Run Text="Mobile Number: " 
+                         Foreground="#FF969494" />
+                    <Run Text="70 707040463" 
+                         x:Name="tblMobile"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <!--</FlipView>-->
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+    
+</UserControl>

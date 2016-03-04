@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:order="using:PayBay.View.OrderGroup"
+    xmlns:delpay="using:PayBay.View.OrderGroup.DeliveryPaymentGroup"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -329,7 +330,7 @@
                                                 <CompositeTransform x:Name="PivotLayoutElementTranslateTransform"/>
                                             </Grid.RenderTransform>
                                             <ContentPresenter x:Name="LeftHeaderPresenter" ContentTemplate="{TemplateBinding LeftHeaderTemplate}" Content="{TemplateBinding LeftHeader}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                                            <ContentControl x:Name="HeaderClipper" Grid.Column="1" HorizontalContentAlignment="Stretch" UseSystemFocusVisuals="True" >
+                                            <ContentControl x:Name="HeaderClipper" Grid.Column="1" HorizontalContentAlignment="Center" UseSystemFocusVisuals="True" >
                                                 <ContentControl.Clip>
                                                     <RectangleGeometry x:Name="HeaderClipperGeometry"/>
                                                 </ContentControl.Clip>
@@ -343,7 +344,7 @@
                                                     <ProgressBar HorizontalAlignment="Center" 
                                                                  Height="0.3" 
                                                                  VerticalAlignment="Center" 
-                                                                 Width="280" 
+                                                                 Width="180" 
                                                                  Margin="0,32,0,0"
                                                                  x:Name="progressBarOrder" 
                                                                  Value="100"
@@ -397,7 +398,7 @@
                SelectionChanged="pivotOrder_SelectionChanged"
                x:Name="pivotOrder">
             <PivotItem x:Name="PivotItem1">
-                    <PivotItem.Header>
+                <PivotItem.Header>
                     <TextBlock Text="Pre-order"
                                TextAlignment="Center"/>
                 </PivotItem.Header>
@@ -407,22 +408,22 @@
             </PivotItem>
             <PivotItem x:Name="PivotItem2">
                 <PivotItem.Header>
-                    <TextBlock Text="Product&#x0a;Information"
-                               TextAlignment="Center"/>
-                </PivotItem.Header>
-            </PivotItem>
-            <PivotItem x:Name="PivotItem3">
-                <PivotItem.Header>
                     <TextBlock Text="Delivery &amp;&#x0a; Payment Terms"
                                TextAlignment="Center"/>
 
                 </PivotItem.Header>
+                <PivotItem>
+                    <delpay:DeliveryPaymentPage/>
+                </PivotItem>
             </PivotItem>
-            <PivotItem x:Name="PivotItem4">
+            <PivotItem x:Name="PivotItem3">
                 <PivotItem.Header>
                     <TextBlock Text="Confirm&#x0a;Order"
                                TextAlignment="Center"/>
                 </PivotItem.Header>
+                <PivotItem>
+                    <delpay:ConfirmPage/>
+                </PivotItem>
             </PivotItem>
         </Pivot>
     </Grid>

@@ -26,5 +26,44 @@ namespace PayBay.View.MiddleFunctionGroup
 		{
 			this.InitializeComponent();
 		}
+
+		private void btnPhone_Click(object sender, RoutedEventArgs e)
+		{
+            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI("01268673096", "Admin");
+        }
+
+		private void btnEmail_Click(object sender, RoutedEventArgs e)
+		{
+			popupEmail.IsOpen = true;
+			srvMain.IsHitTestVisible = false;
+			srvMain.Opacity = 0.4;
+
+			ProcessPopupSizeAndPos();
+
+			frameEmail.Navigate(typeof(EmailPage));
+		}
+
+		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			ProcessPopupSizeAndPos();
+		}
+
+		private void popupEmail_Closed(object sender, object e)
+		{
+			srvMain.Opacity = 1.0;
+			srvMain.IsHitTestVisible = true;
+		}
+
+		private void ProcessPopupSizeAndPos()
+		{
+			frameEmail.Height = ActualHeight * 0.85;
+			frameEmail.Width = frameEmail.Height / 1.5;
+
+			if (frameEmail.Width < 330)
+				frameEmail.Width = 330;
+
+			popupEmail.HorizontalOffset = (ActualWidth - frameEmail.Width) / 2;
+			popupEmail.VerticalOffset = (ActualHeight - frameEmail.Height) / 2;
+		}
 	}
 }

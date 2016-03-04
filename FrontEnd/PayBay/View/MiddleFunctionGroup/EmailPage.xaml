@@ -1,0 +1,79 @@
+﻿<Page
+    x:Class="PayBay.View.MiddleFunctionGroup.EmailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PayBay.View.MiddleFunctionGroup"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+   
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="48"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="0" 
+			  Background="{StaticResource LightBlueBrush}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<HyperlinkButton x:Name="btnCancel"
+							 Grid.Column="0"
+							 FontFamily="Segoe MDL2 Assets"
+							 Content="&#xE711;"
+							 FontSize="20"
+							 FontWeight="ExtraBold"
+							 Margin="20,0"
+							 Foreground="{StaticResource WhiteBrush}"
+							 Click="btnCancel_Click"/>
+			<TextBlock Text="Send Email" 
+					   Grid.Column="1"
+					   FontSize="20"
+					   FontWeight="Bold"
+					   VerticalAlignment="Center"
+					   Margin="10,0"
+					   Foreground="{StaticResource WhiteBrush}"/>
+		</Grid>
+		
+		<ScrollViewer Grid.Row="1" 
+					  VerticalScrollBarVisibility="Auto">
+			<StackPanel>
+				<StackPanel.Resources>
+					<Style TargetType="TextBlock">
+						<Setter Property="Foreground" Value="{StaticResource GrayBrush}"/>
+						<Setter Property="Margin" Value="15,20,15,10"/>
+					</Style>
+					<Style TargetType="TextBox">
+						<Setter Property="BorderThickness" Value="0,0,0,2"/>
+						<Setter Property="Margin" Value="15,0"/>
+					</Style>
+				</StackPanel.Resources>
+				<TextBlock Text="Email"/>
+				<TextBox x:Name="tbEmail"/>
+				<TextBlock Text="Password"/>
+				<TextBox x:Name="tbPassword"/>
+				<TextBlock Text="Title"/>
+				<TextBox x:Name="tbTitle"/>
+				<TextBlock Text="Content"/>
+				<TextBox x:Name="tbContent" 
+						 BorderThickness="1"
+						 TextWrapping="Wrap"
+						 AcceptsReturn="True"
+						 Height="150" 
+						 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+				<Button x:Name="btnSend" 
+						Content="SEND"
+						FontWeight="Bold"
+						Margin="30,20"
+						Style="{StaticResource RoundedButtonStyle}"
+						HorizontalAlignment="Stretch"
+						Foreground="{StaticResource WhiteBrush}"
+						Background="{StaticResource LightBlueBrush}" 
+						Click="btnSend_Click"/>
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</Page>

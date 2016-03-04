@@ -188,7 +188,17 @@ namespace PayBay.View.MarketGroup
         private void btCallMobile_Click(object sender, RoutedEventArgs e)
         {
             Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
-        }                      
+
+            
+        }
+        
+        async private void btMessage_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.ApplicationModel.Chat.ChatMessage msg = new Windows.ApplicationModel.Chat.ChatMessage();
+            msg.Body = "This is body of demo message.";
+            msg.Recipients.Add(KiosVm.SelectedStore.Phone);
+            await Windows.ApplicationModel.Chat.ChatMessageManager.ShowComposeSmsMessageAsync(msg);
+        }                     
 
         private void scrvSliderOfStore_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {

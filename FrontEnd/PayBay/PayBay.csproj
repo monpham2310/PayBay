@@ -120,6 +120,9 @@
     <Compile Include="Utilities\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
     <Compile Include="Utilities\Converters\RatingToStarConverter.cs" />
+    <Compile Include="Utilities\CustomControl\Blank.xaml.cs">
+      <DependentUpon>Blank.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\CustomControl\Star.xaml.cs">
       <DependentUpon>Star.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,9 @@
     <Compile Include="View\MiddleFunctionGroup\AboutUsPage.xaml.cs">
       <DependentUpon>AboutUsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MiddleFunctionGroup\EmailPage.xaml.cs">
+      <DependentUpon>EmailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MiddleFunctionGroup\FreeCallPage.xaml.cs">
       <DependentUpon>FreeCallPage.xaml</DependentUpon>
     </Compile>
@@ -218,6 +224,9 @@
     <Compile Include="View\StartGroup\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\BlankPage.xaml.cs">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\InboxPage.xaml.cs">
       <DependentUpon>InboxPage.xaml</DependentUpon>
     </Compile>
@@ -234,24 +243,36 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BlankPage.png" />
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\ForwardIcon.PNG" />
     <Content Include="Assets\Button\Hamburger.png" />
     <Content Include="Assets\Icon.png" />
     <Content Include="Assets\Icon\about_icon.png" />
+    <Content Include="Assets\Icon\AllSaleOff.png" />
     <Content Include="Assets\Icon\call_icon.png" />
     <Content Include="Assets\Icon\clock_icon.png" />
     <Content Include="Assets\Icon\dollar_icon.png" />
+    <Content Include="Assets\Icon\EditorChoice.png" />
     <Content Include="Assets\Icon\favourite_icon.png" />
     <Content Include="Assets\Icon\feedback_icon.png" />
     <Content Include="Assets\Icon\function_icon.png" />
     <Content Include="Assets\Icon\home_icon.png" />
+    <Content Include="Assets\Icon\HotProducts.jpg" />
     <Content Include="Assets\Icon\inbox_icon.png" />
     <Content Include="Assets\Icon\location_icon.png" />
     <Content Include="Assets\Icon\logout_icon.png" />
+    <Content Include="Assets\Icon\mail_icon.png" />
+    <Content Include="Assets\Icon\MarketAndSupermarket.png" />
     <Content Include="Assets\Icon\mypaybay_icon.png" />
+    <Content Include="Assets\Icon\NewProducts.jpg" />
     <Content Include="Assets\Icon\phone_icon.png" />
+    <Content Include="Assets\Icon\phone_icon_blue.png" />
     <Content Include="Assets\Icon\setting_icon.png" />
+    <Content Include="Assets\Icon\ShopMall.png" />
+    <Content Include="Assets\Icon\TradeLogo.png" />
+    <Content Include="Assets\Icon\VillageFarmer.png" />
+    <Content Include="Assets\Icon\WeeklyDeals.png" />
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Rating\emptystar.png" />
@@ -312,6 +333,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Utilities\CustomControl\Blank.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utilities\CustomControl\Star.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -380,6 +405,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MiddleFunctionGroup\EmailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MiddleFunctionGroup\FreeCallPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -423,6 +452,10 @@
     <Page Include="View\StartGroup\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\BlankPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\TopFunctionGroup\InboxPage.xaml">
       <SubType>Designer</SubType>

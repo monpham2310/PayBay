@@ -251,6 +251,7 @@
     <Compile Include="Controllers\StoresController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserTypesController.cs" />
+    <Compile Include="Models\Accounts\AccountMail.cs" />
     <Compile Include="Models\Accounts\Accounts.cs" />
     <Compile Include="Models\Bill.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>

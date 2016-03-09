@@ -97,7 +97,7 @@ namespace PayBayService.Controllers
             result = JObject.FromObject(user);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
+                
         // PUT: api/Users/{account}
         [ResponseType(typeof(User))]
         public async Task<HttpResponseMessage> PutAccount(Account account,int code)

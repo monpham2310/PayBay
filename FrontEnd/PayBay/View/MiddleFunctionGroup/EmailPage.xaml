@@ -28,7 +28,7 @@
 							 FontWeight="ExtraBold"
 							 Margin="20,0"
 							 Foreground="{StaticResource WhiteBrush}"
-							 Click="btnCancel_Click"/>
+							 Click="btnCancel_Click"/> 
 			<TextBlock Text="Send Email" 
 					   Grid.Column="1"
 					   FontSize="20"
@@ -50,11 +50,15 @@
 						<Setter Property="BorderThickness" Value="0,0,0,2"/>
 						<Setter Property="Margin" Value="15,0"/>
 					</Style>
-				</StackPanel.Resources>
+                    <Style TargetType="PasswordBox">
+                        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                        <Setter Property="Margin" Value="15,0"/>
+                    </Style>
+                </StackPanel.Resources>
 				<TextBlock Text="Email"/>
 				<TextBox x:Name="tbEmail"/>
 				<TextBlock Text="Password"/>
-				<TextBox x:Name="tbPassword"/>
+				<PasswordBox x:Name="pbPassword"/>
 				<TextBlock Text="Title"/>
 				<TextBox x:Name="tbTitle"/>
 				<TextBlock Text="Content"/>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PayBay.Model;
+using PayBay.Utilities.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,9 +34,18 @@ namespace PayBay.View.MiddleFunctionGroup
 			((Popup)Frame.Parent).IsOpen = false;
 		}
 
-		private void btnSend_Click(object sender, RoutedEventArgs e)
+		private async void btnSend_Click(object sender, RoutedEventArgs e)
 		{
+            string email = tbEmail.Text;
+            string pass = pbPassword.Password;
+            string title = tbTitle.Text;
+            string content = tbContent.Text;
 
-		}
+            if (email != "" && pass != "" && title != "" && content != "")
+            {
+                GuestMail mail = new GuestMail(email, pass, title, content);
+                await MediateClass.UserVM.UserSendMail(mail);
+            }
+		} 
 	}
 }

@@ -13,6 +13,7 @@ using PayBayService.Models;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using PayBayService.Common;
+using PayBayService.Models.Accounts;
 
 namespace PayBayService.Controllers
 {
@@ -69,6 +70,27 @@ namespace PayBayService.Controllers
 
             result = Methods.CustomResponseMessage(1, "Update user type successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        //POST: api/UserTypes/Account
+        [ResponseType(typeof(HttpResponseMessage))]
+        public async Task<HttpResponseMessage> UserSendMail(AccountMail mail, string type)
+        {
+            JObject body = new JObject();
+            try
+            {
+                bool check = await Methods.GetInstance().UserSendMail(mail);
+                if (check)
+                {
+                    body = Methods.CustomResponseMessage(1, "Send mail is successful!");
+                }
+            }
+            catch (Exception ex)
+            {
+                body = Methods.CustomResponseMessage(0, ex.Message.ToString());
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, body);
         }
 
         // POST: api/UserTypes

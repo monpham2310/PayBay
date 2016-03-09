@@ -36,24 +36,19 @@ namespace PayBay.View.TopFunctionGroup
 
 		public HomePage()
 		{
-			this.InitializeComponent();
-            this.Loaded += Page_Loaded;   
-            FlipViewLoop();      
+			this.InitializeComponent();            
+            this.Loaded += Page_Loaded;
+            FlipViewLoop();
         }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
+        int change = 1;
         private void FlipViewLoop()
-        {
-            int change = 1;
-
+        {        
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(3);
             timer.Tick += (o, a) =>
             {
+                // If we'd go out of bounds then reverse
+                //int newIndex = flipViewAdvertise.SelectedIndex + change;
                 if (flipViewAdvertise.SelectedIndex >= flipViewAdvertise.Items.Count - 1)
                 {
                     //change *= -1;
@@ -61,14 +56,25 @@ namespace PayBay.View.TopFunctionGroup
                 }
                 else
                 {
-                    // If we'd go out of bounds then reverse
                     flipViewAdvertise.SelectedIndex += change;
-                }           
+                }
+                //if (change <= AdVm.AdvertiseItemList.Count - 1)
+                //    AdVm.SelectedAd = AdVm.AdvertiseItemList[++change];
+                //else
+                //{
+                //    change = 0;
+                //    AdVm.SelectedAd = AdVm.AdvertiseItemList[change];
+                //}
             };
 
             timer.Start();
         }
-        		
+        
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+            //FlipViewLoop();
+        }
+
         private void ToBlankPage(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MyFavoritesPage));

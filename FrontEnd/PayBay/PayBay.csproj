@@ -103,6 +103,7 @@
     <Compile Include="Model\Bill.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\DetailBill.cs" />
+    <Compile Include="Model\GuestMail.cs" />
     <Compile Include="Model\Kios.cs" />
     <Compile Include="Model\Rating.cs" />
     <Compile Include="Services\MobileServices\PaybayNotification\push.register.cs" />
@@ -488,6 +489,14 @@
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
 </Project>

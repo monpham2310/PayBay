@@ -110,5 +110,22 @@ namespace PayBay.ViewModel.AccountGroup
             }
         }
 
+        public async Task UserSendMail(GuestMail mail)
+        {
+            JToken body = JToken.FromObject(mail);
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"type" , "mail"}
+            };
+            try
+            {
+                var result = await App.MobileService.InvokeApiAsync("UserTypes", body, HttpMethod.Post, param);
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+        }
+
     }
 }

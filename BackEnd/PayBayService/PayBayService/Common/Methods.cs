@@ -4,6 +4,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PayBayService.Models;
+using PayBayService.Models.Accounts;
 using PayBayService.Models.BlobStorage;
 using System;
 using System.Collections.Generic;
@@ -307,6 +308,49 @@ namespace PayBayService.Common
                     smtp.Host = "smtp-mail.outlook.com";
                     smtp.Port = 587;
                     smtp.EnableSsl = true;                    
+                    await smtp.SendMailAsync(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> UserSendMail(AccountMail mail)
+        {
+            string Host = "";
+            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+            string msg = string.Format("<p>{0}</p>", mail.Content);
+            var message = new MailMessage();
+            message.To.Add(new MailAddress("paybayservice@outlook.com.vn"));  // replace with valid value 
+            message.From = new MailAddress(mail.Email);  // replace with valid value
+            message.Subject = mail.Title;
+            message.Body = string.Format(body, mail.Email, "paybayservice@outlook.com.vn", msg);
+            message.IsBodyHtml = true;
+            message.Priority = MailPriority.High;
+            try
+            {
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = mail.Email,  // replace with valid value
+                        Password = mail.Pass  // replace with valid value
+                    };
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = credential;
+                    Host = mail.Email.Substring(mail.Email.IndexOf("@") + 1);
+                    if (mail.Email.IndexOf("outlook.com") != -1)
+                    {
+                        Host = "smtp-mail." + Host;
+                    }
+                    else
+                        Host = "smtp." + Host;            
+                    smtp.Host = Host;
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
                     await smtp.SendMailAsync(message);
                 }
             }

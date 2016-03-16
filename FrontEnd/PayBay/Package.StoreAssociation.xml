@@ -358,18 +358,19 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>7021VH9595.GoMarket</MainPackageIdentityName>
+    <MainPackageIdentityName>7021VH9595.PayBay</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>GoMarket</ReservedName>
+      <ReservedName>PayBay</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>7021VH9595.ChunMan</MainPackageIdentityName>
     <MainPackageIdentityName>7021VH9595.ClientSoundHub</MainPackageIdentityName>
+    <MainPackageIdentityName>7021VH9595.GoMarket</MainPackageIdentityName>
     <MainPackageIdentityName>7021VH9595.SaigonEating</MainPackageIdentityName>
     <MainPackageIdentityName>7021VH9595.ServerSoundHub</MainPackageIdentityName>
     <MainPackageIdentityName>7021VH9595.SoundHub</MainPackageIdentityName>
     <MainPackageIdentityName>7021VH9595.SoundHubServer</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH4QBT9" />
+  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH4QZR0" />
 </StoreAssociation>

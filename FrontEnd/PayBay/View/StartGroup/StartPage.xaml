@@ -245,13 +245,13 @@
 						  Background="{StaticResource LightBlueBrush}" 
 						  Click="AccountButton_Click" />
 
-			<AppBarButton x:Name="MailButton"
+			<AppBarButton x:Name="InboxButton"
 						  Icon="Mail"
 						  Grid.Column="5"
 						  HorizontalAlignment="Center"
 						  Foreground="{StaticResource WhiteBrush}" 
 						  Background="{StaticResource LightBlueBrush}" 
-						  Click="AccountButton_Click" />
+						  Click="InboxButton_Click" />
 
 			<!--<TextBlock Margin="12,0,0,0"
                            VerticalAlignment="Center"

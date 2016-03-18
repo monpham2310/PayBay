@@ -21,7 +21,7 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>A5E30AEC265CC34D6C250ED51507AD91F161D0F1</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>7B8EAD3DAD1BC0A3C7FA2FAD37F8F754240281AE</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -110,7 +110,9 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\DetailBill.cs" />
     <Compile Include="Model\GuestMail.cs" />
+    <Compile Include="Model\InboxDetail.cs" />
     <Compile Include="Model\Kios.cs" />
+    <Compile Include="Model\MessageInbox.cs" />
     <Compile Include="Model\Rating.cs" />
     <Compile Include="Services\MobileServices\PaybayNotification\push.register.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
@@ -136,7 +138,15 @@
     <Compile Include="Utilities\CustomControl\StarRating.xaml.cs">
       <DependentUpon>StarRating.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\InboxGroup\InboxDetailViewModel.cs" />
+    <Compile Include="ViewModel\InboxGroup\MessageInboxViewModel.cs" />
     <Compile Include="ViewModel\OrderGroupViewModel\OrderViewModel.cs" />
+    <Compile Include="View\InboxGroup\InboxDetailPage.xaml.cs">
+      <DependentUpon>InboxDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InboxGroup\MessageInboxPage.xaml.cs">
+      <DependentUpon>MessageInboxPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OrderGroup\DeliveryPaymentGroup\ConfirmPage.xaml.cs">
       <DependentUpon>ConfirmPage.xaml</DependentUpon>
     </Compile>
@@ -387,6 +397,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BottomFunctionGroup\SettingGroup\SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InboxGroup\InboxDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InboxGroup\MessageInboxPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

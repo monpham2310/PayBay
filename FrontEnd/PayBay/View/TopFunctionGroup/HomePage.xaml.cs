@@ -38,7 +38,7 @@ namespace PayBay.View.TopFunctionGroup
 		{
 			this.InitializeComponent();            
             this.Loaded += Page_Loaded;
-            FlipViewLoop();
+            //FlipViewLoop();
         }
         int change = 1;
         private void FlipViewLoop()

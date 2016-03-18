@@ -17,6 +17,7 @@ using PayBay.ViewModel.ProductGroup;
 using PayBay.View.OrderGroup;
 using PayBay.Model;
 using PayBay.Utilities.Common;
+using Windows.UI.Popups;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -80,7 +81,7 @@ namespace PayBay.View.MarketGroup.KiosGroup
             return null;
         }
 
-        private void checkBtn_Click(object sender, RoutedEventArgs e)
+        private async void checkBtn_Click(object sender, RoutedEventArgs e)
         {            
             ProductVm.ProductOrderList.Clear();
             foreach (Product product in listViewProductsOfStore.Items)
@@ -88,6 +89,10 @@ namespace PayBay.View.MarketGroup.KiosGroup
                 if (product.OrderUnit > 0 && product.OrderUnit <= product.NumberOf)
                 {                                    
                     ProductVm.ProductOrderList.Add(product);
+                }
+                else
+                {
+                    await new MessageDialog("Some product is out.Please check again!", "Notification!").ShowAsync();
                 }
             }
 

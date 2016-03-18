@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using PayBay.Services.MobileServices.PaybayNotification;
+using Windows.Networking.PushNotifications;
 
 namespace PayBay.ViewModel.AccountGroup
 {
@@ -67,9 +68,9 @@ namespace PayBay.ViewModel.AccountGroup
                 {
                     var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
                     JObject user = JObject.Parse(result.ToString());
-                    UserInfo = user.ToObject<UserInfo>();
-                    MediateClass.StartVM.EnableFunction(UserInfo.TypeId);
-                    PaybayPushClient.UploadChannel();
+                    UserInfo = user.ToObject<UserInfo>();                    
+                    //PaybayPushClient.UploadChannel();
+                    PaybayPushClient.UploadChannel(UserInfo.UserId);
                 }
             }
             catch (Exception ex)
@@ -78,7 +79,7 @@ namespace PayBay.ViewModel.AccountGroup
             }
             return true;               
         }
-
+                
         public async Task ResetPasswordOfUser(string email)
         {
             string newPass = "abcdXYZ123";

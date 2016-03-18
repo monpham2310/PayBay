@@ -34,8 +34,11 @@ namespace PayBay.View.MarketGroup.KiosGroup
         private async void btSend_Click(object sender, RoutedEventArgs e)
         {
             int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
-            await CommentVm.UserComment(txtComment.Text, storeId, TYPEGET.MORE, true);
-            txtComment.Text = "";                        
+            if (txtComment.Text != "")
+            {
+                await CommentVm.UserComment(txtComment.Text, storeId, TYPEGET.MORE, true);
+                txtComment.Text = "";
+            }                 
         }
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

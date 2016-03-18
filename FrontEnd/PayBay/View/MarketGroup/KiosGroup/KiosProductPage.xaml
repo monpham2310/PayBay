@@ -48,7 +48,7 @@
 							   Text="UnitPrice"
 							   HorizontalAlignment="Center"/>
 					<TextBlock Grid.Column="3" 
-							   Text="Unit"
+							   Text="Amount"
 							   HorizontalAlignment="Center"/>
 					<TextBlock Grid.Column="4" 
 							   Text="Order"
@@ -91,7 +91,7 @@
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>
 									<TextBlock Grid.Column="3" 
-											  Text="{Binding Unit}"
+											  Text="{Binding NumberOf}"
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>
 									<TextBox Grid.Column="4" 

@@ -17,14 +17,7 @@ namespace PayBayService
         {
             // Use this class to set configuration options for your mobile service
             ConfigOptions options = new ConfigOptions();
-
-            #region LoginProvider
                         
-            //options.LoginProviders.Remove(typeof(FacebookLoginProvider));
-            //options.LoginProviders.Add(typeof(FacebookLoginAuthenticationProvider));           
-            
-            #endregion
-
             // Use this class to set WebAPI configuration options
             HttpConfiguration config = ServiceConfig.Initialize(new ConfigBuilder(options));
 
@@ -47,7 +40,14 @@ namespace PayBayService
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
+            #region LoginProvider
+
+            //options.LoginProviders.Remove(typeof(FacebookLoginProvider));
+            //options.LoginProviders.Add(typeof(FacebookLoginAuthenticationProvider));
+
+            #endregion
+
+            //options.PushAuthorization = Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
             config.SetIsHosted(true);
 
         }

@@ -242,7 +242,9 @@
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\DetailBillsController.cs" />
+    <Compile Include="Controllers\InboxDetailsController.cs" />
     <Compile Include="Controllers\MarketsController.cs" />
+    <Compile Include="Controllers\MessageInboxesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProductStatisticsController.cs" />
     <Compile Include="Controllers\RevenueStatisticsController.cs" />
@@ -263,7 +265,13 @@
     <Compile Include="Models\DetailBill.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InboxDetail.cs">
+      <DependentUpon>PaybayModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Market.cs">
+      <DependentUpon>PaybayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MessageInbox.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PaybayModel.Context.cs">

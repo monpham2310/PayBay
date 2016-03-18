@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="7021VH9595.PayBay" Publisher="CN=34631C18-408A-4D13-97E3-8DA193E54DF4" Version="1.1.2.0" />
+  <Identity Name="7021VH9595.PayBay" Publisher="CN=34631C18-408A-4D13-97E3-8DA193E54DF4" Version="1.1.1.0" />
   <mp:PhoneIdentity PhoneProductId="958480a4-97b2-4b60-bf05-4c1fb8f3c39e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>PayBay</DisplayName>

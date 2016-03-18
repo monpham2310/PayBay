@@ -21,6 +21,7 @@ using PayBay.Utilities.Common;
 using Windows.UI.Core;
 using PayBay.Utilities.Helpers;
 using PayBay.Services.MobileServices.PaybayNotification;
+using Windows.Networking.PushNotifications;
 
 namespace PayBay
 {
@@ -42,8 +43,8 @@ namespace PayBay
             Suspending += OnSuspending;
         }
         
-        //public static string UrlHost = "http://localhost:4591";
-        public static string UrlHost = "https://paybayservice.azure-mobile.net/";
+        public static string UrlHost = "http://localhost:4591";
+        //public static string UrlHost = "https://paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
                 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
@@ -51,7 +52,18 @@ namespace PayBay
         public static MobileServiceClient MobileService = new MobileServiceClient(
             UrlHost, ApplicationKey
         );
-                  
+               
+        private async void AcquirePushChannel()
+        {
+            PaybayPushClient.CurrentChannel = await Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+            PaybayPushClient.CurrentChannel.PushNotificationReceived += CurrentChannel_PushNotificationReceived;
+        }
+
+        private void CurrentChannel_PushNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
+        {
+            
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -66,7 +78,9 @@ namespace PayBay
             //                this.DebugSettings.EnableFrameRateCounter = true;
             //            }
             //#endif
-            
+
+            AcquirePushChannel();
+
             Frame rootFrame = Window.Current.Content as Frame;
             
             // Do not repeat app initialization when the Window already has content,
@@ -109,7 +123,14 @@ namespace PayBay
                 
         protected override void OnActivated(IActivatedEventArgs args)
         {
-            
+#if WINDOWS_PHONE_APP
+            if (args.Kind == ActivationKind.WebAuthenticationBrokerContinuation)
+            {
+                // Completes the sign-in process started by LoginAsync.
+                // Change 'MobileService' to the name of your MobileServiceClient instance. 
+                App.MobileService.LoginComplete(args as WebAuthenticationBrokerContinuationEventArgs);
+            }
+#endif
             base.OnActivated(args);
         }
                 

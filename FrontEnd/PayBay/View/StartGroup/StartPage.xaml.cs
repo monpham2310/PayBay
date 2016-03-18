@@ -11,6 +11,8 @@ using PayBay.View.AccountGroup;
 using PayBay.Utilities.Common;
 using PayBay.View.AppBarFunctionGroup;
 using System;
+using PayBay.View.InboxGroup;
+using Windows.UI.Popups;
 
 namespace PayBay.View.StartGroup
 {
@@ -164,6 +166,7 @@ namespace PayBay.View.StartGroup
             if (MediateClass.UserVM.UserInfo != null)
 			{
                 isLoginControl(true);
+                MediateClass.StartVM.EnableFunction(MediateClass.UserVM.UserInfo.TypeId);
                 if (MediateClass.UserVM.UserInfo.Avatar == null)
 				{
                     MediateClass.UserVM.UserInfo.Avatar = "/Assets/Square150x150Logo.scale-100.png";
@@ -220,6 +223,21 @@ namespace PayBay.View.StartGroup
 			AccountPopup.HorizontalOffset = (ActualWidth - AccountFrame.Width) / 2;
 			AccountPopup.VerticalOffset = (ActualHeight - AccountFrame.Height) / 2;
 		}
-	}
+
+        private async void InboxButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MediateClass.UserVM != null)
+            {
+                if (MediateClass.UserVM.UserInfo != null)
+                {
+                    MainFrame.Navigate(typeof(MessageInboxPage));
+                }
+                else
+                {
+                    await new MessageDialog("Login is required!", "Notification!").ShowAsync();
+                }
+            }
+        }
+    }
 
 }

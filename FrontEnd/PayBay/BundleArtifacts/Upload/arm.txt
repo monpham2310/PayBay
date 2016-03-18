@@ -1,0 +1,6 @@
+MainPackage=D:\MyJobs\ImagineCup2016\PayBayTeam\PayBay\FrontEnd\PayBay\bin\ARM\Release\Upload\PayBay_1.1.1.0_ARM.appx
+SymbolPackage=D:\MyJobs\ImagineCup2016\PayBayTeam\PayBay\FrontEnd\PayBay\AppPackages\PayBay_1.1.1.0\PayBay_1.1.1.0_ARM.appxsym
+ResourcePack=D:\MyJobs\ImagineCup2016\PayBayTeam\PayBay\FrontEnd\PayBay\_scale-100.appx
+ResourcePack=D:\MyJobs\ImagineCup2016\PayBayTeam\PayBay\FrontEnd\PayBay\_scale-125.appx
+ResourcePack=D:\MyJobs\ImagineCup2016\PayBayTeam\PayBay\FrontEnd\PayBay\_scale-150.appx
+ResourcePack=D:\MyJobs\ImagineCup2016\PayBayTeam\PayBay\FrontEnd\PayBay\_scale-400.appx

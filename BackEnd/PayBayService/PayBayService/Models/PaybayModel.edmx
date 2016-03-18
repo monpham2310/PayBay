@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PayBayDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bills">
           <Key>
             <PropertyRef Name="BillId" />
@@ -42,6 +42,15 @@
           <Property Name="UnitPrice" Type="float" />
           <Property Name="Unit" Type="nvarchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="InboxDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageID" Type="int" />
+          <Property Name="InboxDate" Type="datetime" />
+          <Property Name="Content" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Markets">
           <Key>
             <PropertyRef Name="MarketId" />
@@ -54,6 +63,14 @@
           <Property Name="SasQuery" Type="nvarchar(max)" />
           <Property Name="Latitute" Type="float" />
           <Property Name="Longitute" Type="float" />
+        </EntityType>
+        <EntityType Name="MessageInbox">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="OwnerID" Type="int" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -156,7 +173,9 @@
           <EntitySet Name="Bills" EntityType="Self.Bills" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="DetailBill" EntityType="Self.DetailBill" Schema="paybayservice" store:Type="Tables" />
+          <EntitySet Name="InboxDetail" EntityType="Self.InboxDetail" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="Markets" EntityType="Self.Markets" Schema="paybayservice" store:Type="Tables" />
+          <EntitySet Name="MessageInbox" EntityType="Self.MessageInbox" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="ProductStatistic" EntityType="Self.ProductStatistic" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="RevenueStatistic" EntityType="Self.RevenueStatistic" Schema="paybayservice" store:Type="Tables" />
@@ -166,8 +185,7 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="paybayservice" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="paybayservice" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PayBayDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -331,7 +349,26 @@
           <EntitySet Name="Stores" EntityType="Self.Store" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+          <EntitySet Name="InboxDetails" EntityType="PayBayDatabaseModel.InboxDetail" />
+          <EntitySet Name="MessageInboxes" EntityType="PayBayDatabaseModel.MessageInbox" />
         </EntityContainer>
+        <EntityType Name="InboxDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageID" Type="Int32" />
+          <Property Name="InboxDate" Type="DateTime" Precision="3" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MessageInbox">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="OwnerID" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -494,6 +531,25 @@
               <MappingFragment StoreEntitySet="UserType">
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InboxDetails">
+            <EntityTypeMapping TypeName="PayBayDatabaseModel.InboxDetail">
+              <MappingFragment StoreEntitySet="InboxDetail">
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="InboxDate" ColumnName="InboxDate" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageInboxes">
+            <EntityTypeMapping TypeName="PayBayDatabaseModel.MessageInbox">
+              <MappingFragment StoreEntitySet="MessageInbox">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -21,9 +21,9 @@ using PayBay.ViewModel.AccountGroup;
 using PayBay.ViewModel.ProductGroup;
 using PayBay.ViewModel.CommentGroup;
 using PayBay.ViewModel.RatingGroup;
-
 using PayBay.View.OrderGroup;
 using PayBay.ViewModel.OrderGroupViewModel;
+using PayBay.ViewModel.InboxGroup;
 
 namespace PayBay.ViewModel
 {
@@ -61,6 +61,8 @@ namespace PayBay.ViewModel
             SimpleIoc.Default.Register<CommentViewModel>();
             SimpleIoc.Default.Register<RatingViewModel>();
             SimpleIoc.Default.Register<OrderViewModel>();
+            SimpleIoc.Default.Register<MessageInboxViewModel>();
+            SimpleIoc.Default.Register<InboxDetailViewModel>();
         }
 
         //TODO: Register to use ViewModel here, syntax as below
@@ -73,6 +75,8 @@ namespace PayBay.ViewModel
         public CommentViewModel CommentVm => ServiceLocator.Current.GetInstance<CommentViewModel>();
         public RatingViewModel RatingVm => ServiceLocator.Current.GetInstance<RatingViewModel>();
         public OrderViewModel OrderVm => ServiceLocator.Current.GetInstance<OrderViewModel>();
+        public MessageInboxViewModel MessageVm => ServiceLocator.Current.GetInstance<MessageInboxViewModel>();
+        public InboxDetailViewModel InboxDetailVm => ServiceLocator.Current.GetInstance<InboxDetailViewModel>();
 
         public static void Cleanup()
         {

@@ -18,7 +18,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Linq;
 using Windows.Security.Credentials;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -101,7 +100,7 @@ namespace PayBay.View.AccountGroup
         //        //await InitLocalStoreAsync(); //offline sync support.               
         //    }
         //}
-                           
+
         // Define a method that performs the authentication process
         // using a Facebook sign-in. 
         private async System.Threading.Tasks.Task<bool> AuthenticateAsync()
@@ -112,8 +111,9 @@ namespace PayBay.View.AccountGroup
             {
                 // Change 'MobileService' to the name of your MobileServiceClient instance.
                 // Sign-in using Facebook authentication.
+                
                 user = await App.MobileService
-                    .LoginAsync(MobileServiceAuthenticationProvider.Facebook,true);
+                    .LoginAsync(MobileServiceAuthenticationProvider.Facebook, true);
                 message =
                     string.Format("You are now signed in - {0}", user.UserId);
 

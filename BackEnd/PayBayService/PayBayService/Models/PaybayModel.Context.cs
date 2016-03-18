@@ -37,5 +37,7 @@ namespace PayBayService.Models
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<InboxDetail> InboxDetails { get; set; }
+        public virtual DbSet<MessageInbox> MessageInboxes { get; set; }
     }
 }

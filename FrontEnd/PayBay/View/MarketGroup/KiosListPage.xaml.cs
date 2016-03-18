@@ -148,8 +148,11 @@ namespace PayBay.View.MarketGroup
         {
             if(MediateClass.UserVM.UserInfo != null)
             {
-                await CommentVm.UserComment(txtComment.Text, KiosVm.SelectedStore.StoreId, TYPEGET.START);
-                txtComment.Text = "";                
+                if (txtComment.Text != "")
+                {
+                    await CommentVm.UserComment(txtComment.Text, KiosVm.SelectedStore.StoreId, TYPEGET.START);
+                    txtComment.Text = "";
+                }              
             }
             else
             {

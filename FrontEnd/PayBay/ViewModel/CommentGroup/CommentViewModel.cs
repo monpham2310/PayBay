@@ -108,7 +108,7 @@ namespace PayBay.ViewModel.CommentGroup
                 isResponsed = false;
             }
         }
-
+         
         public async Task UserComment(string content, int storeId, TYPEGET type, bool inKios=false)
         {
             UserInfo currentUser = MediateClass.UserVM.UserInfo;
@@ -130,22 +130,18 @@ namespace PayBay.ViewModel.CommentGroup
                     {
                         isCommented = true;
                         JToken result = await App.MobileService.InvokeApiAsync("Comments", body, HttpMethod.Post, null);
-                        JObject response = JObject.Parse(result.ToString());
-                        if (response["ErrCode"].ToString().Equals("1"))
+                        JArray response = JArray.Parse(result.ToString());                        
+                        ObservableCollection<Comment> updateCmt = response.ToObject<ObservableCollection<Comment>>();
+                        if (!inKios)
                         {                            
-                            string lastId = "-1";
-                            if (!inKios)
-                                lastId = CommentLstOfStore.Max(x => x.Id).ToString();
-                            IDictionary<string, string> param = new Dictionary<string, string>
+                            CommentLstOfStore = updateCmt;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < updateCmt.Count; i++)
                             {
-                                {"storeId" , storeId.ToString()},
-                                {"commentId" , lastId},
-                                {"type" , TYPE.OLD.ToString()}
-                            };
-                            if (!inKios)
-                                await SendData(TYPEGET.START, TYPE.OLD, param);
-                            else
-                                await SendData(TYPEGET.MORE, TYPE.NEW, param);
+                                CommentLstOfStore.Insert(i, updateCmt[i]);
+                            }
                         }
                     }                    
                 }

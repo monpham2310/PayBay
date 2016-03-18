@@ -108,20 +108,40 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostComment(Comment comment)
         {
-            JObject result = new JObject();
+            JArray result = new JArray();
+            JObject ownerInfo = new JObject();
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.Comments.Add(comment);
-            await db.SaveChangesAsync();
+            //db.Comments.Add(comment);
+            //await db.SaveChangesAsync();
 
-            //var currentUser = this.User as ServiceUser;
+            try
+            {
+                var cmtDate = new SqlParameter("@Date", comment.CommentDate);
+                var storeId = new SqlParameter("@StoreID", comment.StoreID);
+                var userId = new SqlParameter("@UserID", comment.UserID);
+                var content = new SqlParameter("@Content", comment.Content);
+                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AddComment", CommandType.StoredProcedure, ref Methods.err, cmtDate, storeId, userId, content);
 
-            await PushHelper.SendToastAsync(WebApiConfig.Services, comment.UserID.ToString(), comment.Content);
+                var store = new SqlParameter("@StoreID", comment.StoreID);
+                var user = new SqlParameter("@UserID", comment.UserID);       
+                var owner = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetOwnerInfo", CommandType.StoredProcedure, ref Methods.err, store, user);
+                if(owner.Count > 0)
+                {
+                    ownerInfo = owner[0].ToObject<JObject>();
+                }
 
-            result = Methods.CustomResponseMessage(1, "Add Comment is successful!");
+                //var currentUser = this.User as ServiceUser;
+                //await PushHelper.SendToastAsync(WebApiConfig.Services, ownerInfo["UserName"].ToString(), comment.Content, new Uri(ownerInfo["Avatar"].ToString()));
+                await PushHelper.SendToastAsync(WebApiConfig.Services, ownerInfo["UserName"].ToString(), comment.Content, new Uri(ownerInfo["Avatar"].ToString()), ownerInfo["OwnerID"].ToString());                               
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
             return Request.CreateResponse(HttpStatusCode.OK, result);                        
         }
 

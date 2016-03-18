@@ -24,6 +24,15 @@ namespace PayBayService.Services.MobileServices.Handler
 
                 // Get the logged-in user.
                 var currentUser = context.Principal as ServiceUser;
+                
+                foreach (string item in registration.Tags)
+                {
+                    if (item != null)
+                    {
+                        currentUser.Id = item;
+                        break;
+                    }
+                }
 
                 // Add a new tag that is the user ID.
                 registration.Tags.Add(currentUser.Id);

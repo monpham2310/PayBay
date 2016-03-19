@@ -9,6 +9,8 @@ namespace PayBay.Model
 {
     public class InboxDetail : BaseViewModel
     {
+        private int _Id;
+        private int _messageId;
         private int _userId;
         private string _userName;
         private string _avatar;
@@ -83,6 +85,47 @@ namespace PayBay.Model
                 _inboxDate = value;
                 OnPropertyChanged();
             }
+        }
+
+        public int ID
+        {
+            get
+            {
+                return _Id;
+            }
+
+            set
+            {
+                _Id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int MessageId
+        {
+            get
+            {
+                return _messageId;
+            }
+
+            set
+            {
+                _messageId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public InboxDetail()
+        {
+
+        }
+
+        public InboxDetail(int messageId, DateTime inboxDate, string content)
+        {
+            ID = -1;
+            MessageId = messageId;
+            InboxDate = inboxDate;
+            Content = content;
         }
     }
 }

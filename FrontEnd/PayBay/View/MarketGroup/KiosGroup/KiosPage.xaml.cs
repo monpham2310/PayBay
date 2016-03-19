@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.Utilities.Common;
+using PayBay.View.InboxGroup;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,6 +33,15 @@ namespace PayBay.View.MarketGroup.KiosGroup
         private void btCallStore_Click(object sender, RoutedEventArgs e)
         {
             Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
+        }
+
+        private void btInbox_Click(object sender, RoutedEventArgs e)
+        {
+            //if (MediateClass.MessageVM == null)
+            //    MediateClass.MessageVM = new ViewModel.InboxGroup.MessageInboxViewModel();
+            MediateClass.isBtInbox = true;
+            Frame.Navigate(typeof(MessageInboxPage));
+            
         }
     }
 }

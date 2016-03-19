@@ -13,6 +13,7 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 using PayBayService.Common;
+using PayBayService.Services.MobileServices;
 
 namespace PayBayService.Controllers
 {
@@ -28,13 +29,22 @@ namespace PayBayService.Controllers
 
         // GET: api/MessageInboxes/5
         [ResponseType(typeof(MessageInbox))]
-        public HttpResponseMessage GetMessageInbox(int ownerId)
+        public HttpResponseMessage GetMessageInbox(int messageId, int userId, TYPE type)
         {
             JArray result = new JArray();
             try
             {
-                var ownerStore = new SqlParameter("@OwnerID", ownerId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMessageOfStore", CommandType.StoredProcedure, ref Methods.err, ownerStore);
+                var mess = new SqlParameter("@MessageID", messageId);
+                var user = new SqlParameter("@UserID", userId);
+                if(type == TYPE.OLD)
+                {
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMessageOfStore", CommandType.StoredProcedure, ref Methods.err, mess, user);
+                }
+                else
+                {
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreNewMessage", CommandType.StoredProcedure, ref Methods.err, mess, user);
+                }
+                               
             }
             catch (Exception ex)
             {
@@ -42,7 +52,7 @@ namespace PayBayService.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
+                
         // PUT: api/MessageInboxes/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutMessageInbox(int id, MessageInbox messageInbox)
@@ -80,17 +90,24 @@ namespace PayBayService.Controllers
 
         // POST: api/MessageInboxes
         [ResponseType(typeof(MessageInbox))]
-        public async Task<IHttpActionResult> PostMessageInbox(MessageInbox messageInbox)
+        public HttpResponseMessage PostMessageInbox(MessageInbox messageInbox)
         {
-            if (!ModelState.IsValid)
+            JObject result = new JObject();
+            try
             {
-                return BadRequest(ModelState);
+                var userId = new SqlParameter("@UserID", messageInbox.UserID);
+                var ownerId = new SqlParameter("@OwnerID", messageInbox.OwnerID);
+                var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AddNewMessage", CommandType.StoredProcedure, ref Methods.err, userId, ownerId);
+                if (response.Count > 0)
+                {
+                    result = response[0].ToObject<JObject>();
+                }                              
             }
-
-            db.MessageInboxes.Add(messageInbox);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = messageInbox.MessageID }, messageInbox);
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/MessageInboxes/5

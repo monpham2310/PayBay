@@ -230,6 +230,9 @@ namespace PayBay.View.StartGroup
             {
                 if (MediateClass.UserVM.UserInfo != null)
                 {
+                    if (MediateClass.MessageVM != null)
+                        MediateClass.MessageVM.LoadMoreMessageList(TYPEGET.START);
+                    MediateClass.isBtInbox = false;
                     MainFrame.Navigate(typeof(MessageInboxPage));
                 }
                 else

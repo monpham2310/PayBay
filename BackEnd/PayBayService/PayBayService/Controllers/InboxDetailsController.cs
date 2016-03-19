@@ -13,6 +13,7 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.Common;
 using System.Data.SqlClient;
+using PayBayService.Services.MobileServices;
 
 namespace PayBayService.Controllers
 {
@@ -25,16 +26,24 @@ namespace PayBayService.Controllers
         {
             return db.InboxDetails;
         }
-
+                
         // GET: api/InboxDetails/5
         [ResponseType(typeof(InboxDetail))]
-        public HttpResponseMessage GetInboxDetail(int messageId)
+        public HttpResponseMessage GetInboxDetail(int id, int messageId, TYPE type)
         {
             JArray result = new JArray();
             try
             {
+                var detailId = new SqlParameter("@ID", id);
                 var messDetail = new SqlParameter("@MessageID", messageId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMessageDetail", CommandType.StoredProcedure, ref Methods.err, messDetail);
+                if (type == TYPE.OLD)
+                {
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreMessageDetail", CommandType.StoredProcedure, ref Methods.err, detailId, messDetail);
+                }
+                else
+                {
+                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewMessageDetail", CommandType.StoredProcedure, ref Methods.err, detailId, messDetail);
+                }
             }
             catch (Exception ex)
             {
@@ -80,17 +89,26 @@ namespace PayBayService.Controllers
 
         // POST: api/InboxDetails
         [ResponseType(typeof(InboxDetail))]
-        public async Task<IHttpActionResult> PostInboxDetail(InboxDetail inboxDetail)
+        public async Task<HttpResponseMessage> PostInboxDetail(InboxDetail inboxDetail)
         {
-            if (!ModelState.IsValid)
+            JObject result = new JObject();
+            try
             {
-                return BadRequest(ModelState);
+                var msgId = new SqlParameter("@MessageID", inboxDetail.MessageID);
+                var dtime = new SqlParameter("@InboxDate", inboxDetail.InboxDate);
+                var content = new SqlParameter("@Content", inboxDetail.Content);
+                var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AddMsgDetail", CommandType.StoredProcedure, ref Methods.err, msgId, dtime, content);
+                if(response.Count > 0)
+                {
+                    result = response[0].ToObject<JObject>();
+                    await PushHelper.SendToastAsync(WebApiConfig.Services, result, result["UserID"].ToString());
+                }                
             }
-
-            db.InboxDetails.Add(inboxDetail);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = inboxDetail.ID }, inboxDetail);
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/InboxDetails/5

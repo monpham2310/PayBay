@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PayBay.Utilities.Common;
+using PayBay.ViewModel.InboxGroup;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +24,8 @@ namespace PayBay.View.InboxGroup
     /// </summary>
     public sealed partial class InboxDetailPage : Page
     {
+        private InboxDetailViewModel MsgDetailVm => (InboxDetailViewModel)pnMsgLst.DataContext;
+
         public InboxDetailPage()
         {
             this.InitializeComponent();
@@ -30,6 +34,36 @@ namespace PayBay.View.InboxGroup
         private void ExitHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             ((Popup)Frame.Parent).IsOpen = false;
+        }
+
+        private async void btSend_Click(object sender, RoutedEventArgs e)
+        {
+            string content = txtMessage.Text;
+            DateTime inboxDate = DateTime.UtcNow;
+            await MsgDetailVm.PushMessage(content, inboxDate);
+        }
+
+        private void svMsgLst_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if(svMsgLst.VerticalOffset >= svMsgLst.ScrollableHeight)
+            {
+                if(MsgDetailVm != null)
+                {
+                    MsgDetailVm.LoadMoreMessage(TYPEGET.MORE);
+                }
+            }
+            //else
+            //{
+            //    if (MsgDetailVm != null)
+            //    {
+            //        await MsgDetailVm.LoadMoreMessage(TYPEGET.MORE, TYPE.NEW);
+            //    }
+            //}
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            MsgDetailVm.LoadMoreMessage(TYPEGET.START);
         }
     }
 }

@@ -157,15 +157,15 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter
-            x:Name="ContentPresenter"
-            Content="{TemplateBinding Content}"
-            ContentTemplate="{TemplateBinding ContentTemplate}"
-            Margin="{TemplateBinding Padding}"
-            FontSize="{TemplateBinding FontSize}"
-            FontFamily="{TemplateBinding FontFamily}"
-            FontWeight="{TemplateBinding FontWeight}"
-            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                x:Name="ContentPresenter"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Margin="{TemplateBinding Padding}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <ContentPresenter.RenderTransform>
                                     <TranslateTransform x:Name="ContentPresenterTranslateTransform" />
                                 </ContentPresenter.RenderTransform>
@@ -236,7 +236,7 @@
 						BorderThickness="1,0,0,0"
 						BorderBrush="{StaticResource LightGrayBrush}">
                 <HyperlinkButton Content="Call" Name="btCallStore" Click="btCallStore_Click"/>
-                <HyperlinkButton Content="Inbox"/>
+                <HyperlinkButton Content="Inbox" Name="btInbox" Click="btInbox_Click"/>
                 <HyperlinkButton Content="Check List"/>
             </StackPanel>
         </Grid>

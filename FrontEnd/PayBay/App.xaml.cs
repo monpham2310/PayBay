@@ -22,6 +22,7 @@ using Windows.UI.Core;
 using PayBay.Utilities.Helpers;
 using PayBay.Services.MobileServices.PaybayNotification;
 using Windows.Networking.PushNotifications;
+using PayBay.Model;
 
 namespace PayBay
 {
@@ -43,8 +44,8 @@ namespace PayBay
             Suspending += OnSuspending;
         }
         
-        public static string UrlHost = "http://localhost:4591";
-        //public static string UrlHost = "https://paybayservice.azure-mobile.net/";
+        //public static string UrlHost = "http://localhost:4591";
+        public static string UrlHost = "https://paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "OilbMshzaPgvERqbTfFtLLLFwlEHFl47";
                 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
@@ -61,7 +62,43 @@ namespace PayBay
 
         private void CurrentChannel_PushNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
         {
-            
+            //lock (this)
+            //{
+            //    var messageContent = args.ToastNotification.Content;
+            //    var textElements = messageContent.GetElementsByTagName("text");
+            //    var imgElement = messageContent.GetElementsByTagName("image");
+            //    var msgId = textElements.ElementAt(4).InnerText;
+            //    var id = textElements.ElementAt(3).InnerText;
+            //    var userId = textElements.ElementAt(5).InnerText;
+            //    var ownerId = textElements.ElementAt(6).InnerText;
+            //    var msgContent = textElements.ElementAt(1).InnerText;
+            //    var msgDate = textElements.ElementAt(2).InnerText;
+            //    var userName = textElements.ElementAt(0).InnerText;
+            //    var avatar = imgElement.ElementAt(0).Attributes[1].InnerText;
+            //    var chatMessage = new MessageInbox()
+            //    {
+            //        MessageId = int.Parse(msgId),
+            //        UserId = int.Parse(userId),
+            //        OwnerId = int.Parse(ownerId),
+            //        UserName = userName,
+            //        Avatar = avatar
+            //    };
+
+            //    var chatMessageDetail = new InboxDetail()
+            //    {
+            //        ID = int.Parse(id),
+            //        MessageId = int.Parse(msgId),
+            //        UserId = int.Parse(userId),
+            //        UserName = userName,
+            //        Avatar = avatar,
+            //        Content = msgContent,
+            //        InboxDate = Convert.ToDateTime(string.Format(msgDate, "MM/dd/yyyy HH:mm:ss"))
+            //    };
+
+            //    if (MediateClass.MessageVM.MessageList.Count(x => x.MessageId == chatMessage.MessageId) == 0)
+            //        MediateClass.MessageVM.MessageList.Add(chatMessage);
+            //    MediateClass.MsgDetailVM.DetailList.Insert(0, chatMessageDetail);
+            //}
         }
 
         /// <summary>

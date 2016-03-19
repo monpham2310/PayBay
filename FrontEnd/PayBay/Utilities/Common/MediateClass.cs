@@ -1,9 +1,11 @@
-﻿using PayBay.View.MarketGroup.KiosGroup;
+﻿using PayBay.View.InboxGroup;
+using PayBay.View.MarketGroup.KiosGroup;
 using PayBay.View.OrderGroup;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
 using PayBay.ViewModel.CommentGroup;
 using PayBay.ViewModel.HomePageGroup;
+using PayBay.ViewModel.InboxGroup;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.ViewModel.OrderGroupViewModel;
 using PayBay.ViewModel.ProductGroup;
@@ -31,5 +33,8 @@ namespace PayBay.Utilities.Common
         public static RatingViewModel RateVm;
         public static OrderViewModel OrderVM;
         public static OrderPage OrderPage;
+        public static MessageInboxViewModel MessageVM;
+        public static InboxDetailViewModel MsgDetailVM;
+        public static bool isBtInbox = false;
     }
 }

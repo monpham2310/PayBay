@@ -863,3 +863,95 @@ as
 		if(@@Error > 0)
 			rollback tran
 	commit
+
+
+alter proc paybayservice.sp_GetMoreMessageDetail
+@ID int,
+@MessageID int
+as
+	if(@ID = -1)
+	begin
+		select top 5 ID,a.MessageId,b.UserId,Username,Avatar,Content,InboxDate
+		from paybayservice.InboxDetail a join paybayservice.MessageInbox b on a.MessageId=b.MessageId
+				join paybayservice.Users c on b.UserId=c.UserId 
+		where a.MessageID = @MessageID
+		order by ID desc
+	end
+	else
+	begin
+		select top 5 ID,a.MessageId,b.UserId,Username,Avatar,Content,InboxDate
+		from paybayservice.InboxDetail a join paybayservice.MessageInbox b on a.MessageId=b.MessageId
+				join paybayservice.Users c on b.UserId=c.UserId 
+		where a.MessageID = @MessageID and ID < @ID 
+		order by ID desc
+	end
+
+alter proc paybayservice.sp_GetNewMessageDetail
+@ID int,
+@MessageID int
+as
+	select top 5 ID,a.MessageId,b.UserId,Username,Avatar,Content,InboxDate
+	from paybayservice.InboxDetail a join paybayservice.MessageInbox b on a.MessageId=b.MessageId
+			join paybayservice.Users c on b.UserId=c.UserId 
+	where a.MessageID = @MessageID and ID > @ID 
+	order by ID desc
+
+ALTER proc [paybayservice].[sp_GetMessageOfStore] ---1,9
+@MessageID int,
+@UserID int
+as	
+	if(@MessageID = -1)
+	begin
+		select top 8 a.MessageID,a.UserId,Username,Avatar,getdate() as RecentDate
+		from paybayservice.MessageInbox a join paybayservice.Users b on a.UserID=b.UserID 				
+		where OwnerID=9
+		group by a.MessageID,a.UserId,Username,Avatar
+		order by a.MessageID desc
+	end
+	else
+	begin
+		select top 8 a.MessageID,a.UserId,Username,Avatar,getdate() RecentDate
+		from paybayservice.MessageInbox a join paybayservice.Users b on a.UserID=b.UserID 				
+		where OwnerID=@UserID and a.MessageID < @MessageID
+		group by a.MessageID,a.UserId,Username,Avatar
+		order by a.MessageID desc
+	end
+
+alter proc paybayservice.sp_GetMoreNewMessage
+@MessageID int,
+@UserID int
+as
+	select top 8 a.MessageID,a.UserId,Username,Avatar,getdate() as RecentDate
+		from paybayservice.MessageInbox a join paybayservice.Users b on a.UserID=b.UserID 				
+		where OwnerID=@UserID and a.MessageID > @MessageID
+		group by a.MessageID,a.UserId,Username,Avatar
+		order by a.MessageID desc
+
+create proc paybayservice.sp_AddNewMessage
+@UserID int,
+@OwnerID int
+as
+	begin tran addNewMsg
+		if exists (select 1 from paybayservice.MessageInbox where UserID=@UserID and OwnerID=@OwnerID)
+		begin
+			insert into paybayservice.MessageInbox values (@UserID,@OwnerID)
+		end
+		if(@@error > 0)
+			rollback tran
+	commit
+
+alter proc paybayservice.sp_AddMsgDetail
+@MessageID int,
+@InboxDate datetime,
+@Content nvarchar(max)
+as
+	begin tran addDetail
+		insert into paybayservice.InboxDetail values (@MessageID,@InboxDate,@Content)
+		if(@@error > 0)
+			rollback tran
+		select a.UserID,OwnerID,ID,b.MessageID,Username,Avatar,InboxDate,Content
+		from paybayservice.MessageInbox a join paybayservice.InboxDetail b on a.MessageID=b.MessageID
+			join paybayservice.Users c on c.UserID=a.OwnerID
+		where b.MessageID = @MessageID and InboxDate = @InboxDate
+	commit
+

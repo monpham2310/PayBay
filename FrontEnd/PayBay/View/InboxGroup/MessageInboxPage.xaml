@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    SizeChanged="Page_SizeChanged">
+    SizeChanged="Page_SizeChanged"
+    Loaded="Page_Loaded">
 
     <Page.Resources>
         <DataTemplate x:Key="messageItemTemplate">
@@ -36,6 +37,7 @@
     <Grid>
         <Grid Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <ScrollViewer Name="scrollvMessage"
+                          ViewChanged="scrollvMessage_ViewChanged"
                       DataContext="{Binding Source={StaticResource Locator},Path=MessageVm}">
                 <Grid>
                     <Grid.RowDefinitions>

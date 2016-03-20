@@ -53,24 +53,15 @@ namespace PayBay.ViewModel.MarketGroup
         public MarketViewModel()
         {
             MediateClass.MarketVM = this;
-            InitializeProperties();
-            InitializeData();
+            InitializeProperties();           
         }
 
         private void InitializeProperties()
         {
             SelectedMarket = new Market();
             MarketItemList = new ObservableCollection<Market>();
-        }
-                
-        /// <summary>
-        /// Initialize market
-        /// </summary>
-        private void InitializeData()
-        {
-            LoadMoreMarket(TYPEGET.START);
-        }
-                
+        }     
+                        
         public async void LoadMoreMarket(TYPEGET type, TYPE isOld = 0)
         {
             string lastId = "";

@@ -28,6 +28,7 @@ namespace PayBay.View.AppBarFunctionGroup
 
         private MarketViewModel MarketVm => (MarketViewModel)scrollvMarket.DataContext;
         private AdvertiseViewModel SaleVm => (AdvertiseViewModel)scrollvSale.DataContext;
+        private ProductViewModel ProductVm => (ProductViewModel)scrollvProducts.DataContext;
         
         public SearchPage()
         {
@@ -38,7 +39,9 @@ namespace PayBay.View.AppBarFunctionGroup
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            MarketVm.LoadMoreMarket(TYPEGET.START);
             SaleVm.LoadMoreSale(TYPEGET.START);
+            ProductVm.LoadMoreProduct(TYPEGET.START);
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -53,7 +56,7 @@ namespace PayBay.View.AppBarFunctionGroup
             grid.Height = grid.ActualWidth;
         }
 
-        private void btSearchProduct_Click(object sender, RoutedEventArgs e)
+        private void btSearchSale_Click(object sender, RoutedEventArgs e)
         {
             string name = txtSearchSale.Text;
             if (SaleVm != null)
@@ -62,6 +65,18 @@ namespace PayBay.View.AppBarFunctionGroup
                     SaleVm.LoadMoreSale(name,TYPEGET.START);
                 else
                     SaleVm.LoadMoreSale(TYPEGET.START);
+            }
+        }
+
+        private void btSearchProduct_Click(object sender, RoutedEventArgs e)
+        {
+            string name = txtSearchProduct.Text;
+            if (ProductVm != null)
+            {
+                if (!string.IsNullOrEmpty(txtSearchProduct.Text))
+                    ProductVm.LoadMoreProduct(name, TYPEGET.START);
+                else
+                    ProductVm.LoadMoreProduct(TYPEGET.START);
             }
         }
 
@@ -93,7 +108,13 @@ namespace PayBay.View.AppBarFunctionGroup
             //scroll at top
             else if(scrollvMarket.VerticalOffset == 0)
             {
-
+                if (MarketVm != null)
+                {
+                    if (string.IsNullOrEmpty(txtSearchSale.Text))
+                        MarketVm.LoadMoreMarket(TYPEGET.MORE, TYPE.NEW);
+                    else
+                        MarketVm.LoadMoreMarket(txtSearchSale.Text, TYPEGET.MORE, TYPE.NEW);
+                }
             }
         }
 
@@ -127,7 +148,31 @@ namespace PayBay.View.AppBarFunctionGroup
 		{
             if (MarketVm != null)
                 MarketVm.SelectedMarket = (Market)marketListBox.SelectedItem;
-			Frame.Navigate(typeof(MarketPage), NavigationMode.Forward);
+			Frame.Navigate(typeof(MarketPage));
 		}
-	}
+
+        private void scrollvProducts_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if(scrollvProducts.VerticalOffset == 0)
+            {
+                if (ProductVm != null)
+                {
+                    if (string.IsNullOrEmpty(txtSearchProduct.Text))
+                        ProductVm.LoadMoreProduct(TYPEGET.MORE, TYPE.NEW);
+                    else
+                        ProductVm.LoadMoreProduct(txtSearchProduct.Text, TYPEGET.MORE, TYPE.NEW);
+                }
+            }
+            else if(scrollvProducts.VerticalOffset >= scrollvProducts.ScrollableHeight)
+            {
+                if (ProductVm != null)
+                {
+                    if (string.IsNullOrEmpty(txtSearchProduct.Text))
+                        ProductVm.LoadMoreProduct(TYPEGET.MORE);
+                    else
+                        ProductVm.LoadMoreProduct(txtSearchProduct.Text, TYPEGET.MORE);
+                }
+            }
+        }
+    }
 }

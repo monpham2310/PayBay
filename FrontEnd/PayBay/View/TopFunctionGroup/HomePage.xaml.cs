@@ -59,14 +59,7 @@ namespace PayBay.View.TopFunctionGroup
                 else
                 {
                     flipViewAdvertise.SelectedIndex += change;
-                }
-                //if (change <= AdVm.AdvertiseItemList.Count - 1)
-                //    AdVm.SelectedAd = AdVm.AdvertiseItemList[++change];
-                //else
-                //{
-                //    change = 0;
-                //    AdVm.SelectedAd = AdVm.AdvertiseItemList[change];
-                //}
+                }                
             };
 
             timer.Start();

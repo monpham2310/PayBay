@@ -36,12 +36,9 @@ namespace PayBay.View.MarketGroup.KiosGroup
         }
 
         private void btInbox_Click(object sender, RoutedEventArgs e)
-        {
-            //if (MediateClass.MessageVM == null)
-            //    MediateClass.MessageVM = new ViewModel.InboxGroup.MessageInboxViewModel();
+        {            
             MediateClass.isBtInbox = true;
-            Frame.Navigate(typeof(MessageInboxPage));
-            
+            Frame.Navigate(typeof(MessageInboxPage));            
         }
 
 		private void linkHide_Click(object sender, RoutedEventArgs e)

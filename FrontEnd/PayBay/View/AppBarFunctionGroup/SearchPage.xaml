@@ -56,7 +56,29 @@
             </StackPanel>
         </DataTemplate>
 
-		<!-- PIVOT STYLE-->
+        <DataTemplate x:Key="itemListProduct">
+            <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                BorderThickness="2,2,2,2"
+                                                Margin="0,5,0,5"
+                                                BorderBrush="{StaticResource LightBlueBrush}">
+                <Image Source="{Binding Image}" 
+                                               Width="107" 
+                                               Height="63" 
+                                               Stretch="Fill"/>
+                <StackPanel Orientation="Vertical"
+							HorizontalAlignment="Stretch"
+							Width="280"
+							Margin="20,0">
+                    <TextBlock Text="{Binding ProductName}"
+							   Foreground="{StaticResource LightBlueBrush}"/>
+                    <TextBlock Text="{Binding UnitPrice}"/>                                                                   
+                    <TextBlock Text="{Binding StoreName}" FontSize="12" Foreground="{StaticResource RedBrush}"/>                    
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- PIVOT STYLE-->
 		<Style TargetType="Pivot">
 			<Setter Property="Margin" Value="0"/>
 			<Setter Property="Padding" Value="0"/>
@@ -520,13 +542,13 @@
                                      Margin="0,0,35,-2"
                                      x:Name="txtSearchSale"
                                      />
-                            <Button x:Name="btSearchProduct" 
+                            <Button x:Name="btSearchSale" 
                     	            Height="31" 
                     	            Width="35" 
                     	            Background="#EBEBEB"
                                     HorizontalAlignment="Right"
                                     Grid.Column="1"
-                                    Click="btSearchProduct_Click">
+                                    Click="btSearchSale_Click">
                                 <Image Source="/Assets/SearchIcon.PNG" 
                     	               HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
@@ -545,6 +567,61 @@
                                       Background="White"
                                       ItemTemplate="{StaticResource itemListSales}">
 							</GridView>
+                        </ScrollViewer>
+                    </Grid>
+                </PivotItem>
+                <PivotItem Margin="0" Header="PRODUCTS">
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Background="#EBEBEB" 
+                              Height="30"
+                              Margin="10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="50" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox BorderThickness="0" 
+                                     HorizontalAlignment="Stretch"
+                                     Grid.Column="0" 
+                                     Grid.ColumnSpan="2" 
+                                     Margin="0,0,35,-2"
+                                     x:Name="txtSearchProduct"
+                                     />
+                            <Button x:Name="btSearchProduct" 
+                    	            Height="31" 
+                    	            Width="35" 
+                    	            Background="#EBEBEB"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Click="btSearchProduct_Click">
+                                <Image Source="/Assets/SearchIcon.PNG" 
+                    	               HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            </Button>
+                        </Grid>
+                        <ScrollViewer Name="scrollvProducts"
+                                      Grid.Row="1"
+                                      Grid.ColumnSpan="2" 
+									  HorizontalAlignment="Stretch"
+                                      DataContext="{Binding Source={StaticResource Locator},Path=ProductVm}"
+                                      ViewChanged="scrollvProducts_ViewChanged">
+                            <GridView x:Name="lvProduct"                                     
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Top"                                      
+                                      ItemsSource="{Binding ProductList}"
+                                      Background="White"
+                                      ItemTemplate="{StaticResource itemListProduct}">
+                            </GridView>
                         </ScrollViewer>
                     </Grid>
                 </PivotItem>

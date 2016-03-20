@@ -16,6 +16,7 @@ using Windows.UI.Popups;
 using PayBay.Utilities.Helpers;
 using PayBay.ViewModel;
 using PayBay.ViewModel.AccountGroup;
+using PayBay.View.TopFunctionGroup;
 
 namespace PayBay.View.StartGroup
 {
@@ -35,6 +36,11 @@ namespace PayBay.View.StartGroup
 
 			Loaded += StartPage_Loaded;
 		}
+
+        public void MoveHomePage()
+        {
+            MainFrame.Navigate(typeof(HomePage));
+        }
 
 		private void StartPage_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -107,18 +113,18 @@ namespace PayBay.View.StartGroup
 			{
 				SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 			}
-			//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-			//	((Frame)sender).CanGoBack ?
-			//	AppViewBackButtonVisibility.Visible :
-				
-		}
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+            //	((Frame)sender).CanGoBack ?
+            //	AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
 
-		/// <summary>
-		/// Invoked when Navigation to a certain page fails
-		/// </summary>
-		/// <param name="sender">The Frame which failed navigation</param>
-		/// <param name="e">Details about the navigation failure</param>
-		private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        }
+
+        /// <summary>
+        /// Invoked when Navigation to a certain page fails
+        /// </summary>
+        /// <param name="sender">The Frame which failed navigation</param>
+        /// <param name="e">Details about the navigation failure</param>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
 		{
 			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 		}
@@ -263,9 +269,7 @@ namespace PayBay.View.StartGroup
             if (MediateClass.UserVM != null)
             {
                 if (MediateClass.UserVM.UserInfo != null)
-                {
-                    if (MediateClass.MessageVM != null)
-                        MediateClass.MessageVM.LoadMoreMessageList(TYPEGET.START);
+                {                    
                     MediateClass.isBtInbox = false;
                     MainFrame.Navigate(typeof(MessageInboxPage), NavigationMode.Forward);
                 }

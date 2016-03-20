@@ -34,7 +34,7 @@ namespace PayBay.View.InboxGroup
                 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            MediateClass.MessageVM.LoadMoreMessageList(TYPEGET.START);
+            MessageVm.LoadMoreMessageList(TYPEGET.START);
             //if (MediateClass.isBtInbox)
             //{
             //    await MessageVm.NewMessage();

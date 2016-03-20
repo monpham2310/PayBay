@@ -114,31 +114,31 @@ namespace PayBay.ViewModel.InboxGroup
 
         public async Task PushMessage(string content, DateTime inboxDate)
         {
-            //int messageId = MediateClass.MessageVM.MessageSelected.MessageId;
-            
-            //InboxDetail inbox = new InboxDetail(messageId, inboxDate, content);
-            //try
-            //{
-            //    if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
-            //    {
-            //        if (!isSended)
-            //        {
-            //            isSended = true;
-            //            JToken body = JToken.FromObject(inbox);
-            //            var response = await App.MobileService.InvokeApiAsync("InboxDetails", body, HttpMethod.Post, null);
-            //            inbox = response.ToObject<InboxDetail>();
-            //            DetailList.Insert(0, inbox);
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    await new MessageDialog(ex.Message.ToString(), "Inbox Detail!").ShowAsync();
-            //}
-            //finally
-            //{
-            //    isSended = false;
-            //}
+            int messageId = MediateClass.MessageVM.MessageSelected.MessageId;
+
+            InboxDetail inbox = new InboxDetail(messageId, inboxDate, content);
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (!isSended)
+                    {
+                        isSended = true;
+                        JToken body = JToken.FromObject(inbox);
+                        var response = await App.MobileService.InvokeApiAsync("InboxDetails", body, HttpMethod.Post, null);
+                        inbox = response.ToObject<InboxDetail>();
+                        DetailList.Insert(0, inbox);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Inbox Detail!").ShowAsync();
+            }
+            finally
+            {
+                isSended = false;
+            }
         }
 
     }

@@ -78,24 +78,18 @@ namespace PayBay.ViewModel.ProductGroup
         public ProductViewModel()
         {
             MediateClass.ProductVM = this;
-            InitializeProperties();
-            //InitializeData();
+            InitializeProperties();            
         }
 
         private void InitializeProperties()
         {
             ProductList = new ObservableCollection<Product>();
             ProductOrderList = new ObservableCollection<Product>();
-        }
+        }                 
 
-        private async void InitializeData()
+        public async void LoadMoreProduct(TYPEGET type, TYPE isOld=0)
         {
-            await LoadMoreProduct(TYPEGET.START);        
-        }      
-
-        public async Task LoadMoreProduct(TYPEGET type, TYPE isOld=0)
-        {
-            string lastId = "";
+            string lastId = "-1";
             if (type == TYPEGET.MORE)
             {
                 if (ProductList.Count != 0)
@@ -105,16 +99,13 @@ namespace PayBay.ViewModel.ProductGroup
                     else
                         lastId = ProductList.Max(x => x.ProductId).ToString();
                 }
-            }
-            else
-                lastId = "-1";
+            }            
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId},
                 {"type" , isOld.ToString()}
             };
-            if(lastId != "")
-                await SendData(type, isOld, param);         
+            await SendData(type, isOld, param);         
         }
 
         public async void LoadMoreProduct(string name, TYPEGET type, TYPE isOld=0)
@@ -188,7 +179,8 @@ namespace PayBay.ViewModel.ProductGroup
                                     ProductList.Add(item);
                                 }
                             }
-                            else {
+                            else
+                            {
                                 for (int i = 0; i < moreProduct.Count; i++)
                                 {
                                     ProductList.Insert(i, moreProduct[i]);

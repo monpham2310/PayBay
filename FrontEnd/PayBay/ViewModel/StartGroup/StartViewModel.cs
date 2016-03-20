@@ -405,7 +405,8 @@ namespace PayBay.ViewModel.StartGroup
                         EnableFunction((int)USERTYPE.GUEST);
                         BottomFunctionItemList.Remove(_logout);
 						SettingsHelper.SetSetting("Remember", false);
-						await new MessageDialog("You have logged out", "Notification!").ShowAsync();
+                        MediateClass.StartPage.MoveHomePage();
+						await new MessageDialog("You have logged out", "Notification!").ShowAsync();                        
 					}
                     else
                     {

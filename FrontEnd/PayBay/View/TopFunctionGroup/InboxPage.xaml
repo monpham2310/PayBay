@@ -6,9 +6,36 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:custom="using:PayBay.Utilities.CustomControl"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<custom:Blank/>
-	</Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row ="0">
+            <ScrollViewer>
+                <ListView ItemsSource="{Binding MessageList}" />
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <TextBox VerticalAlignment="Center" 
+                     Grid.Column="0"
+                     x:Name="tbxMessage"
+                     PlaceholderText="Enter your message here..."/>
+            <Button Background="{StaticResource LightBlueBrush}"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    Click="sendBtn_Click">
+                <TextBlock Text="Send" 
+                           Foreground="White"/>
+            </Button>
+
+        </Grid>
+    </Grid>
 </Page>

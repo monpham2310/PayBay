@@ -43,5 +43,19 @@ namespace PayBay.View.MarketGroup.KiosGroup
             Frame.Navigate(typeof(MessageInboxPage));
             
         }
-    }
+
+		private void linkHide_Click(object sender, RoutedEventArgs e)
+		{
+			if (linkHide.Content.ToString() == "Hide")
+			{
+				gridInfo.Visibility = Visibility.Collapsed;
+				linkHide.Content = "Show";
+			}
+			else
+			{
+				gridInfo.Visibility = Visibility.Visible;
+				linkHide.Content = "Hide";
+			}
+		}
+	}
 }

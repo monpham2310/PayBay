@@ -6,8 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="400"
-    d:DesignWidth="300"
 	DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}">
 
 	<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
@@ -55,7 +53,11 @@
 							   HorizontalAlignment="Center"/>
 				</Grid>
 
-				<ScrollViewer Grid.Row="1" Name="scrollvProductLst" ViewChanged="scrollvProductLst_ViewChanged">
+				<ScrollViewer Grid.Row="1" 
+							  Name="scrollvProductLst" 
+							  ViewChanged="scrollvProductLst_ViewChanged"
+							  VerticalScrollBarVisibility="Auto"
+							  VerticalScrollMode="Enabled">
 					<ListView ItemsSource="{Binding ProductsOfStore}"
                               x:Name="listViewProductsOfStore">
 						<ListView.ItemContainerStyle>

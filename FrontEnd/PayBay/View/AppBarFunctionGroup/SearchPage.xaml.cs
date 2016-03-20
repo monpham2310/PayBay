@@ -127,7 +127,7 @@ namespace PayBay.View.AppBarFunctionGroup
 		{
             if (MarketVm != null)
                 MarketVm.SelectedMarket = (Market)marketListBox.SelectedItem;
-			Frame.Navigate(typeof(MarketPage));
+			Frame.Navigate(typeof(MarketPage), NavigationMode.Forward);
 		}
 	}
 }

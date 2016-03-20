@@ -13,6 +13,9 @@ using PayBay.View.AppBarFunctionGroup;
 using System;
 using PayBay.View.InboxGroup;
 using Windows.UI.Popups;
+using PayBay.Utilities.Helpers;
+using PayBay.ViewModel;
+using PayBay.ViewModel.AccountGroup;
 
 namespace PayBay.View.StartGroup
 {
@@ -55,6 +58,29 @@ namespace PayBay.View.StartGroup
                 if(MediateClass.UserVM.UserInfo != null)
                     isLoginControl(true);
             }
+
+			if (SettingsHelper.GetSetting<bool?>("Remember") == true)
+			{
+				AttempLogin();
+			}
+		}
+
+		private async void AttempLogin()
+		{
+			UserInfoViewModel UserVm = ((ViewModelLocator)App.Current.Resources["Locator"]).AccountVm as UserInfoViewModel;
+			String mail = SettingsHelper.GetSetting<String>("Mail");
+			String password = SettingsHelper.GetSetting<String>("Password");
+
+			bool check = await UserVm.LoginAccount(mail, password);
+
+			if (check)
+			{
+				UserLoginSucceed();
+			}
+			else
+			{
+				await new MessageDialog("Attempted login is not successful", "Notification!").ShowAsync();
+			}
 		}
 
 		private void OnBackRequested(object sender, BackRequestedEventArgs e)
@@ -73,10 +99,18 @@ namespace PayBay.View.StartGroup
 		/// <param name="e"></param>
 		private void OnNavigated(object sender, NavigationEventArgs e)
 		{
-			SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-				((Frame)sender).CanGoBack ?
-				AppViewBackButtonVisibility.Visible :
-				AppViewBackButtonVisibility.Collapsed;
+			if (((NavigationMode)e.Parameter) == NavigationMode.New)
+			{
+				SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+			}
+			else
+			{
+				SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+			}
+			//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+			//	((Frame)sender).CanGoBack ?
+			//	AppViewBackButtonVisibility.Visible :
+				
 		}
 
 		/// <summary>
@@ -176,7 +210,7 @@ namespace PayBay.View.StartGroup
 
 		private void SearchButton_Click(object sender, RoutedEventArgs e)
 		{                       
-			MainFrame.Navigate(typeof(SearchPage));
+			MainFrame.Navigate(typeof(SearchPage), NavigationMode.Forward);
 		}
 
 		private void SignInButton_Click(object sender, RoutedEventArgs e)
@@ -233,7 +267,7 @@ namespace PayBay.View.StartGroup
                     if (MediateClass.MessageVM != null)
                         MediateClass.MessageVM.LoadMoreMessageList(TYPEGET.START);
                     MediateClass.isBtInbox = false;
-                    MainFrame.Navigate(typeof(MessageInboxPage));
+                    MainFrame.Navigate(typeof(MessageInboxPage), NavigationMode.Forward);
                 }
                 else
                 {

@@ -9,6 +9,8 @@ using PayBay.View.OrderGroup;
 using PayBay.Utilities.Common;
 using Windows.UI.Popups;
 using System;
+using Windows.UI.Xaml.Navigation;
+using PayBay.Utilities.Helpers;
 
 namespace PayBay.ViewModel.StartGroup
 {
@@ -345,42 +347,42 @@ namespace PayBay.ViewModel.StartGroup
             {
 				case MenuFunc.HomePage:
 				{
-					frame.Navigate(typeof (HomePage));
+					frame.Navigate(typeof (HomePage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.Inbox:
 				{
-					frame.Navigate(typeof(MyFavoritesPage));
+					frame.Navigate(typeof(MyFavoritesPage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.MyPayBay:
 				{
-					frame.Navigate(typeof(AddProductPage));
+					frame.Navigate(typeof(AddProductPage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.MyFavorites:
 				{
-					frame.Navigate(typeof(MyFavoritesPage));
+					frame.Navigate(typeof(MyFavoritesPage), NavigationMode.New);
 					break;
 				}
                 case MenuFunc.Func1:
                 {
-                    frame.Navigate(typeof (Function1Page));
+                    frame.Navigate(typeof (Function1Page), NavigationMode.New);
                     break;
                 }
                 case MenuFunc.Func2:
                 {
-                    frame.Navigate(typeof (Function2Page));
+                    frame.Navigate(typeof (Function2Page), NavigationMode.New);
                     break;
                 }
                 case MenuFunc.Func3:
                 {
-                    frame.Navigate(typeof(Function3Page));
+                    frame.Navigate(typeof(Function3Page), NavigationMode.New);
                     break;
                 }
                 case MenuFunc.Func4:
                 {
-                    frame.Navigate(typeof(Function4Page));
+                    frame.Navigate(typeof(Function4Page), NavigationMode.New);
                     break;
                 }
                 case MenuFunc.FreeCall:
@@ -390,7 +392,7 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.AboutUs:
 				{
-					frame.Navigate(typeof(AboutUsPage));
+					frame.Navigate(typeof(AboutUsPage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.Logout:
@@ -401,8 +403,10 @@ namespace PayBay.ViewModel.StartGroup
                         MediateClass.UserVM.UserInfo = null;
                         MediateClass.StartPage.isLoginControl(false);
                         EnableFunction((int)USERTYPE.GUEST);
-                        BottomFunctionItemList.Remove(_logout);                 
-                    }
+                        BottomFunctionItemList.Remove(_logout);
+						SettingsHelper.SetSetting("Remember", false);
+						await new MessageDialog("You have logged out", "Notification!").ShowAsync();
+					}
                     else
                     {
                         await new MessageDialog("You are not login!", "Notification!").ShowAsync();
@@ -411,17 +415,17 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.FeedbackAndApps:
 				{
-					frame.Navigate(typeof(FeedbackAndAppsPage));
+					frame.Navigate(typeof(FeedbackAndAppsPage), NavigationMode.New);
 					break;
 				}
                 case MenuFunc.Settings:
                 {
-                    frame.Navigate(typeof (SettingPage));
+                    frame.Navigate(typeof (SettingPage), NavigationMode.New);
                     break;
                 }
                 default:
                 {
-                    frame.Navigate(typeof (HomePage));
+                    frame.Navigate(typeof (HomePage), NavigationMode.New);
                     break;
                 }
             }            

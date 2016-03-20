@@ -20,7 +20,8 @@
                        Stretch="Fill"/>
                 <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Stretch"
-                            Width="280">
+                            Width="280"
+							Margin="20,0">
                     <TextBlock Text="{Binding MarketName}"
                                Foreground="{StaticResource LightBlueBrush}"/>
                     <TextBlock Text="{Binding Address}"/>
@@ -40,10 +41,11 @@
                                                Height="63" 
                                                Stretch="Fill"/>
                 <StackPanel Orientation="Vertical"
-                                                    HorizontalAlignment="Stretch"
-                                                    Width="280">
+							HorizontalAlignment="Stretch"
+							Width="280"
+							Margin="20,0">
                     <TextBlock Text="{Binding Title}"
-                                                       Foreground="{StaticResource LightBlueBrush}"/>
+							   Foreground="{StaticResource LightBlueBrush}"/>
                     <TextBlock Text="{Binding Describes}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding StartDate}" FontSize="12" Foreground="{StaticResource RedBrush}"/>
@@ -427,64 +429,17 @@
 	</Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <!--<Grid Grid.Row="0"
-              Background="{StaticResource LightBlueBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <HyperlinkButton x:Name="BackHyperlinkButton"
-							 Grid.Column="0"
-							 FontFamily="Segoe MDL2 Assets"
-							 Content="&#xE72B;"
-							 FontSize="20"
-							 FontWeight="ExtraBold"
-							 Margin="20,0"
-							 Foreground="{StaticResource WhiteBrush}"
-							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}" Click="BackHyperlinkButton_Click"/>
-            <TextBlock Text="Search"
-                       Grid.Column="1"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Foreground="{StaticResource WhiteBrush}"
-                       FontWeight="ExtraBold"
-                       Margin="10, 0"/>
-        </Grid>-->
-        <Grid Grid.Row="1">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="1">
 
             <Pivot>
 
-                <PivotItem Margin="0" Header="MARKETS">
-                    <!--<PivotItem.Header>
-                        <TextBlock Text="MARKETS"
-                                   Foreground="White"
-                                   FontSize="15"/>
-                    </PivotItem.Header>-->
-                    <Grid Background="White">
-                        <!--<TextBlock Text="Popular Searches"
-                                   FontSize="10"
-                                   Foreground="Gray"
-                                   Margin="10,10,-10,-10" 
-                                   HorizontalAlignment="Left" 
-                                   VerticalAlignment="Top"/>
-                        <Border BorderThickness="1.5"
-                                BorderBrush="#FFC3B8B8" 
-                                HorizontalAlignment="Left" 
-                                VerticalAlignment="Top" Margin="10,25,0,0" CornerRadius="2">
-                            <TextBlock Text="Ben Thanh Market"
-                                       FontSize="10"
-                                       Foreground="#FFDD6060"
-                                       Padding="3"
-                                       Width="88"
-                                       TextAlignment="Center"/>
-                        </Border>-->
-                        <Grid.RowDefinitions>
+				<PivotItem Margin="0" Header="MARKETS">
+					<Grid Background="White">
+						<Grid.RowDefinitions>
                             <RowDefinition Height="60" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -504,7 +459,9 @@
                             </Grid.ColumnDefinitions>
                             <TextBox BorderThickness="0" 
                                      HorizontalAlignment="Stretch"
-                                     Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,35,-2"
+                                     Grid.Column="0" 
+									 Grid.ColumnSpan="2" 
+									 Margin="0,0,35,-2"
                                      x:Name="txtSearchMarket"
                                      />
                             <Button x:Name="btSearchMarket" 
@@ -519,74 +476,34 @@
                                        VerticalAlignment="Center"/>
                             </Button>                            
                         </Grid>
-                        <ScrollViewer Name="scrollvMarket" 
+						<ScrollViewer Name="scrollvMarket" 
                                       Grid.Row="1"
                                       Grid.ColumnSpan="2" 
                                       HorizontalAlignment="Stretch"
                                       DataContext="{Binding Source={StaticResource Locator},Path=MarketVm}"
                                       ViewChanged="ScrollViewer_ViewChanged" >
-							<ListView x:Name="marketListBox"                                     
-                                     HorizontalAlignment="Stretch" 
-                                     VerticalAlignment="Top"                                      
-                                     ItemsSource="{Binding MarketItemList}"
-                                     ItemTemplate="{StaticResource itemListMarket}"                                     
-                                     Background="White" SelectionChanged="marketListBox_SelectionChanged" >
-								<ListView.ItemContainerStyle>
-									<Style TargetType="ListViewItem">
-										<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-									</Style>
-								</ListView.ItemContainerStyle>
-							</ListView>
-                        </ScrollViewer>
-                        <!--<ListBox ItemsSource="{Binding MarketItemList}" Width="350" Margin="0,5,0,10">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Padding="5,0,5,0"
-                                                   Text="{Binding FirstName}" />
-                                        <TextBlock Text="{Binding LastName}" />
-                                        <TextBlock Text=", " />
-                                        <TextBlock Text="{Binding Address}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>-->
-
-
-                    </Grid>
+							<GridView x:Name="marketListBox"  
+									  HorizontalAlignment="Center" 
+                                      VerticalAlignment="Top"                                      
+                                      ItemsSource="{Binding MarketItemList}"
+                                      ItemTemplate="{StaticResource itemListMarket}"                                     
+                                      Background="White" 
+									  SelectionChanged="marketListBox_SelectionChanged" >
+							</GridView>
+						</ScrollViewer>
+					</Grid>
                 </PivotItem>
-                <PivotItem Margin="0" Header="SALES">
-                    <!--<PivotItem.Header>
-                        <TextBlock Text="PRODUCTS"
-                                   Foreground="White"
-                                   FontSize="15"/>
-                    </PivotItem.Header>-->
-                    <Grid Background="White">
+				<PivotItem Margin="0" Header="SALES">
+					<Grid Background="White">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <!--<TextBox Grid.Row="0"
-                                 Grid.Column="1"
-                                 HorizontalAlignment="Stretch" 
-                                 VerticalAlignment="Center" 
-                                 Margin="0,0,15,0" 
-                                 BorderThickness="0,0,0,1.5"
-                                 BorderBrush="#FFC3B8B8"
-                                 Name="txtSearchProduct">
-                        </TextBox>
-                        <Button x:Name="btSearchProduct"
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Content="Search" 
-                                HorizontalAlignment="Center" 
-                                VerticalAlignment="Center" Margin="10,10,0,0"
-                                Click="btSearchProduct_Click"/>-->
-                        <Grid Grid.Row="0"
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="100" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Grid Grid.Row="0"
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
                               Background="#EBEBEB" 
@@ -621,18 +538,13 @@
 									  HorizontalAlignment="Stretch"
                                       DataContext="{Binding Source={StaticResource Locator},Path=AdvertiseVm}"
                                       ViewChanged="scrollvSale_ViewChanged">
-                            <ListView x:Name="lvSale"                                     
-                                     HorizontalAlignment="Stretch" 
-                                     VerticalAlignment="Top"                                      
-                                     ItemsSource="{Binding SaleList}"
-                                     Background="White"
-                                     ItemTemplate="{StaticResource itemListSales}" >
-								<ListView.ItemContainerStyle>
-									<Style TargetType="ListViewItem">
-										<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-									</Style>
-								</ListView.ItemContainerStyle>
-							</ListView>
+							<GridView x:Name="lvSale"                                     
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Top"                                      
+                                      ItemsSource="{Binding SaleList}"
+                                      Background="White"
+                                      ItemTemplate="{StaticResource itemListSales}">
+							</GridView>
                         </ScrollViewer>
                     </Grid>
                 </PivotItem>

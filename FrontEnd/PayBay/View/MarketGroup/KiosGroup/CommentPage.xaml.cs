@@ -41,22 +41,22 @@ namespace PayBay.View.MarketGroup.KiosGroup
             }                 
         }
 
-        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
-            if(scrollvComentLst.VerticalOffset >= scrollvComentLst.ScrollableHeight)
-            {
-                if(CommentVm != null)
-                    CommentVm.GetCommentOfStore(storeId, TYPEGET.MORE);
-            }
-            else if(scrollvComentLst.VerticalOffset == 0)
-            {
-                if(CommentVm != null)
-                    CommentVm.GetCommentOfStore(storeId, TYPEGET.MORE, TYPE.NEW);
-            }
-        }
+		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		{
+			int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
+			if (scrollvComentLst.VerticalOffset >= scrollvComentLst.ScrollableHeight)
+			{
+				if (CommentVm != null)
+					CommentVm.GetCommentOfStore(storeId, TYPEGET.MORE);
+			}
+			else if (scrollvComentLst.VerticalOffset == 0)
+			{
+				if (CommentVm != null)
+					CommentVm.GetCommentOfStore(storeId, TYPEGET.MORE, TYPE.NEW);
+			}
+		}
 
-        private async void starrRating_Tapped(object sender, TappedRoutedEventArgs e)
+		private async void starrRating_Tapped(object sender, TappedRoutedEventArgs e)
         {
             double rated = starRating.Value;
 

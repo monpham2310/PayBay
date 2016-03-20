@@ -9,8 +9,8 @@
                             Path=StartVm}"
       mc:Ignorable="d" SizeChanged="Page_SizeChanged">
 
-    <Page.Resources>
-        <converters:PageToNameConverter x:Key="PageToNameConverter" />
+	<Page.Resources>
+		<converters:PageToNameConverter x:Key="PageToNameConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         
         <DataTemplate x:Key="MenuListItemDataTemplate" x:DataType="model:MenuListItem">

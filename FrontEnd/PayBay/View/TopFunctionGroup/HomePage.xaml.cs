@@ -32,18 +32,20 @@ namespace PayBay.View.TopFunctionGroup
 	/// </summary>
 	public sealed partial class HomePage : Page
 	{
+		private int change = 1;
 		public AdvertiseViewModel AdVm => (AdvertiseViewModel)DataContext;
 
 		public HomePage()
 		{
 			this.InitializeComponent();            
             this.Loaded += Page_Loaded;
-            //FlipViewLoop();
-        }
-        int change = 1;
-        private void FlipViewLoop()
-        {        
-            DispatcherTimer timer = new DispatcherTimer();
+			//FlipViewLoop();
+		}
+
+		private void FlipViewLoop()
+        {
+			
+			DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(3);
             timer.Tick += (o, a) =>
             {
@@ -72,12 +74,12 @@ namespace PayBay.View.TopFunctionGroup
         
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-            //FlipViewLoop();
-        }
+			//FlipViewLoop();
+		}
 
         private void ToBlankPage(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MyFavoritesPage));
+            Frame.Navigate(typeof(MyFavoritesPage), NavigationMode.Forward);
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)

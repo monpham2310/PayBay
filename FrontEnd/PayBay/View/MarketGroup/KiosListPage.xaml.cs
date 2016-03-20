@@ -166,7 +166,7 @@ namespace PayBay.View.MarketGroup
             {
                 if(MediateClass.RateVm != null)
                     MediateClass.RateVm.LoadStarRated();
-                Frame.Navigate(typeof(KiosPage));
+                Frame.Navigate(typeof(KiosPage), NavigationMode.Forward);
             }
             else
             {
@@ -180,7 +180,7 @@ namespace PayBay.View.MarketGroup
             {
                 if (MediateClass.RateVm != null)
                     MediateClass.RateVm.LoadStarRated();
-                Frame.Navigate(typeof(KiosPage));
+                Frame.Navigate(typeof(KiosPage), NavigationMode.Forward);
             }
             else
             {

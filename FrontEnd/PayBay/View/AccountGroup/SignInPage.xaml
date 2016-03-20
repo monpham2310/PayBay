@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:converter="using:PayBay.Utilities.Converters"
     DataContext="{Binding Source={StaticResource Locator}, Path=AccountVm}"
-    mc:Ignorable="d" Loaded="Page_Loaded">
+    mc:Ignorable="d" 
+	Loaded="Page_Loaded"
+	KeyUp="Page_KeyUp">
 
 	<Page.Resources>
 		<converter:BoolToVisibilityConverter x:Name="BoolToVisibilityConverter"/>
@@ -55,18 +57,22 @@
 			</Grid>
 
 			<StackPanel Grid.Row="1">
-				<Grid Margin="20,20">
+				<Grid Margin="20">
 					<TextBox x:Name="EmailTextBox"
-						 BorderThickness="0,0,0,2" 
-						 PlaceholderText="Your Email Address"
-						 />
+							 BorderThickness="0,0,0,2" 
+							 PlaceholderText="Your Email Address"/>
 				</Grid>
-				<Grid Margin="20,20">
+				<Grid Margin="20,20,20,5">
 					<PasswordBox x:Name="PasswordBox" 
-							BorderThickness="0,0,0,2"                         
-							PlaceholderText="Enter your password" 
-							/>
+								 BorderThickness="0,0,0,2"     
+								 PlaceholderText="Enter your password"/>
 				</Grid>
+				<CheckBox x:Name="chkRemember"
+						  Content="Remember me?"
+						  HorizontalAlignment="Right"
+						  FontSize="13"
+						  Foreground="{StaticResource LightBlueBrush}"
+						  Margin="20,5"/>
 				<Button Content="SIGN IN"
                     Name="btSignin"
 					Margin="20,0"

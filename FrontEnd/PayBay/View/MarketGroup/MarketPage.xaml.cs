@@ -46,7 +46,7 @@ namespace PayBay.View.MarketGroup
             {
                 MediateClass.KiotVM.LoadMoreStore(MarketVm.SelectedMarket.MarketId, TYPEGET.START);                
             }
-            Frame.Navigate(typeof(KiosListPage));
+            Frame.Navigate(typeof(KiosListPage), NavigationMode.Forward);
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)

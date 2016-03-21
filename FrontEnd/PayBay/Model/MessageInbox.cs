@@ -31,7 +31,7 @@ namespace PayBay.Model
             }
         }
 
-        public int UserId
+        public int UserID
         {
             get
             {
@@ -124,7 +124,7 @@ namespace PayBay.Model
         public MessageInbox(int userId, int ownerId)
         {
             MessageId = -1;
-            UserId = userId;
+            UserID = userId;
             OwnerId = ownerId;
         }
     }

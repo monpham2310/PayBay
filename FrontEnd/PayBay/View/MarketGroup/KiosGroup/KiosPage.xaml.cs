@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.Utilities.Common;
+using PayBay.View.TopFunctionGroup;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -37,7 +38,7 @@ namespace PayBay.View.MarketGroup.KiosGroup
         private void btInbox_Click(object sender, RoutedEventArgs e)
         {            
             MediateClass.isBtInbox = true;
-            //Frame.Navigate(typeof(MessageInboxPage));            
+            Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);            
         }
 
 		private void linkHide_Click(object sender, RoutedEventArgs e)

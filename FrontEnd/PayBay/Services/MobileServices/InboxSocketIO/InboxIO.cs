@@ -109,7 +109,7 @@ namespace PayBay.Services.MobileServices.InboxSocketIO
                 MessageInbox inbox = new MessageInbox
                 {
                     UserID = receiverID,
-                    OwnerId = userId,
+                    OwnerID = userId,
                     UserName = name,
                     Avatar = avatar,
                     InboxDate = inboxDate,

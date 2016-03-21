@@ -10,8 +10,8 @@ namespace PayBay.Model
     public class MessageInbox : BaseViewModel
     {
         private int _messageId;
-        private int _userId;
-        private int _ownerId;
+        private int _userID;
+        private int _ownerID;
         private string _userName;
         private string _avatar;
         private DateTime _inboxDate;
@@ -35,12 +35,12 @@ namespace PayBay.Model
         {
             get
             {
-                return _userId;
+                return _userID;
             }
 
             set
             {
-                _userId = value;
+                _userID = value;
                 OnPropertyChanged();
             }
         }
@@ -88,16 +88,16 @@ namespace PayBay.Model
             }
         }
 
-        public int OwnerId
+        public int OwnerID
         {
             get
             {
-                return _ownerId;
+                return _ownerID;
             }
 
             set
             {
-                _ownerId = value;
+                _ownerID = value;
                 OnPropertyChanged();
             }
         }
@@ -125,7 +125,7 @@ namespace PayBay.Model
         {
             MessageId = -1;
             UserID = userId;
-            OwnerId = ownerId;
+            OwnerID = ownerId;
         }
     }
 }

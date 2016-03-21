@@ -17,7 +17,7 @@ namespace PayBay.ViewModel.InboxGroup
 {
     public class MessageInboxViewModel : BaseViewModel
     {
-        private static Socket _socket;        
+        public static Socket _socket;        
         private ObservableCollection<MessageInbox> _messageList;       
         MessageInbox receivedMessage;
         private int receiverID = -1;
@@ -42,10 +42,10 @@ namespace PayBay.ViewModel.InboxGroup
 
         public void InitSocket()
         {
-            if (portNumber > 0)
-                _socket = IO.Socket(HostURL + ":" + portNumber);
-            else
-                _socket = IO.Socket(HostURL);
+            //if (portNumber > 0)
+            //    _socket = IO.Socket(HostURL + ":" + portNumber);
+            //else
+            //    _socket = IO.Socket(HostURL);
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += updateMessageListUponReceivingMessage;
@@ -66,8 +66,10 @@ namespace PayBay.ViewModel.InboxGroup
 
         public MessageInboxViewModel()
         {
+            MediateClass.MessageVM = this;
             MessageList = new ObservableCollection<MessageInbox>();
-            receivedMessage = new MessageInbox(); 
+            receivedMessage = new MessageInbox();
+            InitSocket();
         }
 
         private void updateMessageListUponReceivingMessage(object sender, object e)
@@ -84,7 +86,7 @@ namespace PayBay.ViewModel.InboxGroup
             }
         }
 
-        public void registerClient()
+        public static void registerClient()
         {
             if (MediateClass.UserVM.UserInfo != null)
             {

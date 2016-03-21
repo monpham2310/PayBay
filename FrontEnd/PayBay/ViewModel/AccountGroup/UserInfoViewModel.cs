@@ -12,6 +12,8 @@ using Windows.UI.Popups;
 using PayBay.Services.MobileServices.PaybayNotification;
 using Windows.Networking.PushNotifications;
 using PayBay.Services.MobileServices.InboxSocketIO;
+using PayBay.ViewModel.InboxGroup;
+using Quobject.SocketIoClientDotNet.Client;
 
 namespace PayBay.ViewModel.AccountGroup
 {
@@ -72,12 +74,8 @@ namespace PayBay.ViewModel.AccountGroup
                     UserInfo = user.ToObject<UserInfo>();                    
                     //PaybayPushClient.UploadChannel();
                     PaybayPushClient.UploadChannel(UserInfo.UserId);
-                    if (MediateClass.MessageVM == null)
-                    {
-                        MediateClass.MessageVM = new InboxGroup.MessageInboxViewModel();
-                        MediateClass.MessageVM.InitSocket();
-                    }
-                    MediateClass.MessageVM.registerClient();
+                    MessageInboxViewModel._socket = IO.Socket("http://immense-reef-32079.herokuapp.com/");
+                    MessageInboxViewModel.registerClient();
                 }
             }
             catch (Exception ex)

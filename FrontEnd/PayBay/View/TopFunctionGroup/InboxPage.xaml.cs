@@ -36,9 +36,9 @@ namespace PayBay.View.TopFunctionGroup
                 
         private async void sendBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (tbxMessage.Text != "" && MessageVm != null)
+            if (tbxMessage.Text != "" && MediateClass.MessageVM != null)
             {
-                bool check = await MessageVm.sendMessage(tbxMessage.Text);
+                bool check = await MediateClass.MessageVM.sendMessage(tbxMessage.Text);
                 if (check)
                     tbxMessage.Text = "";
             }

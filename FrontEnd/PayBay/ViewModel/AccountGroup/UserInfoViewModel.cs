@@ -73,7 +73,10 @@ namespace PayBay.ViewModel.AccountGroup
                     //PaybayPushClient.UploadChannel();
                     PaybayPushClient.UploadChannel(UserInfo.UserId);
                     if (MediateClass.MessageVM == null)
+                    {
                         MediateClass.MessageVM = new InboxGroup.MessageInboxViewModel();
+                        MediateClass.MessageVM.InitSocket();
+                    }
                     MediateClass.MessageVM.registerClient();
                 }
             }

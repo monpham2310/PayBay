@@ -5,14 +5,15 @@
     xmlns:local="using:PayBay.View.TopFunctionGroup"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:custom="using:PayBay.Utilities.CustomControl"    
+	xmlns:custom="using:PayBay.Utilities.CustomControl"
+    DataContext="{Binding Source={StaticResource Locator}, Path=MessageVm}"
     mc:Ignorable="d">
 
     <Page.Resources>
         <DataTemplate x:Key="messageItemTemplate">
             <Grid Width="270">
                 <TextBlock Text="{Binding InboxDate}" 
-                           Foreground="Black"
+                           Foreground="White"
                            Margin="0,0,30,0"
                            HorizontalAlignment="Right"
                            FontSize="11"/>
@@ -23,11 +24,11 @@
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel Margin="5,0,0,0">
-                        <TextBlock Text="{Binding UserName}" 
-                                   Foreground="Black"
+                        <TextBlock Text="{Binding Username}" 
+                                   Foreground="White"
                                    FontSize="11"/>
                         <TextBlock Text="{Binding Content}"
-                                   Foreground="Black"
+                                   Foreground="White"
                                    FontSize="11" 
                                    Margin="0,5,0,0"
                                    FontStyle="Italic"/>
@@ -44,8 +45,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row ="0">
             <ScrollViewer Name="svMessage"
-                          ViewChanged="svMessage_ViewChanged"
-                          DataContext="{Binding Source={StaticResource Locator}, Path=MessageVm}">
+                          ViewChanged="svMessage_ViewChanged">
                 <ListView ItemsSource="{Binding MessageList}" 
                           ItemTemplate="{StaticResource messageItemTemplate}"
                           Margin="0,5,0,0"

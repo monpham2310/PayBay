@@ -61,7 +61,6 @@ namespace PayBay.ViewModel.InboxGroup
             {
                 JObject received = (JObject)data;
                 receivedMessage = received.ToObject<MessageInbox>();
-                receiverID = receivedMessage.UserID;
             });
         }
 
@@ -77,6 +76,8 @@ namespace PayBay.ViewModel.InboxGroup
             {
                 if (receivedMessage != null)
                 {
+                    receiverID = receivedMessage.UserID;
+                    Debug.WriteLine("RECEIVED: " + receivedMessage.Content);
                     MessageList.Add(receivedMessage);
                     receivedMessage = null;
                 }

@@ -17,7 +17,7 @@ namespace PayBay.ViewModel.InboxGroup
 {
     public class MessageInboxViewModel : BaseViewModel
     {
-        public static Socket _socket = IO.Socket(HostURL);        
+        public static Socket _socket;        
         private ObservableCollection<MessageInbox> _messageList;       
         MessageInbox receivedMessage;
         private int receiverID = -1;
@@ -88,6 +88,7 @@ namespace PayBay.ViewModel.InboxGroup
 
         public static void registerClient()
         {
+            _socket = IO.Socket(HostURL);
             if (MediateClass.UserVM.UserInfo != null)
             {
                 _socket.Emit("storeMyID", MediateClass.UserVM.UserInfo.UserId);

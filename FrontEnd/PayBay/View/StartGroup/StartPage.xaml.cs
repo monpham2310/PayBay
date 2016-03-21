@@ -11,7 +11,6 @@ using PayBay.View.AccountGroup;
 using PayBay.Utilities.Common;
 using PayBay.View.AppBarFunctionGroup;
 using System;
-using PayBay.View.InboxGroup;
 using Windows.UI.Popups;
 using PayBay.Utilities.Helpers;
 using PayBay.ViewModel;
@@ -39,7 +38,7 @@ namespace PayBay.View.StartGroup
 
         public void MoveHomePage()
         {
-            MainFrame.Navigate(typeof(HomePage));
+            MainFrame.Navigate(typeof(HomePage), NavigationMode.Back);
         }
 
 		private void StartPage_Loaded(object sender, RoutedEventArgs e)
@@ -105,17 +104,17 @@ namespace PayBay.View.StartGroup
 		/// <param name="e"></param>
 		private void OnNavigated(object sender, NavigationEventArgs e)
 		{
-			if (((NavigationMode)e.Parameter) == NavigationMode.New)
-			{
-				SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-			}
-			else
-			{
-				SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-			}
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-            //	((Frame)sender).CanGoBack ?
-            //	AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+            //if (((NavigationMode)e.Parameter) == NavigationMode.New)
+            //{
+            //	SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            //}
+            //else
+            //{
+            //	SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            //}
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                ((Frame)sender).CanGoBack ?
+                AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
 
         }
 
@@ -215,7 +214,14 @@ namespace PayBay.View.StartGroup
 		}
 
 		private void SearchButton_Click(object sender, RoutedEventArgs e)
-		{                       
+		{
+            if (MediateClass.MarketVM != null)
+                MediateClass.MarketVM.LoadMoreMarket(TYPEGET.START);
+            if (MediateClass.AdvertiseVM != null)
+                MediateClass.AdvertiseVM.LoadMoreSale(TYPEGET.START);
+            if (MediateClass.ProductVM != null)
+                MediateClass.ProductVM.LoadMoreProduct(TYPEGET.START);
+                          
 			MainFrame.Navigate(typeof(SearchPage), NavigationMode.Forward);
 		}
 
@@ -271,7 +277,7 @@ namespace PayBay.View.StartGroup
                 if (MediateClass.UserVM.UserInfo != null)
                 {                    
                     MediateClass.isBtInbox = false;
-                    MainFrame.Navigate(typeof(MessageInboxPage), NavigationMode.Forward);
+                    //MainFrame.Navigate(typeof(MessageInboxPage), NavigationMode.Forward);
                 }
                 else
                 {

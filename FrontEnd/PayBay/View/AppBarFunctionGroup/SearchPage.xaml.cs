@@ -33,15 +33,12 @@ namespace PayBay.View.AppBarFunctionGroup
         public SearchPage()
         {
             InitializeComponent();
-            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            this.Loaded += Page_Loaded;
+            //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;            
 		}
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            MarketVm.LoadMoreMarket(TYPEGET.START);
-            SaleVm.LoadMoreSale(TYPEGET.START);
-            ProductVm.LoadMoreProduct(TYPEGET.START);
+            
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -148,7 +145,7 @@ namespace PayBay.View.AppBarFunctionGroup
 		{
             if (MarketVm != null)
                 MarketVm.SelectedMarket = (Market)marketListBox.SelectedItem;
-			Frame.Navigate(typeof(MarketPage));
+			Frame.Navigate(typeof(MarketPage), NavigationMode.Forward);
 		}
 
         private void scrollvProducts_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

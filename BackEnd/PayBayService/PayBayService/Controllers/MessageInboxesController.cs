@@ -90,17 +90,20 @@ namespace PayBayService.Controllers
 
         // POST: api/MessageInboxes
         [ResponseType(typeof(MessageInbox))]
-        public HttpResponseMessage PostMessageInbox(MessageInbox messageInbox)
+        public async Task<HttpResponseMessage> PostMessageInbox(MessageInbox messageInbox)
         {
             JObject result = new JObject();
             try
             {
                 var userId = new SqlParameter("@UserID", messageInbox.UserID);
                 var ownerId = new SqlParameter("@OwnerID", messageInbox.OwnerID);
-                var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AddNewMessage", CommandType.StoredProcedure, ref Methods.err, userId, ownerId);
+                var content = new SqlParameter("@Content", messageInbox.Content);
+                var inboxDate = new SqlParameter("@InboxDate", messageInbox.InboxDate);
+                var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AddNewMessage", CommandType.StoredProcedure, ref Methods.err, userId, ownerId, content, inboxDate);
                 if (response.Count > 0)
                 {
                     result = response[0].ToObject<JObject>();
+                    await PushHelper.SendToastAsync(WebApiConfig.Services, result["Username"].ToString(), result["Content"].ToString(), new Uri(result["Avatar"].ToString()), result["UserID"].ToString());
                 }                              
             }
             catch (Exception ex)

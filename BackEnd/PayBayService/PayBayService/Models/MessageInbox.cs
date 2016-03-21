@@ -17,5 +17,7 @@ namespace PayBayService.Models
         public int MessageID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> OwnerID { get; set; }
+        public string Content { get; set; }
+        public Nullable<System.DateTime> InboxDate { get; set; }
     }
 }

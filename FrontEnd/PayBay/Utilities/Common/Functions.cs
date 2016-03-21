@@ -25,11 +25,11 @@ namespace PayBay.Utilities.Common
         OLD = 0,
         NEW = 1
     };
-
+        
     public class Functions
     {                
         private static Functions m_Instance = null;
-
+        
         static Regex ValidEmailRegex = CreateValidEmailRegex();
 
         public static Functions Instance

@@ -8,17 +8,35 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using PayBay.Utilities.Common;
+using PayBay.Model;
 
 namespace PayBay.Services.MobileServices.InboxSocketIO
 {
     public class InboxIO
     {
-        private Socket _socket;
-        private String _customerID;
-        private ObservableCollection<String> _messageList;
-        private String receivedMessage;
+        private static InboxIO m_Instance = null;
+        private static string HostURL = "http://immense-reef-32079.herokuapp.com/";
 
-        public ObservableCollection<string> MessageList
+        public static InboxIO Instance
+        {
+            get
+            {
+                return m_Instance ?? (m_Instance = new InboxIO(HostURL, 0));
+            }
+
+            protected set
+            {
+                m_Instance = value;
+            }
+        }
+        private Socket _socket;
+        //private String _customerID;
+        private ObservableCollection<MessageInbox> _messageList;
+        //private String receivedMessage;
+        MessageInbox receivedMessage;
+
+        public ObservableCollection<MessageInbox> MessageList
         {
             get
             {
@@ -26,15 +44,15 @@ namespace PayBay.Services.MobileServices.InboxSocketIO
             }
 
             set
-            {
-                if (Equals(value, _messageList)) return;
+            {                
                 _messageList = value;
             }
         }
 
         public InboxIO(String hostURL, int portNumber)
         {
-            MessageList = new ObservableCollection<String>();
+            _messageList = new ObservableCollection<MessageInbox>();
+            receivedMessage = new MessageInbox();
             if (portNumber > 0)
                 _socket = IO.Socket(hostURL + ":" + portNumber);
             else
@@ -42,19 +60,18 @@ namespace PayBay.Services.MobileServices.InboxSocketIO
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += updateMessageListUponReceivingMessage;
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            timer.Interval = new TimeSpan(0, 0, 1);
             timer.Start();
 
             _socket.On(Socket.EVENT_CONNECT, () =>
             {
                 _socket.Emit("testwp", "hi");
-
             });
 
             _socket.On(Socket.EVENT_MESSAGE, (data) =>
             {
                 JObject received = (JObject)data;
-                receivedMessage = received.GetValue("CustomerID") + ": " + received.GetValue("msg");
+                receivedMessage = received.ToObject<MessageInbox>();
             });
 
         }
@@ -70,21 +87,41 @@ namespace PayBay.Services.MobileServices.InboxSocketIO
                 }
             }
         }
-
-        public void registerClient(String customerID)
+                
+        public void registerClient()
         {
-            _customerID = customerID;
-            _socket.Emit("storeMyID", _customerID);
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                _socket.Emit("storeMyID", MediateClass.UserVM.UserInfo.UserId);
+            }
         }
-
-        public void sendMessage(String receiverID, String message)
+                
+        public void sendMessage(string message)
         {
-            JObject jsonRequest = JObject.FromObject(new { hisId = receiverID, msg = message });
-            Debug.WriteLine("JSON: " + jsonRequest);
-            _socket.Send(jsonRequest);
-            _messageList.Add(_customerID + ": " + message);
-        }
+            if (MediateClass.KiotVM != null && MediateClass.UserVM != null)
+            {
+                int receiverID = MediateClass.KiotVM.SelectedStore.OwnerId;
+                int userId = MediateClass.UserVM.UserInfo.UserId;
+                string name = MediateClass.UserVM.UserInfo.Avatar;
+                string avatar = MediateClass.UserVM.UserInfo.Avatar;
+                DateTime inboxDate = DateTime.Now;
 
+                MessageInbox inbox = new MessageInbox
+                {
+                    UserId = receiverID,
+                    OwnerId = userId,
+                    UserName = name,
+                    Avatar = avatar,
+                    RecentDate = inboxDate,
+                    Content = message
+                };
+
+                JObject jsonRequest = JObject.FromObject(inbox);
+                Debug.WriteLine("JSON: " + jsonRequest);
+                _socket.Send(jsonRequest);
+                _messageList.Add(inbox);
+            }
+        }
 
     }
 }

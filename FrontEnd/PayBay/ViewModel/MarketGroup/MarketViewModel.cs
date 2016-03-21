@@ -53,7 +53,8 @@ namespace PayBay.ViewModel.MarketGroup
         public MarketViewModel()
         {
             MediateClass.MarketVM = this;
-            InitializeProperties();           
+            InitializeProperties();
+            LoadMoreMarket(TYPEGET.START);         
         }
 
         private void InitializeProperties()

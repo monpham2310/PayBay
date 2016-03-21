@@ -85,7 +85,7 @@ namespace PayBay.ViewModel.HomePageGroup
             MediateClass.AdvertiseVM = this;
 			InitializeProperties();
             InitializeDataFromDB();
-            //LoadMoreSale(TYPEGET.START);
+            LoadMoreSale(TYPEGET.START);
         }
 
 		/// <summary>

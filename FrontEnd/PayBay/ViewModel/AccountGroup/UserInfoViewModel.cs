@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using PayBay.Services.MobileServices.PaybayNotification;
 using Windows.Networking.PushNotifications;
+using PayBay.Services.MobileServices.InboxSocketIO;
 
 namespace PayBay.ViewModel.AccountGroup
 {
@@ -71,6 +72,9 @@ namespace PayBay.ViewModel.AccountGroup
                     UserInfo = user.ToObject<UserInfo>();                    
                     //PaybayPushClient.UploadChannel();
                     PaybayPushClient.UploadChannel(UserInfo.UserId);
+                    if (MediateClass.MessageVM == null)
+                        MediateClass.MessageVM = new InboxGroup.MessageInboxViewModel();
+                    MediateClass.MessageVM.registerClient();
                 }
             }
             catch (Exception ex)

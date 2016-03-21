@@ -17,7 +17,8 @@ namespace PayBay.Model
         private string _phone;
         private int _marketId;
         private int _ownerId;
-        private string _userName;        
+        private string _userName;
+        private string _avatar;  
         private string _sasQuery;
         private float _rate;        
 
@@ -154,6 +155,19 @@ namespace PayBay.Model
                 OnPropertyChanged();
             }
         }
-                
+
+        public string Avatar
+        {
+            get
+            {
+                return _avatar;
+            }
+
+            set
+            {
+                _avatar = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@ using Quobject.SocketIoClientDotNet.Client;
 using System.Diagnostics;
 using PayBay.Services.MobileServices.InboxSocketIO;
 using System.Collections.ObjectModel;
+using PayBay.Utilities.Common;
+using PayBay.ViewModel.InboxGroup;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,28 +28,25 @@ namespace PayBay.View.TopFunctionGroup
 	/// </summary>
 	public sealed partial class InboxPage : Page
 	{
-
-        InboxIO inbox;
-
+        private MessageInboxViewModel MessageVm => (MessageInboxViewModel)DataContext;               
         public InboxPage()
 		{
-			this.InitializeComponent();
-            inbox = new InboxIO("http://immense-reef-32079.herokuapp.com/", 0);
-            inbox.registerClient("Huy");
+			this.InitializeComponent();            
         }
-
-        public ObservableCollection<string> MessageList
+                
+        private async void sendBtn_Click(object sender, RoutedEventArgs e)
         {
-            get
+            if (tbxMessage.Text != "" && MediateClass.MessageVM != null)
             {
-                return inbox.MessageList;
+                bool check = await MediateClass.MessageVM.sendMessage(tbxMessage.Text);
+                if (check)
+                    tbxMessage.Text = "";
             }
         }
 
-        private void sendBtn_Click(object sender, RoutedEventArgs e)
+        private void svMessage_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            if (tbxMessage.Text != "")
-                inbox.sendMessage("Tam", tbxMessage.Text);
+
         }
     }
 }

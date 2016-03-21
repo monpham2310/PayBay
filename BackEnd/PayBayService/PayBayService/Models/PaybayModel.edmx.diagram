@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="PayBayDatabaseModel.Store" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.User" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.UserType" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PayBayDatabaseModel.InboxDetail" Width="1.5" PointX="7.375" PointY="8.75" />
         <EntityTypeShape EntityType="PayBayDatabaseModel.MessageInbox" Width="1.5" PointX="9.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>

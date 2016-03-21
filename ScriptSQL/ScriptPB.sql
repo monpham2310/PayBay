@@ -165,3 +165,7 @@ create table paybayservice.StatisticRating(
 	StoreID int,
 	RateOfUser float
 );
+
+alter table paybayservice.MessageInbox add Content nvarchar(255)
+alter table paybayservice.MessageInbox add InboxDate datetime
+alter table paybayser

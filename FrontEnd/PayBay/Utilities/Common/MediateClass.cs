@@ -1,5 +1,4 @@
-﻿using PayBay.View.InboxGroup;
-using PayBay.View.MarketGroup.KiosGroup;
+﻿using PayBay.View.MarketGroup.KiosGroup;
 using PayBay.View.OrderGroup;
 using PayBay.View.StartGroup;
 using PayBay.ViewModel.AccountGroup;
@@ -34,7 +33,6 @@ namespace PayBay.Utilities.Common
         public static OrderViewModel OrderVM;
         public static OrderPage OrderPage;
         public static MessageInboxViewModel MessageVM;
-        public static InboxDetailViewModel MsgDetailVM;
         public static bool isBtInbox = false;
     }
 }

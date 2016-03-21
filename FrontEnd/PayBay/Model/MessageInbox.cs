@@ -15,6 +15,7 @@ namespace PayBay.Model
         private string _userName;
         private string _avatar;
         private DateTime _recentDate;
+        private string _content;
 
         public int MessageId
         {
@@ -97,6 +98,20 @@ namespace PayBay.Model
             set
             {
                 _ownerId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Content
+        {
+            get
+            {
+                return _content;
+            }
+
+            set
+            {
+                _content = value;
                 OnPropertyChanged();
             }
         }

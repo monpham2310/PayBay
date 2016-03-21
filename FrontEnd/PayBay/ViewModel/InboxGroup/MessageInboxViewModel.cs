@@ -17,11 +17,11 @@ namespace PayBay.ViewModel.InboxGroup
 {
     public class MessageInboxViewModel : BaseViewModel
     {
-        public static Socket _socket;        
+        public static Socket _socket = IO.Socket(HostURL);        
         private ObservableCollection<MessageInbox> _messageList;       
         MessageInbox receivedMessage;
         private int receiverID = -1;
-        private string HostURL = "http://immense-reef-32079.herokuapp.com/";
+        private static string HostURL = "http://immense-reef-32079.herokuapp.com/";
         private int portNumber = 0;
         private static bool isResponsed = false;
         private static bool isSended = false;

@@ -73,8 +73,7 @@ namespace PayBay.ViewModel.AccountGroup
                     JObject user = JObject.Parse(result.ToString());
                     UserInfo = user.ToObject<UserInfo>();                    
                     //PaybayPushClient.UploadChannel();
-                    PaybayPushClient.UploadChannel(UserInfo.UserId);
-                    MessageInboxViewModel._socket = IO.Socket("http://immense-reef-32079.herokuapp.com/");
+                    PaybayPushClient.UploadChannel(UserInfo.UserId);                    
                     MessageInboxViewModel.registerClient();
                 }
             }

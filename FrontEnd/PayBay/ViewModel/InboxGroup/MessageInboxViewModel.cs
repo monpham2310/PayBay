@@ -67,7 +67,7 @@ namespace PayBay.ViewModel.InboxGroup
         public MessageInboxViewModel()
         {
             MediateClass.MessageVM = this;
-            MessageList = new ObservableCollection<MessageInbox>();
+            _messageList = new ObservableCollection<MessageInbox>();
             receivedMessage = new MessageInbox();
             InitSocket();
         }
@@ -100,7 +100,7 @@ namespace PayBay.ViewModel.InboxGroup
             try {
                 if (MediateClass.UserVM != null)
                 {
-                    receiverID = (receiverID == -1) ? MediateClass.KiotVM.SelectedStore.OwnerId : receiverID;
+                    receiverID = (receiverID == -1 || receiverID == 0) ? MediateClass.KiotVM.SelectedStore.OwnerId : receiverID;
                     int userId = MediateClass.UserVM.UserInfo.UserId;
                     string name = MediateClass.UserVM.UserInfo.Username;
                     string avatar = MediateClass.UserVM.UserInfo.Avatar;

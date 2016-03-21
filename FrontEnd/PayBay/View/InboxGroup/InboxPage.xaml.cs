@@ -40,13 +40,25 @@ namespace PayBay.View.TopFunctionGroup
             {
                 bool check = await MessageVm.sendMessage(tbxMessage.Text);
                 if (check)
+                {
                     tbxMessage.Text = "";
+                    svMessage.ChangeView(null, svMessage.ScrollableHeight, null);
+                }
             }
         }
 
         private void svMessage_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-
+        { 
+            if(svMessage.VerticalOffset == 0)
+            {
+                if (MessageVm != null)
+                    MessageVm.LoadInboxHitory(TYPEGET.MORE);
+            }
+            else if(svMessage.VerticalOffset >= svMessage.ScrollableHeight)
+            {
+                if (MessageVm != null)
+                    MessageVm.LoadInboxHitory(TYPEGET.MORE, TYPE.NEW);
+            }
         }
     }
 }

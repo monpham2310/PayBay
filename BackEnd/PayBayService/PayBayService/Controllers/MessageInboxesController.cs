@@ -35,7 +35,7 @@ namespace PayBayService.Controllers
             try
             {
                 var mess = new SqlParameter("@MessageID", messageId);
-                var user = new SqlParameter("@UserID", userId);
+                var user = new SqlParameter("@OwnerID", userId);
                 if(type == TYPE.OLD)
                 {
                     result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMessageOfStore", CommandType.StoredProcedure, ref Methods.err, mess, user);

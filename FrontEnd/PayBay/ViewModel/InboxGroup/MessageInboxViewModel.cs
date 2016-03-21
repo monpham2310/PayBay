@@ -17,12 +17,13 @@ namespace PayBay.ViewModel.InboxGroup
 {
     public class MessageInboxViewModel : BaseViewModel
     {
-        public static Socket _socket;        
+        private static Socket _socket;        
         private ObservableCollection<MessageInbox> _messageList;       
-        MessageInbox receivedMessage;
+        private MessageInbox receivedMessage;
+        private MessageInbox _messageSelected;
         private int receiverID = -1;
         private static string HostURL = "http://immense-reef-32079.herokuapp.com/";
-        private int portNumber = 0;
+        //private int portNumber = 0;
         private static bool isResponsed = false;
         private static bool isSended = false;
 
@@ -40,13 +41,31 @@ namespace PayBay.ViewModel.InboxGroup
             }
         }
 
-        public void InitSocket()
+        public MessageInbox MessageSelected
         {
-            //if (portNumber > 0)
-            //    _socket = IO.Socket(HostURL + ":" + portNumber);
-            //else
-            //    _socket = IO.Socket(HostURL);
+            get
+            {
+                return _messageSelected;
+            }
 
+            set
+            {
+                _messageSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public static void registerClient()
+        {
+            _socket = IO.Socket(HostURL);
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                _socket.Emit("storeMyID", MediateClass.UserVM.UserInfo.UserId);
+            }
+        }
+
+        public void InitSocket()
+        {            
             DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += updateMessageListUponReceivingMessage;
             timer.Interval = new TimeSpan(0, 0, 1);
@@ -68,8 +87,9 @@ namespace PayBay.ViewModel.InboxGroup
         {
             MediateClass.MessageVM = this;
             _messageList = new ObservableCollection<MessageInbox>();
-            receivedMessage = new MessageInbox();
+            MessageSelected = new MessageInbox();            
             InitSocket();
+            LoadInboxHitory(TYPEGET.START);
         }
 
         private void updateMessageListUponReceivingMessage(object sender, object e)
@@ -78,23 +98,14 @@ namespace PayBay.ViewModel.InboxGroup
             {
                 if (receivedMessage != null)
                 {
-                    receiverID = receivedMessage.UserID;
+                    receiverID = receivedMessage.OwnerID;
                     Debug.WriteLine("RECEIVED: " + receivedMessage.Content);
                     MessageList.Add(receivedMessage);
                     receivedMessage = null;
                 }
             }
         }
-
-        public static void registerClient()
-        {
-            _socket = IO.Socket(HostURL);
-            if (MediateClass.UserVM.UserInfo != null)
-            {
-                _socket.Emit("storeMyID", MediateClass.UserVM.UserInfo.UserId);
-            }
-        }
-
+                
         public async Task<bool> sendMessage(string message)
         {
             try {
@@ -144,6 +155,78 @@ namespace PayBay.ViewModel.InboxGroup
                 isSended = false;
             }
             return true;
+        }
+
+        public async void LoadInboxHitory(TYPEGET typeGet, TYPE type = TYPE.OLD)
+        {
+            int userID = MediateClass.UserVM.UserInfo.UserId;
+            int msgId = -1;
+            if(typeGet == TYPEGET.MORE)
+            {
+                if(type == TYPE.OLD)
+                {
+                    msgId = MessageList.Min(x => x.MessageId);
+                }
+                else
+                {
+                    msgId = MessageList.Max(x => x.MessageId);
+                }
+            }
+
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"messageId" , msgId.ToString()},
+                {"userId" , userID.ToString()},
+                {"type" , type.ToString()}
+            };
+
+            await SendData(typeGet, type, param);
+        }
+
+        private async Task SendData(TYPEGET typeGet, TYPE type, IDictionary<string, string> param)
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (!isResponsed)
+                    {
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("MessageInboxes", HttpMethod.Get, param);
+                        JArray response = JArray.Parse(result.ToString());
+                        if (typeGet == TYPEGET.START)
+                        {
+                            MessageList = response.ToObject<ObservableCollection<MessageInbox>>();
+                        }
+                        else
+                        {
+                            ObservableCollection<MessageInbox> more = response.ToObject<ObservableCollection<MessageInbox>>();
+                            if (type == TYPE.OLD)
+                            {
+                                for (int i = 0; i < more.Count; i++)
+                                {
+                                    MessageList.Insert(i, more[i]);
+                                }
+                            }
+                            else
+                            {                                
+                                foreach (var item in more)
+                                {
+                                    MessageList.Add(item);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Message!").ShowAsync();
+            }
+            finally
+            {
+                isResponsed = false;
+            }
         }
 
     }

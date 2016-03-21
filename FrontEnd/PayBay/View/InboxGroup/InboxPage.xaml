@@ -14,9 +14,9 @@
             <Grid Width="270">
                 <TextBlock Text="{Binding InboxDate}" 
                            Foreground="Black"
-                           Margin="0,0,30,0"
+                           Margin="0,0,10,0"
                            HorizontalAlignment="Right"
-                           FontSize="11"/>
+                           FontSize="8"/>
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Height="40" Width="40">
                         <Ellipse.Fill>
@@ -24,7 +24,7 @@
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel Margin="5,0,0,0">
-                        <TextBlock Text="{Binding Username}" 
+                        <TextBlock Text="{Binding UserName}" 
                                    Foreground="Black"
                                    FontSize="11"/>
                         <TextBlock Text="{Binding Content}"
@@ -41,7 +41,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row ="0">
             <ScrollViewer Name="svMessage"
@@ -57,14 +57,16 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
-            </Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>            
             <TextBox VerticalAlignment="Center" 
                      Grid.Column="0"
+                     Height="60"
                      x:Name="tbxMessage"
                      PlaceholderText="Enter your message here..."/>
             <Button Background="{StaticResource LightBlueBrush}"
                     Grid.Column="1"
+                    Height="30"
                     HorizontalAlignment="Center"
                     Click="sendBtn_Click">
                 <TextBlock Text="Send" 

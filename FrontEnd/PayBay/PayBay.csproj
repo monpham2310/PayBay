@@ -140,6 +140,9 @@
     </Compile>
     <Compile Include="ViewModel\InboxGroup\MessageInboxViewModel.cs" />
     <Compile Include="ViewModel\OrderGroupViewModel\OrderViewModel.cs" />
+    <Compile Include="View\InboxGroup\InboxListPage.xaml.cs">
+      <DependentUpon>InboxListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OrderGroup\DeliveryPaymentGroup\ConfirmPage.xaml.cs">
       <DependentUpon>ConfirmPage.xaml</DependentUpon>
     </Compile>
@@ -237,7 +240,7 @@
     <Compile Include="View\StartGroup\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TopFunctionGroup\InboxPage.xaml.cs">
+    <Compile Include="View\InboxGroup\InboxPage.xaml.cs">
       <DependentUpon>InboxPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TopFunctionGroup\MyFavoritesPage.xaml.cs">
@@ -393,6 +396,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\InboxGroup\InboxListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MarketGroup\KiosGroup\CommentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -469,7 +476,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TopFunctionGroup\InboxPage.xaml">
+    <Page Include="View\InboxGroup\InboxPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

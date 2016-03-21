@@ -896,62 +896,76 @@ as
 	where a.MessageID = @MessageID and ID > @ID 
 	order by ID desc
 
-ALTER proc [paybayservice].[sp_GetMessageOfStore] ---1,9
+ALTER proc [paybayservice].[sp_GetMessageOfStore] --52,8
 @MessageID int,
-@UserID int
+@OwnerID int
 as	
 	if(@MessageID = -1)
 	begin
-		select top 8 a.MessageID,a.UserId,Username,Avatar,getdate() as RecentDate
-		from paybayservice.MessageInbox a join paybayservice.Users b on a.UserID=b.UserID 				
-		where OwnerID=9
-		group by a.MessageID,a.UserId,Username,Avatar
-		order by a.MessageID desc
+		select MessageID,a.UserID,OwnerID,Username,Avatar,InboxDate,Content
+		from (
+			select top 8 MessageID,a.UserID,OwnerID,Username,Avatar,InboxDate,Content
+			from paybayservice.MessageInbox a join paybayservice.Users b on a.OwnerID=b.UserID
+			where OwnerID = @OwnerID or a.UserID = @OwnerID
+			order by MessageID desc
+		) a
+		order by MessageID asc
 	end
 	else
 	begin
-		select top 8 a.MessageID,a.UserId,Username,Avatar,getdate() RecentDate
-		from paybayservice.MessageInbox a join paybayservice.Users b on a.UserID=b.UserID 				
-		where OwnerID=@UserID and a.MessageID < @MessageID
-		group by a.MessageID,a.UserId,Username,Avatar
-		order by a.MessageID desc
+		select MessageID,a.UserID,OwnerID,Username,Avatar,InboxDate,Content
+		from (
+			select top 8 MessageID,a.UserID,OwnerID,Username,Avatar,InboxDate,Content
+			from paybayservice.MessageInbox a join paybayservice.Users b on a.OwnerID=b.UserID
+			where  MessageID < @MessageID and (OwnerID = @OwnerID or a.UserID = @OwnerID)
+			order by MessageID desc
+		) a
+		order by MessageID asc
 	end
 
-alter proc paybayservice.sp_GetMoreNewMessage
+alter proc paybayservice.sp_GetMoreNewMessage --10,9
 @MessageID int,
-@UserID int
-as
-	select top 8 a.MessageID,a.UserId,Username,Avatar,getdate() as RecentDate
-		from paybayservice.MessageInbox a join paybayservice.Users b on a.UserID=b.UserID 				
-		where OwnerID=@UserID and a.MessageID > @MessageID
-		group by a.MessageID,a.UserId,Username,Avatar
-		order by a.MessageID desc
-
-create proc paybayservice.sp_AddNewMessage
-@UserID int,
 @OwnerID int
 as
-	begin tran addNewMsg
-		if exists (select 1 from paybayservice.MessageInbox where UserID=@UserID and OwnerID=@OwnerID)
-		begin
-			insert into paybayservice.MessageInbox values (@UserID,@OwnerID)
-		end
-		if(@@error > 0)
-			rollback tran
-	commit
+	select MessageID,a.UserID,OwnerID,Username,Avatar,InboxDate,Content
+		from (
+			select top 8 MessageID,a.UserID,OwnerID,Username,Avatar,InboxDate,Content
+			from paybayservice.MessageInbox a join paybayservice.Users b on a.OwnerID=b.UserID
+			where MessageID > @MessageID and (OwnerID = @OwnerID or a.UserID = @OwnerID)
+			order by MessageID desc
+		) a
+		order by MessageID asc
 
-alter proc paybayservice.sp_AddMsgDetail
-@MessageID int,
-@InboxDate datetime,
-@Content nvarchar(max)
+alter proc paybayservice.sp_InboxHistory --9
+@OwnerID int
 as
-	begin tran addDetail
-		insert into paybayservice.InboxDetail values (@MessageID,@InboxDate,@Content)
-		if(@@error > 0)
-			rollback tran
-		select a.UserID,OwnerID,ID,b.MessageID,Username,Avatar,InboxDate,Content
-		from paybayservice.MessageInbox a join paybayservice.InboxDetail b on a.MessageID=b.MessageID
-			join paybayservice.Users c on c.UserID=a.OwnerID
-		where b.MessageID = @MessageID and InboxDate = @InboxDate
-	commit
+	declare @UserID int,@UserName nvarchar(30),@Avatar nvarchar(max),@InboxDate datetime
+	declare @tbl table (UserID int,UserName nvarchar(30),Avatar nvarchar(max),InboxDate datetime)
+	declare cUser cursor for select distinct UserID
+								from paybayservice.MessageInbox
+								where OwnerID = @OwnerID
+								order by UserID desc
+	open cUser
+	fetch next from cUser into @UserID
+	while @@fetch_status = 0
+	begin
+		select @UserName=Username,@Avatar=Avatar
+		from paybayservice.Users a
+		where a.UserID=@UserID
+
+		select top 1 @InboxDate=InboxDate
+		from paybayservice.MessageInbox
+		where UserID = @UserID
+		order by InboxDate desc
+
+		insert into @tbl select @UserID,@UserName,@Avatar,@InboxDate
+		fetch next from cUser into @UserID
+	end
+	close cUser
+	deallocate cUser
+	select UserID,UserName,Avatar,InboxDate from @tbl as temp
+
+
+
+
 

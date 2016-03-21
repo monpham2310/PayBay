@@ -112,7 +112,7 @@ namespace PayBay.Services.MobileServices.InboxSocketIO
                     OwnerId = userId,
                     UserName = name,
                     Avatar = avatar,
-                    RecentDate = inboxDate,
+                    InboxDate = inboxDate,
                     Content = message
                 };
 

@@ -14,7 +14,7 @@ namespace PayBay.Model
         private int _ownerId;
         private string _userName;
         private string _avatar;
-        private DateTime _recentDate;
+        private DateTime _inboxDate;
         private string _content;
 
         public int MessageId
@@ -73,17 +73,17 @@ namespace PayBay.Model
             }
         }
 
-        public DateTime RecentDate
+        public DateTime InboxDate
         {
             get
             {
-                return _recentDate;
+                return _inboxDate;
             }
             set
             {
                 if (value == null)
                     value = DateTime.Now;
-                _recentDate = value;
+                _inboxDate = value;
                 OnPropertyChanged();
             }
         }

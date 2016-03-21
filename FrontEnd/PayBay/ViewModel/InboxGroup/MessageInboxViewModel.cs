@@ -20,6 +20,7 @@ namespace PayBay.ViewModel.InboxGroup
         private Socket _socket;        
         private ObservableCollection<MessageInbox> _messageList;       
         MessageInbox receivedMessage;
+        private int receiverID = -1;
         private string HostURL = "http://immense-reef-32079.herokuapp.com/";
         private int portNumber = 0;
         private static bool isResponsed = false;
@@ -41,7 +42,7 @@ namespace PayBay.ViewModel.InboxGroup
 
         public MessageInboxViewModel()
         {
-            _messageList = new ObservableCollection<MessageInbox>();
+            MessageList = new ObservableCollection<MessageInbox>();
             receivedMessage = new MessageInbox();
             if (portNumber > 0)
                 _socket = IO.Socket(HostURL + ":" + portNumber);
@@ -62,6 +63,7 @@ namespace PayBay.ViewModel.InboxGroup
             {
                 JObject received = (JObject)data;
                 receivedMessage = received.ToObject<MessageInbox>();
+                receiverID = receivedMessage.UserId;
             });
 
         }
@@ -89,11 +91,11 @@ namespace PayBay.ViewModel.InboxGroup
         public async Task<bool> sendMessage(string message)
         {
             try {
-                if (MediateClass.KiotVM != null && MediateClass.UserVM != null)
+                if (MediateClass.UserVM != null)
                 {
-                    int receiverID = MediateClass.KiotVM.SelectedStore.OwnerId;
+                    receiverID = (receiverID == -1) ? MediateClass.KiotVM.SelectedStore.OwnerId : receiverID;
                     int userId = MediateClass.UserVM.UserInfo.UserId;
-                    string name = MediateClass.UserVM.UserInfo.Avatar;
+                    string name = MediateClass.UserVM.UserInfo.Username;
                     string avatar = MediateClass.UserVM.UserInfo.Avatar;
                     DateTime inboxDate = DateTime.Now;
 
@@ -103,7 +105,7 @@ namespace PayBay.ViewModel.InboxGroup
                         OwnerId = userId,
                         UserName = name,
                         Avatar = avatar,
-                        RecentDate = inboxDate,
+                        InboxDate = inboxDate,
                         Content = message
                     };
                     if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)

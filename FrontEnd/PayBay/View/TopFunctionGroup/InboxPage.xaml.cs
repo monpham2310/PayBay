@@ -28,7 +28,7 @@ namespace PayBay.View.TopFunctionGroup
 	/// </summary>
 	public sealed partial class InboxPage : Page
 	{
-        private MessageInboxViewModel MessageVm => (MessageInboxViewModel)DataContext;               
+        private MessageInboxViewModel MessageVm => (MessageInboxViewModel)svMessage.DataContext;               
         public InboxPage()
 		{
 			this.InitializeComponent();            
@@ -36,9 +36,9 @@ namespace PayBay.View.TopFunctionGroup
                 
         private async void sendBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (tbxMessage.Text != "" && MediateClass.MessageVM != null)
+            if (tbxMessage.Text != "" && MessageVm != null)
             {
-                bool check = await MediateClass.MessageVM.sendMessage(tbxMessage.Text);
+                bool check = await MessageVm.sendMessage(tbxMessage.Text);
                 if (check)
                     tbxMessage.Text = "";
             }

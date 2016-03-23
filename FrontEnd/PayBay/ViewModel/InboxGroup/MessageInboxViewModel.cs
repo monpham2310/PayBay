@@ -20,7 +20,7 @@ namespace PayBay.ViewModel.InboxGroup
         private static Socket _socket;        
         private ObservableCollection<MessageInbox> _messageList;       
         private MessageInbox receivedMessage;
-        private int _userChated;
+        private static int _userChated;
 
         private ObservableCollection<MessageInbox> _messageLstHistory;
 
@@ -57,7 +57,7 @@ namespace PayBay.ViewModel.InboxGroup
             }
         }
 
-        public int UserChated
+        public static int UserChated
         {
             get
             {
@@ -67,7 +67,7 @@ namespace PayBay.ViewModel.InboxGroup
             set
             {
                 _userChated = value;
-                OnPropertyChanged();
+                //OnPropertyChanged();
             }
         }
 
@@ -102,8 +102,7 @@ namespace PayBay.ViewModel.InboxGroup
         public MessageInboxViewModel()
         {
             MediateClass.MessageVM = this;
-            _messageList = new ObservableCollection<MessageInbox>();
-            _userChated = -1;                       
+            _messageList = new ObservableCollection<MessageInbox>();                                 
             InitSocket();            
             LoadMessageList();
         }

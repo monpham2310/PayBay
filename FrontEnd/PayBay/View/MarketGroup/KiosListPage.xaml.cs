@@ -77,6 +77,7 @@ namespace PayBay.View.MarketGroup
                 {
                     KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
                     int selectedId = KiosVm.SelectedStore.StoreId;
+                    ViewModel.InboxGroup.MessageInboxViewModel.UserChated = KiosVm.SelectedStore.OwnerId;
                     MediateClass.ProductVM.GetProductsOfStore(selectedId, TYPEGET.START);
                     MediateClass.CommentVM.GetCommentOfStore(selectedId, TYPEGET.START);                    
                 }

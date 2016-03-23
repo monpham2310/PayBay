@@ -74,8 +74,6 @@ namespace PayBay.ViewModel.AccountGroup
                     UserInfo = user.ToObject<UserInfo>();                    
                     //PaybayPushClient.UploadChannel();
                     PaybayPushClient.UploadChannel(UserInfo.UserId);
-                    //if (MediateClass.MessageVM == null)
-                    //    MediateClass.MessageVM = new MessageInboxViewModel();               
                     MessageInboxViewModel.registerClient();
                 }
             }

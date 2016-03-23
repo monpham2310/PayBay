@@ -358,7 +358,7 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.MyPayBay:
 				{
-					frame.Navigate(typeof(MyFavoritesPage), NavigationMode.New);
+					frame.Navigate(typeof(HomePageNew), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.MyFavorites:

@@ -244,6 +244,9 @@
     <Compile Include="View\InboxGroup\InboxPage.xaml.cs">
       <DependentUpon>InboxPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\HomePageNew.xaml.cs">
+      <DependentUpon>HomePageNew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\MyFavoritesPage.xaml.cs">
       <DependentUpon>MyFavoritesPage.xaml</DependentUpon>
     </Compile>
@@ -278,12 +281,15 @@
     <Content Include="Assets\Icon\logout_icon.png" />
     <Content Include="Assets\Icon\mail_icon.png" />
     <Content Include="Assets\Icon\MarketAndSupermarket.png" />
+    <Content Include="Assets\Icon\MarketIcon.jpg" />
     <Content Include="Assets\Icon\mypaybay_icon.png" />
     <Content Include="Assets\Icon\NewProducts.jpg" />
     <Content Include="Assets\Icon\phone_icon.png" />
     <Content Include="Assets\Icon\phone_icon_blue.png" />
+    <Content Include="Assets\Icon\SellerIcon.jpg" />
     <Content Include="Assets\Icon\setting_icon.png" />
     <Content Include="Assets\Icon\ShopMall.png" />
+    <Content Include="Assets\Icon\SuperMarketIcon.jpg" />
     <Content Include="Assets\Icon\TradeLogo.png" />
     <Content Include="Assets\Icon\VillageFarmer.png" />
     <Content Include="Assets\Icon\WeeklyDeals.png" />
@@ -478,6 +484,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InboxGroup\InboxPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\HomePageNew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

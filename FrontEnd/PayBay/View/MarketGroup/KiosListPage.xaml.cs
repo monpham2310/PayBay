@@ -65,8 +65,7 @@ namespace PayBay.View.MarketGroup
                     MediateClass.ProductVM.GetProductsOfStore(selectedId,TYPEGET.START);
                     MediateClass.CommentVM.GetCommentOfStore(selectedId,TYPEGET.START);
                 }
-            }
-            txtComment.Text = "";
+            }            
         }
 
         private void kiosItem_Tapped(object sender, TappedRoutedEventArgs e)

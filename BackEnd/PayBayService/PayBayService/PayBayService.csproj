@@ -270,6 +270,7 @@
     <Compile Include="Models\MessageInbox.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Message\MessageInfo.cs" />
     <Compile Include="Models\PaybayModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -378,7 +379,7 @@
     <Content Include="Models\PaybayModel.edmx.diagram">
       <DependentUpon>PaybayModel.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\paybayservice - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\viethung-paybayservice - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

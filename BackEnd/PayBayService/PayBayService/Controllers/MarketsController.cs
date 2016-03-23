@@ -31,11 +31,11 @@ namespace PayBayService.Controllers
                 var marketId = new SqlParameter("@MarketId", id);
                 if (type == TYPE.OLD)
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMoreMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
                 }
                 else
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewMarket", CommandType.StoredProcedure, ref Methods.err, marketId);
                 }
             }
             catch (Exception ex)
@@ -57,11 +57,11 @@ namespace PayBayService.Controllers
                 var marketName = new SqlParameter("@MarketName", name);
                 if (type == TYPE.OLD)
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
                 }
                 else
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
                 }
             }
             catch (Exception ex)
@@ -114,8 +114,8 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var table = new SqlParameter("@table", "paybayservice.Markets");
-            int marketId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            var table = new SqlParameter("@table", "viethung_paybayservice.Markets");
+            int marketId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
             ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("markets", market.MarketName, marketId + 1);
 
             if (blob != null)

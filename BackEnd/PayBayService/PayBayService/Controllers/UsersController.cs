@@ -51,7 +51,7 @@ namespace PayBayService.Controllers
             {                
                 var uid = new SqlParameter("@Email", account.Email);
                 var pwd = new SqlParameter("@Pass", account.Password);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_UserLogin", CommandType.StoredProcedure, ref Methods.err, uid, pwd);
                 if (result.Count > 0)
                 {
                     body = result[0].ToObject<JObject>();
@@ -107,7 +107,7 @@ namespace PayBayService.Controllers
             {
                 var email = new SqlParameter("@Email", account.Email);
                 var pass = new SqlParameter("@Pass", account.Password);
-                bool check = Methods.GetInstance().ExecNonQuery("paybayservice.sp_ResetPassword",CommandType.StoredProcedure,ref Methods.err, email, pass);
+                bool check = Methods.GetInstance().ExecNonQuery("viethung_paybayservice.sp_ResetPassword",CommandType.StoredProcedure,ref Methods.err, email, pass);
                 if (check)
                 {
                     //TODO: send mail
@@ -136,8 +136,8 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            var table = new SqlParameter("@table", "paybayservice.Users");
-            int userId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            var table = new SqlParameter("@table", "viethung_paybayservice.Users");
+            int userId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
             ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, userId + 1);
 
             if (blob != null)

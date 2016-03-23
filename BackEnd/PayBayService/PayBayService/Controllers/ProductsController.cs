@@ -36,11 +36,11 @@ namespace PayBayService.Controllers
                 var proId = new SqlParameter("@ProductId", id);
                 if (type == 0)
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreProduct", CommandType.StoredProcedure, ref Methods.err, proId);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMoreProduct", CommandType.StoredProcedure, ref Methods.err, proId);
                 }
                 else
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err, proId);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err, proId);
                 }
             }
             catch (Exception ex)
@@ -62,11 +62,11 @@ namespace PayBayService.Controllers
                 var productName = new SqlParameter("@ProductName", name);
                 if (type == TYPE.OLD)
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
                 }
                 else
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
                 }
             }
             catch (Exception ex)
@@ -87,9 +87,9 @@ namespace PayBayService.Controllers
                 var store = new SqlParameter("@StoreID", storeId);
                 var product = new SqlParameter("@ProductId", productId);
                 if(type == TYPE.OLD)
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetProductOfStore", CommandType.StoredProcedure, ref Methods.err, store, product);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetProductOfStore", CommandType.StoredProcedure, ref Methods.err, store, product);
                 else
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewProductOfStore", CommandType.StoredProcedure, ref Methods.err, store, product);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewProductOfStore", CommandType.StoredProcedure, ref Methods.err, store, product);
             }
             catch (Exception ex)
             {
@@ -107,11 +107,11 @@ namespace PayBayService.Controllers
         //    try
         //    {
         //        if (typeProduct == (int)Methods.TypeProduct.NEW)
-        //            result = Methods.ExecQueryWithResult("paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err);
+        //            result = Methods.ExecQueryWithResult("viethung_paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err);
         //        else if (typeProduct == (int)Methods.TypeProduct.SALE)
-        //            result = Methods.ExecQueryWithResult("paybayservice.sp_GetSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+        //            result = Methods.ExecQueryWithResult("viethung_paybayservice.sp_GetSaleProduct", CommandType.StoredProcedure, ref Methods.err);
         //        else
-        //            result = Methods.ExecQueryWithResult("paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+        //            result = Methods.ExecQueryWithResult("viethung_paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err);
         //    }
         //    catch (Exception ex)
         //    {
@@ -164,7 +164,7 @@ namespace PayBayService.Controllers
                 var product = new SqlParameter("@ProductID", productid);
                 var number = new SqlParameter("@NumberOf", numberof);
                 var importdate = new SqlParameter("@ImportDate", DateTime.Now);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UpdateNumOfProduct", CommandType.StoredProcedure, ref Methods.err, product, number, importdate);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_UpdateNumOfProduct", CommandType.StoredProcedure, ref Methods.err, product, number, importdate);
             }
             catch (Exception ex)
             {
@@ -186,8 +186,8 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var table = new SqlParameter("@table", "paybayservice.Products");
-            int productId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            var table = new SqlParameter("@table", "viethung_paybayservice.Products");
+            int productId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
             ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, productId + 1);
                         
             if (blob != null)

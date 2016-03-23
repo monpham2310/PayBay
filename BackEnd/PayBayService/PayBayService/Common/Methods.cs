@@ -290,9 +290,9 @@ namespace PayBayService.Common
             string msg = string.Format("<p>HI {0}!!!</p><p>Your new password is: {1}</p><p>Thank you for using our app!</p>", email, newPwd);
             var message = new MailMessage();
             message.To.Add(new MailAddress(email));  // replace with valid value 
-            message.From = new MailAddress("paybayservice@outlook.com.vn");  // replace with valid value
+            message.From = new MailAddress("viethung_paybayservice@outlook.com.vn");  // replace with valid value
             message.Subject = "Reset Your Password";
-            message.Body = string.Format(body, "Paybay Group", "paybayservice@outlook.com.vn", msg);
+            message.Body = string.Format(body, "Paybay Group", "viethung_paybayservice@outlook.com.vn", msg);
             message.IsBodyHtml = true;
             message.Priority = MailPriority.High;
             try {
@@ -300,7 +300,7 @@ namespace PayBayService.Common
                 {
                     var credential = new NetworkCredential
                     {
-                        UserName = "paybayservice@outlook.com.vn",  // replace with valid value
+                        UserName = "viethung_paybayservice@outlook.com.vn",  // replace with valid value
                         Password = "paybayteam@"  // replace with valid value
                     };
                     smtp.UseDefaultCredentials = false;
@@ -324,10 +324,10 @@ namespace PayBayService.Common
             var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
             string msg = string.Format("<p>{0}</p>", mail.Content);
             var message = new MailMessage();
-            message.To.Add(new MailAddress("paybayservice@outlook.com.vn"));  // replace with valid value 
+            message.To.Add(new MailAddress("viethung_paybayservice@outlook.com.vn"));  // replace with valid value 
             message.From = new MailAddress(mail.Email);  // replace with valid value
             message.Subject = mail.Title;
-            message.Body = string.Format(body, mail.Email, "paybayservice@outlook.com.vn", msg);
+            message.Body = string.Format(body, mail.Email, "viethung_paybayservice@outlook.com.vn", msg);
             message.IsBodyHtml = true;
             message.Priority = MailPriority.High;
             try

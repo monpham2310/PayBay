@@ -16,6 +16,7 @@ using PayBay.Utilities.Helpers;
 using PayBay.ViewModel;
 using PayBay.ViewModel.AccountGroup;
 using PayBay.View.TopFunctionGroup;
+using PayBay.View.InboxGroup;
 
 namespace PayBay.View.StartGroup
 {
@@ -276,8 +277,7 @@ namespace PayBay.View.StartGroup
             {
                 if (MediateClass.UserVM.UserInfo != null)
                 {                    
-                    MediateClass.isBtInbox = false;
-                    //MainFrame.Navigate(typeof(MessageInboxPage), NavigationMode.Forward);
+                    MainFrame.Navigate(typeof(InboxListPage), NavigationMode.Forward);
                 }
                 else
                 {

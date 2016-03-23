@@ -36,8 +36,12 @@ namespace PayBay.View.MarketGroup.KiosGroup
         }
 
         private void btInbox_Click(object sender, RoutedEventArgs e)
-        {            
-            MediateClass.isBtInbox = true;
+        {
+            if (MediateClass.MessageVM != null && MediateClass.KiotVM.SelectedStore != null)
+            {
+                MediateClass.MessageVM.UserChated = MediateClass.KiotVM.SelectedStore.OwnerId;
+                MediateClass.MessageVM.LoadInboxHitory(TYPEGET.START);
+            }
             Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);            
         }
 

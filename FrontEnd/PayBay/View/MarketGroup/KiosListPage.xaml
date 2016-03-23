@@ -128,7 +128,7 @@
         </SplitView.Content>
         <SplitView.Pane>
             <ScrollViewer Name="scrvSliderOfStore" HorizontalScrollMode="Auto" ViewChanged="scrvSliderOfStore_ViewChanged">
-                <Grid Background="#4F81BC">
+                <Grid Background="{StaticResource BlueBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

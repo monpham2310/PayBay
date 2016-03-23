@@ -27,7 +27,7 @@ namespace PayBayService.Controllers
             JArray result = new JArray();
             try
             {
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetAllSaleInfo", CommandType.StoredProcedure, ref Methods.err);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetAllSaleInfo", CommandType.StoredProcedure, ref Methods.err);
             }
             catch (Exception ex)
             {
@@ -47,11 +47,11 @@ namespace PayBayService.Controllers
                 var required = new SqlParameter("@isRequired", true);
                 if (type == TYPE.OLD)
                 {                                     
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadAllSale", CommandType.StoredProcedure, ref Methods.err, saleId, required);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_LoadAllSale", CommandType.StoredProcedure, ref Methods.err, saleId, required);
                 }
                 else
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadNewSale", CommandType.StoredProcedure, ref Methods.err, saleId, required);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_LoadNewSale", CommandType.StoredProcedure, ref Methods.err, saleId, required);
                 }
             }
             catch (Exception ex)
@@ -74,11 +74,11 @@ namespace PayBayService.Controllers
                 var required = new SqlParameter("@isRequired", true);
                 if (type == TYPE.OLD)
                 {                                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadAllSaleWithTitle", CommandType.StoredProcedure, ref Methods.err, saleId, saleName, required);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_LoadAllSaleWithTitle", CommandType.StoredProcedure, ref Methods.err, saleId, saleName, required);
                 }
                 else
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_LoadNewSaleWithTitle", CommandType.StoredProcedure, ref Methods.err, saleId, saleName, required);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_LoadNewSaleWithTitle", CommandType.StoredProcedure, ref Methods.err, saleId, saleName, required);
                 }
             }
             catch (Exception ex)
@@ -98,7 +98,7 @@ namespace PayBayService.Controllers
             {
                 var id = new SqlParameter("@StoreID", storeId);
                 var pRequired = new SqlParameter("@isRequired", required);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetSaleInfoOfStore", CommandType.StoredProcedure, ref Methods.err, id, pRequired);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetSaleInfoOfStore", CommandType.StoredProcedure, ref Methods.err, id, pRequired);
             }
             catch (Exception ex)
             {
@@ -116,7 +116,7 @@ namespace PayBayService.Controllers
             try
             {                
                 var pRequired = new SqlParameter("@isRequired", required);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetImageSale", CommandType.StoredProcedure, ref Methods.err, pRequired);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetImageSale", CommandType.StoredProcedure, ref Methods.err, pRequired);
             }
             catch (Exception ex)
             {
@@ -168,7 +168,7 @@ namespace PayBayService.Controllers
             {
                 var sale = new SqlParameter("@SaleId", saleId);
                 var required = new SqlParameter("@isRequired", isRequired);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AllowShowHomePage", CommandType.StoredProcedure, ref Methods.err, sale, required);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AllowShowHomePage", CommandType.StoredProcedure, ref Methods.err, sale, required);
             }
             catch (Exception ex)
             {
@@ -188,8 +188,8 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var table = new SqlParameter("@table", "paybayservice.SaleInfo");
-            int saleId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            var table = new SqlParameter("@table", "viethung_paybayservice.SaleInfo");
+            int saleId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
             ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", saleInfo.Title, saleId + 1);
 
             if (blob != null)

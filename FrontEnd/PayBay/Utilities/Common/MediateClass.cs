@@ -1,6 +1,7 @@
 ﻿using PayBay.View.MarketGroup.KiosGroup;
 using PayBay.View.OrderGroup;
 using PayBay.View.StartGroup;
+using PayBay.View.TopFunctionGroup;
 using PayBay.ViewModel.AccountGroup;
 using PayBay.ViewModel.CommentGroup;
 using PayBay.ViewModel.HomePageGroup;
@@ -21,6 +22,8 @@ namespace PayBay.Utilities.Common
     public class MediateClass
     {
         public static StartPage StartPage;
+        public static InboxPage InboxPage;
+
         public static UserInfoViewModel UserVM;
         public static StartViewModel StartVM;
         public static MarketViewModel MarketVM;
@@ -33,6 +36,5 @@ namespace PayBay.Utilities.Common
         public static OrderViewModel OrderVM;
         public static OrderPage OrderPage;
         public static MessageInboxViewModel MessageVM;
-        public static bool isBtInbox = false;
     }
 }

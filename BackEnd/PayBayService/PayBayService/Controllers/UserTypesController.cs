@@ -105,7 +105,7 @@ namespace PayBayService.Controllers
         //    db.UserTypes.Add(userType);
 
         //    //var name = new SqlParameter("@typeName", userType.TypeName);
-        //    //db.UserTypes.SqlQuery("paybayservice.sp_AddUserType @typeName", name);
+        //    //db.UserTypes.SqlQuery("viethung_paybayservice.sp_AddUserType @typeName", name);
 
         //    await db.SaveChangesAsync();
 
@@ -127,7 +127,7 @@ namespace PayBayService.Controllers
             //try
             //{
             //    var name = new SqlParameter("@typeName", userType.TypeName);
-            //    result = Methods.ExecQueryWithResult("paybayservice.sp_AddUserType",CommandType.StoredProcedure,ref Methods.err, name);
+            //    result = Methods.ExecQueryWithResult("viethung_paybayservice.sp_AddUserType",CommandType.StoredProcedure,ref Methods.err, name);
             //}
             //catch (Exception ex)
             //{

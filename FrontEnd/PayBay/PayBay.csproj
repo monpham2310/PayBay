@@ -112,6 +112,7 @@
     <Compile Include="Model\GuestMail.cs" />
     <Compile Include="Model\Kios.cs" />
     <Compile Include="Model\MessageInbox.cs" />
+    <Compile Include="Model\MessageInfo.cs" />
     <Compile Include="Model\Rating.cs" />
     <Compile Include="Services\MobileServices\InboxSocketIO\InboxIO.cs" />
     <Compile Include="Services\MobileServices\PaybayNotification\push.register.cs" />

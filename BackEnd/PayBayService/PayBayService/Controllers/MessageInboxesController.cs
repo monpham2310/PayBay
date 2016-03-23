@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 using PayBayService.Common;
 using PayBayService.Services.MobileServices;
+using PayBayService.Models.Message;
 
 namespace PayBayService.Controllers
 {
@@ -29,22 +30,22 @@ namespace PayBayService.Controllers
 
         // GET: api/MessageInboxes/5
         [ResponseType(typeof(MessageInbox))]
-        public HttpResponseMessage GetMessageInbox(int messageId, int userId, TYPE type)
+        public HttpResponseMessage GetMessageInbox(MessageInfo msg, int type)
         {
             JArray result = new JArray();
             try
             {
-                var mess = new SqlParameter("@MessageID", messageId);
-                var user = new SqlParameter("@OwnerID", userId);
-                if(type == TYPE.OLD)
+                var mess = new SqlParameter("@MessageID", msg.MessageID);
+                var user = new SqlParameter("@OwnerID", msg.UserID);
+                var userChat = new SqlParameter("@UserID", msg.UserChat);
+                if(msg.Type == TYPE.OLD)
                 {
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMessageOfStore", CommandType.StoredProcedure, ref Methods.err, mess, user);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMessageOfStore", CommandType.StoredProcedure, ref Methods.err, mess, user, userChat);
                 }
                 else
                 {
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetMoreNewMessage", CommandType.StoredProcedure, ref Methods.err, mess, user);
-                }
-                               
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMoreNewMessage", CommandType.StoredProcedure, ref Methods.err, mess, user, userChat);
+                }                               
             }
             catch (Exception ex)
             {
@@ -52,7 +53,24 @@ namespace PayBayService.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-                
+
+        // GET: api/MessageInboxes/5
+        [ResponseType(typeof(MessageInbox))]
+        public HttpResponseMessage GetMessageInbox(int userId)
+        {
+            JArray result = new JArray();
+            try
+            {                
+                var user = new SqlParameter("@OwnerID", userId);                
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_InboxHistory", CommandType.StoredProcedure, ref Methods.err, user);                               
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // PUT: api/MessageInboxes/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutMessageInbox(int id, MessageInbox messageInbox)
@@ -99,7 +117,7 @@ namespace PayBayService.Controllers
                 var ownerId = new SqlParameter("@OwnerID", messageInbox.OwnerID);
                 var content = new SqlParameter("@Content", messageInbox.Content);
                 var inboxDate = new SqlParameter("@InboxDate", messageInbox.InboxDate);
-                var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AddNewMessage", CommandType.StoredProcedure, ref Methods.err, userId, ownerId, content, inboxDate);
+                var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AddNewMessage", CommandType.StoredProcedure, ref Methods.err, userId, ownerId, content, inboxDate);
                 if (response.Count > 0)
                 {
                     result = response[0].ToObject<JObject>();

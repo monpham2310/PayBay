@@ -38,9 +38,9 @@ namespace PayBayService.Controllers
                 var marId = new SqlParameter("@MarketID", markId);
                 var storeid = new SqlParameter("@StoreId", storeId);
                 if(type == TYPE.OLD)
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_FindStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_FindStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
                 else
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_FindNewStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_FindNewStore", CommandType.StoredProcedure, ref Methods.err, storeName, marId, storeid);
             }
             catch (Exception ex)
             {
@@ -59,9 +59,9 @@ namespace PayBayService.Controllers
                 var market = new SqlParameter("@MarketID", marketId);
                 var store = new SqlParameter("@StoreID", storeId);
                 if(type == TYPE.OLD)
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
                 else
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetNewStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewStoreOfMarket", CommandType.StoredProcedure, ref Methods.err, market, store);
             }
             catch (Exception ex)
             {
@@ -114,8 +114,8 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
 
-            var table = new SqlParameter("@table", "paybayservice.Stores");
-            int storeId = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+            var table = new SqlParameter("@table", "viethung_paybayservice.Stores");
+            int storeId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
             ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", store.StoreName, storeId + 1);
 
             if (blob != null)
@@ -144,7 +144,7 @@ namespace PayBayService.Controllers
             {
                 var store = new SqlParameter("@StoreID", storeId);
                 var num = new SqlParameter("@NumberOf", number);
-                result = Convert.ToInt32(Methods.GetInstance().GetValue("paybayservice.sp_UpdateLike", CommandType.StoredProcedure, ref Methods.err, store, num));
+                result = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_UpdateLike", CommandType.StoredProcedure, ref Methods.err, store, num));
             }
             catch (Exception ex)
             {

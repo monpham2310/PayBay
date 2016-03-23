@@ -16,7 +16,7 @@ namespace PayBayService.Models
     public partial class PayBayDatabaseEntities : DbContext
     {
         public PayBayDatabaseEntities()
-            : base("name=PayBayDatabaseEntities")
+            : base("name=PaybayDatabaseEntities")
         {
         }
     
@@ -29,6 +29,7 @@ namespace PayBayService.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<DetailBill> DetailBills { get; set; }
         public virtual DbSet<Market> Markets { get; set; }
+        public virtual DbSet<MessageInbox> MessageInboxes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductStatistic> ProductStatistics { get; set; }
         public virtual DbSet<RevenueStatistic> RevenueStatistics { get; set; }
@@ -37,6 +38,5 @@ namespace PayBayService.Models
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
-        public virtual DbSet<MessageInbox> MessageInboxes { get; set; }
     }
 }

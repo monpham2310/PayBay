@@ -31,9 +31,20 @@ namespace PayBay.View.TopFunctionGroup
         private MessageInboxViewModel MessageVm => (MessageInboxViewModel)DataContext;               
         public InboxPage()
 		{
+            MediateClass.InboxPage = this;
 			this.InitializeComponent();            
         }
-                
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        public void ScrollToBottom()
+        {
+            svMessage.ChangeView(null, svMessage.ScrollableHeight, null);
+        }
+              
         private async void sendBtn_Click(object sender, RoutedEventArgs e)
         {
             if (tbxMessage.Text != "" && MessageVm != null)
@@ -42,7 +53,7 @@ namespace PayBay.View.TopFunctionGroup
                 if (check)
                 {
                     tbxMessage.Text = "";
-                    svMessage.ChangeView(null, svMessage.ScrollableHeight, null);
+                    ScrollToBottom();              
                 }
             }
         }
@@ -52,13 +63,18 @@ namespace PayBay.View.TopFunctionGroup
             if(svMessage.VerticalOffset == 0)
             {
                 if (MessageVm != null)
+                {                    
                     MessageVm.LoadInboxHitory(TYPEGET.MORE);
+                }
             }
             else if(svMessage.VerticalOffset >= svMessage.ScrollableHeight)
             {
                 if (MessageVm != null)
+                {                    
                     MessageVm.LoadInboxHitory(TYPEGET.MORE, TYPE.NEW);
+                }
             }
         }
+        
     }
 }

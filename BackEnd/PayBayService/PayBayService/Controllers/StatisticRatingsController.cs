@@ -35,7 +35,7 @@ namespace PayBayService.Controllers
             {
                 var user = new SqlParameter("@UserId", userId);
                 var store = new SqlParameter("@StoreId", storeId);
-                var response = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetStarRated", CommandType.StoredProcedure, ref Methods.err, user, store);
+                var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetStarRated", CommandType.StoredProcedure, ref Methods.err, user, store);
                 if(response.Count != 0)
                     result = response[0].ToObject<JObject>();
             }
@@ -104,7 +104,7 @@ namespace PayBayService.Controllers
                 var userId = new SqlParameter("@UserId", statisticRating.UserID);
                 var storeId = new SqlParameter("@StoreId", statisticRating.StoreID);
                 var rate = new SqlParameter("@Rate", statisticRating.RateOfUser);
-                var result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_UserRate",CommandType.StoredProcedure,ref Methods.err, userId, storeId, rate);
+                var result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_UserRate",CommandType.StoredProcedure,ref Methods.err, userId, storeId, rate);
                 response = result[0].ToObject<JObject>();
             }
             catch (Exception ex)

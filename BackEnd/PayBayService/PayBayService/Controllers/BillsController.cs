@@ -34,7 +34,7 @@ namespace PayBayService.Controllers
             try
             {
                 var store = new SqlParameter("@StoreID", storeId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetBillOfStore", CommandType.StoredProcedure, ref Methods.err, store);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBillOfStore", CommandType.StoredProcedure, ref Methods.err, store);
                 if (result == null)
                 {
                     var error = Methods.CustomResponseMessage(0, "Data not found!");
@@ -57,7 +57,7 @@ namespace PayBayService.Controllers
             try
             {
                 var store = new SqlParameter("@UserID", userId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetBillOfUser", CommandType.StoredProcedure, ref Methods.err, store);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBillOfUser", CommandType.StoredProcedure, ref Methods.err, store);
                 if (result == null)
                 {
                     var error = Methods.CustomResponseMessage(0, "Data not found!");
@@ -137,7 +137,7 @@ namespace PayBayService.Controllers
             db.Bills.Remove(bill);
             var billId = new SqlParameter("@BillID", id);
             var product = new SqlParameter("@ProductID", 0);
-            bool check = Methods.GetInstance().ExecNonQuery("paybayservice.sp_DelDetailBill", CommandType.StoredProcedure, ref Methods.err, billId, product);
+            bool check = Methods.GetInstance().ExecNonQuery("viethung_paybayservice.sp_DelDetailBill", CommandType.StoredProcedure, ref Methods.err, billId, product);
             await db.SaveChangesAsync();
 
             result = Methods.CustomResponseMessage(1, "Delete Bill is successful!");

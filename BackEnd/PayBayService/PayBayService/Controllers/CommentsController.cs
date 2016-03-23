@@ -56,11 +56,11 @@ namespace PayBayService.Controllers
                 var comment = new SqlParameter("@CommentId", commentId);
                 if (type == TYPE.OLD)
                 {
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_ViewCommentOfStore", CommandType.StoredProcedure, ref Methods.err, id, comment);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_ViewCommentOfStore", CommandType.StoredProcedure, ref Methods.err, id, comment);
                 }
                 else
                 {
-                    result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_ViewNewCmtOfStore", CommandType.StoredProcedure, ref Methods.err, id, comment);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_ViewNewCmtOfStore", CommandType.StoredProcedure, ref Methods.err, id, comment);
                 }
             }
             catch (Exception ex)
@@ -124,11 +124,11 @@ namespace PayBayService.Controllers
                 var storeId = new SqlParameter("@StoreID", comment.StoreID);
                 var userId = new SqlParameter("@UserID", comment.UserID);
                 var content = new SqlParameter("@Content", comment.Content);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_AddComment", CommandType.StoredProcedure, ref Methods.err, cmtDate, storeId, userId, content);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AddComment", CommandType.StoredProcedure, ref Methods.err, cmtDate, storeId, userId, content);
 
                 var store = new SqlParameter("@StoreID", comment.StoreID);
                 var user = new SqlParameter("@UserID", comment.UserID);       
-                var owner = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetOwnerInfo", CommandType.StoredProcedure, ref Methods.err, store, user);
+                var owner = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetOwnerInfo", CommandType.StoredProcedure, ref Methods.err, store, user);
                 if(owner.Count > 0)
                 {
                     ownerInfo = owner[0].ToObject<JObject>();

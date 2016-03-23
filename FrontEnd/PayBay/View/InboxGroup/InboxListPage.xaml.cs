@@ -1,4 +1,8 @@
-﻿using System;
+﻿using PayBay.Model;
+using PayBay.Utilities.Common;
+using PayBay.View.TopFunctionGroup;
+using PayBay.ViewModel.InboxGroup;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +26,40 @@ namespace PayBay.View.InboxGroup
     /// </summary>
     public sealed partial class InboxListPage : Page
     {
+        private MessageInboxViewModel MessageVm => (MessageInboxViewModel)svMessageLst.DataContext;
+
         public InboxListPage()
         {
             this.InitializeComponent();
+        }
+
+        private void svMessageLst_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            
+        }
+                
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(MediateClass.MessageVM != null)
+            {
+                MediateClass.MessageVM.LoadMessageList();
+            }
+        }
+
+        private void lvMsgHistory_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (lvMsgHistory.SelectedItem != null)
+            {
+                MessageInbox msg = (MessageInbox)lvMsgHistory.SelectedItem;
+
+                if (MediateClass.MessageVM != null)
+                {
+                    MediateClass.MessageVM.UserChated = msg.UserID;
+                    MediateClass.MessageVM.LoadInboxHitory(TYPEGET.START);
+                }
+            }
+
+            Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
         }
     }
 }

@@ -11,6 +11,7 @@ using Windows.UI.Popups;
 using System;
 using Windows.UI.Xaml.Navigation;
 using PayBay.Utilities.Helpers;
+using PayBay.View.InboxGroup;
 
 namespace PayBay.ViewModel.StartGroup
 {
@@ -164,7 +165,7 @@ namespace PayBay.ViewModel.StartGroup
 			{
 				Name = "Inbox",
 				IsEnabled = true,
-				MenuF = MenuFunc.MyFavorites,
+				MenuF = MenuFunc.Inbox,
 				Icon = "/Assets/Icon/inbox_icon.png"
 				//"M48.850243,32.061127L40.837259,42.988266 36.466324,40.074284 26.633064,51.365921 61.962049,51.365921 57.591017,36.067707 52.492086,36.067707z M30.036716,26.927057C27.798449,26.927057 25.983376,28.740846 25.983376,30.979034 25.983376,33.21732 27.798449,35.031313 30.036716,35.031313 32.273483,35.031313 34.088657,33.21732 34.088657,30.979034 34.088657,28.740846 32.273483,26.927057 30.036716,26.927057z M17.322001,19.069001L65.332998,19.069001 65.332998,54.707001 17.322001,54.707001z M42.922237,0L50.809,15.735769 13.98841,15.735769 13.98841,49.422001 0,21.513156z"
 			};
@@ -351,13 +352,13 @@ namespace PayBay.ViewModel.StartGroup
 					break;
 				}
 				case MenuFunc.Inbox:
-				{
-					frame.Navigate(typeof(MyFavoritesPage), NavigationMode.New);
+				{                   
+                    frame.Navigate(typeof(InboxListPage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.MyPayBay:
 				{
-					frame.Navigate(typeof(InboxPage), NavigationMode.New);
+					frame.Navigate(typeof(MyFavoritesPage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.MyFavorites:

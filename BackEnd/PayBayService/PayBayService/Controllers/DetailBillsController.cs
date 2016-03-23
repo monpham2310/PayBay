@@ -34,7 +34,7 @@ namespace PayBayService.Controllers
             JArray result = new JArray();
             try {
                 var bill = new SqlParameter("@BillId", billId);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_GetDetailBill", CommandType.StoredProcedure, ref Methods.err, bill);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetDetailBill", CommandType.StoredProcedure, ref Methods.err, bill);
                 if (result == null)
                 {
                     var error = Methods.CustomResponseMessage(0, "Data not found!");
@@ -117,7 +117,7 @@ namespace PayBayService.Controllers
                     var bill = new SqlParameter("@BillID", item.BillID);
                     var product = new SqlParameter("@ProductID", item.ProductID);
                     var numberof = new SqlParameter("@NumberOf", item.NumberOf);
-                    check = Methods.GetInstance().ExecNonQuery("paybayservice.sp_InsertDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product, numberof);
+                    check = Methods.GetInstance().ExecNonQuery("viethung_paybayservice.sp_InsertDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product, numberof);
                 }
                 if (check)
                     result = Methods.CustomResponseMessage(1, "Insert is successful!");
@@ -160,7 +160,7 @@ namespace PayBayService.Controllers
             try {
                 var bill = new SqlParameter("@BillID", billid);
                 var product = new SqlParameter("@ProductID", productid);
-                result = Methods.GetInstance().ExecQueryWithResult("paybayservice.sp_DelDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_DelDetailBill", CommandType.StoredProcedure, ref Methods.err, bill, product);
                 if (result == null)
                 {
                     var notfound = Methods.CustomResponseMessage(0, "Detail Bill isn't exists!");

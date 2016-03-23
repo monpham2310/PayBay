@@ -20,10 +20,12 @@ namespace PayBay.ViewModel.InboxGroup
         private static Socket _socket;        
         private ObservableCollection<MessageInbox> _messageList;       
         private MessageInbox receivedMessage;
-        private MessageInbox _messageSelected;
+        private int _userChated;
+
+        private ObservableCollection<MessageInbox> _messageLstHistory;
+
         private int receiverID = -1;
         private static string HostURL = "http://immense-reef-32079.herokuapp.com/";
-        //private int portNumber = 0;
         private static bool isResponsed = false;
         private static bool isSended = false;
 
@@ -40,17 +42,31 @@ namespace PayBay.ViewModel.InboxGroup
                 OnPropertyChanged();
             }
         }
-
-        public MessageInbox MessageSelected
+                
+        public ObservableCollection<MessageInbox> MessageLstHistory
         {
             get
             {
-                return _messageSelected;
+                return _messageLstHistory;
             }
 
             set
             {
-                _messageSelected = value;
+                _messageLstHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int UserChated
+        {
+            get
+            {
+                return _userChated;
+            }
+
+            set
+            {
+                _userChated = value;
                 OnPropertyChanged();
             }
         }
@@ -87,9 +103,9 @@ namespace PayBay.ViewModel.InboxGroup
         {
             MediateClass.MessageVM = this;
             _messageList = new ObservableCollection<MessageInbox>();
-            MessageSelected = new MessageInbox();            
-            InitSocket();
-            LoadInboxHitory(TYPEGET.START);
+            _userChated = -1;                       
+            InitSocket();            
+            LoadMessageList();
         }
 
         private void updateMessageListUponReceivingMessage(object sender, object e)
@@ -101,6 +117,7 @@ namespace PayBay.ViewModel.InboxGroup
                     receiverID = receivedMessage.OwnerID;
                     Debug.WriteLine("RECEIVED: " + receivedMessage.Content);
                     MessageList.Add(receivedMessage);
+                    MediateClass.InboxPage.ScrollToBottom();
                     receivedMessage = null;
                 }
             }
@@ -111,7 +128,7 @@ namespace PayBay.ViewModel.InboxGroup
             try {
                 if (MediateClass.UserVM != null)
                 {
-                    receiverID = (receiverID == -1 || receiverID == 0) ? MediateClass.KiotVM.SelectedStore.OwnerId : receiverID;
+                    receiverID = (receiverID == -1 || receiverID == 0) ? UserChated : receiverID;
                     int userId = MediateClass.UserVM.UserInfo.UserId;
                     string name = MediateClass.UserVM.UserInfo.Username;
                     string avatar = MediateClass.UserVM.UserInfo.Avatar;
@@ -157,9 +174,22 @@ namespace PayBay.ViewModel.InboxGroup
             return true;
         }
 
-        public async void LoadInboxHitory(TYPEGET typeGet, TYPE type = TYPE.OLD)
+        public async void LoadMessageList()
         {
+            int userId = MediateClass.UserVM.UserInfo.UserId;
+            
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {                
+                {"userId" , userId.ToString()}                
+            };
+
+            await GetData(param);
+        }
+
+        public async void LoadInboxHitory(TYPEGET typeGet, TYPE type = TYPE.OLD)
+        {          
             int userID = MediateClass.UserVM.UserInfo.UserId;
+            int userChat = UserChated;
             int msgId = -1;
             if(typeGet == TYPEGET.MORE)
             {
@@ -173,17 +203,17 @@ namespace PayBay.ViewModel.InboxGroup
                 }
             }
 
+            MessageInfo msg = new MessageInfo(msgId, userID, userChat, type);
+
             IDictionary<string, string> param = new Dictionary<string, string>
             {
-                {"messageId" , msgId.ToString()},
-                {"userId" , userID.ToString()},
-                {"type" , type.ToString()}
+                {"type" , "1"}
             };
-
-            await SendData(typeGet, type, param);
+                        
+            await SendData(typeGet, type, msg, param);
         }
 
-        private async Task SendData(TYPEGET typeGet, TYPE type, IDictionary<string, string> param)
+        private async Task GetData(IDictionary<string, string> param)
         {
             try
             {
@@ -193,6 +223,32 @@ namespace PayBay.ViewModel.InboxGroup
                     {
                         isResponsed = true;
                         JToken result = await App.MobileService.InvokeApiAsync("MessageInboxes", HttpMethod.Get, param);
+                        JArray response = JArray.Parse(result.ToString());
+                        MessageLstHistory = response.ToObject<ObservableCollection<MessageInbox>>();                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Message!").ShowAsync();
+            }
+            finally
+            {
+                isResponsed = false;
+            }
+        }
+
+        private async Task SendData(TYPEGET typeGet, TYPE type, MessageInfo param, IDictionary<string,string> arg)
+        {
+            try
+            {
+                JToken body = JToken.FromObject(param);
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (!isResponsed)
+                    {
+                        isResponsed = true;
+                        JToken result = await App.MobileService.InvokeApiAsync("MessageInboxes", body, HttpMethod.Get, arg);
                         JArray response = JArray.Parse(result.ToString());
                         if (typeGet == TYPEGET.START)
                         {

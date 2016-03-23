@@ -31,21 +31,17 @@ namespace PayBay.View.MarketGroup
         private MarketViewModel MarketVm => (MarketViewModel)spnHeader.DataContext;
 		public MarketPage()
 		{
-			this.InitializeComponent();            
-            this.Loaded += Page_Loaded;
+			this.InitializeComponent();           
+            
 		}
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
+        {            
             SetUpMap();
         }
 
         private void ShopNowButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MediateClass.KiotVM != null)
-            {
-                MediateClass.KiotVM.LoadMoreStore(MarketVm.SelectedMarket.MarketId, TYPEGET.START);                
-            }
+        {            
             Frame.Navigate(typeof(KiosListPage), NavigationMode.Forward);
         }
 

@@ -57,9 +57,8 @@ namespace PayBay.View.InboxGroup
                     MessageInboxViewModel.UserChated = msg.UserID;
                     MediateClass.MessageVM.LoadInboxHitory(TYPEGET.START);
                 }
-            }
-
-            Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
+                Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
+            }            
         }
     }
 }

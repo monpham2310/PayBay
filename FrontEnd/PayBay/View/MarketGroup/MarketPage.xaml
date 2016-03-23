@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     x:Class="PayBay.View.MarketGroup.MarketPage"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
 	<ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"

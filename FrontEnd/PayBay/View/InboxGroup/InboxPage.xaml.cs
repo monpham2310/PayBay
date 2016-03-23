@@ -37,7 +37,8 @@ namespace PayBay.View.TopFunctionGroup
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            if (MessageVm != null)
+                MessageVm.LoadMessageList();
         }
 
         public void ScrollToBottom()

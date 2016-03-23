@@ -65,5 +65,11 @@ namespace PayBay.View.MarketGroup.KiosGroup
                 await RateVm.PostRate(rated);
             }
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (MediateClass.RateVm != null)
+                MediateClass.RateVm.LoadStarRated();
+        }
     }
 }

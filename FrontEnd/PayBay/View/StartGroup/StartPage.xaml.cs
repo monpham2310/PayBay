@@ -215,14 +215,7 @@ namespace PayBay.View.StartGroup
 		}
 
 		private void SearchButton_Click(object sender, RoutedEventArgs e)
-		{
-            if (MediateClass.MarketVM != null)
-                MediateClass.MarketVM.LoadMoreMarket(TYPEGET.START);
-            if (MediateClass.AdvertiseVM != null)
-                MediateClass.AdvertiseVM.LoadMoreSale(TYPEGET.START);
-            if (MediateClass.ProductVM != null)
-                MediateClass.ProductVM.LoadMoreProduct(TYPEGET.START);
-                          
+		{                          
 			MainFrame.Navigate(typeof(SearchPage), NavigationMode.Forward);
 		}
 

@@ -7,7 +7,8 @@
     xmlns:converters="using:PayBay.Utilities.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    DataContext="{Binding Source={StaticResource Locator}, Path=KiosVm}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=MessageVm}"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -116,7 +117,8 @@
 
                 <Grid Grid.Row="1">
                     <ScrollViewer Name="scrollvStore"                          
-                          ViewChanged="ScrollViewer_ViewChanged">
+                          ViewChanged="ScrollViewer_ViewChanged"
+                          DataContext="{Binding Source={StaticResource Locator}, Path=KiosVm}">
                         <GridView x:Name="gridviewKiosList"                      
                               ItemsSource="{Binding KiosList}"
                               ItemTemplate="{StaticResource kiosItemTemplate}"
@@ -127,7 +129,8 @@
             </Grid>
         </SplitView.Content>
         <SplitView.Pane>
-            <ScrollViewer Name="scrvSliderOfStore" HorizontalScrollMode="Auto" ViewChanged="scrvSliderOfStore_ViewChanged">
+            <ScrollViewer Name="scrvSliderOfStore" HorizontalScrollMode="Auto" ViewChanged="scrvSliderOfStore_ViewChanged"
+                          DataContext="{Binding Source={StaticResource Locator}, Path=KiosVm}">
                 <Grid Background="{StaticResource BlueBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

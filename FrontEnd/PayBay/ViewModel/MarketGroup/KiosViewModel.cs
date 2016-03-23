@@ -54,7 +54,7 @@ namespace PayBay.ViewModel.MarketGroup
             MediateClass.KiotVM = this;
             InitializeProperties();
             InitializeData();
-                        
+            LoadMoreStore(MediateClass.MarketVM.SelectedMarket.MarketId, TYPEGET.START);            
         }
 
         //Initialize Fake Data

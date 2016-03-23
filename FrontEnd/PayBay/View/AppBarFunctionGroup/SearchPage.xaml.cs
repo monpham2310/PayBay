@@ -30,7 +30,7 @@ namespace PayBay.View.AppBarFunctionGroup
         private AdvertiseViewModel SaleVm => (AdvertiseViewModel)scrollvSale.DataContext;
         private ProductViewModel ProductVm => (ProductViewModel)scrollvProducts.DataContext;
         
-        public SearchPage()
+        public SearchPage() 
         {
             InitializeComponent();
             //SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;            
@@ -38,7 +38,12 @@ namespace PayBay.View.AppBarFunctionGroup
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            if (MediateClass.MarketVM != null)
+                MediateClass.MarketVM.LoadMoreMarket(TYPEGET.START);
+            if (MediateClass.AdvertiseVM != null)
+                MediateClass.AdvertiseVM.LoadMoreSale(TYPEGET.START);
+            if (MediateClass.ProductVM != null)
+                MediateClass.ProductVM.LoadMoreProduct(TYPEGET.START);
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)

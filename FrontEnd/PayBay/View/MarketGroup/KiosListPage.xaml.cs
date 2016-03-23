@@ -26,11 +26,14 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Popups;
 using PayBay.ViewModel.CommentGroup;
 using PayBay.View.MarketGroup.KiosGroup;
+using PayBay.View.TopFunctionGroup;
+using PayBay.ViewModel.InboxGroup;
 
 namespace PayBay.View.MarketGroup
 {
     public sealed partial class KiosListPage : Page
     {
+        private MessageInboxViewModel MessageVm => (MessageInboxViewModel)DataContext;
         private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;
         private CommentViewModel CommentVm => (CommentViewModel)scrollvComment.DataContext;
         private ProductViewModel ProductVm => (ProductViewModel)scrollvProduct.DataContext;
@@ -38,6 +41,14 @@ namespace PayBay.View.MarketGroup
         public KiosListPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (MediateClass.KiotVM != null)
+            {
+                MediateClass.KiotVM.LoadMoreStore(MediateClass.MarketVM.SelectedMarket.MarketId, TYPEGET.START);
+            }
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -70,18 +81,18 @@ namespace PayBay.View.MarketGroup
 
         private void kiosItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            splitviewKios.IsPaneOpen = !splitviewKios.IsPaneOpen;
-            if (KiosVm != null)
+            if (gridviewKiosList.SelectedItem != null)
             {
-                if (gridviewKiosList.SelectedItem != null)
-                {
+                splitviewKios.IsPaneOpen = !splitviewKios.IsPaneOpen;
+                if (KiosVm != null)
+                {                    
                     KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
                     int selectedId = KiosVm.SelectedStore.StoreId;
                     ViewModel.InboxGroup.MessageInboxViewModel.UserChated = KiosVm.SelectedStore.OwnerId;
                     MediateClass.ProductVM.GetProductsOfStore(selectedId, TYPEGET.START);
                     MediateClass.CommentVM.GetCommentOfStore(selectedId, TYPEGET.START);                    
                 }
-            }            
+            }
         }
 
         //private void btnStar1_Click(object sender, RoutedEventArgs e)
@@ -163,9 +174,7 @@ namespace PayBay.View.MarketGroup
 		private async void linkSeeComments_Click(object sender, RoutedEventArgs e)
 		{
             if (MediateClass.UserVM.UserInfo != null)
-            {
-                if(MediateClass.RateVm != null)
-                    MediateClass.RateVm.LoadStarRated();
+            {                
                 Frame.Navigate(typeof(KiosPage), NavigationMode.Forward);
             }
             else
@@ -177,9 +186,7 @@ namespace PayBay.View.MarketGroup
 		private async void linkSeeProducts_Click(object sender, RoutedEventArgs e)
 		{
             if (MediateClass.UserVM.UserInfo != null)
-            {
-                if (MediateClass.RateVm != null)
-                    MediateClass.RateVm.LoadStarRated();
+            {                
                 Frame.Navigate(typeof(KiosPage), NavigationMode.Forward);
             }
             else
@@ -188,19 +195,28 @@ namespace PayBay.View.MarketGroup
             }
 		}
 
-        private void btCallMobile_Click(object sender, RoutedEventArgs e)
+        private async void btCallMobile_Click(object sender, RoutedEventArgs e)
         {
-            Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
-
-            
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
+            }
+            else
+                await new MessageDialog("You are not login.Login is required!", "Notification!").ShowAsync();
         }
         
-        async private void btMessage_Click(object sender, RoutedEventArgs e)
+        private async void btMessage_Click(object sender, RoutedEventArgs e)
         {
-            Windows.ApplicationModel.Chat.ChatMessage msg = new Windows.ApplicationModel.Chat.ChatMessage();
-            msg.Body = "This is body of demo message.";
-            msg.Recipients.Add(KiosVm.SelectedStore.Phone);
-            await Windows.ApplicationModel.Chat.ChatMessageManager.ShowComposeSmsMessageAsync(msg);
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                if (MediateClass.KiotVM.SelectedStore != null)
+                {
+                    MessageVm.LoadInboxHitory(TYPEGET.START);
+                }
+                Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
+            }
+            else
+                await new MessageDialog("You are not login.Login is required!", "Notification!").ShowAsync();
         }                     
 
         private void scrvSliderOfStore_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

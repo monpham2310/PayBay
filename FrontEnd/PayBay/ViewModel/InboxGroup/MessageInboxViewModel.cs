@@ -104,7 +104,7 @@ namespace PayBay.ViewModel.InboxGroup
             MediateClass.MessageVM = this;
             _messageList = new ObservableCollection<MessageInbox>();                                 
             InitSocket();            
-            LoadMessageList();
+            //LoadMessageList();
         }
 
         private void updateMessageListUponReceivingMessage(object sender, object e)
@@ -113,7 +113,7 @@ namespace PayBay.ViewModel.InboxGroup
             {
                 if (receivedMessage != null)
                 {
-                    receiverID = receivedMessage.OwnerID;
+                    //receiverID = receivedMessage.OwnerID;
                     Debug.WriteLine("RECEIVED: " + receivedMessage.Content);
                     MessageList.Add(receivedMessage);
                     MediateClass.InboxPage.ScrollToBottom();
@@ -127,7 +127,8 @@ namespace PayBay.ViewModel.InboxGroup
             try {
                 if (MediateClass.UserVM != null)
                 {
-                    receiverID = (receiverID == -1 || receiverID == 0) ? UserChated : receiverID;
+                    //receiverID = (receiverID == -1 || receiverID == 0 || receiverID == MediateClass.UserVM.UserInfo.UserId) ? UserChated : receiverID;
+                    receiverID = UserChated;
                     int userId = MediateClass.UserVM.UserInfo.UserId;
                     string name = MediateClass.UserVM.UserInfo.Username;
                     string avatar = MediateClass.UserVM.UserInfo.Avatar;

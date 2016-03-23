@@ -112,7 +112,13 @@ namespace PayBay.ViewModel.HomePageGroup
                     { "required", "true"}
                 };
                 
-                await ImportData(sale);                
+                //await ImportData(sale);    
+                for(int i=0; i < 7; i++)
+                {
+                    AdvertiseItem dummyAd = new AdvertiseItem();
+                    dummyAd.Image = "ms-appx:///Assets/Icon/MarketIcon.jpg";
+                    AdvertiseItemList.Add(dummyAd);
+                }            
 
             }
             catch (MobileServiceInvalidOperationException e)

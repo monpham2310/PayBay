@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Quobject.SocketIoClientDotNet.Client;
 using System.Diagnostics;
-using PayBay.Services.MobileServices.InboxSocketIO;
 using System.Collections.ObjectModel;
 using PayBay.Utilities.Common;
 using PayBay.ViewModel.InboxGroup;
@@ -38,7 +37,7 @@ namespace PayBay.View.TopFunctionGroup
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (MessageVm != null)
-                MessageVm.LoadMessageList();
+                MessageVm.LoadInboxHitory(TYPEGET.START);
         }
 
         public void ScrollToBottom()

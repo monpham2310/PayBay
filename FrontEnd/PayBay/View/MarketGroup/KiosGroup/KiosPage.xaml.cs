@@ -36,11 +36,7 @@ namespace PayBay.View.MarketGroup.KiosGroup
         }
 
         private void btInbox_Click(object sender, RoutedEventArgs e)
-        {
-            if (MediateClass.KiotVM.SelectedStore != null)
-            {                
-                MediateClass.MessageVM.LoadInboxHitory(TYPEGET.START);
-            }
+        {            
             Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);            
         }
 

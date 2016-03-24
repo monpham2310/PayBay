@@ -41,7 +41,39 @@ namespace PayBay.View.AccountGroup
 			this.InitializeComponent();
 		}
 
-		private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (UserInfoViewModel.isViewInfo)
+            {
+                tblTitle.Text = "Account Infomation";
+                BackHyperlinkButton.Content = "&#xE711;";
+
+                var userInfo = MediateClass.UserVM.UserInfo;
+                if (userInfo.Avatar != "/Assets/lol.jpg")
+                {
+                    var uriAvatar = new Uri(userInfo.Avatar);
+                    var img = new BitmapImage(uriAvatar);
+                    AvatarImage.ImageSource = img;
+                }
+                FullNameTextBox.Text = userInfo.Username;
+                EmailTextBox.Text = userInfo.Email;
+                PhoneTextBox.Text = userInfo.Phone;
+                AddressTextBox.Text = userInfo.Address;
+                BirthdayDatePicker.Date = userInfo.Birthday;
+                MaleRadioButton.IsChecked = userInfo.Gender;
+                
+                if(userInfo.TypeId != 1)
+                {
+                    TypeCommboBox.SelectedItem = (userInfo.TypeId == 2) ? StoreOwner : User;
+                }
+                else
+                {
+                    TypeCommboBox.IsEnabled = false;
+                }
+            }
+        }
+
+        private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.GoBack();
 		}
@@ -61,7 +93,7 @@ namespace PayBay.View.AccountGroup
             }
         }
 
-        private async void SummitButton_Click(object sender, RoutedEventArgs e)
+        private async void alterOrCreateUser()
         {
             UserInfo user = new UserInfo();
 
@@ -69,7 +101,7 @@ namespace PayBay.View.AccountGroup
                 && PasswordTextBox.Password != "")
             {
                 if (Functions.EmailIsValid(EmailTextBox.Text))
-                {
+                {                    
                     user.Username = FullNameTextBox.Text;
                     user.Address = AddressTextBox.Text;
                     user.Phone = PhoneTextBox.Text;
@@ -78,55 +110,60 @@ namespace PayBay.View.AccountGroup
                     user.Pass = Functions.GetBytes(PasswordTextBox.Password);
                     user.Birthday = BirthdayDatePicker.Date.DateTime;
                     ComboBoxItem ComboItem = (ComboBoxItem)TypeCommboBox.SelectedItem;
-                    int typeid = int.Parse(ComboItem.Tag.ToString());
-                    user.TypeId = typeid;
-
-                    await InsertUser(user);
+                    int typeid = int.Parse(ComboItem.Tag.ToString());                    
+                    
+                    if (!UserInfoViewModel.isViewInfo)
+                    {
+                        user.TypeId = typeid;
+                        bool result = await MediateClass.UserVM.AlterOrCreateUser(user, mediaFile, HttpMethod.Post);
+                        if (result)
+                        {
+                            await new MessageDialog("Create Account is successful!", "Notification!").ShowAsync();
+                            Frame.GoBack();
+                        }
+                        else
+                        {
+                            await new MessageDialog("Upload avatar is not successful!", "Notification!").ShowAsync();
+                            EmailTextBox.Focus(FocusState.Pointer);
+                        }
+                    }
+                    else
+                    {
+                        user.UserId = MediateClass.UserVM.UserInfo.UserId;
+                        user.TypeId = (MediateClass.UserVM.UserInfo.TypeId == 1) ? MediateClass.UserVM.UserInfo.TypeId : typeid;
+                        bool result = await MediateClass.UserVM.AlterOrCreateUser(user, mediaFile, HttpMethod.Put);
+                        if (result)
+                        {
+                            await new MessageDialog("Update Account is successful!", "Notification!").ShowAsync();
+                            ((Popup)Frame.Parent).IsOpen = false;
+                            UserInfoViewModel.isViewInfo = false;
+                        }
+                        else
+                        {
+                            await new MessageDialog("Update account is not successful!", "Notification!").ShowAsync();
+                            EmailTextBox.Focus(FocusState.Pointer);
+                        }
+                    }
                 }
                 else
                 {
                     await new MessageDialog("Your email is NOT valid!Please try again!", "Notification").ShowAsync();
+                    EmailTextBox.Focus(FocusState.Pointer);
                 }
             }
             else
             {
-                await new MessageDialog("Please fill all the infomation!Thank you!", "Notification").ShowAsync();
-            }
-        }
-
-        private async Task InsertUser(UserInfo user)
-        {
-            try
-            {
-                JToken data = JToken.FromObject(user);
-                JToken result = await App.MobileService.InvokeApiAsync("Users", data, HttpMethod.Post, null);
-
-                JObject response = JObject.Parse(result.ToString());
-
-                user.UserId = int.Parse(response["UserId"].ToString());
-                user.Avatar = response["Avatar"].ToString();
-                user.SasQuery = response["SasQuery"].ToString();
-
-                string userName = user.Username.ToLower();
-                userName = (userName.IndexOf(" ") != 1) ? userName.Replace(" ", "") : userName;
-
-                var func = Functions.Instance;
-
-                bool check = await func.UploadImageToBlob("users", user.Avatar, user.SasQuery, mediaFile);
-                if (check)
-                {
-                    await new MessageDialog("Create Account is successful!", "Notification!").ShowAsync();
-                }
+                if(!UserInfoViewModel.isViewInfo)
+                    await new MessageDialog("Please fill all the infomation!Thank you!", "Notification").ShowAsync();
                 else
-                {
-                    await new MessageDialog("Create Account is NOT successful!", "Notification!").ShowAsync();
-                }                                         
-            }
-            catch (Exception ex)
-            {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                    await new MessageDialog("Please confirm your password!", "Notification").ShowAsync();
             }
         }
-               
+
+        private void SummitButton_Click(object sender, RoutedEventArgs e)
+        {
+            alterOrCreateUser();
+        }
+                
     }
 }

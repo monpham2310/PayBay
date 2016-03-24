@@ -122,6 +122,8 @@ namespace PayBay.Model
 
             set
             {
+                if (value == null)
+                    value = "/Assets/lol.jpg";    
                 _avatar = value;
                 OnPropertyChanged();
             }

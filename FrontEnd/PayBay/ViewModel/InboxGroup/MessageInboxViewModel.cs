@@ -116,7 +116,8 @@ namespace PayBay.ViewModel.InboxGroup
                     //receiverID = receivedMessage.OwnerID;
                     Debug.WriteLine("RECEIVED: " + receivedMessage.Content);
                     MessageList.Add(receivedMessage);
-                    MediateClass.InboxPage.ScrollToBottom();
+                    if(MediateClass.InboxPage != null)
+                        MediateClass.InboxPage.ScrollToBottom();
                     receivedMessage = null;
                 }
             }

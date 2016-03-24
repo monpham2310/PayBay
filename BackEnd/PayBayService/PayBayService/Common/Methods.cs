@@ -244,42 +244,48 @@ namespace PayBayService.Common
         public async Task<ModelBlob> GetSasAndImageUriFromBlob(string containnerName, string resourceName, int objectId)
         {
             ModelBlob blob = new ModelBlob();
-            
-            // Set the URI for the Blob Storage service.
-            Uri blobEndpoint = new Uri(string.Format("https://{0}.blob.core.windows.net", StorageAccoutName));
 
-            // Create the BLOB service client.
-            CloudBlobClient blobClient = new CloudBlobClient(blobEndpoint,
-                new StorageCredentials(StorageAccoutName, StorageAccountKey));
-                        
-            // Set the BLOB store container name on the item, which must be lowercase.
-            string _resname = resourceName.ToLower();
-            _resname = (_resname.IndexOf(" ") != -1) ? _resname.Replace(" ", "") : _resname;
+            try {
+                // Set the URI for the Blob Storage service.
+                Uri blobEndpoint = new Uri(string.Format("https://{0}.blob.core.windows.net", StorageAccoutName));
 
-            // Create a container, if it doesn't already exist.
-            CloudBlobContainer container = blobClient.GetContainerReference(containnerName);
-            await container.CreateIfNotExistsAsync();
+                // Create the BLOB service client.
+                CloudBlobClient blobClient = new CloudBlobClient(blobEndpoint,
+                    new StorageCredentials(StorageAccoutName, StorageAccountKey));
 
-            // Create a shared access permission policy. 
-            BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+                // Set the BLOB store container name on the item, which must be lowercase.
+                string _resname = resourceName.ToLower();
+                _resname = (_resname.IndexOf(" ") != -1) ? _resname.Replace(" ", "") : _resname;
 
-            // Enable anonymous read access to BLOBs.
-            containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
-            container.SetPermissions(containerPermissions);
+                // Create a container, if it doesn't already exist.
+                CloudBlobContainer container = blobClient.GetContainerReference(containnerName);
+                await container.CreateIfNotExistsAsync();
 
-            // Define a policy that gives write access to the container for 5 minutes.                                   
-            SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
+                // Create a shared access permission policy. 
+                BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+
+                // Enable anonymous read access to BLOBs.
+                containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+                container.SetPermissions(containerPermissions);
+
+                // Define a policy that gives write access to the container for 5 minutes.                                   
+                SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
+                {
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
+                    Permissions = SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Read
+                };
+
+                // Get the SAS as a string.
+                blob.SasQuery = container.GetSharedAccessSignature(sasPolicy);
+
+                // Set the URL used to store the image.
+                blob.ImageUri = string.Format("{0}{1}/{2}", blobEndpoint.ToString(),
+                    containnerName, _resname + objectId + ".jpg");
+            }
+            catch (Exception ex)
             {
-                SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
-                Permissions = SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Read
-            };
-
-            // Get the SAS as a string.
-            blob.SasQuery = container.GetSharedAccessSignature(sasPolicy);
-
-            // Set the URL used to store the image.
-            blob.ImageUri = string.Format("{0}{1}/{2}", blobEndpoint.ToString(),
-                containnerName, _resname + objectId + ".jpg");
+                return null;
+            }
 
             return blob;            
         }

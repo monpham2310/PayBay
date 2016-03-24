@@ -73,25 +73,33 @@ namespace PayBayService.Controllers
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
-            }
-
-            db.Entry(user).State = EntityState.Modified;
+            }                    
                         
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(user.UserId))
+                var userId = new SqlParameter("@UserID", user.UserId);
+                string email = Convert.ToString(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetEmailOfUser", CommandType.StoredProcedure, ref Methods.err, userId));
+                if (email == user.Email || !AccountExists(user.Email))
                 {
-                    result = Methods.CustomResponseMessage(0, "User is not exists!");
-                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, user.UserId);
+                    if (blob != null)
+                    {
+                        user.Avatar = blob.ImageUri;
+                        user.SasQuery = blob.SasQuery;
+                        db.Entry(user).State = EntityState.Modified;
+                        await db.SaveChangesAsync();
+                    }
                 }
                 else
                 {
-                    throw;
+                    result = Methods.CustomResponseMessage(0, "Update user is not successful!");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, result);
                 }
+            }
+            catch (Exception ex)
+            {                
+                result = Methods.CustomResponseMessage(0, "Update user is not successful!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);                
             }
 
             result = JObject.FromObject(user);
@@ -100,7 +108,7 @@ namespace PayBayService.Controllers
                 
         // PUT: api/Users/{account}
         [ResponseType(typeof(User))]
-        public async Task<HttpResponseMessage> PutAccount(Account account,int code)
+        public async Task<HttpResponseMessage> ResetPassword(Account account,int code)
         {
             JObject result = new JObject();
             try
@@ -140,7 +148,7 @@ namespace PayBayService.Controllers
             int userId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
             ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, userId + 1);
 
-            if (blob != null)
+            if (blob != null && !AccountExists(user.Email))
             {
                 user.Avatar = blob.ImageUri;
                 user.SasQuery = blob.SasQuery;
@@ -190,9 +198,9 @@ namespace PayBayService.Controllers
             return db.Users.Count(e => e.UserId == id) > 0;
         }
               
-        private bool AccountExists(string email, byte[] password)
+        private bool AccountExists(string email)
         {
-            return db.Users.Count(e => e.Email == email && e.Pass == password) > 0;
+            return db.Users.Count(e => e.Email == email) > 0;
         }
           
     }

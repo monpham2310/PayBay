@@ -40,9 +40,9 @@ namespace PayBay.View.InboxGroup
                 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if(MediateClass.MessageVM != null)
+            if(MessageVm != null)
             {
-                MediateClass.MessageVM.LoadMessageList();
+                MessageVm.LoadMessageList();
             }
         }
 
@@ -52,10 +52,9 @@ namespace PayBay.View.InboxGroup
             {
                 MessageInbox msg = (MessageInbox)lvMsgHistory.SelectedItem;
 
-                if (MediateClass.MessageVM != null)
+                if (MessageVm != null)
                 {
-                    MessageInboxViewModel.UserChated = msg.UserID;
-                    MediateClass.MessageVM.LoadInboxHitory(TYPEGET.START);
+                    MessageInboxViewModel.UserChated = msg.UserID;                    
                 }
                 Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
             }            

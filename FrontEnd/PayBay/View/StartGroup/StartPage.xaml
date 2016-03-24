@@ -303,7 +303,8 @@
                                             Visibility="Collapsed" 
                                             Name="UserAvatarElipse" >
                                             <Ellipse.Fill>
-                                                <ImageBrush ImageSource="{Binding UserInfo.Avatar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                <ImageBrush ImageSource="{Binding UserInfo.Avatar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                            x:Name="imgbrAvatar"/>
                                             </Ellipse.Fill>
                                         </Ellipse>
                                     </StackPanel>

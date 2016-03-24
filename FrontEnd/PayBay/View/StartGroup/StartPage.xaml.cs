@@ -179,10 +179,17 @@ namespace PayBay.View.StartGroup
 			}
 		}
 
-		private void AccountButton_Click(object sender, RoutedEventArgs e)
+		private async void AccountButton_Click(object sender, RoutedEventArgs e)
 		{
-
-		}
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                showPopup();
+                UserInfoViewModel.isViewInfo = true;
+                AccountFrame.Navigate(typeof(CreateAccountPage));
+            }
+            else
+                await new MessageDialog("You are not login!", "Notification!").ShowAsync();
+        }
 
 		private void MainSplitView_PaneClosed(SplitView sender, object args)
 		{
@@ -207,10 +214,6 @@ namespace PayBay.View.StartGroup
 			{
                 isLoginControl(true);
                 MediateClass.StartVM.EnableFunction(MediateClass.UserVM.UserInfo.TypeId);
-                if (MediateClass.UserVM.UserInfo.Avatar == null)
-				{
-                    MediateClass.UserVM.UserInfo.Avatar = "/Assets/Square150x150Logo.scale-100.png";
-				}                
             }
 		}
 
@@ -219,14 +222,19 @@ namespace PayBay.View.StartGroup
 			MainFrame.Navigate(typeof(SearchPage), NavigationMode.Forward);
 		}
 
+        private void showPopup()
+        {
+            AccountPopup.IsOpen = true;
+            MainSplitView.IsPaneOpen = false;
+            MainGrid.IsHitTestVisible = false;
+            MainGrid.Opacity = 0.4;
+
+            ProcessPopupSizeAndPos();
+        }
+
 		private void SignInButton_Click(object sender, RoutedEventArgs e)
 		{
-			AccountPopup.IsOpen = true;
-			MainSplitView.IsPaneOpen = false;
-			MainGrid.IsHitTestVisible = false;
-			MainGrid.Opacity = 0.4;
-
-			ProcessPopupSizeAndPos();
+            showPopup();
 
 			AccountFrame.Navigate(typeof(SignInPage));
 		}
@@ -241,12 +249,7 @@ namespace PayBay.View.StartGroup
 			MainGrid.Opacity = 1.0;
 			MainGrid.IsHitTestVisible = true;
 		}
-
-		private void UserInfoViewButton_Click(object sender, RoutedEventArgs e)
-		{
-
-		}
-
+        		
 		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			ProcessPopupSizeAndPos();
@@ -278,6 +281,14 @@ namespace PayBay.View.StartGroup
                 }
             }
         }
+
+        private void UserInfoViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            showPopup();
+            UserInfoViewModel.isViewInfo = true;
+            AccountFrame.Navigate(typeof(CreateAccountPage));            
+        }
+
     }
 
 }

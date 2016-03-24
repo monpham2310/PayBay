@@ -63,7 +63,7 @@ namespace PayBay.Services.MobileServices.PaybayNotification
                
         private async static void HandleRegisterException(Exception exception)
         {
-            await new MessageDialog(exception.Message.ToString(), "Notification!").ShowAsync();
+            //await new MessageDialog(exception.Message.ToString(), "Notification!").ShowAsync();
         }
     }
 }

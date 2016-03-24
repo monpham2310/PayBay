@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using PayBay.Services.MobileServices.PaybayNotification;
 using Windows.Networking.PushNotifications;
-using PayBay.Services.MobileServices.InboxSocketIO;
 using PayBay.ViewModel.InboxGroup;
 using Quobject.SocketIoClientDotNet.Client;
+using Windows.Storage;
 
 namespace PayBay.ViewModel.AccountGroup
 {
@@ -21,6 +21,7 @@ namespace PayBay.ViewModel.AccountGroup
     {
         private ObservableCollection<UserInfo> _userInfoList;
         private UserInfo _userInfo;
+        public static bool isViewInfo = false;
                                                 
         public ObservableCollection<UserInfo> UserAccountList
         {
@@ -44,7 +45,7 @@ namespace PayBay.ViewModel.AccountGroup
             }
 
             set
-            {
+            {                
                 _userInfo = value;
                 OnPropertyChanged();                          
             }
@@ -71,8 +72,7 @@ namespace PayBay.ViewModel.AccountGroup
                 {
                     var result = await App.MobileService.InvokeApiAsync("Users", body, HttpMethod.Post, argument);
                     JObject user = JObject.Parse(result.ToString());
-                    UserInfo = user.ToObject<UserInfo>();                    
-                    //PaybayPushClient.UploadChannel();
+                    UserInfo = user.ToObject<UserInfo>();             
                     PaybayPushClient.UploadChannel(UserInfo.UserId);                    
                     MessageInboxViewModel.registerClient();                    
                 }
@@ -132,5 +132,32 @@ namespace PayBay.ViewModel.AccountGroup
             }
         }
 
+        public async Task<bool> AlterOrCreateUser(UserInfo user, StorageFile mediaFile, HttpMethod method)
+        {
+            bool check = false;
+            try
+            {
+                JToken data = JToken.FromObject(user);
+                JToken result = await App.MobileService.InvokeApiAsync("Users", data, method, null);
+                JObject response = JObject.Parse(result.ToString());
+
+                UserInfo = response.ToObject<UserInfo>();
+                                
+                string userName = UserInfo.Username.ToLower();
+                userName = (userName.IndexOf(" ") != 1) ? userName.Replace(" ", "") : userName;
+
+                var func = Functions.Instance;
+
+                check = await func.UploadImageToBlob("users", UserInfo.Avatar, UserInfo.SasQuery, mediaFile);                                
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog("Email had already exists!", "Create Account!").ShowAsync();
+                return check;
+            }
+
+            return check;
+        }
+                
     }
 }

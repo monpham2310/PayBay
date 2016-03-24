@@ -209,10 +209,6 @@ namespace PayBay.View.MarketGroup
         {
             if (MediateClass.UserVM.UserInfo != null)
             {
-                if (MediateClass.KiotVM.SelectedStore != null)
-                {
-                    MessageVm.LoadInboxHitory(TYPEGET.START);
-                }
                 Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
             }
             else

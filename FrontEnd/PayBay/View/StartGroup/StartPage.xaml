@@ -284,7 +284,8 @@
 					<StackPanel Grid.Row="0"
 								x:Name="AccountGroupStackPanel"
 								Visibility="{Binding IsPaneOpen, ElementName=MainSplitView, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <StackPanel Name="panelUser" Orientation="Vertical" DataContext="{Binding Source={StaticResource Locator}, Path=AccountVm}">
+                                <StackPanel Name="panelUser" Orientation="Vertical" 
+                                            DataContext="{Binding Source={StaticResource Locator}, Path=AccountVm}">
                                     <StackPanel Orientation="Horizontal" Margin="10,0" >
                                         <Ellipse Width="60"
 								        Height="60"
@@ -303,7 +304,7 @@
                                             Visibility="Collapsed" 
                                             Name="UserAvatarElipse" >
                                             <Ellipse.Fill>
-                                                <ImageBrush ImageSource="{Binding UserInfo.Avatar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                <ImageBrush ImageSource="{Binding UserInfo.Avatar}" 
                                                             x:Name="imgbrAvatar"/>
                                             </Ellipse.Fill>
                                         </Ellipse>
@@ -316,12 +317,13 @@
                                                  Visibility="Visible"
 											     Foreground="{StaticResource GrayBrush}"/>
                                         <HyperlinkButton Name="UserInfoViewButton" 
-                                                 Visibility="Collapsed"                                                 
-											     Content="{Binding UserInfo.Username, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 Visibility="Collapsed"   
+                                                 Margin="15,0,0,0"
+											     Content="{Binding UserInfo.Username}"
 											     Click="UserInfoViewButton_Click"                                             
 											     Foreground="{StaticResource GrayBrush}"/>
                                     </StackPanel>
-                        </StackPanel>
+                            </StackPanel>
                         <Grid Background="{StaticResource BlackBrush}">
                                     <AutoSuggestBox Name="asbSearch"
                                             Width="Auto"

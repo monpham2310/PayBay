@@ -102,6 +102,18 @@
 							 Margin="20,0"
 							 Foreground="{StaticResource WhiteBrush}"
 							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}" Click="BackHyperlinkButton_Click"/>
+            
+            <HyperlinkButton x:Name="ExitHyperlinkButton" Grid.Column="0"
+							 FontFamily="Segoe MDL2 Assets"
+							 Content="&#xE711;"
+							 FontSize="20"
+							 Margin="20,0"
+							 ContentTemplate="{StaticResource NoUnderlineDataTemplate}"
+							 Foreground="{StaticResource WhiteBrush}" 
+							 HorizontalAlignment="Center" 
+							 VerticalAlignment="Center" 
+							 Click="ExitHyperlinkButton_Click"/>
+            
 			<TextBlock Name="tblTitle"
                        Text="Create Account" 
 					   Grid.Column="1"

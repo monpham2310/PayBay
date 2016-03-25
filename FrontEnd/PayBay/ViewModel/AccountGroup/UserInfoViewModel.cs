@@ -132,31 +132,45 @@ namespace PayBay.ViewModel.AccountGroup
             }
         }
 
+        private async void uploadAvatar(string userName, string Avatar, string SasQuery, StorageFile mediaFile)
+        {                   
+            var func = Functions.Instance;
+            await func.UploadImageToBlob("users", Avatar, SasQuery, mediaFile);            
+        }
+
         public async Task<bool> AlterOrCreateUser(UserInfo user, StorageFile mediaFile, HttpMethod method)
-        {
-            bool check = false;
+        {            
             try
             {
+                if (user.Avatar == null)
+                {
+                    if(mediaFile == null)
+                        user.Avatar = "/Assets/lol.jpg";
+                }
                 JToken data = JToken.FromObject(user);
                 JToken result = await App.MobileService.InvokeApiAsync("Users", data, method, null);
                 JObject response = JObject.Parse(result.ToString());
-
-                UserInfo = response.ToObject<UserInfo>();
-                                
-                string userName = UserInfo.Username.ToLower();
-                userName = (userName.IndexOf(" ") != 1) ? userName.Replace(" ", "") : userName;
-
-                var func = Functions.Instance;
-
-                check = await func.UploadImageToBlob("users", UserInfo.Avatar, UserInfo.SasQuery, mediaFile);                                
+                if (method == HttpMethod.Put)
+                {                    
+                    UserInfo = response.ToObject<UserInfo>();
+                    if (mediaFile != null)
+                    {
+                        uploadAvatar(UserInfo.Username, UserInfo.Avatar, UserInfo.SasQuery, mediaFile);                       
+                    }
+                    return true;
+                }
+                if(mediaFile != null)
+                {
+                    uploadAvatar(response["Username"].ToString(), response["Avatar"].ToString(), response["SasQuery"].ToString(), mediaFile);                    
+                }
             }
             catch (Exception ex)
             {
                 await new MessageDialog("Email had already exists!", "Create Account!").ShowAsync();
-                return check;
+                return false;
             }
 
-            return check;
+            return true;
         }
                 
     }

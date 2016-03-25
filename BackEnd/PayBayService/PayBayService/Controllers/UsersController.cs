@@ -81,14 +81,17 @@ namespace PayBayService.Controllers
                 string email = Convert.ToString(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetEmailOfUser", CommandType.StoredProcedure, ref Methods.err, userId));
                 if (email == user.Email || !AccountExists(user.Email))
                 {
-                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, user.UserId);
-                    if (blob != null)
+                    if (user.Avatar == null)
                     {
-                        user.Avatar = blob.ImageUri;
-                        user.SasQuery = blob.SasQuery;
-                        db.Entry(user).State = EntityState.Modified;
-                        await db.SaveChangesAsync();
+                        ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, user.UserId);
+                        if (blob != null)
+                        {
+                            user.Avatar = blob.ImageUri;
+                            user.SasQuery = blob.SasQuery;
+                        }
                     }
+                    db.Entry(user).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
                 }
                 else
                 {
@@ -143,24 +146,34 @@ namespace PayBayService.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
-
-            var table = new SqlParameter("@table", "viethung_paybayservice.Users");
-            int userId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
-            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, userId + 1);
-
-            if (blob != null && !AccountExists(user.Email))
+            try
             {
-                user.Avatar = blob.ImageUri;
-                user.SasQuery = blob.SasQuery;
-                db.Users.Add(user);
-                await db.SaveChangesAsync();
-            }
-            else
-            {
-                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
+                if (!AccountExists(user.Email))
+                {
+                    if (user.Avatar == null)
+                    {
+                        var table = new SqlParameter("@table", "viethung_paybayservice.Users");
+                        int userId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+                        ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, userId + 1);
 
+                        if (blob != null)
+                        {
+                            user.Avatar = blob.ImageUri;
+                            user.SasQuery = blob.SasQuery;
+                        }
+                    }                
+                    db.Users.Add(user);
+                    await db.SaveChangesAsync();
+                }
+                else
+                {
+                    result = Methods.CustomResponseMessage(0, "Email had exists!");                    
+                }
+            }
+            catch (Exception ex)
+            {
+                result = Methods.CustomResponseMessage(0, ex.Message.ToString());
+            }
             result = JObject.FromObject(user);        
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

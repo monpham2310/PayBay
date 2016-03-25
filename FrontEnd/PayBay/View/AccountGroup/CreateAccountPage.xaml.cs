@@ -41,13 +41,18 @@ namespace PayBay.View.AccountGroup
 			this.InitializeComponent();
 		}
 
+        private void isShowControl(bool isShow)
+        {
+            BackHyperlinkButton.Visibility = (isShow) ? Visibility.Collapsed : Visibility.Visible;
+            ExitHyperlinkButton.Visibility = (isShow) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (UserInfoViewModel.isViewInfo)
             {
                 tblTitle.Text = "Account Infomation";
-                BackHyperlinkButton.Content = "&#xE711;";
-
+                isShowControl(true);
                 var userInfo = MediateClass.UserVM.UserInfo;
                 if (userInfo.Avatar != "/Assets/lol.jpg")
                 {
@@ -61,8 +66,8 @@ namespace PayBay.View.AccountGroup
                 AddressTextBox.Text = userInfo.Address;
                 BirthdayDatePicker.Date = userInfo.Birthday;
                 MaleRadioButton.IsChecked = userInfo.Gender;
-                
-                if(userInfo.TypeId != 1)
+
+                if (userInfo.TypeId != 1)
                 {
                     TypeCommboBox.SelectedItem = (userInfo.TypeId == 2) ? StoreOwner : User;
                 }
@@ -71,12 +76,14 @@ namespace PayBay.View.AccountGroup
                     TypeCommboBox.IsEnabled = false;
                 }
             }
+            else
+                isShowControl(false);
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
-		{
-			Frame.GoBack();
-		}
+		{            
+			Frame.GoBack();                
+        }
 
         private async void AvatarButton_Click(object sender, RoutedEventArgs e)
         {            
@@ -129,6 +136,8 @@ namespace PayBay.View.AccountGroup
                     }
                     else
                     {
+                        user.Avatar = MediateClass.UserVM.UserInfo.Avatar;
+                        user.SasQuery = MediateClass.UserVM.UserInfo.SasQuery;
                         user.UserId = MediateClass.UserVM.UserInfo.UserId;
                         user.TypeId = (MediateClass.UserVM.UserInfo.TypeId == 1) ? MediateClass.UserVM.UserInfo.TypeId : typeid;
                         bool result = await MediateClass.UserVM.AlterOrCreateUser(user, mediaFile, HttpMethod.Put);
@@ -164,6 +173,10 @@ namespace PayBay.View.AccountGroup
         {
             alterOrCreateUser();
         }
-                
+
+        private void ExitHyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((Popup)Frame.Parent).IsOpen = false;
+        }
     }
 }

@@ -49,6 +49,23 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        // GET: api/Stores/5
+        [ResponseType(typeof(Store))]
+        public HttpResponseMessage GetStoresOfOwner(int ownerId)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var owner = new SqlParameter("@OwnerID", ownerId);                                
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetStoreOfOwner", CommandType.StoredProcedure, ref Methods.err, owner);                
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // GET: api/Stores/MarketID
         [ResponseType(typeof(Store))]
         public HttpResponseMessage GetStoreOfMarket(int marketId, int storeId, TYPE type)
@@ -80,27 +97,29 @@ namespace PayBayService.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
-                        
-            db.Entry(store).State = EntityState.Modified;
 
             try
             {
+                if (store.Image == null)
+                {                    
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("stores", store.StoreName, store.StoreId);
+
+                    if (blob != null)
+                    {
+                        store.Image = blob.ImageUri;
+                        store.SasQuery = blob.SasQuery;
+                    }
+                }
+                db.Entry(store).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!StoreExists(store.StoreId))
-                {
-                    result = Methods.CustomResponseMessage(0, "Store isn't exists!");
-                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
-                }
-                else
-                {
-                    throw;
-                }
+                result = Methods.CustomResponseMessage(0, "Update store is not successful!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
-            result = Methods.CustomResponseMessage(1, "Update store is successful!");
+            result = JObject.FromObject(store);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -113,19 +132,23 @@ namespace PayBayService.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
+            try {
+                if (store.Image == null)
+                {
+                    var table = new SqlParameter("@table", "viethung_paybayservice.Stores");
+                    int storeId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("stores", store.StoreName, storeId + 1);
 
-            var table = new SqlParameter("@table", "viethung_paybayservice.Stores");
-            int storeId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
-            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", store.StoreName, storeId + 1);
-
-            if (blob != null)
-            {
-                store.Image = blob.ImageUri;
-                store.SasQuery = blob.SasQuery;
+                    if (blob != null)
+                    {
+                        store.Image = blob.ImageUri;
+                        store.SasQuery = blob.SasQuery;                        
+                    }                    
+                }
                 db.Stores.Add(store);
                 await db.SaveChangesAsync();
             }
-            else
+            catch (Exception ex)
             {
                 result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
@@ -156,10 +179,10 @@ namespace PayBayService.Controllers
 
         // DELETE: api/Stores/5
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> DeleteStore(int id)
+        public async Task<HttpResponseMessage> DeleteStore(int storeId)
         {
             JObject result = new JObject();
-            Store store = await db.Stores.FindAsync(id);
+            Store store = await db.Stores.FindAsync(storeId);
             if (store == null)
             {
                 result = Methods.CustomResponseMessage(0, "Store isn't exists!");

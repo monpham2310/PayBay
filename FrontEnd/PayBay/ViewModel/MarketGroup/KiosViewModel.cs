@@ -12,13 +12,18 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using PayBay.Utilities.Common;
+using Windows.Storage;
 
 namespace PayBay.ViewModel.MarketGroup
 {
     public class KiosViewModel : BaseViewModel
     {
+        public static bool isUpdate = false;
+
         private Kios _selectedStore;
         private ObservableCollection<Kios> _kiosList;
+        private ObservableCollection<Kios> _storesOfOwner;
+        private Kios _store;
         
         private static bool isResponsed = false;
         
@@ -47,45 +52,54 @@ namespace PayBay.ViewModel.MarketGroup
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<Kios> StoresOfOwner
+        {
+            get
+            {
+                return _storesOfOwner;
+            }
+
+            set
+            {
+                _storesOfOwner = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Kios Store
+        {
+            get
+            {
+                return _store;
+            }
+
+            set
+            {
+                _store = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         public KiosViewModel()
         {
             MediateClass.KiotVM = this;
-            InitializeProperties();
-            InitializeData();
-            LoadMoreStore(MediateClass.MarketVM.SelectedMarket.MarketId, TYPEGET.START);            
+            InitializeProperties();            
+            //LoadMoreStore(TYPEGET.START);            
         }
-
-        //Initialize Fake Data
-        //private void InitFakeData()
-        //{
-        //    _fakeKios = new Kios();
-        //    ObservableCollection<Product> fakeProductList = new ObservableCollection<Product>();
-        //    for (int i=0; i < 5; i++)
-        //    {
-        //        Product fakeProduct = new Product();
-        //        fakeProduct.ProductName = "Ba Con Soi";
-        //        fakeProductList.Add(fakeProduct);
-        //    }
-        //    _fakeKios.ProductList = fakeProductList;
-        //}
-
+                
         private void InitializeProperties()
         {            
             SelectedStore = new Kios();
             KiosList = new ObservableCollection<Kios>();
+            StoresOfOwner = new ObservableCollection<Kios>();
         }
-
-        public void InitializeData()
-        {
-            int marketID = MediateClass.MarketVM.SelectedMarket.MarketId;
-            LoadMoreStore(marketID, TYPEGET.START);
-        }
-
-        public async void LoadMoreStore(int marketId, TYPEGET typeGet,TYPE type=0)
+                
+        public async void LoadMoreStore(TYPEGET typeGet,TYPE type=0)
         {
             string lastId = "";
+            int marketId = MediateClass.MarketVM.SelectedMarket.MarketId;
             if (typeGet == TYPEGET.MORE)
             {
                 if (KiosList.Count != 0)
@@ -109,9 +123,10 @@ namespace PayBay.ViewModel.MarketGroup
                 await SendData(typeGet, type, param);
         }
                
-        public async void LoadMoreStore(int marketId, string storeName, TYPEGET typeGet, TYPE type=0)
+        public async void LoadMoreStore(string storeName, TYPEGET typeGet, TYPE type=0)
         {
             string lastId = "";
+            int marketId = MediateClass.MarketVM.SelectedMarket.MarketId;
             if (typeGet == TYPEGET.MORE)
             {
                 if (KiosList.Count != 0)
@@ -178,6 +193,120 @@ namespace PayBay.ViewModel.MarketGroup
             {
                 isResponsed = false;
             }
+        }
+
+        public async Task<bool> InsertStore(Kios store, StorageFile media)
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (store.Image == null || store.Image == "/Assets/LockScreenLogo.scale-200.png")
+                    {
+                        if (media == null)
+                            store.Image = "/Assets/LockScreenLogo.scale-200.png";
+                        else
+                            store.Image = null;
+                    }
+                    JToken data = JToken.FromObject(store);
+                    JToken result = await App.MobileService.InvokeApiAsync("Stores", data, HttpMethod.Post, null);
+                    JObject response = JObject.Parse(result.ToString());
+
+                    if (media != null)
+                    {
+                        store.Image = response["Image"].ToString();
+                        store.SasQuery = response["SasQuery"].ToString();
+                        await Functions.Instance.UploadImageToBlob("stores", store.Image, store.SasQuery, media);
+                    }                   
+                                
+                }
+                else
+                {
+                    await new MessageDialog("You have not internet connection!", "Store Register").ShowAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateStore(Kios store, StorageFile media)
+        {
+            try
+            {
+                if (store.Image == null || store.Image == "/Assets/LockScreenLogo.scale-200.png")
+                {
+                    if (media == null)
+                        store.Image = "/Assets/LockScreenLogo.scale-200.png";
+                    else
+                        store.Image = null;
+                }
+                JToken data = JToken.FromObject(store);
+                JToken result = await App.MobileService.InvokeApiAsync("Stores", data, HttpMethod.Put, null);
+                JObject response = JObject.Parse(result.ToString());
+
+                Store = response.ToObject<Kios>();
+                if(media != null)
+                {
+                    await Functions.Instance.UploadImageToBlob("stores", Store.Image, Store.SasQuery, media);
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        public async void GetStoresOfOwner()
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    JArray result = new JArray();
+                    int ownerId = MediateClass.UserVM.UserInfo.UserId;
+                    IDictionary<string, string> param = new Dictionary<string, string>
+                    {
+                        {"ownerId" , ownerId.ToString()}
+                    };
+                    var response = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Get, param);
+                    result = JArray.Parse(response.ToString());
+                    StoresOfOwner = result.ToObject<ObservableCollection<Kios>>();
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Get Store").ShowAsync();
+            }
+        }
+
+        public async Task<bool> DeleteStore()
+        {
+            try
+            {
+                JObject result = new JObject();
+                IDictionary<string, string> param = new Dictionary<string, string>
+                {
+                    {"storeId", Store.StoreId.ToString()}
+                };
+                var response = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Delete, param);
+                result = JObject.Parse(response.ToString());
+                if(result["ErrCode"].ToString() == "0")
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Delete Store").ShowAsync();
+                return false;
+            }
+            return true;
         }
 
     }

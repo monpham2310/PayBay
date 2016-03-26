@@ -32,8 +32,7 @@ using PayBay.ViewModel.InboxGroup;
 namespace PayBay.View.MarketGroup
 {
     public sealed partial class KiosListPage : Page
-    {
-        private MessageInboxViewModel MessageVm => (MessageInboxViewModel)DataContext;
+    {        
         private KiosViewModel KiosVm => (KiosViewModel)gridviewKiosList.DataContext;
         private CommentViewModel CommentVm => (CommentViewModel)scrollvComment.DataContext;
         private ProductViewModel ProductVm => (ProductViewModel)scrollvProduct.DataContext;
@@ -41,26 +40,25 @@ namespace PayBay.View.MarketGroup
         public KiosListPage()
         {
             this.InitializeComponent();
-        }
+        } 
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (MediateClass.KiotVM != null)
+            if (KiosVm != null)
             {
-                MediateClass.KiotVM.LoadMoreStore(MediateClass.MarketVM.SelectedMarket.MarketId, TYPEGET.START);
+                KiosVm.LoadMoreStore(TYPEGET.START);
             }
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            string storeName = tbxSearch.Text;
-            int marketId = MediateClass.MarketVM.SelectedMarket.MarketId;
+            string storeName = tbxSearch.Text;            
             if(KiosVm != null)
             {
                 if (!string.IsNullOrEmpty(storeName))
-                    KiosVm.LoadMoreStore(marketId, storeName, TYPEGET.START);
+                    KiosVm.LoadMoreStore(storeName, TYPEGET.START);
                 else
-                    KiosVm.LoadMoreStore(marketId, TYPEGET.START);
+                    KiosVm.LoadMoreStore(TYPEGET.START);
             }
         }
 
@@ -131,16 +129,15 @@ namespace PayBay.View.MarketGroup
         //}
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            int marketId = MediateClass.MarketVM.SelectedMarket.MarketId;
+        {            
             if(scrollvStore.VerticalOffset >= scrollvStore.ScrollableHeight)
             {
                 if (KiosVm != null)
                 {
                     if (!string.IsNullOrEmpty(tbxSearch.Text))
-                        KiosVm.LoadMoreStore(marketId, tbxSearch.Text, TYPEGET.MORE);
+                        KiosVm.LoadMoreStore(tbxSearch.Text, TYPEGET.MORE);
                     else
-                        KiosVm.LoadMoreStore(marketId, TYPEGET.MORE);
+                        KiosVm.LoadMoreStore(TYPEGET.MORE);
                 }
             }
             else if (scrollvStore.VerticalOffset == 0)
@@ -148,9 +145,9 @@ namespace PayBay.View.MarketGroup
                 if (KiosVm != null)
                 {
                     if (!string.IsNullOrEmpty(tbxSearch.Text))
-                        KiosVm.LoadMoreStore(marketId, tbxSearch.Text, TYPEGET.MORE, TYPE.NEW);
+                        KiosVm.LoadMoreStore(tbxSearch.Text, TYPEGET.MORE, TYPE.NEW);
                     else
-                        KiosVm.LoadMoreStore(marketId, TYPEGET.MORE, TYPE.NEW);
+                        KiosVm.LoadMoreStore(TYPEGET.MORE, TYPE.NEW);
                 }
             }
         }
@@ -209,7 +206,10 @@ namespace PayBay.View.MarketGroup
         {
             if (MediateClass.UserVM.UserInfo != null)
             {
-                Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
+                if (KiosVm.SelectedStore.OwnerId != MediateClass.UserVM.UserInfo.UserId)
+                    Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
+                else
+                    await new MessageDialog("You can not send message to your store!", "Message").ShowAsync();
             }
             else
                 await new MessageDialog("You are not login.Login is required!", "Notification!").ShowAsync();

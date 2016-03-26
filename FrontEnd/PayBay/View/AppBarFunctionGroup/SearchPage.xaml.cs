@@ -38,12 +38,12 @@ namespace PayBay.View.AppBarFunctionGroup
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (MediateClass.MarketVM != null)
-                MediateClass.MarketVM.LoadMoreMarket(TYPEGET.START);
-            if (MediateClass.AdvertiseVM != null)
-                MediateClass.AdvertiseVM.LoadMoreSale(TYPEGET.START);
-            if (MediateClass.ProductVM != null)
-                MediateClass.ProductVM.LoadMoreProduct(TYPEGET.START);
+            if (MarketVm != null)
+                MarketVm.LoadMoreMarket(TYPEGET.START);
+            if (SaleVm != null)
+                SaleVm.LoadMoreSale(TYPEGET.START);
+            if (ProductVm != null)
+                ProductVm.LoadMoreProduct(TYPEGET.START);
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -145,14 +145,7 @@ namespace PayBay.View.AppBarFunctionGroup
                 }
             }
         }
-
-		private void marketListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-            if (MarketVm != null)
-                MarketVm.SelectedMarket = (Market)marketListBox.SelectedItem;
-			Frame.Navigate(typeof(MarketPage), NavigationMode.Forward);
-		}
-
+        		
         private void scrollvProducts_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if(scrollvProducts.VerticalOffset == 0)
@@ -174,6 +167,16 @@ namespace PayBay.View.AppBarFunctionGroup
                     else
                         ProductVm.LoadMoreProduct(txtSearchProduct.Text, TYPEGET.MORE);
                 }
+            }
+        }
+
+        private void marketListBox_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (marketListBox.SelectedItem != null)
+            {
+                if (MarketVm != null)
+                    MarketVm.SelectedMarket = (Market)marketListBox.SelectedItem;
+                Frame.Navigate(typeof(MarketPage), NavigationMode.Forward);
             }
         }
     }

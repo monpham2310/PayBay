@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.Utilities.Common;
 using PayBay.View.TopFunctionGroup;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -35,9 +36,12 @@ namespace PayBay.View.MarketGroup.KiosGroup
             Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
         }
 
-        private void btInbox_Click(object sender, RoutedEventArgs e)
-        {            
-            Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);            
+        private async void btInbox_Click(object sender, RoutedEventArgs e)
+        {         
+            if(KiosVm.SelectedStore.OwnerId != MediateClass.UserVM.UserInfo.UserId)   
+                Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);            
+            else
+                await new MessageDialog("You can not send message to your store!", "Message").ShowAsync();
         }
 
 		private void linkHide_Click(object sender, RoutedEventArgs e)

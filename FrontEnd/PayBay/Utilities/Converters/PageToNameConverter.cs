@@ -26,12 +26,12 @@ namespace PayBay.Utilities.Converters
 				return "HomePage";
 			}
 
-            if (value is Function1Page)
+            if (value is AddMarketPage)
             {
                 return "Function 1";
             }
 
-            if (value is Function2Page)
+            if (value is AddProductPage)
             {
                 return "Function 2";
             }

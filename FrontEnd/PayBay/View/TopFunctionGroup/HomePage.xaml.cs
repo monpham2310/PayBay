@@ -37,9 +37,7 @@ namespace PayBay.View.TopFunctionGroup
 
 		public HomePage()
 		{
-			this.InitializeComponent();            
-            this.Loaded += Page_Loaded;
-			//FlipViewLoop();
+			this.InitializeComponent();               			
 		}
 
 		private void FlipViewLoop()
@@ -67,7 +65,8 @@ namespace PayBay.View.TopFunctionGroup
         
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			//FlipViewLoop();
+            //FlipViewLoop();
+            AdVm.InitializeDataFromDB();
 		}
 
         private void ToBlankPage(object sender, RoutedEventArgs e)
@@ -77,7 +76,7 @@ namespace PayBay.View.TopFunctionGroup
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(Function1Page));
+			Frame.Navigate(typeof(AddMarketPage));
 		}
 
 		private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)

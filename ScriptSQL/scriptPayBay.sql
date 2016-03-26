@@ -1041,7 +1041,18 @@ alter schema viethung_paybayservice transfer viethung_paybayservice.sp_UserRate
 alter schema viethung_paybayservice transfer viethung_paybayservice.sp_ViewCommentOfStore
 alter schema viethung_paybayservice transfer viethung_paybayservice.sp_ViewNewCmtOfStore
 
+create proc viethung_paybayservice.sp_GetStoreOfOwner
+@OwnerID int
+as
+	select StoreId,StoreName,KiotNo,Image,Phone,MarketID,OwnerID,SasQuery,Rate
+	from viethung_paybayservice.STORES
+	where OwnerID = @OwnerID
 
+create proc viethung_paybayservice.sp_GetAllMarket
+as
+	select MarketID,MarketName
+	from viethung_paybayservice.Markets
+	
 
 
 

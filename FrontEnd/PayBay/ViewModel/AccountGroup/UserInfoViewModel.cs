@@ -14,6 +14,7 @@ using Windows.Networking.PushNotifications;
 using PayBay.ViewModel.InboxGroup;
 using Quobject.SocketIoClientDotNet.Client;
 using Windows.Storage;
+using PayBay.Utilities.Helpers;
 
 namespace PayBay.ViewModel.AccountGroup
 {
@@ -74,7 +75,14 @@ namespace PayBay.ViewModel.AccountGroup
                     JObject user = JObject.Parse(result.ToString());
                     UserInfo = user.ToObject<UserInfo>();             
                     PaybayPushClient.UploadChannel(UserInfo.UserId);                    
-                    MessageInboxViewModel.registerClient();                    
+                    MessageInboxViewModel.registerClient();
+                    MediateClass.MessageVM = new MessageInboxViewModel();
+                    MediateClass.MessageVM.InitSocket();      
+                }
+                else
+                {
+                    await new MessageDialog("You have not internet connection!Can not login!","Login").ShowAsync();
+                    return false;
                 }
             }
             catch (Exception ex)
@@ -142,26 +150,35 @@ namespace PayBay.ViewModel.AccountGroup
         {            
             try
             {
-                if (user.Avatar == null)
+                if (NetworkHelper.Instance.HasInternetConnection)
                 {
-                    if(mediaFile == null)
-                        user.Avatar = "/Assets/lol.jpg";
-                }
-                JToken data = JToken.FromObject(user);
-                JToken result = await App.MobileService.InvokeApiAsync("Users", data, method, null);
-                JObject response = JObject.Parse(result.ToString());
-                if (method == HttpMethod.Put)
-                {                    
-                    UserInfo = response.ToObject<UserInfo>();
+                    if (user.Avatar == null || user.Avatar == "/Assets/lol.jpg")
+                    {
+                        if (mediaFile == null)
+                            user.Avatar = "/Assets/lol.jpg";
+                        else
+                            user.Avatar = null;
+                    }
+                    JToken data = JToken.FromObject(user);
+                    JToken result = await App.MobileService.InvokeApiAsync("Users", data, method, null);
+                    JObject response = JObject.Parse(result.ToString());
+                    if (method == HttpMethod.Put)
+                    {
+                        UserInfo = response.ToObject<UserInfo>();
+                        if (mediaFile != null)
+                        {
+                            uploadAvatar(UserInfo.Username, UserInfo.Avatar, UserInfo.SasQuery, mediaFile);
+                        }
+                        return true;
+                    }
                     if (mediaFile != null)
                     {
-                        uploadAvatar(UserInfo.Username, UserInfo.Avatar, UserInfo.SasQuery, mediaFile);                       
+                        uploadAvatar(response["Username"].ToString(), response["Avatar"].ToString(), response["SasQuery"].ToString(), mediaFile);
                     }
-                    return true;
                 }
-                if(mediaFile != null)
+                else
                 {
-                    uploadAvatar(response["Username"].ToString(), response["Avatar"].ToString(), response["SasQuery"].ToString(), mediaFile);                    
+                    await new MessageDialog("You have not internet connection!", "Create Account").ShowAsync();
                 }
             }
             catch (Exception ex)

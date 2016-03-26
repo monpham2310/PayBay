@@ -61,7 +61,7 @@ namespace PayBay.View.AccountGroup
 					}
 				}
                 else
-                    await new MessageDialog("Login is NOT successful!\nMaybe wrong email or password,please try again!", "Notification!").ShowAsync();
+                    await new MessageDialog("Login is NOT successful!", "Notification!").ShowAsync();
                 btSignin.IsEnabled = true;				
 			}
 			else

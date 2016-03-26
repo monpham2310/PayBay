@@ -19,6 +19,8 @@ namespace PayBay.ViewModel.MarketGroup
         private ObservableCollection<Market> _marketItemList;
         private static bool isResponsed = false;
 
+        private ObservableCollection<Market> _allMarket;
+
         #region Property with calling to PropertyChanged
         public Market SelectedMarket
         {
@@ -45,6 +47,20 @@ namespace PayBay.ViewModel.MarketGroup
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<Market> AllMarket
+        {
+            get
+            {
+                return _allMarket;
+            }
+
+            set
+            {
+                _allMarket = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         /// <summary>
@@ -54,15 +70,33 @@ namespace PayBay.ViewModel.MarketGroup
         {
             MediateClass.MarketVM = this;
             InitializeProperties();
-            LoadMoreMarket(TYPEGET.START);         
+            //GetAllMarket();             
         }
 
         private void InitializeProperties()
         {
             SelectedMarket = new Market();
             MarketItemList = new ObservableCollection<Market>();
+            AllMarket = new ObservableCollection<Market>();
         }     
-                        
+                  
+        public async void GetAllMarket()
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    var response = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, null);
+                    var result = JArray.Parse(response.ToString());
+                    AllMarket = result.ToObject<ObservableCollection<Market>>();
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+            }
+        }
+              
         public async void LoadMoreMarket(TYPEGET type, TYPE isOld = 0)
         {
             string lastId = "";
@@ -77,7 +111,7 @@ namespace PayBay.ViewModel.MarketGroup
                 }
             }
             else
-                lastId = "-1";
+                lastId = "-1"; 
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId},

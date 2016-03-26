@@ -71,6 +71,22 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        // GET: api/Markets/BenThanh
+        [ResponseType(typeof(Market))]
+        public HttpResponseMessage GetAllMarket()
+        {
+            JArray result = new JArray();
+            try
+            {
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetAllMarket", CommandType.StoredProcedure, ref Methods.err);                
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // PUT: api/Markets/5
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutMarket(Market market)

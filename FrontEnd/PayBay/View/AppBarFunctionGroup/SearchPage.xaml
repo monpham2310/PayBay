@@ -510,8 +510,8 @@
                                       VerticalAlignment="Top"                                      
                                       ItemsSource="{Binding MarketItemList}"
                                       ItemTemplate="{StaticResource itemListMarket}"                                     
-                                      Background="White" 
-									  SelectionChanged="marketListBox_SelectionChanged" >
+                                      Background="White" 									  
+                                      Tapped="marketListBox_Tapped">
 							</GridView>
 						</ScrollViewer>
 					</Grid>
@@ -628,9 +628,7 @@
                 </PivotItem>
             </Pivot>
 
-
         </Grid>
-
 
     </Grid>
 </Page>

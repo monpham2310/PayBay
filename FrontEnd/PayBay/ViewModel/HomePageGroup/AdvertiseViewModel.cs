@@ -84,8 +84,8 @@ namespace PayBay.ViewModel.HomePageGroup
 		{
             MediateClass.AdvertiseVM = this;
 			InitializeProperties();
-            InitializeDataFromDB();
-            LoadMoreSale(TYPEGET.START);
+            //InitializeDataFromDB();
+            //LoadMoreSale(TYPEGET.START);
         }
 
 		/// <summary>
@@ -101,10 +101,10 @@ namespace PayBay.ViewModel.HomePageGroup
         /// Get data from service
         /// </summary>
         /// <returns></returns>
-        private async void InitializeDataFromDB()
+        public async void InitializeDataFromDB()
         {
             MobileServiceInvalidOperationException exception = null;
-            
+                        
             try
             {
                 IDictionary<string, string> sale = new Dictionary<string, string>
@@ -112,13 +112,13 @@ namespace PayBay.ViewModel.HomePageGroup
                     { "required", "true"}
                 };
                 
-                //await ImportData(sale);    
-                for(int i=0; i < 7; i++)
-                {
-                    AdvertiseItem dummyAd = new AdvertiseItem();
-                    dummyAd.Image = "ms-appx:///Assets/Icon/MarketIcon.jpg";
-                    AdvertiseItemList.Add(dummyAd);
-                }            
+                await ImportData(sale);    
+                //for(int i=0; i < 7; i++)
+                //{
+                //    AdvertiseItem dummyAd = new AdvertiseItem();
+                //    dummyAd.Image = "ms-appx:///Assets/Icon/MarketIcon.jpg";
+                //    AdvertiseItemList.Add(dummyAd);
+                //}            
 
             }
             catch (MobileServiceInvalidOperationException e)

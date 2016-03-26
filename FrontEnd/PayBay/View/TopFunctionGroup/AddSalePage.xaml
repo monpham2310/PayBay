@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="PayBay.View.TopFunctionGroup.Function4Page"
+    x:Class="PayBay.View.TopFunctionGroup.AddSalePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PayBay.View.TopFunctionGroup"

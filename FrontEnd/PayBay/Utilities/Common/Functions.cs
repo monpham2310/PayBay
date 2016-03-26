@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PayBay.Model;
+using PayBay.Utilities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,36 +85,39 @@ namespace PayBay.Utilities.Common
         {
             try
             {
-                //If we have a returned SAS, then upload the blob.
-                if (!string.IsNullOrEmpty(SasQuery))
+                if (NetworkHelper.Instance.HasInternetConnection)
                 {
-                    // Get the URI generated that contains the SAS 
-                    // and extract the storage credentials.
-                    StorageCredentials cred = new StorageCredentials(SasQuery);
-                    var imageUri = new Uri(image);
-
-                    // Instantiate a Blob store container based on the info in the returned item.
-                    CloudBlobContainer container = new CloudBlobContainer(
-                        new Uri(string.Format("https://{0}/{1}",
-                            imageUri.Host, containerName)), cred);
-
-                    string resourceName = image.Substring(image.LastIndexOf('/') + 1);
-
-                    // Get the new image as a stream.
-                    using (var inputStream = await media.OpenReadAsync())
+                    //If we have a returned SAS, then upload the blob.
+                    if (!string.IsNullOrEmpty(SasQuery))
                     {
-                        // Upload the new image as a BLOB from the stream.
-                        CloudBlockBlob blobFromSASCredential =
-                            container.GetBlockBlobReference(resourceName);
-                        await blobFromSASCredential.UploadFromStreamAsync(inputStream);
-                    }                                                           
-                }
-                return true;
+                        // Get the URI generated that contains the SAS 
+                        // and extract the storage credentials.
+                        StorageCredentials cred = new StorageCredentials(SasQuery);
+                        var imageUri = new Uri(image);
+
+                        // Instantiate a Blob store container based on the info in the returned item.
+                        CloudBlobContainer container = new CloudBlobContainer(
+                            new Uri(string.Format("https://{0}/{1}",
+                                imageUri.Host, containerName)), cred);
+
+                        string resourceName = image.Substring(image.LastIndexOf('/') + 1);
+
+                        // Get the new image as a stream.
+                        using (var inputStream = await media.OpenReadAsync())
+                        {
+                            // Upload the new image as a BLOB from the stream.
+                            CloudBlockBlob blobFromSASCredential =
+                                container.GetBlockBlobReference(resourceName);
+                            await blobFromSASCredential.UploadFromStreamAsync(inputStream);
+                        }
+                    }
+                }                
             }
             catch (Exception ex)
             {
                 return false;
             }
+            return true;
         }
 
         private static Regex CreateValidEmailRegex()

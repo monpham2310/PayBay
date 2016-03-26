@@ -1,14 +1,13 @@
 ﻿<Page
-    x:Class="PayBay.View.BottomFunctionGroup.PrintPage"
+    x:Class="PayBay.View.TopFunctionGroup.Manage.ProductManagePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PayBay.View.BottomFunctionGroup"
+    xmlns:local="using:PayBay.View.TopFunctionGroup.Manage"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:custom="using:PayBay.Utilities.CustomControl"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<custom:Blank/>
-	</Grid>
+
+    </Grid>
 </Page>

@@ -44,8 +44,8 @@ namespace PayBay
             Suspending += OnSuspending;
         }
         
-        //public static string UrlHost = "http://localhost:4591";
-        public static string UrlHost = "https://viethung-paybayservice.azure-mobile.net/";
+        public static string UrlHost = "http://localhost:4591";
+        //public static string UrlHost = "https://viethung-paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "EbbNfXgfCdUNcjNxAOHaLZLUAmMOwZ47";
                 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url
@@ -55,7 +55,7 @@ namespace PayBay
         );
                
         private async void AcquirePushChannel()
-        {
+        {            
             PaybayPushClient.CurrentChannel = await Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
             PaybayPushClient.CurrentChannel.PushNotificationReceived += CurrentChannel_PushNotificationReceived;
         }
@@ -117,8 +117,7 @@ namespace PayBay
             //#endif
                         
             Frame rootFrame = Window.Current.Content as Frame;
-
-            AcquirePushChannel();
+                        
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -144,18 +143,18 @@ namespace PayBay
                 // configuring the new page by passing required information as a navigation
                 // parameter
                 rootFrame.Navigate(typeof(StartPage), e.Arguments);
-            }
-
+            }        
+            
+            // Ensure the current window is active
+            Window.Current.Activate();
             if (!NetworkHelper.Instance.HasInternetConnection)
             {
                 await new MessageDialog("No internet connection is avaliable. The full functionality of the app isn't avaliable.").ShowAsync();
             }
-
-            //Register device
-            //PaybayPushClient.UploadChannel();
-
-            // Ensure the current window is active
-            Window.Current.Activate();                        
+            else
+            {
+                AcquirePushChannel();
+            }
         }
                 
         protected override void OnActivated(IActivatedEventArgs args)

@@ -177,9 +177,6 @@
     <Compile Include="View\BottomFunctionGroup\FeedbackAndAppsPage.xaml.cs">
       <DependentUpon>FeedbackAndAppsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BottomFunctionGroup\PrintPage.xaml.cs">
-      <DependentUpon>PrintPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\BottomFunctionGroup\SettingGroup\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -219,20 +216,20 @@
     <Compile Include="View\OrderGroup\PreorderPage.xaml.cs">
       <DependentUpon>PreorderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\AddMarketPage.xaml.cs">
+      <DependentUpon>AddMarketPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\AddProductPage.xaml.cs">
       <DependentUpon>AddProductPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TopFunctionGroup\Function1Page.xaml.cs">
-      <DependentUpon>Function1Page.xaml</DependentUpon>
+    <Compile Include="View\TopFunctionGroup\Manage\ProductManagePage.xaml.cs">
+      <DependentUpon>ProductManagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TopFunctionGroup\Function2Page.xaml.cs">
-      <DependentUpon>Function2Page.xaml</DependentUpon>
+    <Compile Include="View\TopFunctionGroup\Manage\StoreManagePage.xaml.cs">
+      <DependentUpon>StoreManagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TopFunctionGroup\Function3Page.xaml.cs">
-      <DependentUpon>Function3Page.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TopFunctionGroup\Function4Page.xaml.cs">
-      <DependentUpon>Function4Page.xaml</DependentUpon>
+    <Compile Include="View\TopFunctionGroup\AddSalePage.xaml.cs">
+      <DependentUpon>AddSalePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TopFunctionGroup\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -251,6 +248,9 @@
     </Compile>
     <Compile Include="View\TopFunctionGroup\MyPayBayPage.xaml.cs">
       <DependentUpon>MyPayBayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\StoreRegisterPage.xaml.cs">
+      <DependentUpon>StoreRegisterPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -386,10 +386,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BottomFunctionGroup\PrintPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\BottomFunctionGroup\SettingGroup\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -454,23 +450,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TopFunctionGroup\AddMarketPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TopFunctionGroup\AddProductPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TopFunctionGroup\Function1Page.xaml">
+    <Page Include="View\TopFunctionGroup\Manage\ProductManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TopFunctionGroup\Function2Page.xaml">
+    <Page Include="View\TopFunctionGroup\Manage\StoreManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TopFunctionGroup\Function3Page.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TopFunctionGroup\Function4Page.xaml">
+    <Page Include="View\TopFunctionGroup\AddSalePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -495,6 +491,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TopFunctionGroup\MyPayBayPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\StoreRegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

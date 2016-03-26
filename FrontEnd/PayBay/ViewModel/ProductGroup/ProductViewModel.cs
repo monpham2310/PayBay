@@ -79,7 +79,7 @@ namespace PayBay.ViewModel.ProductGroup
         {
             MediateClass.ProductVM = this;
             InitializeProperties();
-            LoadMoreProduct(TYPEGET.START);        
+            //LoadMoreProduct(TYPEGET.START);        
         }
 
         private void InitializeProperties()

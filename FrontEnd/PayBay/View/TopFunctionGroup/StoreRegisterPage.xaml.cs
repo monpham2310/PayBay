@@ -72,8 +72,16 @@ namespace PayBay.View.TopFunctionGroup
             }
         }
 
+        private void ToggleProgressRing()
+        {
+            pgrStore.IsActive = !pgrStore.IsActive;
+            gridStore.IsHitTestVisible = !gridStore.IsHitTestVisible;
+            gridStore.Opacity = (gridStore.Opacity == 1.0) ? 0.7 : 1.0;
+        }
+
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
+            ToggleProgressRing();
             bool check = false;
             if (txtStoreName.Text != "" && txtKiotNo.Text != "" && txtPhone.Text != null && cbMarket.SelectedValue != null)
             {
@@ -106,20 +114,24 @@ namespace PayBay.View.TopFunctionGroup
             }
             else
                 await new MessageDialog("Please fill the infomation!", "Store").ShowAsync();
+            ToggleProgressRing();
         }
 
         private async void btDel_Click(object sender, RoutedEventArgs e)
         {
+            ToggleProgressRing();
             bool check = await MediateClass.KiotVM.DeleteStore();
             if (check)
             {
                 await new MessageDialog("Delete is successful!", "Delete Store").ShowAsync();
+
                 Frame.GoBack();
             }
             else
             {
                 await new MessageDialog("Delete is not successful!", "Delete Store").ShowAsync();
             }
+            ToggleProgressRing();
         }
 
     }

@@ -80,13 +80,13 @@
         </Style>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0"
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">        
+        <Grid Name="gridStore">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
 			  Background="{StaticResource LightBlueBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -211,6 +211,10 @@
             </StackPanel>
         </ScrollViewer>
         </Grid>
+        </Grid>
+        <ProgressRing x:Name="pgrStore"
+					  Width="50"
+					  Height="50"/>
     </Grid>
 
 </Page>

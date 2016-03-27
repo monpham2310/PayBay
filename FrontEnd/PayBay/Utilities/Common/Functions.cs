@@ -120,6 +120,40 @@ namespace PayBay.Utilities.Common
             return true;
         }
 
+        public async Task<bool> DeleteImageInBlob(string containerName, string image, string SasQuery)
+        {
+            try
+            {
+                if (NetworkHelper.Instance.HasInternetConnection)
+                {
+                    //If we have a returned SAS, then upload the blob.
+                    if (!string.IsNullOrEmpty(SasQuery))
+                    {
+                        // Get the URI generated that contains the SAS 
+                        // and extract the storage credentials.
+                        StorageCredentials cred = new StorageCredentials(SasQuery);
+                        var imageUri = new Uri(image);
+
+                        // Instantiate a Blob store container based on the info in the returned item.
+                        CloudBlobContainer container = new CloudBlobContainer(
+                            new Uri(string.Format("https://{0}/{1}",
+                                imageUri.Host, containerName)), cred);
+
+                        string resourceName = image.Substring(image.LastIndexOf('/') + 1);
+                                                                       
+                        // Upload the new image as a BLOB from the stream.
+                        CloudBlockBlob blobFromSASCredential = container.GetBlockBlobReference(resourceName);
+                        await blobFromSASCredential.DeleteIfExistsAsync();                       
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private static Regex CreateValidEmailRegex()
         {
             string validEmailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"

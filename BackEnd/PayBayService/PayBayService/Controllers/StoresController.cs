@@ -154,7 +154,7 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
-            result = Methods.CustomResponseMessage(1, "Add store is successful!");
+            result = JObject.FromObject(store);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

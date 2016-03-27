@@ -300,6 +300,8 @@ namespace PayBay.ViewModel.MarketGroup
                 {
                     return false;
                 }
+                await Functions.Instance.DeleteImageInBlob("stores", Store.Image, Store.SasQuery);
+                Store = null;
             }
             catch (Exception ex)
             {

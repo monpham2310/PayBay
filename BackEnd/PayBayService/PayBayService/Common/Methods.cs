@@ -272,7 +272,7 @@ namespace PayBayService.Common
                 SharedAccessBlobPolicy sasPolicy = new SharedAccessBlobPolicy()
                 {
                     SharedAccessExpiryTime = DateTime.UtcNow.AddHours(24),
-                    Permissions = SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Read
+                    Permissions = SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Delete
                 };
 
                 // Get the SAS as a string.

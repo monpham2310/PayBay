@@ -100,6 +100,13 @@ namespace PayBay.View.AccountGroup
             }
         }
 
+        private void ToggleProgressRing()
+        {
+            pgrAccount.IsActive = !pgrAccount.IsActive;
+            grAccount.IsHitTestVisible = !grAccount.IsHitTestVisible;
+            grAccount.Opacity = (grAccount.Opacity == 1.0) ? 0.7 : 1.0;
+        }
+
         private async void alterOrCreateUser()
         {
             UserInfo user = new UserInfo();
@@ -167,10 +174,12 @@ namespace PayBay.View.AccountGroup
                 else
                     await new MessageDialog("Please confirm your password!", "Notification").ShowAsync();
             }
+            ToggleProgressRing();
         }
 
         private void SummitButton_Click(object sender, RoutedEventArgs e)
         {
+            ToggleProgressRing();
             alterOrCreateUser();
         }
 

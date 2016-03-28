@@ -136,7 +136,7 @@ namespace PayBayService.Controllers
 
                 //var currentUser = this.User as ServiceUser;
                 //await PushHelper.SendToastAsync(WebApiConfig.Services, ownerInfo["UserName"].ToString(), comment.Content, new Uri(ownerInfo["Avatar"].ToString()));
-                await PushHelper.SendToastAsync(WebApiConfig.Services, ownerInfo["UserName"].ToString(), comment.Content, new Uri(ownerInfo["Avatar"].ToString()), ownerInfo["OwnerID"].ToString());                               
+                await PushHelper.SendToastAsync(WebApiConfig.Services, ownerInfo["UserName"].ToString() + "just commented!", comment.Content, new Uri(ownerInfo["Avatar"].ToString()), ownerInfo["OwnerID"].ToString());                               
             }
             catch (Exception ex)
             {

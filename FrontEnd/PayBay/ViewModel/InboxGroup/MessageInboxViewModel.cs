@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using PayBay.Model;
+using PayBay.Model.RequestBody;
 using PayBay.Utilities.Common;
 using Quobject.SocketIoClientDotNet.Client;
 using System;

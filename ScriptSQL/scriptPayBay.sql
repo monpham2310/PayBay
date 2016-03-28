@@ -1053,6 +1053,33 @@ as
 	select MarketID,MarketName
 	from viethung_paybayservice.Markets
 	
+---------------------------------------------------------
 
+create proc viethung_paybayservice.sp_GetProductOfOwner
+@OwnerID int,
+@ProductID int
+as
+if(@ProductID = -1)
+begin
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,NumberOf,Unit,a.StoreID,ImportDate,SalePrice,a.SasQuery
+	from viethung_paybayservice.Products a join viethung_paybayservice.Stores b on a.StoreID=b.StoreID
+	where OwnerID = @OwnerID
+	order by ProductId desc
+end
+else
+begin
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,NumberOf,Unit,a.StoreID,ImportDate,SalePrice,a.SasQuery
+	from viethung_paybayservice.Products a join viethung_paybayservice.Stores b on a.StoreID=b.StoreID
+	where OwnerID = @OwnerID and ProductID < @ProductID
+	order by ProductId desc
+end
 
+create proc viethung_paybayservice.sp_GetMoreProductOfOwner
+@OwnerID int,
+@ProductID int
+as
+	select top 5 ProductId,ProductName,a.Image,UnitPrice,NumberOf,Unit,a.StoreID,ImportDate,SalePrice,a.SasQuery
+	from viethung_paybayservice.Products a join viethung_paybayservice.Stores b on a.StoreID=b.StoreID
+	where OwnerID = @OwnerID and ProductID > @ProductID
+	order by ProductId desc
 

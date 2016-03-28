@@ -19,6 +19,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
 using System.Configuration;
 using PayBayService.Models.BlobStorage;
+using PayBayService.Models.Products;
 
 namespace PayBayService.Controllers
 {
@@ -101,7 +102,7 @@ namespace PayBayService.Controllers
 
         // GET: api/Products/
         //[ResponseType(typeof(HttpResponseMessage))]
-        //public HttpResponseMessage GetProductFollowType(int typeProduct)
+        //public HttpResponseMessage GetProductFollowType(TypeProduct typeProduct)
         //{
         //    JArray result = new JArray();
         //    try
@@ -120,6 +121,28 @@ namespace PayBayService.Controllers
 
         //    return Request.CreateResponse(HttpStatusCode.OK, result);
         //}
+
+        // GET: api/Products/5
+        [ResponseType(typeof(Product))]
+        public HttpResponseMessage GetProductOfStoreOwner(ProductInfo request)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var owner = new SqlParameter("@OwnerID", request.OwnerID);
+                var product = new SqlParameter("@ProductID", request.ProductID);
+                if(request.Type == TYPE.OLD)
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetProductOfOwner", CommandType.StoredProcedure, ref Methods.err, owner, product);
+                else
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMoreProductOfOwner", CommandType.StoredProcedure, ref Methods.err, owner, product);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
 
         // PUT: api/Products/5
         [ResponseType(typeof(HttpResponseMessage))]

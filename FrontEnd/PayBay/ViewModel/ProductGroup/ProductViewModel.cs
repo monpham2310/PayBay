@@ -9,6 +9,7 @@ using System.Net.Http;
 using System;
 using Windows.UI.Popups;
 using PayBay.Utilities.Common;
+using PayBay.Model.RequestBody;
 
 namespace PayBay.ViewModel.ProductGroup
 {
@@ -17,6 +18,8 @@ namespace PayBay.ViewModel.ProductGroup
         private Product _selectedProduct;
         private ObservableCollection<Product> _productsOfStore;
         private ObservableCollection<Product> _productList;
+        private ObservableCollection<Product> _productsOfStoreOwner;
+
         private static bool isResponsed = false;
 
         //List for order purpose
@@ -73,6 +76,20 @@ namespace PayBay.ViewModel.ProductGroup
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<Product> ProductsOfStoreOwner
+        {
+            get
+            {
+                return _productsOfStoreOwner;
+            }
+
+            set
+            {
+                _productsOfStoreOwner = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         public ProductViewModel()
@@ -111,7 +128,7 @@ namespace PayBay.ViewModel.ProductGroup
 
         public async void LoadMoreProduct(string name, TYPEGET type, TYPE isOld=0)
         {
-            string lastId = "";
+            string lastId = "-1";
             if (type == TYPEGET.MORE)
             {
                 if (ProductList.Count != 0)
@@ -121,9 +138,7 @@ namespace PayBay.ViewModel.ProductGroup
                     else
                         lastId = ProductList.Max(x => x.ProductId).ToString();
                 }
-            }
-            else
-                lastId = "-1";
+            }            
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"id" , lastId},
@@ -136,7 +151,7 @@ namespace PayBay.ViewModel.ProductGroup
                 
         public async void GetProductsOfStore(int storeId, TYPEGET typeGet, TYPE type=0)
         {
-            string lastId = "";
+            string lastId = "-1";
             if (typeGet == TYPEGET.MORE)
             {
                 if (ProductsOfStore.Count != 0)
@@ -146,9 +161,7 @@ namespace PayBay.ViewModel.ProductGroup
                     else
                         lastId = ProductsOfStore.Max(x => x.ProductId).ToString();
                 }
-            }
-            else
-                lastId = "-1";
+            }            
             IDictionary<string, string> param = new Dictionary<string, string>
             {
                 {"storeId" , storeId.ToString()},
@@ -195,7 +208,7 @@ namespace PayBay.ViewModel.ProductGroup
             }
             catch (Exception ex)
             {                
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                await new MessageDialog(ex.Message.ToString(), "Load Product").ShowAsync();
             }
             finally
             {
@@ -214,13 +227,13 @@ namespace PayBay.ViewModel.ProductGroup
                         isResponsed = true;
                         JToken result = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Get, param);
                         JArray response = JArray.Parse(result.ToString());
+                        ObservableCollection<Product> more = response.ToObject<ObservableCollection<Product>>();
                         if (typeGet == TYPEGET.START)
                         {
-                            ProductsOfStore = response.ToObject<ObservableCollection<Product>>();
+                            ProductsOfStore = more;
                         }
                         else
-                        {
-                            ObservableCollection<Product> more = response.ToObject<ObservableCollection<Product>>();
+                        {                            
                             if (type == TYPE.OLD)
                             {
                                 foreach (var item in more)
@@ -241,11 +254,65 @@ namespace PayBay.ViewModel.ProductGroup
             }
             catch (Exception ex)
             {                
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                await new MessageDialog(ex.Message.ToString(), "Load Product!").ShowAsync();
             }
             finally
             {
                 isResponsed = false;
+            }
+        }
+
+        public async void LoadProductsOfStoreOwner(TYPEGET typeGet, TYPE type = TYPE.OLD)
+        {
+            try
+            {
+                JArray result = new JArray();
+                int lastId = -1;
+                if (typeGet == TYPEGET.MORE)
+                {
+                    if (ProductsOfStoreOwner.Count != 0)
+                    {
+                        if (type == TYPE.OLD)
+                            lastId = ProductsOfStoreOwner.Min(x => x.ProductId);
+                        else
+                            lastId = ProductsOfStoreOwner.Max(x => x.ProductId);
+                    }
+                }
+                int ownerId = MediateClass.UserVM.UserInfo.UserId;
+                ProductInfo proInfo = new ProductInfo(ownerId, lastId, type);
+                JToken body = JToken.FromObject(proInfo);
+
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {                    
+                    var response = await App.MobileService.InvokeApiAsync("Products", body, HttpMethod.Get, null);
+                    result = JArray.Parse(response.ToString());
+                    ObservableCollection<Product> more = result.ToObject<ObservableCollection<Product>>();
+                    if (typeGet == TYPEGET.START)
+                    {
+                        ProductsOfStoreOwner = more;
+                    }
+                    else
+                    {
+                        if(type == TYPE.OLD)
+                        {
+                            foreach (var item in more)
+                            {
+                                ProductsOfStoreOwner.Add(item);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < more.Count; i++)
+                            {
+                                ProductsOfStoreOwner.Insert(i, more[i]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Load Product").ShowAsync();
             }
         }
 

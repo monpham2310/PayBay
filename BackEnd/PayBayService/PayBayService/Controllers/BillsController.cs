@@ -13,6 +13,7 @@ using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.Common;
 using System.Data.SqlClient;
+using PayBayService.Services.MobileServices;
 
 namespace PayBayService.Controllers
 {
@@ -114,9 +115,19 @@ namespace PayBayService.Controllers
             {                
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
+            try
+            {
+                db.Bills.Add(bill);
+                await db.SaveChangesAsync();
 
-            db.Bills.Add(bill);
-            await db.SaveChangesAsync();
+                //var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AddBill", CommandType.StoredProcedure, ref Methods.err,);
+
+                //await PushHelper.SendToastAsync(WebApiConfig.Services, bill.);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
 
             result = JObject.FromObject(bill);
             return Request.CreateResponse(HttpStatusCode.OK, result);

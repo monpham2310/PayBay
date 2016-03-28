@@ -359,7 +359,7 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.MyPayBay:
 				{
-					frame.Navigate(typeof(HomePageNew), NavigationMode.New);
+					frame.Navigate(typeof(MyFavoritesPage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.MyFavorites:
@@ -374,7 +374,7 @@ namespace PayBay.ViewModel.StartGroup
                 }
                 case MenuFunc.Product:
                 {
-                    frame.Navigate(typeof (AddProductPage), NavigationMode.New);
+                    frame.Navigate(typeof (ProductManagePage), NavigationMode.New);
                     break;
                 }
                 case MenuFunc.Store:

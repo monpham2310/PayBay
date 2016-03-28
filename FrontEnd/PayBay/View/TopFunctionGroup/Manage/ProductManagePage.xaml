@@ -5,9 +5,105 @@
     xmlns:local="using:PayBay.View.TopFunctionGroup.Manage"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=KiosVm}"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <DataTemplate x:Key="itemListProduct">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        BorderThickness="2,2,2,2"    
+                        Margin="0,5,0,5"
+                        BorderBrush="{StaticResource LightBlueBrush}">
+                <Image Source="{Binding Image}" 
+                       Width="107" 
+                       Height="63" 
+                       Stretch="Fill"/>
+                <StackPanel Orientation="Vertical"
+                            HorizontalAlignment="Stretch"
+                            Width="280"
+							Margin="20,0">
+                    <TextBlock Text="{Binding ProductName}"
+                               Foreground="{StaticResource LightBlueBrush}"/>
+                    <TextBlock Text="{Binding StoreName}"/>
+                    <TextBlock Text="{Binding UnitPrice}"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+			  Background="{StaticResource LightBlueBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Name="tblTitle"
+                       Text="My Products" 
+					   Grid.Column="1"
+					   FontSize="20"
+					   FontWeight="Bold"
+					   VerticalAlignment="Center"
+					   Margin="10,0"
+					   Foreground="{StaticResource WhiteBrush}"/>
+        </Grid>
+        <Grid Grid.Row="1">
+
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ScrollViewer Name="svProduct" 
+                                Grid.Row="0"
+                                Grid.ColumnSpan="2" 
+                                HorizontalAlignment="Stretch"                                
+                                ViewChanged="svProduct_ViewChanged" 
+                                DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}">
+                    <GridView x:Name="gvProduct"  
+							    HorizontalAlignment="Center" 
+                                VerticalAlignment="Top"                                      
+                                ItemsSource="{Binding ProductsOfStoreOwner}"
+                                ItemTemplate="{StaticResource itemListProduct}"                                     
+                                Background="White" 							    
+                                Tapped="gvProduct_Tapped">
+                    </GridView>
+                </ScrollViewer>
+
+                <Grid Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource WhiteBrush}"                         
+                        Margin="10,0">
+                    <Button x:Name="btnAddProduct" 
+                    	    Height="51" 
+                    	    Width="165" 
+                    	    Foreground="{StaticResource WhiteBrush}"
+						    Background="{StaticResource LightBlueBrush}"
+                            Style="{StaticResource RoundedButtonStyle}"
+                            HorizontalAlignment="Center"
+                            Grid.Column="1"
+                            FontSize="20"
+                            Click="btnAddProduct_Click"
+                            Content="Add Product">
+                    </Button>
+                </Grid>
+            </Grid>
+
+        </Grid>
 
     </Grid>
 </Page>

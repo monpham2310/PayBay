@@ -32,7 +32,8 @@ namespace PayBay.View.TopFunctionGroup
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            AdVm.InitializeDataFromDB();
+            if (AdVm != null)
+                AdVm.InitializeDataFromDB();
         }
     }
 }

@@ -177,19 +177,19 @@
     <ScrollViewer>
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="160" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="110" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="120" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="120" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="130" />
+                <RowDefinition Height="180" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="11*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="12*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="12*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="13*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <FlipView ItemsSource="{Binding AdvertiseItemList}"
+                <FlipView ItemsSource="{Binding DummyAdvertiseList2}"
 						  SelectedItem="{Binding SelectedAd, Mode=TwoWay}" 
 						  Style="{StaticResource BigNavigatorFlipViewStyle}"
                           x:Name="flipViewAdvertise">
@@ -200,7 +200,7 @@
                         </DataTemplate>
                     </FlipView.ItemTemplate>
                 </FlipView>
-                <ItemsControl ItemsSource="{Binding AdvertiseItemList}" 
+                <ItemsControl ItemsSource="{Binding DummyAdvertiseList2}"
 							  HorizontalAlignment="Center" 
 							  VerticalAlignment="Bottom" 
 							  Margin="0,10">
@@ -228,7 +228,8 @@
             </Grid>
 
             <Grid Grid.Row="2"
-                  Background="LightGray">
+                  Background="#DEDFE0"
+                  x:Name="gridStoreFinder">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*" />
                     <ColumnDefinition Width="*" />
@@ -239,21 +240,21 @@
                 <Grid Grid.Column="0">
                     <Button Padding="0"
                             BorderThickness="0">
-                        <Image Source="ms-appx:///Assets/Icon/MarketIcon.jpg" 
+                        <Image Source="ms-appx:///Assets/Icon/MarketIcon.png" 
                            Stretch="Fill"/>
                     </Button>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Button Padding="0"
                             BorderThickness="0">
-                        <Image Source="ms-appx:///Assets/Icon/SuperMarketIcon.jpg" 
+                        <Image Source="ms-appx:///Assets/Icon/SuperMarketIcon.png" 
                            Stretch="Fill"/>
                     </Button>
                 </Grid>
                 <Grid Grid.Column="4">
                     <Button Padding="0"
                             BorderThickness="0">
-                        <Image Source="ms-appx:///Assets/Icon/SellerIcon.jpg" 
+                        <Image Source="ms-appx:///Assets/Icon/SellerIcon.png" 
                            Stretch="Fill"/>
                     </Button>
                 </Grid>
@@ -267,14 +268,15 @@
             </Grid>
 
             <Grid Grid.Row="4"
-                  Background="LightGray">
+                  Background="#DEDFE0">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
                     <ListView Background="LightGray"
-                          ItemsSource="{Binding AdvertiseItemList}">
+                          ItemsSource="{Binding DummyAdvertiseList}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Image}"
-                                   Stretch="Fill"/>
+                                   Stretch="Fill"
+                                       Width="135"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemsPanel>
@@ -293,14 +295,15 @@
             </Grid>
 
             <Grid Grid.Row="6"
-                  Background="LightGray">
+                  Background="#DEDFE0">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
                     <ListView Background="LightGray"
-                          ItemsSource="{Binding AdvertiseItemList}">
+                          ItemsSource="{Binding DummyAdvertiseList}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Image}"
-                                   Stretch="Fill"/>
+                                   Stretch="Fill"
+                                       Width="135"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemsPanel>
@@ -319,7 +322,7 @@
             </Grid>
 
             <Grid Grid.Row="8"
-                  Background="LightGray">
+                  Background="#DEDFE0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*" />
                     <ColumnDefinition Width="*" />
@@ -330,21 +333,21 @@
                 <Grid Grid.Column="0">
                     <Button Padding="0"
                             BorderThickness="0">
-                        <Image Source="ms-appx:///Assets/Icon/MarketIcon.jpg" 
+                        <Image Source="ms-appx:///Assets/Icon/SalelistIcon.png" 
                            Stretch="Fill"/>
                     </Button>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Button Padding="0"
                             BorderThickness="0">
-                        <Image Source="ms-appx:///Assets/Icon/SuperMarketIcon.jpg" 
+                        <Image Source="ms-appx:///Assets/Icon/BestchoiceIcon.png" 
                            Stretch="Fill"/>
                     </Button>
                 </Grid>
                 <Grid Grid.Column="4">
                     <Button Padding="0"
                             BorderThickness="0">
-                        <Image Source="ms-appx:///Assets/Icon/SellerIcon.jpg" 
+                        <Image Source="ms-appx:///Assets/Icon/DealWeekIcon.png" 
                            Stretch="Fill"/>
                     </Button>
                 </Grid>

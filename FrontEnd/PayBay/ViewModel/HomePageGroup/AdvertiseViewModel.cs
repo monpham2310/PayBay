@@ -21,6 +21,8 @@ namespace PayBay.ViewModel.HomePageGroup
 	public class AdvertiseViewModel : BaseViewModel
 	{	   
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
+        private ObservableCollection<AdvertiseItem> _dummyAdvertiseList;
+        private ObservableCollection<AdvertiseItem> _dummyAdvertiseList2;
         private ObservableCollection<AdvertiseItem> _saleList;
         private ObservableCollection<AdvertiseItem> _saleOfStoreOwner;
 
@@ -97,6 +99,7 @@ namespace PayBay.ViewModel.HomePageGroup
             }
         }
 
+
         public AdvertiseItem SelectedSale
         {
             get
@@ -119,9 +122,26 @@ namespace PayBay.ViewModel.HomePageGroup
 		{
             MediateClass.AdvertiseVM = this;
 			InitializeProperties();
+            //InitializeDummyAds();
             //InitializeDataFromDB();
             //LoadMoreSale(TYPEGET.START);
         }
+
+        //private void InitializeDummyAds()
+        //{
+        //    DummyAdvertiseList = new ObservableCollection<AdvertiseItem>();
+        //    DummyAdvertiseList2 = new ObservableCollection<AdvertiseItem>();
+        //    for (int i=0; i < 20; i++)
+        //    {
+        //        AdvertiseItem ad = new AdvertiseItem();
+        //        ad.Image = "ms-appx:///Assets/Icon/FruitIcon.png";
+        //        DummyAdvertiseList.Add(ad);
+        //    }
+
+        //    AdvertiseItem ad2 = new AdvertiseItem();
+        //    ad2.Image = "ms-appx:///Assets/Icon/WelcomePaybay.png";
+        //    DummyAdvertiseList2.Add(ad2);
+        //}
 
 		/// <summary>
 		/// Initialize market

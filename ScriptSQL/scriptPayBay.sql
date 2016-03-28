@@ -1094,4 +1094,56 @@ as
 		from viethung_paybayservice.Users  
 		where UserID = @UserID		
 	commit
+	
+create proc viethung_paybayservice.sp_GetSaleOfOwner
+@SaleID int,
+@OwnerID int
+as
+	if(@SaleID = -1)
+	begin
+		select top 5 SaleId,Title,Describes,StartDate,EndDate,a.StoreID,a.Image,a.SasQuery
+		from viethung_paybayservice.SaleInfo a join viethung_paybayservice.Stores b on a.StoreID=b.StoreID
+		where OwnerID = @OwnerID
+		order by SaleId desc
+	end
+	else
+	begin
+		select top 5 SaleId,Title,Describes,StartDate,EndDate,a.StoreID,a.Image,a.SasQuery
+		from viethung_paybayservice.SaleInfo a join viethung_paybayservice.Stores b on a.StoreID=b.StoreID
+		where OwnerID = @OwnerID and SaleId < @SaleID
+		order by SaleId desc
+	end
+	
+create proc viethung_paybayservice.sp_GetMoreSaleOfOwner
+@SaleID int,
+@OwnerID int
+as
+	select top 5 SaleId,Title,Describes,StartDate,EndDate,a.StoreID,a.Image,a.SasQuery
+	from viethung_paybayservice.SaleInfo a join viethung_paybayservice.Stores b on a.StoreID=b.StoreID
+	where OwnerID = @OwnerID and SaleId > @SaleID
+	order by SaleId desc
 
+create proc viethung_paybayservice.sp_GetNewMechandise
+@ProductID int
+as
+if(@ProductID = -1)
+begin
+	select top 5 ProductId,ProductName,Image
+	from viethung_paybayservice.Products
+	order by ProductId desc
+end
+else
+begin
+	select top 5 ProductId,ProductName,Image
+	from viethung_paybayservice.Products
+	where ProductId < @ProductId
+	order by ProductId desc
+end
+
+create proc viethung_paybayservice.sp_GetMoreNewMechandise
+@ProductID int
+as
+	select top 5 ProductId,ProductName,Image
+	from viethung_paybayservice.Products
+	where ProductId > @ProductId
+	order by ProductId desc

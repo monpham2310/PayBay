@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using PayBayService.Models;
 using Newtonsoft.Json.Linq;
 using PayBayService.Common;
+using System.Data.SqlClient;
 
 namespace PayBayService.Controllers
 {
@@ -36,6 +37,46 @@ namespace PayBayService.Controllers
             }
 
             return Ok(productStatistic);
+        }
+
+        [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage GetNewProduct(TYPE typeProduct, int productId)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var product = new SqlParameter("@ProductID", productId);
+                if (typeProduct == TYPE.OLD)
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewMechandise", CommandType.StoredProcedure, ref Methods.err, product);
+                else
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMoreNewMechandise", CommandType.StoredProcedure, ref Methods.err, product);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage GetBestSaleProduct(int productId, TYPE typeProduct, bool type)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var product = new SqlParameter("@ProductID", productId);
+                if (typeProduct == TYPE.OLD)
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err, product);
+                else
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewBestSaleProduct", CommandType.StoredProcedure, ref Methods.err, product);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // PUT: api/ProductStatistics/5

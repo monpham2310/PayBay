@@ -102,17 +102,15 @@ namespace PayBayService.Controllers
 
         // GET: api/Products/
         //[ResponseType(typeof(HttpResponseMessage))]
-        //public HttpResponseMessage GetProductFollowType(TypeProduct typeProduct)
+        //public HttpResponseMessage GetProductFollowType(TYPE typeProduct)
         //{
         //    JArray result = new JArray();
         //    try
         //    {
-        //        if (typeProduct == (int)Methods.TypeProduct.NEW)
-        //            result = Methods.ExecQueryWithResult("viethung_paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err);
-        //        else if (typeProduct == (int)Methods.TypeProduct.SALE)
-        //            result = Methods.ExecQueryWithResult("viethung_paybayservice.sp_GetSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+        //        if (typeProduct == TYPE.NEW)
+        //            result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewProduct", CommandType.StoredProcedure, ref Methods.err);                
         //        else
-        //            result = Methods.ExecQueryWithResult("viethung_paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err);
+        //            result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err);
         //    }
         //    catch (Exception ex)
         //    {
@@ -212,7 +210,7 @@ namespace PayBayService.Controllers
 
             try
             {
-                if (product.Image != null)
+                if (product.Image == null)
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.Products");
                     int productId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));

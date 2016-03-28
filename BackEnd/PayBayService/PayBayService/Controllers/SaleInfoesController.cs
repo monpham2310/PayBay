@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 using PayBayService.Common;
 using System.Data.SqlClient;
 using PayBayService.Models.BlobStorage;
+using PayBayService.Models.Sales;
 
 namespace PayBayService.Controllers
 {
@@ -22,19 +23,19 @@ namespace PayBayService.Controllers
         private PayBayDatabaseEntities db = new PayBayDatabaseEntities();
 
         // GET: api/SaleInfoes
-        public HttpResponseMessage GetSaleInfoes()
-        {
-            JArray result = new JArray();
-            try
-            {
-                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetAllSaleInfo", CommandType.StoredProcedure, ref Methods.err);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, ex.Message);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+        //public HttpResponseMessage GetSaleInfoes()
+        //{
+        //    JArray result = new JArray();
+        //    try
+        //    {
+        //        result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetAllSaleInfo", CommandType.StoredProcedure, ref Methods.err);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.OK, ex.Message);
+        //    }
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
 
         // GET: api/SaleInfoes/5
         [ResponseType(typeof(SaleInfo))]
@@ -126,9 +127,31 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        // GET: api/Products/5
+        [ResponseType(typeof(SaleInfo))]
+        public HttpResponseMessage GetSaleOfStoreOwner(SaleItem request)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var sale = new SqlParameter("@SaleID", request.SaleId);
+                var owner = new SqlParameter("@OwnerID", request.OwnerId);
+                if (request.Type == TYPE.OLD)
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetSaleOfOwner", CommandType.StoredProcedure, ref Methods.err, sale, owner);
+                else
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMoreSaleOfOwner", CommandType.StoredProcedure, ref Methods.err, sale, owner);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // PUT: api/SaleInfoes/5
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> PutSaleInfo(SaleInfo saleInfo)
+        public async Task<HttpResponseMessage> PutSaleInfo(SaleInfo sale)
         {
             JObject result = new JObject();
             if (!ModelState.IsValid)
@@ -136,26 +159,27 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.Entry(saleInfo).State = EntityState.Modified;
-
             try
             {
+                if (sale.Image == null)
+                {
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", sale.Title, sale.SaleId);
+
+                    if (blob != null)
+                    {
+                        sale.Image = blob.ImageUri;
+                        sale.SasQuery = blob.SasQuery;
+                    }
+                }
+                db.Entry(sale).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!SaleInfoExists(saleInfo.SaleId))
-                {
-                    result = Methods.CustomResponseMessage(0, "Sale Info isn't exists!");
-                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
-                }
-                else
-                {
-                    throw;
-                }
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
-            result = Methods.CustomResponseMessage(1, "Update sale info is successful!");
+            result = JObject.FromObject(sale);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -180,7 +204,7 @@ namespace PayBayService.Controllers
 
         // POST: api/SaleInfoes
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> PostSaleInfo(SaleInfo saleInfo)
+        public async Task<HttpResponseMessage> PostSaleInfo(SaleInfo sale)
         {
             JObject result = new JObject();
             if (!ModelState.IsValid)
@@ -188,33 +212,38 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var table = new SqlParameter("@table", "viethung_paybayservice.SaleInfo");
-            int saleId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
-            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", saleInfo.Title, saleId + 1);
+            try
+            {
+                if (sale.Image == null)
+                {
+                    var table = new SqlParameter("@table", "viethung_paybayservice.SaleInfo");
+                    int saleId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", sale.Title, saleId + 1);
 
-            if (blob != null)
-            {
-                saleInfo.Image = blob.ImageUri;
-                saleInfo.SasQuery = blob.SasQuery;
-                db.SaleInfoes.Add(saleInfo);
+                    if (blob != null)
+                    {
+                        sale.Image = blob.ImageUri;
+                        sale.SasQuery = blob.SasQuery;
+                    }
+                }
+                db.SaleInfoes.Add(sale);
                 await db.SaveChangesAsync();
-                result = JObject.FromObject(saleInfo);
             }
-            else
+            catch (Exception ex)
             {
-                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
-                        
+
+            result = JObject.FromObject(sale);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/SaleInfoes/5
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> DeleteSaleInfo(int id)
+        public async Task<HttpResponseMessage> DeleteSaleInfo(int saleId)
         {
             JObject result = new JObject();
-            SaleInfo saleInfo = await db.SaleInfoes.FindAsync(id);
+            SaleInfo saleInfo = await db.SaleInfoes.FindAsync(saleId);
             if (saleInfo == null)
             {
                 result = Methods.CustomResponseMessage(0, "Sale info isn't exists!");

@@ -115,6 +115,7 @@
     <Compile Include="Model\RequestBody\MessageInfo.cs" />
     <Compile Include="Model\Rating.cs" />
     <Compile Include="Model\RequestBody\ProductInfo.cs" />
+    <Compile Include="Model\RequestBody\SaleItem.cs" />
     <Compile Include="Services\MobileServices\PaybayNotification\push.register.cs" />
     <Compile Include="Utilities\Common\Functions.cs" />
     <Compile Include="Model\Product.cs" />
@@ -225,6 +226,9 @@
     </Compile>
     <Compile Include="View\TopFunctionGroup\Manage\ProductManagePage.xaml.cs">
       <DependentUpon>ProductManagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\Manage\SaleManagePage.xaml.cs">
+      <DependentUpon>SaleManagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TopFunctionGroup\Manage\StoreManagePage.xaml.cs">
       <DependentUpon>StoreManagePage.xaml</DependentUpon>
@@ -457,6 +461,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TopFunctionGroup\Manage\ProductManagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\Manage\SaleManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -105,6 +105,7 @@ namespace PayBay.View.TopFunctionGroup
                 temp.NumberOf = Convert.ToInt32(txtAmount.Text);
                 temp.SalePrice = float.Parse(txtSalePrice.Text);
                 temp.StoreId = Convert.ToInt32(cbStore.SelectedValue);
+                temp.ImportDate = DateTime.UtcNow;
                 
                 if (!ProductViewModel.isUpdate)
                 {

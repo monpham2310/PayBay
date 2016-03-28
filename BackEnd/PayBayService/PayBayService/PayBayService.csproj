@@ -299,6 +299,7 @@
     <Compile Include="Models\SaleInfo.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Sales\SaleItem.cs" />
     <Compile Include="Models\StatisticRating.cs">
       <DependentUpon>PaybayModel.tt</DependentUpon>
     </Compile>

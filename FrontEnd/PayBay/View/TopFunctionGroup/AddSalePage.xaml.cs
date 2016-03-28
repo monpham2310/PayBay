@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using PayBay.Model;
 using PayBay.Utilities.Common;
+using PayBay.ViewModel.HomePageGroup;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,6 +38,28 @@ namespace PayBay.View.TopFunctionGroup
 
         StorageFile media = null;
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (AdvertiseViewModel.isUpdate)
+            {
+                var sale = MediateClass.AdvertiseVM.SelectedSale;
+                txtTitle.Text = sale.Title;
+                txtDescribes.Text = sale.Describes;
+                dpStartDate.Date = sale.StartDate;
+                dpEndDate.Date = sale.EndDate;                
+                cbStore.SelectedValue = sale.StoreId;
+                if (sale.Image != null)
+                {
+                    if (sale.Image.IndexOf("/Assets/") == -1)
+                    {
+                        var uriImage = new Uri(sale.Image);
+                        var img = new BitmapImage(uriImage);
+                        imgbrImage.ImageSource = img;
+                    }
+                }
+            }
+        }
+
         private async void ButtonCapture_Click(object sender, RoutedEventArgs e)
         {
             media = await Functions.GetPhotoFromGallery();
@@ -48,45 +71,69 @@ namespace PayBay.View.TopFunctionGroup
                 await bitmapImage.SetSourceAsync(stream);
 
                 var decoder = await Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(stream);
-                imagePreview.Source = bitmapImage;
+                imgbrImage.ImageSource = bitmapImage;
             }
+        }
+
+        private void ToggleProgressRing()
+        {
+            pgrSale.IsActive = !pgrSale.IsActive;
+            gridSale.IsHitTestVisible = !gridSale.IsHitTestVisible;
+            gridSale.Opacity = (gridSale.Opacity == 1.0) ? 0.7 : 1.0;
         }
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            AdvertiseItem temp = new AdvertiseItem();
-            temp.Title = txtTitle.Text;
-            temp.Describes = txtDes.Text;
-            temp.StartDate = dpStartDate.Date.DateTime;
-            temp.EndDate = dpEndDate.Date.DateTime;
-            temp.StoreId = int.Parse(txtStoreid.Text);
-            temp.IsRequired = (bool)cbxRequire.IsChecked;            
-
-            await InsertSale(temp);
-        }
-
-        private async Task InsertSale(AdvertiseItem sale)
-        {
-            try
+            ToggleProgressRing();
+            bool check = false;
+            if (txtTitle.Text != "" && txtDescribes.Text != null && cbStore.SelectedValue != null)
             {
-                JToken data = JToken.FromObject(sale);
-                JToken result = await App.MobileService.InvokeApiAsync("SaleInfoes", data, HttpMethod.Post, null);
+                AdvertiseItem temp = new AdvertiseItem();
+                temp.Title = txtTitle.Text;
+                temp.Describes = txtDescribes.Text;
+                temp.StartDate = dpStartDate.Date.DateTime;
+                temp.EndDate = dpEndDate.Date.DateTime;
+                temp.StoreId = Convert.ToInt32(cbStore.SelectedValue);
+                if (!AdvertiseViewModel.isUpdate)
+                {
+                    check = await MediateClass.AdvertiseVM.InsertSale(temp, media);
+                }
+                else
+                {
+                    temp.SaleId = MediateClass.AdvertiseVM.SelectedSale.SaleId;
+                    temp.Image = MediateClass.AdvertiseVM.SelectedSale.Image;
+                    temp.SasQuery = MediateClass.AdvertiseVM.SelectedSale.SasQuery;
 
-                JObject response = JObject.Parse(result.ToString());
-
-                sale.Image = response["Image"].ToString();
-                sale.SasQuery = response["SasQuery"].ToString();
+                    check = await MediateClass.AdvertiseVM.UpdateSale(temp, media);
+                }
+                if (check)
+                {
+                    await new MessageDialog("Successful!", "Sales").ShowAsync();
+                    Frame.GoBack();
+                }
+                else
+                    await new MessageDialog("Not successful!", "Sales").ShowAsync();
+            }
+            else
+                await new MessageDialog("Please fill the infomation!", "Product").ShowAsync();
+            ToggleProgressRing();
+        }
                 
-                bool check = await Functions.Instance
-                                            .UploadImageToBlob("sales", sale.Image, sale.SasQuery, media);
-
-                imagePreview.Source = null;
-                //viewModel.ProductList.Add(product);
-            }
-            catch (Exception ex)
+        private async void btDel_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleProgressRing();
+            bool check = await MediateClass.AdvertiseVM.DeleteSale();
+            if (check)
             {
-                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                await new MessageDialog("Delete is successful!", "Delete Sale").ShowAsync();
+                Frame.GoBack();
             }
+            else
+            {
+                await new MessageDialog("Delete is not successful!", "Delete Sale").ShowAsync();
+            }
+            ToggleProgressRing();
         }
+                
     }
 }

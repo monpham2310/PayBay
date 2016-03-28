@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using System.IO;
 using PayBay.Utilities.Helpers;
 using PayBay.Utilities.Common;
+using PayBay.Model.RequestBody;
+using Windows.Storage;
 
 namespace PayBay.ViewModel.HomePageGroup
 {
@@ -20,7 +22,12 @@ namespace PayBay.ViewModel.HomePageGroup
 	{	   
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
         private ObservableCollection<AdvertiseItem> _saleList;
+        private ObservableCollection<AdvertiseItem> _saleOfStoreOwner;
+
+        private AdvertiseItem _selectedSale;
 		private AdvertiseItem _selectedAd;
+
+        public static bool isUpdate = false;
         private static bool isResponsed = false;
 
 		#region Property with calling to PropertyChanged
@@ -72,6 +79,34 @@ namespace PayBay.ViewModel.HomePageGroup
             set
             {
                 _saleList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<AdvertiseItem> SaleOfStoreOwner
+        {
+            get
+            {
+                return _saleOfStoreOwner;
+            }
+
+            set
+            {
+                _saleOfStoreOwner = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public AdvertiseItem SelectedSale
+        {
+            get
+            {
+                return _selectedSale;
+            }
+
+            set
+            {
+                _selectedSale = value;
                 OnPropertyChanged();
             }
         }
@@ -248,6 +283,153 @@ namespace PayBay.ViewModel.HomePageGroup
                 isResponsed = false;
             }
         }
-                
+
+        public async void GetSaleOfOwner(TYPEGET typeGet, TYPE type = TYPE.OLD)
+        {
+            try
+            {
+                JArray result = new JArray();
+                int lastId = -1;
+                if (typeGet == TYPEGET.MORE)
+                {
+                    if (SaleOfStoreOwner.Count != 0)
+                    {
+                        if (type == TYPE.OLD)
+                            lastId = SaleOfStoreOwner.Min(x => x.SaleId);
+                        else
+                            lastId = SaleOfStoreOwner.Max(x => x.SaleId);
+                    }
+                }
+                int ownerId = MediateClass.UserVM.UserInfo.UserId;
+                SaleItem saleInfo = new SaleItem(lastId, ownerId, type);
+                JToken body = JToken.FromObject(saleInfo);
+
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    var response = await App.MobileService.InvokeApiAsync("SaleInfoes", body, HttpMethod.Get, null);
+                    result = JArray.Parse(response.ToString());
+                    ObservableCollection<AdvertiseItem> more = result.ToObject<ObservableCollection<AdvertiseItem>>();
+                    if (typeGet == TYPEGET.START)
+                    {
+                        SaleOfStoreOwner = more;
+                    }
+                    else
+                    {
+                        if (type == TYPE.OLD)
+                        {
+                            foreach (var item in more)
+                            {
+                                SaleOfStoreOwner.Add(item);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < more.Count; i++)
+                            {
+                                SaleOfStoreOwner.Insert(i, more[i]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Load Sale").ShowAsync();
+            }
+        }
+
+        public async Task<bool> InsertSale(AdvertiseItem sale, StorageFile media)
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (sale.Image == null || sale.Image == "/Assets/LockScreenLogo.scale-200.png")
+                    {
+                        if (media == null)
+                            sale.Image = "/Assets/LockScreenLogo.scale-200.png";
+                        else
+                            sale.Image = null;
+                    }
+                    JToken data = JToken.FromObject(sale);
+                    JToken result = await App.MobileService.InvokeApiAsync("SaleInfoes", data, HttpMethod.Post, null);
+
+                    JObject response = JObject.Parse(result.ToString());
+                    if (media != null)
+                    {
+                        sale.Image = response["Image"].ToString();
+                        sale.SasQuery = response["SasQuery"].ToString();
+                        bool check = await Functions.Instance.UploadImageToBlob("sales", sale.Image, sale.SasQuery, media);
+                    }
+                }
+                else
+                {
+                    await new MessageDialog("You have not internet connection!", "Insert Sale").ShowAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateSale(AdvertiseItem sale, StorageFile media)
+        {
+            try
+            {
+                if (sale.Image == null || sale.Image == "/Assets/LockScreenLogo.scale-200.png")
+                {
+                    if (media == null)
+                        sale.Image = "/Assets/LockScreenLogo.scale-200.png";
+                    else
+                        sale.Image = null;
+                }
+                JToken data = JToken.FromObject(sale);
+                JToken result = await App.MobileService.InvokeApiAsync("SaleInfoes", data, HttpMethod.Put, null);
+                JObject response = JObject.Parse(result.ToString());
+
+                SelectedSale = response.ToObject<AdvertiseItem>();
+                if (media != null)
+                {
+                    await Functions.Instance.UploadImageToBlob("sales", SelectedSale.Image, SelectedSale.SasQuery, media);
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> DeleteSale()
+        {
+            try
+            {
+                JObject result = new JObject();
+                IDictionary<string, string> param = new Dictionary<string, string>
+                {
+                    {"saleId", SelectedSale.SaleId.ToString()}
+                };
+                var response = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Delete, param);
+                result = JObject.Parse(response.ToString());
+                if (result["ErrCode"].ToString() == "0")
+                {
+                    return false;
+                }
+                await Functions.Instance.DeleteImageInBlob("sales", SelectedSale.Image, SelectedSale.SasQuery);
+                SelectedSale = null;
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Delete Sale").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
     }
 }

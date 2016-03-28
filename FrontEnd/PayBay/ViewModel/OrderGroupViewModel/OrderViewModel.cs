@@ -88,7 +88,7 @@ namespace PayBay.ViewModel.OrderGroupViewModel
                 Bill temp = myBill.ToObject<Bill>();
                 BillOfUser.BillId = temp.BillId;
                 foreach (DetailBill item in DetailList)
-                {
+                { 
                     item.BillId = temp.BillId;
                 }
 

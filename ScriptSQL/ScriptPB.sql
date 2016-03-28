@@ -168,4 +168,4 @@ create table paybayservice.StatisticRating(
 
 alter table paybayservice.MessageInbox add Content nvarchar(255)
 alter table paybayservice.MessageInbox add InboxDate datetime
-alter table paybayser
+alter table viethung_paybayservice.Products alter column ImportDate datetime

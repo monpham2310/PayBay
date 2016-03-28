@@ -84,6 +84,7 @@ namespace PayBay.View.MarketGroup.KiosGroup
         private async void checkBtn_Click(object sender, RoutedEventArgs e)
         {            
             ProductVm.ProductOrderList.Clear();
+            int checkCount = 0;
             foreach (Product product in listViewProductsOfStore.Items)
             {
                 if (product.OrderUnit > 0 && product.OrderUnit <= product.NumberOf)
@@ -92,8 +93,12 @@ namespace PayBay.View.MarketGroup.KiosGroup
                 }
                 else
                 {
-                    await new MessageDialog("Some product is out.Please check again!", "Notification!").ShowAsync();
+                    checkCount++;
                 }
+            }
+            if(checkCount > 0)
+            {
+                await new MessageDialog("Have " + checkCount + " products is out.Please check again!", "Notification!").ShowAsync();
             }
 
             if (ProductVm.ProductOrderList.Count > 0)

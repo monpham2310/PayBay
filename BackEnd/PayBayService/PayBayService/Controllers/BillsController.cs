@@ -117,19 +117,34 @@ namespace PayBayService.Controllers
             }
             try
             {
-                db.Bills.Add(bill);
-                await db.SaveChangesAsync();
+                //db.Bills.Add(bill);
+                //await db.SaveChangesAsync();
 
-                //var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AddBill", CommandType.StoredProcedure, ref Methods.err,);
+                var createDate = new SqlParameter("@CreatedDate", bill.CreatedDate);
+                var store = new SqlParameter("@StoreID", bill.StoreID);
+                var total = new SqlParameter("@TotalPrice", bill.TotalPrice);
+                var reduce = new SqlParameter("@ReducedPrice", bill.ReducedPrice);
+                var user = new SqlParameter("@UserID", bill.UserID);
+                var note = new SqlParameter("@Note", bill.Note);
+                var shipMethod = new SqlParameter("@ShipMethod", bill.ShipMethod);
+                var trade = new SqlParameter("@TradeTerm", bill.TradeTerm);
+                var agree = new SqlParameter("@Agree", bill.AgreeredShippingDate);
+                var shipDate = new SqlParameter("@ShipDate", bill.ShippingDate);
 
-                //await PushHelper.SendToastAsync(WebApiConfig.Services, bill.);
+                var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AddBill", CommandType.StoredProcedure, ref Methods.err,
+                                createDate, store, total, reduce, user, note, shipMethod, trade, agree, shipDate);
+
+                await PushHelper.SendToastAsync(WebApiConfig.Services, response["Username"].ToString() + "just order to you!","You have new order!"
+                                                    ,new Uri(response["Avatar"].ToString()), response["OwnerID"].ToString());
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+                result = Methods.CustomResponseMessage(0, "Submit bill is not successful!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
-            result = JObject.FromObject(bill);
+            //result = JObject.FromObject(bill);
+            result = Methods.CustomResponseMessage(1, "Submit bill is successful!");
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

@@ -10,6 +10,7 @@ using System;
 using Windows.UI.Popups;
 using PayBay.Utilities.Common;
 using PayBay.Model.RequestBody;
+using Windows.Storage;
 
 namespace PayBay.ViewModel.ProductGroup
 {
@@ -20,6 +21,7 @@ namespace PayBay.ViewModel.ProductGroup
         private ObservableCollection<Product> _productList;
         private ObservableCollection<Product> _productsOfStoreOwner;
 
+        public static bool isUpdate = false;
         private static bool isResponsed = false;
 
         //List for order purpose
@@ -41,8 +43,7 @@ namespace PayBay.ViewModel.ProductGroup
         {
             get { return _selectedProduct; }
             set
-            {
-                if (Equals(value, _selectedProduct)) return;
+            {                
                 _selectedProduct = value;
                 OnPropertyChanged();
             }
@@ -314,6 +315,99 @@ namespace PayBay.ViewModel.ProductGroup
             {
                 await new MessageDialog(ex.Message.ToString(), "Load Product").ShowAsync();
             }
+        }
+
+        public async Task<bool> InsertProduct(Product product, StorageFile media)
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (product.Image == null || product.Image == "/Assets/LockScreenLogo.scale-200.png")
+                    {
+                        if (media == null)
+                            product.Image = "/Assets/LockScreenLogo.scale-200.png";
+                        else
+                            product.Image = null;
+                    }
+                    JToken data = JToken.FromObject(product);
+                    JToken result = await App.MobileService.InvokeApiAsync("Products", data, HttpMethod.Post, null);
+
+                    JObject response = JObject.Parse(result.ToString());
+                    if (media != null)
+                    {
+                        product.Image = response["Image"].ToString();
+                        product.SasQuery = response["SasQuery"].ToString();
+                        bool check = await Functions.Instance.UploadImageToBlob("products", product.Image, product.SasQuery, media);
+                    }
+                }
+                else
+                {
+                    await new MessageDialog("You have not internet connection!", "Insert Product").ShowAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateProduct(Product product, StorageFile media)
+        {
+            try
+            {
+                if (product.Image == null || product.Image == "/Assets/LockScreenLogo.scale-200.png")
+                {
+                    if (media == null)
+                        product.Image = "/Assets/LockScreenLogo.scale-200.png";
+                    else
+                        product.Image = null;
+                }
+                JToken data = JToken.FromObject(product);
+                JToken result = await App.MobileService.InvokeApiAsync("Products", data, HttpMethod.Put, null);
+                JObject response = JObject.Parse(result.ToString());
+
+                SelectedProduct = response.ToObject<Product>();
+                if (media != null)
+                {
+                    await Functions.Instance.UploadImageToBlob("products", SelectedProduct.Image, SelectedProduct.SasQuery, media);
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> DeleteProduct()
+        {
+            try
+            {
+                JObject result = new JObject();
+                IDictionary<string, string> param = new Dictionary<string, string>
+                {
+                    {"productId", SelectedProduct.ProductId.ToString()}
+                };
+                var response = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Delete, param);
+                result = JObject.Parse(response.ToString());
+                if (result["ErrCode"].ToString() == "0")
+                {
+                    return false;
+                }
+                await Functions.Instance.DeleteImageInBlob("products", SelectedProduct.Image, SelectedProduct.SasQuery);
+                SelectedProduct = null;
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Delete Product").ShowAsync();
+                return false;
+            }
+            return true;
         }
 
     }

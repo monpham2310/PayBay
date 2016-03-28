@@ -1,4 +1,5 @@
-﻿using PayBay.Utilities.Common;
+﻿using PayBay.Model;
+using PayBay.Utilities.Common;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.ViewModel.ProductGroup;
 using System;
@@ -60,13 +61,16 @@ namespace PayBay.View.TopFunctionGroup.Manage
         {
             if(gvProduct.SelectedItem != null)
             {
-
+                ProductVm.SelectedProduct = (Product)gvProduct.SelectedItem;
+                ProductViewModel.isUpdate = true;
+                Frame.Navigate(typeof(AddProductPage), NavigationMode.Forward);
             }
         }
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
-
+            ProductViewModel.isUpdate = false;
+            Frame.Navigate(typeof(AddProductPage), NavigationMode.Forward);
         }
                 
     }

@@ -36,5 +36,6 @@ namespace PayBay.Utilities.Common
         public static OrderViewModel OrderVM;
         public static OrderPage OrderPage;
         public static MessageInboxViewModel MessageVM;
+
     }
 }

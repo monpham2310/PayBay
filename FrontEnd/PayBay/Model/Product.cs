@@ -37,8 +37,7 @@ namespace PayBay.Model
         {
             get { return _productName; }
             set
-            {
-                if (value == _productName) return;
+            {                
                 _productName = value;
                 OnPropertyChanged();
             }
@@ -48,8 +47,7 @@ namespace PayBay.Model
         {
             get { return _image; }
             set
-            {
-                if (value == _image) return;
+            {                
                 _image = value;
                 OnPropertyChanged();
             }
@@ -59,8 +57,7 @@ namespace PayBay.Model
         {
             get { return _unitPrice; }
             set
-            {
-                if (value == _unitPrice) return;
+            {                
                 _unitPrice = value;
                 OnPropertyChanged();
             }
@@ -70,8 +67,7 @@ namespace PayBay.Model
         {
             get { return _numberOf; }
             set
-            {
-                if (value == _numberOf) return;
+            {                
                 _numberOf = value;
                 OnPropertyChanged();
             }
@@ -81,8 +77,7 @@ namespace PayBay.Model
         {
             get { return _salePrice; }
             set
-            {
-                if (value == _salePrice) return;
+            {                
                 _salePrice = value;
                 OnPropertyChanged();
             }

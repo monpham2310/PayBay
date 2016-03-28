@@ -287,20 +287,6 @@ as
 		end
 	commit
 
-create proc [viethung_paybayservice].[sp_AddBill]
-@CreatedDate date,
-@StoreID int,
-@UserID int
-as
-	begin tran addBill
-		insert into viethung_paybayservice.BILLS(CreatedDate,StoreID,UserID) values(@CreatedDate,@StoreID,@UserID)
-		if(@@ERROR > 0)
-		begin 
-			rollback tran
-			select 0 as ErrCode,'Add bill not successfull!' as ErrMsg
-		end
-	commit
-
 create proc [viethung_paybayservice].[sp_UpdateBill]
 @BillID int,
 @ReducedPrice float,
@@ -1082,4 +1068,30 @@ as
 	from viethung_paybayservice.Products a join viethung_paybayservice.Stores b on a.StoreID=b.StoreID
 	where OwnerID = @OwnerID and ProductID > @ProductID
 	order by ProductId desc
+
+---------------------------------------------
+alter proc [viethung_paybayservice].[sp_AddBill]
+@CreatedDate date,
+@StoreID int,
+@TotalPrice float,
+@ReducedPrice float,
+@UserID int,
+@Note nvarchar(200),
+@ShipMethod nvarchar(100),
+@TradeTerm nvarchar(100),
+@Agree nvarchar(100),
+@ShipDate datetime
+as
+	begin tran addBill
+		insert into viethung_paybayservice.BILLS values(@CreatedDate,@StoreID,
+												@TotalPrice,@ReducedPrice,@UserID,@Note,@ShipMethod,@TradeTerm,@Agree,@ShipDate)
+		if(@@ERROR > 0)
+		begin 
+			rollback tran
+			select 0 as ErrCode,'Add bill not successfull!' as ErrMsg
+		end
+		select Username,Avatar,(select OwnerID from viethung_paybayservice.Stores where StoreID = @StoreID) as OwnerID
+		from viethung_paybayservice.Users  
+		where UserID = @UserID		
+	commit
 

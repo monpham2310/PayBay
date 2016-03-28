@@ -26,7 +26,7 @@
 							Margin="20,0">
                     <TextBlock Text="{Binding ProductName}"
                                Foreground="{StaticResource LightBlueBrush}"/>
-                    <TextBlock Text="{Binding StoreName}"/>
+                    <TextBlock Text="{Binding Unit}"/>
                     <TextBlock Text="{Binding UnitPrice}"/>
                 </StackPanel>
             </StackPanel>

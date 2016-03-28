@@ -184,7 +184,7 @@ namespace PayBay.View.StartGroup
             if (MediateClass.UserVM.UserInfo != null)
             {
                 showPopup();
-                UserInfoViewModel.isViewInfo = true;
+                UserInfoViewModel.isUpdate = true;
                 AccountFrame.Navigate(typeof(CreateAccountPage));
             }
             else
@@ -285,7 +285,7 @@ namespace PayBay.View.StartGroup
         private void UserInfoViewButton_Click(object sender, RoutedEventArgs e)
         {
             showPopup();
-            UserInfoViewModel.isViewInfo = true;
+            UserInfoViewModel.isUpdate = true;
             AccountFrame.Navigate(typeof(CreateAccountPage));            
         }
 

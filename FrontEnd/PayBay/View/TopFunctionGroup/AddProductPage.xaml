@@ -4,91 +4,237 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:PayBay.View.TopFunctionGroup"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Loaded="Page_Loaded"
       mc:Ignorable="d">
+    
+    <Page.Resources>
+        <Style x:Key="ImageButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid x:Name="RootGrid">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="Ellipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <!--<ObjectAnimationUsingKeyFrames  Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+												<DiscreteObjectKeyFrame KeyTime="00:00:00">
+													<DiscreteObjectKeyFrame.Value>
+														<Cursor>Hand</Cursor>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>-->
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="Ellipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <!--<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonText">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledTransparentBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>-->
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse x:Name="Ellipse"
+										 Width="{Binding ElementName=AvatarButton, Path=Width}"
+										 Height="{Binding ElementName=AvatarButton, Path=Height}"
+										 HorizontalAlignment="Left">
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="Image">
+                                        <ImageBrush.ImageSource>
+                                            <BitmapImage DecodePixelHeight="80" 
+															 DecodePixelWidth="80"
+															 />
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-    <Grid Grid.Row="4" Name="captureGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Name="captureButtons" 
-                Orientation="Vertical">
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Product Name:" />
-            <TextBox Name="txtProName"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="Type name..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Unit Price:" />
-            <TextBox Name="txtUPrice"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Unit:" />
-            <TextBox Name="txtUnit"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Number Of:" />
-            <TextBox Name="txtNumber"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Store ID:" />
-            <TextBox Name="txtStoreid"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Sale Price:" />
-            <TextBox Name="txtSPrice"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Image:" />
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Name="gridProduct">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+			  Background="{StaticResource LightBlueBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        </StackPanel>
+                <TextBlock Name="tblTitle"
+                       Text="Products" 
+					   Grid.Column="1"
+					   FontSize="20"
+					   FontWeight="Bold"
+					   VerticalAlignment="Center"
+					   Margin="10,0"
+					   Foreground="{StaticResource WhiteBrush}"/>
+            </Grid>
 
-        <!--<CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />-->
+            <Grid Grid.Row="1">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Grid Margin="10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                        <Rectangle Height="2"
+						   Fill="{StaticResource LightGrayBrush}"/>
+                        <TextBlock Text="Product Name"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtProductName" BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" />
 
-        <Image Grid.Row="1" Name="imagePreview"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Height="160"
-                Width="160"
-                Visibility="Visible" />
+                        <TextBlock Text="Unit Price"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtUnitPrice"
+						 BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" 
+                         InputScope="Number"/>
 
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row ="3"  Orientation="Horizontal">
-            <AppBarButton Label="Photo" Icon="Camera" Name="ButtonCapture" 
-                  Click="ButtonCapture_Click" Height="78" Width="62" />
-            <AppBarButton Label="Upload" Icon="Upload" Name="ButtonSave" 
-                  Click="ButtonSave_Click"/>
-        </StackPanel>
+                        <TextBlock Text="Unit"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"
+                                   />
 
+                        <TextBox x:Name="txtUnit"
+						 BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" 
+                         />
+
+                        <TextBlock Text="Amount"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+
+                        <TextBox x:Name="txtAmount"
+						 BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" 
+                         InputScope="Number" />
+
+                        <TextBlock Text="Sale Price"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtSalePrice"
+						 BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" 
+                         InputScope="Number"/>
+
+                        <StackPanel Orientation="Horizontal"
+							    Margin="15,10"
+                                Name="spnStoreLst"
+                                DataContext="{Binding Source={StaticResource Locator}, Path=KiosVm}">
+                            <TextBlock Text="Store:"
+							   VerticalAlignment="Center"
+                               Margin="0,0,20,0"
+							   Foreground="{StaticResource GrayBrush}"/>
+
+                            <ComboBox Grid.Row="1" 
+							  Grid.Column="0"			
+                              Width="200"
+							  VerticalAlignment="Center"
+							  HorizontalAlignment="Stretch"							  
+                              Name="cbStore" 
+                              ItemsSource="{Binding StoresOfOwner}"
+                              DisplayMemberPath="StoreName"
+                              SelectedValuePath="StoreId"
+                              >
+                            </ComboBox>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal"
+							Margin="15,10">
+                            <TextBlock Text="Choose your Image:"
+							   VerticalAlignment="Center"
+							   Foreground="{StaticResource GrayBrush}"/>
+                            <Ellipse Width="100"
+							 Height="100"
+							 HorizontalAlignment="Left"
+							 Margin="10,0"     
+							 Name="AvatarEllipse" >
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="imgbrImage"	
+										ImageSource="/Assets/LockScreenLogo.scale-200.png" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <HyperlinkButton x:Name="AvatarButton"
+									 FontFamily="Segoe MDL2 Assets"
+									 Content="&#xE722;"
+									 FontSize="25"
+                                     Margin="12,0,0,0"
+									 Click="ButtonCapture_Click"/>
+                        </StackPanel>
+
+                        <TextBlock Text="By creating an store, I agree to abide by PayBay's Free Membership Agreement" TextWrapping="Wrap"
+						   Margin="15,20"/>
+                        <Button x:Name="SummitButton" Content="SUBMIT"
+						Margin="40,0,50,10"
+						FontWeight="Bold"
+						Foreground="{StaticResource WhiteBrush}"
+						Background="{StaticResource LightBlueBrush}"
+						Style="{StaticResource RoundedButtonStyle}"
+                        Click="ButtonSave_Click"
+						HorizontalAlignment="Stretch"/>
+
+                        <Button x:Name="btDel" Content="Delete"
+						Margin="40,0,50,30"
+						FontWeight="Bold"
+						Foreground="{StaticResource WhiteBrush}"
+						Background="{StaticResource GrayBrush}"
+						Style="{StaticResource RoundedButtonStyle}"
+                        Click="btDel_Click"
+						HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <ProgressRing x:Name="pgrProduct"
+					  Width="50"
+					  Height="50"/>
     </Grid>
+
 </Page>

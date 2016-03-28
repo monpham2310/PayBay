@@ -154,26 +154,27 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            db.Entry(product).State = EntityState.Modified;
-
             try
             {
+                if (product.Image == null)
+                {
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, product.ProductId);
+
+                    if (blob != null)
+                    {
+                        product.Image = blob.ImageUri;
+                        product.SasQuery = blob.SasQuery;
+                    }
+                }
+                db.Entry(product).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!ProductExists(product.ProductId))
-                {
-                    result = Methods.CustomResponseMessage(0, "Product isn't exists!");
-                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
-                }
-                else
-                {
-                    throw;
-                }
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
-            result = Methods.CustomResponseMessage(1, "Update product is successful!");
+            result = JObject.FromObject(product);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -209,22 +210,27 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            var table = new SqlParameter("@table", "viethung_paybayservice.Products");
-            int productId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
-            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, productId + 1);
-                        
-            if (blob != null)
+            try
             {
-                product.Image = blob.ImageUri;
-                product.SasQuery = blob.SasQuery;
+                if (product.Image != null)
+                {
+                    var table = new SqlParameter("@table", "viethung_paybayservice.Products");
+                    int productId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, productId + 1);
+
+                    if (blob != null)
+                    {
+                        product.Image = blob.ImageUri;
+                        product.SasQuery = blob.SasQuery;
+                    }
+                }
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
             }
-            else
-            {
-                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }
+            catch (Exception ex)
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }                
 
             result = JObject.FromObject(product);
             return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -232,10 +238,10 @@ namespace PayBayService.Controllers
 
         // DELETE: api/Products/5
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> DeleteProduct(int id)
+        public async Task<HttpResponseMessage> DeleteProduct(int productId)
         {
             JObject result = new JObject();
-            Product product = await db.Products.FindAsync(id);
+            Product product = await db.Products.FindAsync(productId);
             if (product == null)
             {
                 result = Methods.CustomResponseMessage(0, "Product isn't exists!");

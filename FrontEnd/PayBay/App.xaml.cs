@@ -44,8 +44,8 @@ namespace PayBay
             Suspending += OnSuspending;
         }
         
-        //public static string UrlHost = "http://localhost:4591";
-        public static string UrlHost = "https://viethung-paybayservice.azure-mobile.net/";
+        public static string UrlHost = "http://localhost:4591";
+        //public static string UrlHost = "https://viethung-paybayservice.azure-mobile.net/";
         private static string ApplicationKey = "EbbNfXgfCdUNcjNxAOHaLZLUAmMOwZ47";
                 
         // This MobileServiceClient has been configured to communicate with your Mobile Service's url

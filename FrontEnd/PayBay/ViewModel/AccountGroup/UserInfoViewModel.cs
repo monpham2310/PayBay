@@ -22,7 +22,7 @@ namespace PayBay.ViewModel.AccountGroup
     {
         private ObservableCollection<UserInfo> _userInfoList;
         private UserInfo _userInfo;
-        public static bool isViewInfo = false;
+        public static bool isUpdate = false;
                                                 
         public ObservableCollection<UserInfo> UserAccountList
         {

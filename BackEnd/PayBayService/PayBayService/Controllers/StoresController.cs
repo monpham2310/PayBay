@@ -132,7 +132,8 @@ namespace PayBayService.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
             }
-            try {
+            try
+            {
                 if (store.Image == null)
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.Stores");
@@ -149,9 +150,8 @@ namespace PayBayService.Controllers
                 await db.SaveChangesAsync();
             }
             catch (Exception ex)
-            {
-                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
+            {                
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
 
             result = JObject.FromObject(store);

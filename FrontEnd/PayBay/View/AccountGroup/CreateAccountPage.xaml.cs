@@ -49,12 +49,12 @@ namespace PayBay.View.AccountGroup
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (UserInfoViewModel.isViewInfo)
+            if (UserInfoViewModel.isUpdate)
             {
                 tblTitle.Text = "Account Infomation";
                 isShowControl(true);
                 var userInfo = MediateClass.UserVM.UserInfo;
-                if (userInfo.Avatar != "/Assets/lol.jpg")
+                if (userInfo.Avatar != "/Assets/lol.jpg" || userInfo.Avatar != null)
                 {
                     var uriAvatar = new Uri(userInfo.Avatar);
                     var img = new BitmapImage(uriAvatar);
@@ -126,7 +126,7 @@ namespace PayBay.View.AccountGroup
                     ComboBoxItem ComboItem = (ComboBoxItem)TypeCommboBox.SelectedItem;
                     int typeid = int.Parse(ComboItem.Tag.ToString());                    
                     
-                    if (!UserInfoViewModel.isViewInfo)
+                    if (!UserInfoViewModel.isUpdate)
                     {
                         user.TypeId = typeid;
                         bool result = await MediateClass.UserVM.AlterOrCreateUser(user, mediaFile, HttpMethod.Post);
@@ -152,7 +152,7 @@ namespace PayBay.View.AccountGroup
                         {
                             await new MessageDialog("Update Account is successful!", "Notification!").ShowAsync();
                             ((Popup)Frame.Parent).IsOpen = false;
-                            UserInfoViewModel.isViewInfo = false;
+                            UserInfoViewModel.isUpdate = false;
                         }
                         else
                         {
@@ -169,7 +169,7 @@ namespace PayBay.View.AccountGroup
             }
             else
             {
-                if(!UserInfoViewModel.isViewInfo)
+                if(!UserInfoViewModel.isUpdate)
                     await new MessageDialog("Please fill all the infomation!Thank you!", "Notification").ShowAsync();
                 else
                     await new MessageDialog("Please confirm your password!", "Notification").ShowAsync();

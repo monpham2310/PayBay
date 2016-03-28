@@ -19,6 +19,8 @@ namespace PayBay.ViewModel.HomePageGroup
 	public class AdvertiseViewModel : BaseViewModel
 	{	   
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
+        private ObservableCollection<AdvertiseItem> _dummyAdvertiseList;
+        private ObservableCollection<AdvertiseItem> _dummyAdvertiseList2;
         private ObservableCollection<AdvertiseItem> _saleList;
 		private AdvertiseItem _selectedAd;
         private static bool isResponsed = false;
@@ -75,6 +77,34 @@ namespace PayBay.ViewModel.HomePageGroup
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<AdvertiseItem> DummyAdvertiseList
+        {
+            get
+            {
+                return _dummyAdvertiseList;
+            }
+
+            set
+            {
+                _dummyAdvertiseList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<AdvertiseItem> DummyAdvertiseList2
+        {
+            get
+            {
+                return _dummyAdvertiseList2;
+            }
+
+            set
+            {
+                _dummyAdvertiseList2 = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         /// <summary>
@@ -84,8 +114,25 @@ namespace PayBay.ViewModel.HomePageGroup
 		{
             MediateClass.AdvertiseVM = this;
 			InitializeProperties();
+            InitializeDummyAds();
             //InitializeDataFromDB();
             //LoadMoreSale(TYPEGET.START);
+        }
+
+        private void InitializeDummyAds()
+        {
+            DummyAdvertiseList = new ObservableCollection<AdvertiseItem>();
+            DummyAdvertiseList2 = new ObservableCollection<AdvertiseItem>();
+            for (int i=0; i < 20; i++)
+            {
+                AdvertiseItem ad = new AdvertiseItem();
+                ad.Image = "ms-appx:///Assets/Icon/FruitIcon.png";
+                DummyAdvertiseList.Add(ad);
+            }
+
+            AdvertiseItem ad2 = new AdvertiseItem();
+            ad2.Image = "ms-appx:///Assets/Icon/WelcomePaybay.png";
+            DummyAdvertiseList2.Add(ad2);
         }
 
 		/// <summary>

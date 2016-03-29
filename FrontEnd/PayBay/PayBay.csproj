@@ -142,6 +142,9 @@
     </Compile>
     <Compile Include="ViewModel\InboxGroup\MessageInboxViewModel.cs" />
     <Compile Include="ViewModel\OrderGroupViewModel\OrderViewModel.cs" />
+    <Compile Include="View\InboxGroup\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\InboxGroup\InboxListPage.xaml.cs">
       <DependentUpon>InboxListPage.xaml</DependentUpon>
     </Compile>
@@ -271,6 +274,12 @@
     <Content Include="Assets\Icon\AllSaleOff.png" />
     <Content Include="Assets\Icon\BestchoiceIcon.PNG" />
     <Content Include="Assets\Icon\call_icon.png" />
+    <Content Include="Assets\Icon\ChatPage\CallIcon.png" />
+    <Content Include="Assets\Icon\ChatPage\FacebookIcon.png" />
+    <Content Include="Assets\Icon\ChatPage\FollowIcon.png" />
+    <Content Include="Assets\Icon\ChatPage\HungGay.png" />
+    <Content Include="Assets\Icon\ChatPage\ShopPageIcon.png" />
+    <Content Include="Assets\Icon\ChatPage\TwitterIcon.png" />
     <Content Include="Assets\Icon\clock_icon.png" />
     <Content Include="Assets\Icon\DealWeekIcon.PNG" />
     <Content Include="Assets\Icon\dollar_icon.png" />
@@ -407,6 +416,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BottomFunctionGroup\SettingGroup\SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InboxGroup\ChatPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

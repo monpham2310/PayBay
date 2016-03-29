@@ -132,128 +132,115 @@
     </Page.Resources>
 
     <Grid>
-	<Grid x:Name="MainGrid" 
+        <Grid x:Name="MainGrid" 
 		  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<!--Adaptive trigger handling segment-->
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup x:Name="WindowSizeState">
-				<VisualState x:Name="NarrowState">
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="0" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="MainSplitView.DisplayMode" Value="Overlay" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState x:Name="MediumState">
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="720" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState x:Name="WideState">
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="1280" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay" />
-					</VisualState.Setters>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
+            <!--Adaptive trigger handling segment-->
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="WindowSizeState">
+                    <VisualState x:Name="NarrowState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="MainSplitView.DisplayMode" Value="Overlay" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="MediumState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="720" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="WideState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="1280" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="MainSplitView.DisplayMode" Value="CompactOverlay" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
 
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-		<Grid Grid.Row="0" Height="48" Background="{StaticResource LightBlueBrush}">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="48" />
-				<ColumnDefinition Width="48" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="48" />
-				<ColumnDefinition Width="48" />
-				<ColumnDefinition Width="48" />
-			</Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Height="50" Background="{StaticResource WhiteBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
 
-			<AppBarButton x:Name="HamburgerButton" 
-                    Grid.Column="0"
-                    Width="48"
-                    Height="48"
-					HorizontalAlignment="Center"
-					Foreground="{StaticResource WhiteBrush}"
-					Background="{StaticResource LightBlueBrush}"
-                    Click="HamburgerButton_Click">
-				<AppBarButton.Icon>
-					<FontIcon Glyph="&#xE700;" 
-							  FontSize="30"/>
-				</AppBarButton.Icon>
-			</AppBarButton>
+                <AppBarButton x:Name="HamburgerButton" 
+                              Grid.Column="0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Stretch"
+                              Foreground="{StaticResource LightBlueBrush}"
+                              Background="Transparent"
+                              Click="HamburgerButton_Click">
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/Icon/Topbar/hamburger.png" Width="20"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-            <Image Grid.Column="1"
-                   Width="45"
-                   Height="48"
-                   HorizontalAlignment="Center"
-                   Source="/Assets/Icon.png"                   
+                <AppBarButton x:Name="btnSearch"
+						  Grid.Column="1"
+						  HorizontalAlignment="Center"
+						  Foreground="{StaticResource LightBlueBrush}" 
+						  Background="Transparent" 
+						  Click="SearchButton_Click"  >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/Icon/Topbar/search.png" Width="15"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <Image Grid.Column="2"
+                       Margin="0,2"
+                   HorizontalAlignment="Stretch"
+                   Source="/Assets/SplashScreen.scale-100.png"                   
                 />
 
-            <TextBlock Grid.Column="2"
-					Text="Paybay.xyz"
-					VerticalAlignment="Center"
-					Margin="0,0,0,15"
-					Foreground="{StaticResource WhiteBrush}"/>
-
-			<TextBlock Grid.Column="2"
-					   FontSize="13"
-					   Text="Break me of a piece"
-					   VerticalAlignment="Center"
-					   Margin="0,15,0,0"
-					   Foreground="{StaticResource WhiteBrush}"/>
-
-			<!--<AutoSuggestBox x:Name="MarketSearch" 
-								Grid.Column="3" 
-								Width="Auto"
-								Height="30"
-								
-								VerticalAlignment="Center"
-								Foreground="{StaticResource BlackBrush}" 
-								Background="{StaticResource WhiteBrush}">
-				<AutoSuggestBox.QueryIcon>
-					<FontIcon Glyph="&#xE11A;" 
-								  FontSize="20" 
-								  FontWeight="Bold"
-								  Foreground="{StaticResource BlackBrush}"/>
-				</AutoSuggestBox.QueryIcon>
-			</AutoSuggestBox>-->
-
-			<AppBarButton x:Name="SearchIcon"
-						  Icon="Zoom"
+                <AppBarButton x:Name="btnAccount"
 						  Grid.Column="3"
 						  HorizontalAlignment="Center"
-						  Foreground="{StaticResource WhiteBrush}" 
-						  Background="{StaticResource LightBlueBrush}" 
-						  Click="SearchButton_Click"  />
+						  Foreground="{StaticResource LightBlueBrush}" 
+						  Background="Transparent" 
+                          Click="AccountButton_Click">
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/Icon/Topbar/account.png" Width="20"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-			<AppBarButton x:Name="AccountButton"
-						  Icon="Contact"
+                <AppBarButton x:Name="btnCart"
 						  Grid.Column="4"
 						  HorizontalAlignment="Center"
-						  Foreground="{StaticResource WhiteBrush}" 
-						  Background="{StaticResource LightBlueBrush}" 
-						  Click="AccountButton_Click" />
+						  Foreground="{StaticResource LightBlueBrush}" 
+						  Background="Transparent">
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/Icon/Topbar/cart.png" Width="20"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-			<AppBarButton x:Name="InboxButton"
-						  Icon="Mail"
+                <AppBarButton x:Name="btnInbox"
 						  Grid.Column="5"
 						  HorizontalAlignment="Center"
-						  Foreground="{StaticResource WhiteBrush}" 
-						  Background="{StaticResource LightBlueBrush}" 
-						  Click="InboxButton_Click" />
+						  Foreground="{StaticResource LightBlueBrush}" 
+						  Background="Transparent" 
+						  Click="InboxButton_Click" >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/Icon/Topbar/inbox.png" Width="20"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-			<!--<TextBlock Margin="12,0,0,0"
+                <!--<TextBlock Margin="12,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="24"
                            Foreground="{StaticResource WhiteBrush}"
@@ -261,9 +248,9 @@
                            Text="{Binding Content,
                                           Converter={StaticResource PageToNameConverter},
                                           ElementName=MainFrame}" />-->
-		</Grid>
+            </Grid>
 
-		<SplitView x:Name="MainSplitView"
+            <SplitView x:Name="MainSplitView"
                    Grid.Row="1"
                    CompactPaneLength="48"
 				   OpenPaneLength="270"
@@ -271,17 +258,17 @@
                    PaneClosed="MainSplitView_PaneClosed"
                    PaneBackground="{StaticResource WhiteBrush}">
 
-			<SplitView.Pane>
-				<ScrollViewer HorizontalScrollMode="Disabled">
-				<Grid Background="{StaticResource LightBlackBrush}">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="*" />
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
+                <SplitView.Pane>
+                    <ScrollViewer HorizontalScrollMode="Disabled">
+                        <Grid Background="{StaticResource LightBlackBrush}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-					<StackPanel Grid.Row="0"
+                            <StackPanel Grid.Row="0"
 								x:Name="AccountGroupStackPanel"
 								Visibility="{Binding IsPaneOpen, ElementName=MainSplitView, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <StackPanel Name="panelUser" Orientation="Vertical" 
@@ -311,7 +298,7 @@
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" Margin="10,0">
-							            <HyperlinkButton Name="SignInButton"                                              
+                                        <HyperlinkButton Name="SignInButton"                                              
 											     Content="Sign in | Join Free"
 											     Click="SignInButton_Click" 
                                                  Visibility="Visible"
@@ -323,8 +310,8 @@
 											     Click="UserInfoViewButton_Click"                                             
 											     Foreground="{StaticResource GrayBrush}"/>
                                     </StackPanel>
-                            </StackPanel>
-                        <Grid Background="{StaticResource BlackBrush}">
+                                </StackPanel>
+                                <Grid Background="{StaticResource BlackBrush}">
                                     <AutoSuggestBox Name="asbSearch"
                                             Width="Auto"
 											Height="30"
@@ -336,55 +323,55 @@
 											BorderThickness="0.5"                                               
 											BorderBrush="{StaticResource WhiteBrush}"
 											Foreground="{StaticResource WhiteBrush}" 
-											Background="{StaticResource BlackBrush}" />                         
-                        </Grid>
-					</StackPanel>
+											Background="{StaticResource BlackBrush}" />
+                                </Grid>
+                            </StackPanel>
 
-					<StackPanel Grid.Row="1">
-						<Rectangle Height="1" Fill="{StaticResource GrayBrush}" />
-						<ListView x:Name="TopFunctionsListView"
+                            <StackPanel Grid.Row="1">
+                                <Rectangle Height="1" Fill="{StaticResource GrayBrush}" />
+                                <ListView x:Name="TopFunctionsListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
                                   ItemTemplate="{StaticResource MenuListItemDataTemplate}"
                                   ItemsSource="{x:Bind Vm.TopFunctionItemList, Mode=OneWay}"
                                   SelectionChanged="TopFunctionsListView_OnSelectionChanged"
                                   SelectionMode="Single" />
-					</StackPanel>
-					
-					<StackPanel Grid.Row="3">
-						<Rectangle Height="1" Fill="{StaticResource GrayBrush}" />
-						<ListView x:Name="BottomListView"
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3">
+                                <Rectangle Height="1" Fill="{StaticResource GrayBrush}" />
+                                <ListView x:Name="BottomListView"
                                   VerticalAlignment="Center"
                                   ItemContainerStyle="{StaticResource ListViewItemStyle}"
                                   ItemTemplate="{StaticResource MenuListItemDataTemplate}"
                                   ItemsSource="{x:Bind Vm.BottomFunctionItemList, Mode=OneWay}"
                                   SelectionChanged="BottomListView_OnSelectionChanged"
                                   SelectionMode="Single" />
-					</StackPanel>
-				</Grid>
-				</ScrollViewer>
-			</SplitView.Pane>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </SplitView.Pane>
 
-			<SplitView.Content>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
+                <SplitView.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-					<Frame x:Name="MainFrame" Grid.Column="0" />
+                        <Frame x:Name="MainFrame" Grid.Column="0" />
 
-				</Grid>
-			</SplitView.Content>
+                    </Grid>
+                </SplitView.Content>
 
-		</SplitView>
+            </SplitView>
 
-		
-	</Grid>
-		<Popup x:Name="AccountPopup" 
+
+        </Grid>
+        <Popup x:Name="AccountPopup" 
 			   Closed="AccountPopup_Closed">
-			<Frame x:Name="AccountFrame"
+            <Frame x:Name="AccountFrame"
 				   BorderThickness="1"
 				   BorderBrush="{StaticResource BlackBrush}"/>
-		</Popup>
-	</Grid>
+        </Popup>
+    </Grid>
 </Page>

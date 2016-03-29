@@ -1,4 +1,6 @@
-﻿using PayBay.ViewModel.HomePageGroup;
+﻿using PayBay.Utilities.Common;
+using PayBay.ViewModel.HomePageGroup;
+using PayBay.ViewModel.ProductGroup;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +25,8 @@ namespace PayBay.View.TopFunctionGroup
     /// </summary>
     public sealed partial class HomePage : Page
     {
-        private AdvertiseViewModel AdVm => (AdvertiseViewModel)DataContext;
+        private AdvertiseViewModel AdVm => (AdvertiseViewModel)gridImageSale.DataContext;
+        private ProductStatisticViewModel ProStatisticVm => (ProductStatisticViewModel)DataContext;
 
         public HomePage()
         {
@@ -34,6 +37,39 @@ namespace PayBay.View.TopFunctionGroup
         {
             if (AdVm != null)
                 AdVm.InitializeDataFromDB();
+            if (ProStatisticVm != null)
+            {
+                ProStatisticVm.GetBestSaleProductList(TYPEGET.START);
+                ProStatisticVm.GetNewProductList(TYPEGET.START);
+            }
+        }
+
+        private void svBestPro_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if(svBestPro.HorizontalOffset == 0)
+            {
+                if(ProStatisticVm != null)
+                    ProStatisticVm.GetBestSaleProductList(TYPEGET.MORE, TYPE.NEW);
+            }
+            else if(svBestPro.HorizontalOffset >= svBestPro.ScrollableWidth)
+            {
+                if (ProStatisticVm != null)
+                    ProStatisticVm.GetBestSaleProductList(TYPEGET.MORE);
+            }
+        }
+
+        private void svNewProduct_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (svNewProduct.HorizontalOffset == 0)
+            {
+                if (ProStatisticVm != null)
+                    ProStatisticVm.GetNewProductList(TYPEGET.MORE, TYPE.NEW);
+            }
+            else if (svNewProduct.HorizontalOffset >= svNewProduct.ScrollableWidth)
+            {
+                if (ProStatisticVm != null)
+                    ProStatisticVm.GetNewProductList(TYPEGET.MORE);
+            }
         }
     }
 }

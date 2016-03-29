@@ -65,7 +65,7 @@ namespace PayBayService.Controllers
             JArray result = new JArray();
             try
             {
-                var product = new SqlParameter("@ProductID", productId);
+                var product = new SqlParameter("@Id", productId);
                 if (typeProduct == TYPE.OLD)
                     result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err, product);
                 else

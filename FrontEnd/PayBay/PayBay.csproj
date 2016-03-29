@@ -112,6 +112,7 @@
     <Compile Include="Model\GuestMail.cs" />
     <Compile Include="Model\Kios.cs" />
     <Compile Include="Model\MessageInbox.cs" />
+    <Compile Include="Model\ProductStatistic.cs" />
     <Compile Include="Model\RequestBody\MessageInfo.cs" />
     <Compile Include="Model\Rating.cs" />
     <Compile Include="Model\RequestBody\ProductInfo.cs" />
@@ -142,6 +143,7 @@
     </Compile>
     <Compile Include="ViewModel\InboxGroup\MessageInboxViewModel.cs" />
     <Compile Include="ViewModel\OrderGroupViewModel\OrderViewModel.cs" />
+    <Compile Include="ViewModel\ProductGroup\ProductStatisticViewModel.cs" />
     <Compile Include="View\InboxGroup\InboxListPage.xaml.cs">
       <DependentUpon>InboxListPage.xaml</DependentUpon>
     </Compile>

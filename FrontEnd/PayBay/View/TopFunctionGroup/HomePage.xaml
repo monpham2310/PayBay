@@ -5,9 +5,8 @@
     xmlns:local="using:PayBay.View.TopFunctionGroup"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converters="using:PayBay.Utilities.Converters"
-    DataContext="{Binding Source={StaticResource Locator},
-						  Path=AdvertiseVm}"
+    xmlns:converters="using:PayBay.Utilities.Converters"    
+    DataContext="{Binding Source={StaticResource Locator}, Path=ProStatisticVm}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
@@ -188,8 +187,10 @@
                 <RowDefinition Height="13*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <FlipView ItemsSource="{Binding DummyAdvertiseList2}"
+            <Grid Grid.Row="0"
+                  Name="gridImageSale"
+                  DataContext="{Binding Source={StaticResource Locator}, Path=AdvertiseVm}">
+                <FlipView ItemsSource="{Binding AdvertiseItemList}"
 						  SelectedItem="{Binding SelectedAd, Mode=TwoWay}" 
 						  Style="{StaticResource BigNavigatorFlipViewStyle}"
                           x:Name="flipViewAdvertise">
@@ -200,7 +201,7 @@
                         </DataTemplate>
                     </FlipView.ItemTemplate>
                 </FlipView>
-                <ItemsControl ItemsSource="{Binding DummyAdvertiseList2}"
+                <ItemsControl ItemsSource="{Binding AdvertiseItemList}"
 							  HorizontalAlignment="Center" 
 							  VerticalAlignment="Bottom" 
 							  Margin="0,10">
@@ -231,11 +232,11 @@
                   Background="#DEDFE0"
                   x:Name="gridStoreFinder">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="8*" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="8*" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="8*" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Button Padding="0"
@@ -269,14 +270,18 @@
 
             <Grid Grid.Row="4"
                   Background="#DEDFE0">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              Name="svBestPro"                              
+                              ViewChanged="svBestPro_ViewChanged">
                     <ListView Background="LightGray"
-                          ItemsSource="{Binding DummyAdvertiseList}">
+                              Name="lvBestPro"
+                              ItemsSource="{Binding BestProductList}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Image}"
                                    Stretch="Fill"
-                                       Width="135"/>
+                                       Width="135"
+                                       Height="135"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemsPanel>
@@ -296,14 +301,17 @@
 
             <Grid Grid.Row="6"
                   Background="#DEDFE0">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              Name="svNewProduct"                              
+                              ViewChanged="svNewProduct_ViewChanged">
                     <ListView Background="LightGray"
-                          ItemsSource="{Binding DummyAdvertiseList}">
+                          ItemsSource="{Binding NewProductList}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Image}"
                                    Stretch="Fill"
-                                       Width="135"/>
+                                       Width="135"
+                                       Height="135"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemsPanel>

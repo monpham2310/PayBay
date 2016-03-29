@@ -21,8 +21,8 @@ namespace PayBay.ViewModel.HomePageGroup
 	public class AdvertiseViewModel : BaseViewModel
 	{	   
 		private ObservableCollection<AdvertiseItem> _advertiseItemList;
-        private ObservableCollection<AdvertiseItem> _dummyAdvertiseList;
-        private ObservableCollection<AdvertiseItem> _dummyAdvertiseList2;
+        //private ObservableCollection<AdvertiseItem> _dummyAdvertiseList;
+        //private ObservableCollection<AdvertiseItem> _dummyAdvertiseList2;
         private ObservableCollection<AdvertiseItem> _saleList;
         private ObservableCollection<AdvertiseItem> _saleOfStoreOwner;
 
@@ -150,6 +150,8 @@ namespace PayBay.ViewModel.HomePageGroup
 		{
             AdvertiseItemList = new ObservableCollection<AdvertiseItem>();
             SaleList = new ObservableCollection<AdvertiseItem>();
+            SelectedAd = new AdvertiseItem();
+            SelectedSale = new AdvertiseItem();
         }
 
         /// <summary>

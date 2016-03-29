@@ -29,7 +29,7 @@
 			<Color x:Key="BlackColor">Black</Color>
 			<Color x:Key="TealColor">Teal</Color>
 			<Color x:Key="RedColor">Red</Color>
-            <Color x:Key="BlueColor">#4F81BC</Color>
+            <Color x:Key="BlueColor">#FF0099CC</Color>
 			<Color x:Key="GrayColor">Gray</Color>
 			<Color x:Key="OrangeColor">Orange</Color>
 			<Color x:Key="LightGrayColor">LightGray</Color>
@@ -52,7 +52,7 @@
 			<SolidColorBrush x:Key="LightBlueBrush" Color="{StaticResource LightBlueColor}" />
 			<SolidColorBrush x:Key="LightBlackBrush" Color="{StaticResource LightBlackColor}" />
             <SolidColorBrush x:Key="SkyBlueBrush" Color="{StaticResource SkyBlueColor}" />
-			<SolidColorBrush x:Key="PressedWhiteBrush" Color="{StaticResource PressedWhiteColor}" />
+            <SolidColorBrush x:Key="PressedWhiteBrush" Color="{StaticResource PressedWhiteColor}" />
 			<SolidColorBrush x:Key="HorverWhiteBrush" Color="{StaticResource HoverWhiteColor}" />
 			<SolidColorBrush x:Key="NormalWhiteBrush" Color="{StaticResource NormalWhiteColor}" />
 

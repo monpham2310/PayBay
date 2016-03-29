@@ -46,7 +46,7 @@ namespace PayBay.View.TopFunctionGroup
                 txtTitle.Text = sale.Title;
                 txtDescribes.Text = sale.Describes;
                 dpStartDate.Date = sale.StartDate;
-                dpEndDate.Date = sale.EndDate;                
+                dpEndDate.Date = sale.EndDate;
                 cbStore.SelectedValue = sale.StoreId;
                 if (sale.Image != null)
                 {
@@ -57,6 +57,11 @@ namespace PayBay.View.TopFunctionGroup
                         imgbrImage.ImageSource = img;
                     }
                 }
+            }
+            else
+            {
+                dpStartDate.Date = DateTime.UtcNow;
+                dpEndDate.Date = DateTime.UtcNow;
             }
         }
 
@@ -88,31 +93,38 @@ namespace PayBay.View.TopFunctionGroup
             bool check = false;
             if (txtTitle.Text != "" && txtDescribes.Text != null && cbStore.SelectedValue != null)
             {
-                AdvertiseItem temp = new AdvertiseItem();
-                temp.Title = txtTitle.Text;
-                temp.Describes = txtDescribes.Text;
-                temp.StartDate = dpStartDate.Date.DateTime;
-                temp.EndDate = dpEndDate.Date.DateTime;
-                temp.StoreId = Convert.ToInt32(cbStore.SelectedValue);
-                if (!AdvertiseViewModel.isUpdate)
+                if (dpStartDate.Date <= dpEndDate.Date)
                 {
-                    check = await MediateClass.AdvertiseVM.InsertSale(temp, media);
-                }
-                else
-                {
-                    temp.SaleId = MediateClass.AdvertiseVM.SelectedSale.SaleId;
-                    temp.Image = MediateClass.AdvertiseVM.SelectedSale.Image;
-                    temp.SasQuery = MediateClass.AdvertiseVM.SelectedSale.SasQuery;
+                    AdvertiseItem temp = new AdvertiseItem();
+                    temp.Title = txtTitle.Text;
+                    temp.Describes = txtDescribes.Text;
+                    temp.StartDate = dpStartDate.Date.DateTime;
+                    temp.EndDate = dpEndDate.Date.DateTime;
+                    temp.StoreId = Convert.ToInt32(cbStore.SelectedValue);
+                    if (!AdvertiseViewModel.isUpdate)
+                    {
+                        check = await MediateClass.AdvertiseVM.InsertSale(temp, media);
+                    }
+                    else
+                    {
+                        temp.SaleId = MediateClass.AdvertiseVM.SelectedSale.SaleId;
+                        temp.Image = MediateClass.AdvertiseVM.SelectedSale.Image;
+                        temp.SasQuery = MediateClass.AdvertiseVM.SelectedSale.SasQuery;
 
-                    check = await MediateClass.AdvertiseVM.UpdateSale(temp, media);
-                }
-                if (check)
-                {
-                    await new MessageDialog("Successful!", "Sales").ShowAsync();
-                    Frame.GoBack();
+                        check = await MediateClass.AdvertiseVM.UpdateSale(temp, media);
+                    }
+                    if (check)
+                    {
+                        await new MessageDialog("Successful!", "Sales").ShowAsync();
+                        Frame.GoBack();
+                    }
+                    else
+                        await new MessageDialog("Not successful!", "Sales").ShowAsync();
                 }
                 else
-                    await new MessageDialog("Not successful!", "Sales").ShowAsync();
+                {
+                    await new MessageDialog("Start date must be lower or equal end date!", "Sales").ShowAsync();
+                }
             }
             else
                 await new MessageDialog("Please fill the infomation!", "Product").ShowAsync();

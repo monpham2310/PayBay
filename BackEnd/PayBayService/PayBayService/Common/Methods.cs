@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -31,11 +32,7 @@ namespace PayBayService.Common
     public class Methods
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["MS_TableConnectionString"].ToString();
-
-        //SqlConnection cnn;
-        //SqlCommand cmd;
-        //SqlDataAdapter da;        
-
+                
         public static string err = "";
 
         static string StorageAccoutName = ConfigurationManager.AppSettings["STORAGE_ACCOUNT_NAME"].ToString();
@@ -256,6 +253,7 @@ namespace PayBayService.Common
                 // Set the BLOB store container name on the item, which must be lowercase.
                 string _resname = resourceName.ToLower();
                 _resname = (_resname.IndexOf(" ") != -1) ? _resname.Replace(" ", "") : _resname;
+                _resname = Regex.Replace(_resname, "[^A-Za-z0-9]", "");
 
                 // Create a container, if it doesn't already exist.
                 CloudBlobContainer container = blobClient.GetContainerReference(containnerName);

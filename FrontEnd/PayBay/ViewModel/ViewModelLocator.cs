@@ -62,6 +62,7 @@ namespace PayBay.ViewModel
             SimpleIoc.Default.Register<RatingViewModel>();
             SimpleIoc.Default.Register<OrderViewModel>();
             SimpleIoc.Default.Register<MessageInboxViewModel>();
+            SimpleIoc.Default.Register<ProductStatisticViewModel>();
         }
 
         //TODO: Register to use ViewModel here, syntax as below
@@ -75,6 +76,7 @@ namespace PayBay.ViewModel
         public RatingViewModel RatingVm => ServiceLocator.Current.GetInstance<RatingViewModel>();
         public OrderViewModel OrderVm => ServiceLocator.Current.GetInstance<OrderViewModel>();
         public MessageInboxViewModel MessageVm => ServiceLocator.Current.GetInstance<MessageInboxViewModel>();
+        public ProductStatisticViewModel ProStatisticVm => ServiceLocator.Current.GetInstance<ProductStatisticViewModel>();
 
         public static void Cleanup()
         {

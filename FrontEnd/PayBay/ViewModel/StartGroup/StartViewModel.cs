@@ -359,7 +359,7 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.MyPayBay:
 				{
-					frame.Navigate(typeof(ChatPage), NavigationMode.New);
+					frame.Navigate(typeof(MyPayBayPage), NavigationMode.New);
 					break;
 				}
 				case MenuFunc.MyFavorites:

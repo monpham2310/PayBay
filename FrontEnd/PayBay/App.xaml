@@ -34,13 +34,13 @@
 			<Color x:Key="OrangeColor">Orange</Color>
 			<Color x:Key="LightGrayColor">LightGray</Color>
 			<Color x:Key="LightBlueColor">#FF4FC3F7</Color>
-			<Color x:Key="LightBlackColor">#FF424242</Color>
+            <Color x:Key="LightBlackColor">#FF333333</Color>
             <Color x:Key="SkyBlueColor">#007BA7</Color>
 			<Color x:Key="PressedWhiteColor">#CCFFFFFF</Color>
 			<Color x:Key="HoverWhiteColor">#AAFFFFFF</Color>
-			<Color x:Key="NormalWhiteColor">#99FFFFFF</Color>
-           
-			<SolidColorBrush x:Key="DarkTealBrush" Color="{StaticResource DarkTealColor}" />
+            <Color x:Key="NormalWhiteColor">#99FFFFFF</Color>
+
+            <SolidColorBrush x:Key="DarkTealBrush" Color="{StaticResource DarkTealColor}" />
 			<SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource WhiteColor}" />
 			<SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
 			<SolidColorBrush x:Key="TealBrush" Color="{StaticResource TealColor}" />
@@ -116,7 +116,7 @@
 								<Border x:Name="ButtonBackground"
 									BorderBrush="{TemplateBinding BorderBrush}"
 									BorderThickness="1"
-									CornerRadius="20"
+									CornerRadius="15"
 									Background="{TemplateBinding Background}">
 								</Border>
 								<ContentPresenter>

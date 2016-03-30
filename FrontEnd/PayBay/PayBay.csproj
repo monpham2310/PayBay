@@ -298,6 +298,14 @@
     <Content Include="Assets\Icon\mail_icon.png" />
     <Content Include="Assets\Icon\MarketAndSupermarket.png" />
     <Content Include="Assets\Icon\MarketIcon.PNG" />
+    <Content Include="Assets\Icon\MyPayBay\coupon.png" />
+    <Content Include="Assets\Icon\MyPayBay\message.png" />
+    <Content Include="Assets\Icon\MyPayBay\order.png" />
+    <Content Include="Assets\Icon\MyPayBay\profile.png" />
+    <Content Include="Assets\Icon\MyPayBay\setting.png" />
+    <Content Include="Assets\Icon\MyPayBay\signout.png" />
+    <Content Include="Assets\Icon\MyPayBay\suggestion.png" />
+    <Content Include="Assets\Icon\MyPayBay\survey.png" />
     <Content Include="Assets\Icon\mypaybay_icon.png" />
     <Content Include="Assets\Icon\NewProducts.jpg" />
     <Content Include="Assets\Icon\phone_icon.png" />
@@ -320,6 +328,7 @@
     <Content Include="Assets\lol.jpg" />
     <Content Include="Assets\lol1.PNG" />
     <Content Include="Assets\lol2.PNG" />
+    <Content Include="Assets\lol3.png" />
     <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Rating\emptystar.png" />
     <Content Include="Assets\Rating\fullstar.png" />

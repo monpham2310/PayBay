@@ -86,7 +86,7 @@
                         <TextBlock TextWrapping="WrapWholeWords">
                     <Run Text="Ship Date: " 
                          Foreground="#FF969494" />
-                    <Run Text="{Binding BillOfUser.ShipDate}" 
+                    <Run Text="{Binding BillOfUser.ShippingDate}" 
                          x:Name="tblShipDate"/>
                         </TextBlock>
                         <TextBlock>
@@ -96,7 +96,7 @@
                          x:Name="tblInitPay"/>
                         </TextBlock>
                         <TextBlock>
-                    <Run Text="Reduced Payment: " 
+                    <Run Text="Reduce Payment: " 
                          Foreground="#FF969494" />
                     <Run Text="{Binding BillOfUser.ReducedPrice}" 
                          x:Name="tblBalPay"/>

@@ -93,6 +93,8 @@ alter table paybayservice.Bills add AgreeredShippingDate nvarchar(100)
 alter table paybayservice.Bills add ShippingDate date
 
 exec sp_rename 'paybayservice.Bills.ShipingDate','AgreeredShippingDate','COLUMN'
+exec sp_rename 'viethung_paybayservice.Bills.Note','IsAccepted','COLUMN'
+alter table viethung_paybayservice.Bills add IsAccepted bit default 0
 
 alter table paybayservice.Bills drop column isShiped
 

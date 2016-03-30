@@ -153,14 +153,13 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutSaleInfo(SaleInfo sale)
         {
-            JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-
+            JObject result = new JObject();            
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 if (sale.Image == null)
                 {
                     ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", sale.Title, sale.SaleId);
@@ -206,14 +205,13 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostSaleInfo(SaleInfo sale)
         {
-            JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-
+            JObject result = new JObject();            
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 if (sale.Image == null)
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.SaleInfo");

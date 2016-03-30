@@ -1147,3 +1147,11 @@ as
 	from viethung_paybayservice.Products
 	where ProductId > @ProductId
 	order by ProductId desc
+
+create proc viethung_paybayservice.sp_GetUserJustOrder
+@StoreID int,
+@UserID int
+as
+	select Username,Avatar,(select OwnerID from viethung_paybayservice.Stores where StoreID = @StoreID) as OwnerID
+	from viethung_paybayservice.Users
+	where UserID = @UserID

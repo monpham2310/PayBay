@@ -8,6 +8,7 @@
     mc:Ignorable="d"
     d:DesignHeight="600"
     DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}"
+    Loaded="UserControl_Loaded"
     d:DesignWidth="400">
     <ScrollViewer>
         <Grid Background="White"
@@ -104,7 +105,7 @@
                                  x:Name="tbxInitPay"
                                  GotFocus="tbxInitPay_GotFocus"
                                  LostFocus="tbxInitPay_LostFocus"/>
-                        <TextBlock Text="USD"
+                        <TextBlock Text="VND"
                                HorizontalAlignment="Right"/>
                     </Grid>
                 </StackPanel>
@@ -112,7 +113,7 @@
             <Grid Grid.Row="3"
               Padding="10, 0">
                 <StackPanel>
-                    <TextBlock Text="Balance Payment" 
+                    <TextBlock Text="Reduce Payment" 
                                Foreground="#FF969494"
                                Margin="12,0,0,0"
                                x:Name="tblBalPay"/>
@@ -124,7 +125,7 @@
                                  x:Name="tbxBalPay"
                                  GotFocus="tbxBalPay_GotFocus"
                                  LostFocus="tbxBalPay_LostFocus"/>
-                        <TextBlock Text="USD"
+                        <TextBlock Text="VND"
                                HorizontalAlignment="Right"/>
                     </Grid>
                 </StackPanel>

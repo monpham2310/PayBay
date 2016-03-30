@@ -38,9 +38,10 @@ namespace PayBay.ViewModel.CommentGroup
             CommentLstOfStore = new ObservableCollection<Comment>();
         }
 
-        public async void GetCommentOfStore(int storeId, TYPEGET typeGet, TYPE type=0)
+        public async void GetCommentOfStore(TYPEGET typeGet, TYPE type=0)
         {
             string lastId = "";
+            int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
             if (typeGet == TYPEGET.MORE)
             {
                 if (CommentLstOfStore.Count != 0)
@@ -130,18 +131,20 @@ namespace PayBay.ViewModel.CommentGroup
                     {
                         isCommented = true;
                         JToken result = await App.MobileService.InvokeApiAsync("Comments", body, HttpMethod.Post, null);
-                        JArray response = JArray.Parse(result.ToString());                        
-                        ObservableCollection<Comment> updateCmt = response.ToObject<ObservableCollection<Comment>>();
+                        //JArray response = JArray.Parse(result.ToString());                        
+                        //ObservableCollection<Comment> updateCmt = response.ToObject<ObservableCollection<Comment>>();
                         if (!inKios)
-                        {                            
-                            CommentLstOfStore = updateCmt;
+                        {
+                            //CommentLstOfStore = updateCmt;
+                            GetCommentOfStore(TYPEGET.START);
                         }
                         else
                         {
-                            for (int i = 0; i < updateCmt.Count; i++)
-                            {
-                                CommentLstOfStore.Insert(i, updateCmt[i]);
-                            }
+                            //for (int i = 0; i < updateCmt.Count; i++)
+                            //{
+                            //    CommentLstOfStore.Insert(i, updateCmt[i]);
+                            //}
+                            GetCommentOfStore(TYPEGET.MORE, TYPE.NEW);
                         }
                     }                    
                 }

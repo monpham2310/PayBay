@@ -1,5 +1,6 @@
 ﻿using PayBay.Utilities.Common;
 using PayBay.ViewModel.MarketGroup;
+using PayBay.ViewModel.OrderGroupViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,14 +24,20 @@ namespace PayBay.View.OrderGroup
 {
     public sealed partial class OrderPage : Page
     {
+        private OrderViewModel OrderVm => (OrderViewModel)DataContext;
+
         public OrderPage()
-        {
-            if (MediateClass.OrderVM != null)
-                MediateClass.OrderVM.InitializeBill();
+        {          
+            this.InitializeComponent();
             MediateClass.OrderPage = this;
-            this.InitializeComponent();            
         }
-                
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (OrderVm != null)
+                OrderVm.InitializeBill();
+        }
+
         public void pivotOrder_SelectionChanged(object sender,SelectionChangedEventArgs e)
         {
             if (e.AddedItems[0].Equals(PivotItem1))
@@ -71,6 +78,6 @@ namespace PayBay.View.OrderGroup
             gridOrder.IsHitTestVisible = true;
             gridOrder.Opacity = 1.0;
         }
-
+                
     }
 }

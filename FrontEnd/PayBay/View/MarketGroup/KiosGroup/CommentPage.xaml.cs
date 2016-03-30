@@ -42,17 +42,16 @@ namespace PayBay.View.MarketGroup.KiosGroup
         }
 
 		private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-		{
-			int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
+		{			
 			if (scrollvComentLst.VerticalOffset >= scrollvComentLst.ScrollableHeight)
 			{
 				if (CommentVm != null)
-					CommentVm.GetCommentOfStore(storeId, TYPEGET.MORE);
+					CommentVm.GetCommentOfStore(TYPEGET.MORE);
 			}
 			else if (scrollvComentLst.VerticalOffset == 0)
 			{
 				if (CommentVm != null)
-					CommentVm.GetCommentOfStore(storeId, TYPEGET.MORE, TYPE.NEW);
+					CommentVm.GetCommentOfStore(TYPEGET.MORE, TYPE.NEW);
 			}
 		}
 
@@ -68,8 +67,10 @@ namespace PayBay.View.MarketGroup.KiosGroup
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (MediateClass.RateVm != null)
-                MediateClass.RateVm.LoadStarRated();
+            if (RateVm != null)
+                RateVm.LoadStarRated();
+            if (CommentVm != null)
+                CommentVm.GetCommentOfStore(TYPEGET.START);
         }
     }
 }

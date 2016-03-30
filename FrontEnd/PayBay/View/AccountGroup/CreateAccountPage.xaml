@@ -287,7 +287,8 @@
 					</ComboBox>
 				</StackPanel>
 				
-				<TextBlock Text="By creating an account, I agree to abide by PayBay's Free Membership Agreement" TextWrapping="Wrap"
+				<TextBlock 
+                           Text="By creating an account, I agree to abide by PayBay's Free Membership Agreement" TextWrapping="Wrap"
 						   Margin="15,20"/>
 				<Button x:Name="SummitButton" Content="SUBMIT"
 						Margin="50,0,50,50"

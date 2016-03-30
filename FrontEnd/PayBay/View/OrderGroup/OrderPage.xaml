@@ -8,6 +8,7 @@
     xmlns:order="using:PayBay.View.OrderGroup"
     xmlns:delpay="using:PayBay.View.OrderGroup.DeliveryPaymentGroup"
     DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>

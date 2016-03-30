@@ -16,12 +16,12 @@ namespace PayBay.Model
         private double _totalPrice;
         private double _reducedPrice = 0;
         private int _userId;
-        private string _userName;
-        private string _note;
+        private string _userName;        
         private string _shipMethod;
         private string _tradeTerm;
         private string _agreeredShippingDate;
-        private DateTime _shipDate;
+        private DateTime _shippingDate;
+        private bool _isAccepted;
 
         private double _oldPrice = 0;
 
@@ -125,16 +125,16 @@ namespace PayBay.Model
             }
         }
 
-        public string Note
+        public bool IsAccepted
         {
             get
             {
-                return _note;
+                return _isAccepted;
             }
 
             set
             {
-                _note = value;
+                _isAccepted = value;
                 OnPropertyChanged();
             }
         }
@@ -167,16 +167,16 @@ namespace PayBay.Model
             }
         }
 
-        public DateTime ShipDate
+        public DateTime ShippingDate
         {
             get
             {
-                return _shipDate;
+                return _shippingDate;
             }
 
             set
             {
-                _shipDate = value;
+                _shippingDate = value;
                 OnPropertyChanged();
             }
         }

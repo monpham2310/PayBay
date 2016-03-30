@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
+    Loaded="UserControl_Loaded"
     d:DesignWidth="400">
 
     <UserControl.Resources>
@@ -96,7 +97,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <StackPanel DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}">
+                <StackPanel Name="spnPrice"
+                            DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}">
                     <TextBlock HorizontalAlignment="Right"
                                Margin="0,0,10,0"
                                >
@@ -110,7 +112,7 @@
                                 HorizontalAlignment="Right"
                                 Margin="0,10,10,0"
                                 >
-                        <TextBlock Text="Discount: " 
+                        <TextBlock Text="Negotiate Price: " 
                                    Margin="0,0,10,0"
                                    VerticalAlignment="Center"/>
                         <Border BorderThickness="1" 
@@ -122,13 +124,19 @@
                         </Border>
                     </StackPanel>
                 </StackPanel>
-                <Button Content="Call"
+                <!--<Button Content="Call"
                         Name="btCallNegotiation"
                         Background="{StaticResource LightBlueBrush}"
                         HorizontalAlignment="Right"
                         Foreground="White" 
                         Click="btCallNegotiation_Click"
-                        Margin="0,10,10,0"/>
+                        Margin="0,10,10,0"/>-->
+
+                <TextBlock Text="(Negotiate Price is place you can type a price you want to reduce comparision with total price.)" 
+                           Margin="0,0,10,0"
+                           TextWrapping="Wrap"
+                           FontSize="10"
+                           VerticalAlignment="Center"/>
             </StackPanel>
 
         </Grid>

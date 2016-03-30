@@ -32,21 +32,28 @@ namespace PayBay.View.MarketGroup.KiosGroup
 			this.InitializeComponent();
 		}
 
-        private void scrollvProductLst_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
+            if (ProductVm != null)
+            {
+                ProductVm.GetProductsOfStore(TYPEGET.START);
+            }
+        }
+
+        private void scrollvProductLst_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {            
             if(scrollvProductLst.VerticalOffset >= scrollvProductLst.ScrollableHeight)
             {
                 if(ProductVm != null)
                 {
-                    ProductVm.GetProductsOfStore(storeId, TYPEGET.MORE);
+                    ProductVm.GetProductsOfStore(TYPEGET.MORE);
                 }
             }
             else if (scrollvProductLst.VerticalOffset == 0)
             {
                 if (ProductVm != null)
                 {
-                    ProductVm.GetProductsOfStore(storeId, TYPEGET.MORE, TYPE.NEW);
+                    ProductVm.GetProductsOfStore(TYPEGET.MORE, TYPE.NEW);
                 }
             }
         }
@@ -85,24 +92,35 @@ namespace PayBay.View.MarketGroup.KiosGroup
         {            
             ProductVm.ProductOrderList.Clear();
             int checkCount = 0;
+            int checkIsOut = 0;
             foreach (Product product in listViewProductsOfStore.Items)
             {
-                if (product.OrderUnit > 0 && product.OrderUnit <= product.NumberOf)
-                {                                    
-                    ProductVm.ProductOrderList.Add(product);
+                if (product.OrderUnit > 0)
+                {
+                    if (product.OrderUnit <= product.NumberOf)
+                        ProductVm.ProductOrderList.Add(product);
+                    else
+                        checkIsOut++;
                 }
                 else
                 {
                     checkCount++;
                 }
             }
-            if(checkCount > 0)
+            if(checkCount == listViewProductsOfStore.Items.Count)
             {
-                await new MessageDialog("Have " + checkCount + " products is out.Please check again!", "Notification!").ShowAsync();
+                await new MessageDialog("You haven't select product.Please check again!", "Notification!").ShowAsync();
+                return;
+            }
+            if(checkIsOut > 0)
+            {
+                await new MessageDialog("Have "+ checkIsOut +" products is out.Please check again!", "Notification!").ShowAsync();
+                return;
             }
 
             if (ProductVm.ProductOrderList.Count > 0)
                 MediateClass.KiosPage.Frame.Navigate(typeof(OrderPage));
         }
+                
     }
 }

@@ -150,9 +150,10 @@ namespace PayBay.ViewModel.ProductGroup
                 await SendData(type, isOld, param);          
         }
                 
-        public async void GetProductsOfStore(int storeId, TYPEGET typeGet, TYPE type=0)
+        public async void GetProductsOfStore(TYPEGET typeGet, TYPE type=0)
         {
             string lastId = "-1";
+            int storeId = MediateClass.KiotVM.SelectedStore.StoreId;
             if (typeGet == TYPEGET.MORE)
             {
                 if (ProductsOfStore.Count != 0)

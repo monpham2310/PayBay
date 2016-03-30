@@ -61,7 +61,7 @@ namespace PayBayService.Controllers
                 }
                 else
                 {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewMarketWithName", CommandType.StoredProcedure, ref Methods.err, marketId, marketName);
                 }
             }
             catch (Exception ex)

@@ -66,8 +66,9 @@ namespace PayBayService.Controllers
                     result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
                 }
                 else
-                {                    
-                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
+                {    
+                    /////NOTICE                
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_LoadNewProductWithName", CommandType.StoredProcedure, ref Methods.err, productId, productName);
                 }
             }
             catch (Exception ex)
@@ -146,14 +147,13 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutProduct(Product product)
         {
-            JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-
+            JObject result = new JObject();            
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 if (product.Image == null)
                 {
                     ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, product.ProductId);
@@ -202,14 +202,13 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostProduct(Product product)
         {
-            JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-
+            JObject result = new JObject();            
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 if (product.Image == null)
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.Products");

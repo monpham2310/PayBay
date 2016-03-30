@@ -1,4 +1,5 @@
 ﻿using PayBay.Utilities.Common;
+using PayBay.ViewModel.OrderGroupViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,9 +21,22 @@ namespace PayBay.View.OrderGroup.DeliveryPaymentGroup
 {
     public sealed partial class DeliveryPaymentPage : UserControl
     {
+        private OrderViewModel OrderVm => (OrderViewModel)DataContext;
+
         public DeliveryPaymentPage()
         {
             this.InitializeComponent();
+        }
+        
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            OrderVm.BillOfUser.TradeTerm = ((ComboBoxItem)cbTradeTerm.SelectedValue).Content.ToString();
+
+            OrderVm.BillOfUser.AgreeredShippingDate = ((ComboBoxItem)cbAgreeShip.SelectedValue).Content.ToString();
+            int addDay = Convert.ToInt32(cbAgreeShip.SelectedIndex);
+            OrderVm.BillOfUser.ShippingDate = DateTime.Now.AddDays(addDay + 1);
+
+            OrderVm.BillOfUser.ShipMethod = ((ComboBoxItem)cbShipMethod.SelectedValue).Content.ToString();
         }
 
         private void tbxInitPay_GotFocus(object sender, RoutedEventArgs e)
@@ -47,24 +61,25 @@ namespace PayBay.View.OrderGroup.DeliveryPaymentGroup
                 
         private void cbTradeTerm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MediateClass.OrderVM != null)
-                MediateClass.OrderVM.BillOfUser.TradeTerm = ((ComboBoxItem)cbTradeTerm.SelectedValue).Content.ToString();
+            if (OrderVm != null)
+                OrderVm.BillOfUser.TradeTerm = ((ComboBoxItem)cbTradeTerm.SelectedValue).Content.ToString();
         }
 
         private void cbAgreeShip_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MediateClass.OrderVM != null)
+            if (OrderVm != null)
             {
-                MediateClass.OrderVM.BillOfUser.AgreeredShippingDate = ((ComboBoxItem)cbAgreeShip.SelectedValue).Content.ToString();
+                OrderVm.BillOfUser.AgreeredShippingDate = ((ComboBoxItem)cbAgreeShip.SelectedValue).Content.ToString();
                 int addDay = Convert.ToInt32(cbAgreeShip.SelectedIndex);
-                MediateClass.OrderVM.BillOfUser.ShipDate = DateTime.Now.AddDays(addDay + 1);
+                OrderVm.BillOfUser.ShippingDate = DateTime.Now.AddDays(addDay + 1);
             }
         }
 
         private void cbShipMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MediateClass.OrderVM != null)
-                MediateClass.OrderVM.BillOfUser.ShipMethod = ((ComboBoxItem)cbShipMethod.SelectedValue).Content.ToString();
+            if (OrderVm != null)
+                OrderVm.BillOfUser.ShipMethod = ((ComboBoxItem)cbShipMethod.SelectedValue).Content.ToString();
         }
+
     }
 }

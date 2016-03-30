@@ -110,32 +110,36 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostBill(Bill bill)
         {
-            JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {                
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
+            JObject result = new JObject();            
             try
             {
-                //db.Bills.Add(bill);
-                //await db.SaveChangesAsync();
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                db.Bills.Add(bill);
+                await db.SaveChangesAsync();
 
-                var createDate = new SqlParameter("@CreatedDate", bill.CreatedDate);
+                //var createDate = new SqlParameter("@CreatedDate", bill.CreatedDate);
                 var store = new SqlParameter("@StoreID", bill.StoreID);
-                var total = new SqlParameter("@TotalPrice", bill.TotalPrice);
-                var reduce = new SqlParameter("@ReducedPrice", bill.ReducedPrice);
+                //var total = new SqlParameter("@TotalPrice", bill.TotalPrice);
+                //var reduce = new SqlParameter("@ReducedPrice", bill.ReducedPrice);
                 var user = new SqlParameter("@UserID", bill.UserID);
-                var note = new SqlParameter("@Note", bill.Note);
-                var shipMethod = new SqlParameter("@ShipMethod", bill.ShipMethod);
-                var trade = new SqlParameter("@TradeTerm", bill.TradeTerm);
-                var agree = new SqlParameter("@Agree", bill.AgreeredShippingDate);
-                var shipDate = new SqlParameter("@ShipDate", bill.ShippingDate);
+                //var shipMethod = new SqlParameter("@ShipMethod", bill.ShipMethod);
+                //var trade = new SqlParameter("@TradeTerm", bill.TradeTerm);
+                //var agree = new SqlParameter("@Agree", bill.AgreeredShippingDate);
+                //var shipDate = new SqlParameter("@ShipDate", bill.ShippingDate);
 
-                var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AddBill", CommandType.StoredProcedure, ref Methods.err,
-                                createDate, store, total, reduce, user, note, shipMethod, trade, agree, shipDate);
+                //var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_AddBill", CommandType.StoredProcedure, ref Methods.err,
+                //                  createDate, store, total, reduce, user, shipMethod, trade, agree, shipDate);
 
-                await PushHelper.SendToastAsync(WebApiConfig.Services, response["Username"].ToString() + "just order to you!","You have new order!"
-                                                    ,new Uri(response["Avatar"].ToString()), response["OwnerID"].ToString());
+                var response = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetUserJustOrder", CommandType.StoredProcedure, ref Methods.err, store, user);
+
+                if (response.Count > 0)
+                    result = response[0].ToObject<JObject>();
+
+                await PushHelper.SendToastAsync(WebApiConfig.Services, result["Username"].ToString() + " just order to you!","You have new order!"
+                                                    ,new Uri(result["Avatar"].ToString()), result["OwnerID"].ToString());
             }
             catch (Exception ex)
             {
@@ -143,8 +147,7 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
-            //result = JObject.FromObject(bill);
-            result = Methods.CustomResponseMessage(1, "Submit bill is successful!");
+            result = JObject.FromObject(bill);            
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

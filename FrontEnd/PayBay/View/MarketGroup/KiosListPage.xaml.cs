@@ -69,10 +69,9 @@ namespace PayBay.View.MarketGroup
             {
                 if (gridviewKiosList.SelectedItem != null)
                 {
-                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
-                    int selectedId = KiosVm.SelectedStore.StoreId;
-                    MediateClass.ProductVM.GetProductsOfStore(selectedId,TYPEGET.START);
-                    MediateClass.CommentVM.GetCommentOfStore(selectedId,TYPEGET.START);
+                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;                    
+                    MediateClass.ProductVM.GetProductsOfStore(TYPEGET.START);
+                    MediateClass.CommentVM.GetCommentOfStore(TYPEGET.START);
                 }
             }            
         }
@@ -84,12 +83,12 @@ namespace PayBay.View.MarketGroup
                 splitviewKios.IsPaneOpen = !splitviewKios.IsPaneOpen;
                 if (KiosVm != null)
                 {                    
-                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
-                    int selectedId = KiosVm.SelectedStore.StoreId;
+                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;                    
                     ViewModel.InboxGroup.MessageInboxViewModel.UserChated = KiosVm.SelectedStore.OwnerId;
-                    MediateClass.ProductVM.GetProductsOfStore(selectedId, TYPEGET.START);
-                    MediateClass.CommentVM.GetCommentOfStore(selectedId, TYPEGET.START);                    
+                    ProductVm.GetProductsOfStore(TYPEGET.START);
+                    CommentVm.GetCommentOfStore(TYPEGET.START);                    
                 }
+                gridviewKiosList.SelectedItem = null;
             }
         }
 

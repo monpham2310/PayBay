@@ -49,7 +49,9 @@ namespace PayBay.ViewModel.OrderGroupViewModel
 
         public OrderViewModel()
         {
-            MediateClass.OrderVM = this;            
+            MediateClass.OrderVM = this;
+            BillOfUser = new Bill();
+            DetailList = new ObservableCollection<DetailBill>();
             InitializeBill();
         }
 
@@ -68,12 +70,12 @@ namespace PayBay.ViewModel.OrderGroupViewModel
             //string agreeShipDate = "";
             //DateTime shipDate;
 
-            _billOfUser = new Bill(createDate, storeId, storeName, totalPrice, reducePrice, userId, userName);
-            _detailList = new ObservableCollection<DetailBill>();
+            BillOfUser = new Bill(createDate, storeId, storeName, totalPrice, reducePrice, userId, userName);
+            DetailList = new ObservableCollection<DetailBill>();
             foreach (Product item in MediateClass.ProductVM.ProductOrderList)
             {
                 DetailBill detail = new DetailBill(item.ProductId, item.OrderUnit, item.UnitPrice, item.Unit);
-                _detailList.Add(detail);
+                DetailList.Add(detail);
             }            
         }
 

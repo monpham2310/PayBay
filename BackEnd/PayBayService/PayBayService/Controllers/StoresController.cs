@@ -92,14 +92,13 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutStore(Store store)
         {
-            JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-
+            JObject result = new JObject();            
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 if (store.Image == null)
                 {                    
                     ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("stores", store.StoreName, store.StoreId);
@@ -127,13 +126,13 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PostStore(Store store)
         {
-            JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
-            }
+            JObject result = new JObject();            
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 if (store.Image == null)
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.Stores");

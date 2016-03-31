@@ -23,5 +23,8 @@ namespace PayBayService.Models
         public int OwnerID { get; set; }
         public Nullable<double> Rate { get; set; }
         public string SasQuery { get; set; }
+        public double AcceptDiscount { get; set; }
+        public TimeSpan OpenTime { get; set; }
+        public TimeSpan CloseTime { get; set; }
     }
 }

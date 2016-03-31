@@ -20,7 +20,10 @@ namespace PayBay.Model
         private string _userName;
         private string _avatar;  
         private string _sasQuery;
-        private float _rate;        
+        private float _rate;
+        private double _acceptDiscount;
+        private TimeSpan _openTime;
+        private TimeSpan _closeTime;
 
         public string Image
         {
@@ -163,6 +166,48 @@ namespace PayBay.Model
             set
             {
                 _avatar = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double AcceptDiscount
+        {
+            get
+            {
+                return _acceptDiscount;
+            }
+
+            set
+            {
+                _acceptDiscount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan OpenTime
+        {
+            get
+            {
+                return _openTime;
+            }
+
+            set
+            {
+                _openTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan CloseTime
+        {
+            get
+            {
+                return _closeTime;
+            }
+
+            set
+            {
+                _closeTime = value;
                 OnPropertyChanged();
             }
         }

@@ -17,6 +17,7 @@ using PayBay.ViewModel;
 using PayBay.ViewModel.ProductGroup;
 using PayBay.Utilities.Common;
 using PayBay.ViewModel.OrderGroupViewModel;
+using Windows.UI.Popups;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -42,6 +43,23 @@ namespace PayBay.View.OrderGroup
         {
             Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(MediateClass.KiotVM.SelectedStore.Phone, MediateClass.KiotVM.SelectedStore.StoreName);
         }
-                
+
+        private async void tbxDiscount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            double priceUserWant = Convert.ToDouble(tbxDiscount.Text);
+            double acceptDiscount = MediateClass.KiotVM.SelectedStore.AcceptDiscount;
+            double total = OrderVm.BillOfUser.TotalPrice;
+            double initPrice = OrderVm.BillOfUser._oldPrice;
+            if(priceUserWant <= (total / 100 * acceptDiscount))
+            {
+                OrderVm.BillOfUser.TotalPrice = (total + (initPrice - total)) - priceUserWant;
+                OrderVm.BillOfUser.ReducedPrice = priceUserWant;
+            }
+            else
+            {
+                await new MessageDialog("You have discounted too much!", "Order").ShowAsync();
+                OrderVm.BillOfUser.ReducedPrice = 0;
+            }
+        }
     }
 }

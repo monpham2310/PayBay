@@ -60,16 +60,16 @@ namespace PayBayService.Controllers
         }
 
         [ResponseType(typeof(HttpResponseMessage))]
-        public HttpResponseMessage GetBestSaleProduct(int productId, TYPE typeProduct, bool type)
+        public HttpResponseMessage GetBestSaleProduct(int numberOf, TYPE typeProduct, bool type)
         {
             JArray result = new JArray();
             try
             {
-                var product = new SqlParameter("@Id", productId);
+                var amount = new SqlParameter("@NumberOf", numberOf);
                 if (typeProduct == TYPE.OLD)
-                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err, product);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBestSaleProduct", CommandType.StoredProcedure, ref Methods.err, amount);
                 else
-                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewBestSaleProduct", CommandType.StoredProcedure, ref Methods.err, product);
+                    result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNewBestSaleProduct", CommandType.StoredProcedure, ref Methods.err, amount);
             }
             catch (Exception ex)
             {

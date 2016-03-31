@@ -158,23 +158,23 @@ namespace PayBayService.Controllers
         }
 
         // POST: api/Stores
-        [ResponseType(typeof(HttpResponseMessage))]
-        public HttpResponseMessage UsersLike(int storeId, int number)
-        {
-            int result = 0;
-            try
-            {
-                var store = new SqlParameter("@StoreID", storeId);
-                var num = new SqlParameter("@NumberOf", number);
-                result = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_UpdateLike", CommandType.StoredProcedure, ref Methods.err, store, num));
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
-            }
+        //[ResponseType(typeof(HttpResponseMessage))]
+        //public HttpResponseMessage UsersLike(int storeId, int number)
+        //{
+        //    int result = 0;
+        //    try
+        //    {
+        //        var store = new SqlParameter("@StoreID", storeId);
+        //        var num = new SqlParameter("@NumberOf", number);
+        //        result = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_UpdateLike", CommandType.StoredProcedure, ref Methods.err, store, num));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+        //    }
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+        //    return Request.CreateResponse(HttpStatusCode.OK, result);
+        //}
 
         // DELETE: api/Stores/5
         [ResponseType(typeof(HttpResponseMessage))]

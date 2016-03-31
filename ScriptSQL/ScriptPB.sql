@@ -171,3 +171,15 @@ create table paybayservice.StatisticRating(
 alter table paybayservice.MessageInbox add Content nvarchar(255)
 alter table paybayservice.MessageInbox add InboxDate datetime
 alter table viethung_paybayservice.Products alter column ImportDate datetime
+
+alter view viethung_paybayservice.view_AmountStatistic
+as	
+	select a.ProductId,ProductName,Image,sum(a.NumberOf) as NumberOf
+	from viethung_paybayservice.ProductStatistic a join viethung_paybayservice.Products b on a.ProductId=b.ProductID
+	group by a.ProductId,ProductName,Image
+	
+select * from viethung_paybayservice.Stores
+
+alter table viethung_paybayservice.Stores add AcceptDiscount float
+alter table viethung_paybayservice.Stores add OpenTime time
+alter table viethung_paybayservice.Stores add CloseTime time

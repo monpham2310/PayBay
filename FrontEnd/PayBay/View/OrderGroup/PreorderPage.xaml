@@ -104,7 +104,8 @@
                                >
                         <Run Text="Total product price: " 
                              FontSize="16"/>
-                        <Run Text="{Binding BillOfUser.TotalPrice}" 
+                        <Run x:Name="tblTotalPrice"
+                             Text="{Binding BillOfUser.TotalPrice}" 
                              FontSize="20" 
                              Foreground="#FFF45454"/>
                     </TextBlock>
@@ -120,6 +121,7 @@
                                 CornerRadius="8">
                             <TextBox BorderThickness="0"
                                      x:Name="tbxDiscount"
+                                     LostFocus="tbxDiscount_LostFocus"
                                      Text="{Binding BillOfUser.ReducedPrice, Mode=TwoWay}"/>
                         </Border>
                     </StackPanel>

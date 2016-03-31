@@ -23,7 +23,7 @@ namespace PayBay.Model
         private DateTime _shippingDate;
         private bool _isAccepted;
 
-        private double _oldPrice = 0;
+        public double _oldPrice = 0;
 
         #region
         public int BillId
@@ -92,7 +92,7 @@ namespace PayBay.Model
             set
             {
                 _reducedPrice = value;
-                TotalPrice = (TotalPrice + (_oldPrice - TotalPrice)) - _reducedPrice;
+                //TotalPrice = (TotalPrice + (_oldPrice - TotalPrice)) - _reducedPrice;
                 OnPropertyChanged();
             }
         }

@@ -114,21 +114,21 @@ namespace PayBay.ViewModel.ProductGroup
             try
             {
                 JArray result = new JArray();
-                int lastId = -1;
+                int numberOf = -1;
                 if (typeGet == TYPEGET.MORE)
                 {
                     if (BestProductList.Count != 0)
                     {
                         if (type == TYPE.OLD)
-                            lastId = BestProductList.Min(x => x.Id);
+                            numberOf = BestProductList.Min(x => x.NumberOf);
                         else
-                            lastId = BestProductList.Max(x => x.Id);
+                            numberOf = BestProductList.Max(x => x.NumberOf);
                     }
                 }
 
                 IDictionary<string, string> param = new Dictionary<string, string>
                 {
-                    {"productId" , lastId.ToString()},
+                    {"numberOf" , numberOf.ToString()},
                     {"typeProduct" , type.ToString()},
                     {"type" , "true"}
                 };

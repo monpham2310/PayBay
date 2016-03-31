@@ -226,7 +226,7 @@
                                    />
 
                         <DatePicker x:Name="dpStartDate"
-							Margin="15,10"
+							Margin="10,10,10,10"
 							HorizontalAlignment="Stretch"/>
 
                         <TextBlock Text="End Date"
@@ -234,7 +234,7 @@
 						   Foreground="{StaticResource GrayBrush}"/>
 
                         <DatePicker x:Name="dpEndDate"
-							Margin="15,10"
+							Margin="10,10,10,10"
 							HorizontalAlignment="Stretch"/>
                         
                         <StackPanel Orientation="Horizontal"

@@ -143,14 +143,44 @@
 						 HorizontalAlignment="Stretch" 
                          InputScope="Number" />
 
-                    <StackPanel Orientation="Horizontal"
-							    Margin="15,10"
-                                Name="spnMarketLst"
-                                DataContext="{Binding Source={StaticResource Locator}, Path=MarketVm}">
-                        <TextBlock Text="Market:"
-							   VerticalAlignment="Center"
-                               Margin="0,0,20,0"
-							   Foreground="{StaticResource GrayBrush}"/>
+                <TextBlock Text="Open Time"
+					Margin="15,20,15,10"
+					Foreground="{StaticResource GrayBrush}"/>
+
+                <TimePicker
+                    x:Name="tpOpenTime"
+                    HorizontalAlignment="Stretch"
+                    Margin="10,10,10,10"
+                    />
+
+                <TextBlock Text="Close Time"
+					Margin="15,20,15,10"
+					Foreground="{StaticResource GrayBrush}"/>
+
+                <TimePicker
+                    x:Name="tpCloseTime"
+                    HorizontalAlignment="Stretch"
+                    Margin="10,10,10,10"
+                    />
+                
+                <TextBlock Text="Accept Price on Bill(%)"
+					Margin="15,20,15,10"
+					Foreground="{StaticResource GrayBrush}"/>
+
+                <TextBox x:Name="txtAcceptDiscount"
+					BorderThickness="0,0,0,2"
+					Margin="15,0"
+					HorizontalAlignment="Stretch" 
+                    InputScope="Number" />
+
+                <StackPanel Orientation="Horizontal"
+					Margin="15,15"
+                    Name="spnMarketLst"
+                    DataContext="{Binding Source={StaticResource Locator}, Path=MarketVm}">
+                    <TextBlock Text="Market:"
+					    VerticalAlignment="Center"
+                        Margin="0,0,20,0"
+					    Foreground="{StaticResource GrayBrush}"/>
 
                         <ComboBox Grid.Row="1" 
 							  Grid.Column="0"			

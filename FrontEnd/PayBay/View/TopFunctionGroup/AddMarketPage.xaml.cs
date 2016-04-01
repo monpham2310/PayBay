@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using Windows.UI.Popups;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -90,6 +91,28 @@ namespace PayBay.View.TopFunctionGroup
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
         }
-                
+
+        private async void btnLocation_Click(object sender, RoutedEventArgs e)
+        {
+            var accessStatus = await Geolocator.RequestAccessAsync();
+
+            switch (accessStatus)
+            {
+                case GeolocationAccessStatus.Allowed:
+                    Geolocator geolocator = new Geolocator() { DesiredAccuracyInMeters = 0 };
+                    Geoposition pos = await geolocator.GetGeopositionAsync();
+
+                    tbLatitude.Text = "Latitude: " + pos.Coordinate.Point.Position.Latitude;
+                    tbLongitude.Text = "Longitude: " + pos.Coordinate.Point.Position.Longitude;
+
+                    break;
+                case GeolocationAccessStatus.Denied:
+                    await new MessageDialog("Access to location is denied.", "Notification!").ShowAsync();
+                    break;
+                case GeolocationAccessStatus.Unspecified:
+                    await new MessageDialog("Unspecified error.", "Notification!").ShowAsync();
+                    break;
+            }
+        }
     }
 }

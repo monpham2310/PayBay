@@ -1,72 +1,106 @@
 ﻿<Page x:Class="PayBay.View.TopFunctionGroup.AddMarketPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:PayBay.View.TopFunctionGroup"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:model="using:PayBay.Model"
-      mc:Ignorable="d">
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:local="using:PayBay.View.TopFunctionGroup"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:model="using:PayBay.Model"
+	  mc:Ignorable="d">
 
-    <Page.Resources>
-    </Page.Resources>
+	<Page.Resources>
+	</Page.Resources>
 
-    <Grid Grid.Row="4" Name="captureGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Name="captureButtons" 
-                Orientation="Vertical">
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Market Name:" />
-            <TextBox Name="txtMarketName"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="Type name..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Phone:" />
-            <TextBox Name="txtPhone"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="..." />
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Address:" />
-            <TextBox Name="txtAddr"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 FontSize="10"
-                 PlaceholderText="..." />
-            
-            <TextBlock HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="10"
-                   Text="Image:" />
+	<Grid Grid.Row="4"
+		  Name="captureGrid"
+		  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0"
+					Name="captureButtons"
+					Orientation="Vertical">
+			<TextBlock HorizontalAlignment="Left"
+					   VerticalAlignment="Top"
+					   FontSize="10"
+					   Text="Market Name:" />
+			<TextBox Name="txtMarketName"
+					 HorizontalAlignment="Left"
+					 VerticalAlignment="Top"
+					 FontSize="10"
+					 PlaceholderText="Type name..." />
+			<TextBlock HorizontalAlignment="Left"
+					   VerticalAlignment="Top"
+					   FontSize="10"
+					   Text="Phone:" />
+			<TextBox Name="txtPhone"
+					 HorizontalAlignment="Left"
+					 VerticalAlignment="Top"
+					 FontSize="10"
+					 PlaceholderText="..." />
+			<TextBlock HorizontalAlignment="Left"
+					   VerticalAlignment="Top"
+					   FontSize="10"
+					   Text="Address:" />
+			<TextBox Name="txtAddr"
+					 HorizontalAlignment="Left"
+					 VerticalAlignment="Top"
+					 FontSize="10"
+					 PlaceholderText="..." />
 
-        </StackPanel>
+			<TextBlock HorizontalAlignment="Left"
+					   VerticalAlignment="Top"
+					   FontSize="10"
+					   Text="Image:" />
 
-        <!--<CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />-->
+			<Button x:Name="btnLocation"
+					Content="GET LOCATION"
+					Margin="50"
+					Foreground="{StaticResource WhiteBrush}"
+					Background="{StaticResource LightBlueBrush}"
+					HorizontalAlignment="Stretch"
+					Style="{StaticResource RoundedButtonStyle}"
+					Click="btnLocation_Click" />
 
-        <Image Grid.Row="1" Name="imagePreview"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Height="160"
-                Width="160"
-                Visibility="Visible" />
+			<!--Set Visibility to Visible when access to location is denied -->
+			<HyperlinkButton Content="Location Setting" 
+							 HorizontalAlignment="Center"
+							 NavigateUri="ms-settings:privacy-location">
+			</HyperlinkButton>
 
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row ="3"  Orientation="Horizontal">
-            <AppBarButton Label="Photo" Icon="Camera" Name="ButtonCapture" 
-                  Click="ButtonCapture_Click" Height="78" Width="62" />
-            <AppBarButton Label="Upload" Icon="Upload" Name="ButtonSave" 
-                  Click="ButtonSave_Click"/>
-        </StackPanel>
+			<TextBlock x:Name="tbLatitude"
+					   HorizontalAlignment="Center" />
 
-    </Grid>
+			<TextBlock x:Name="tbLongitude"
+					   HorizontalAlignment="Center" />
+
+		</StackPanel>
+
+		<!--<CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />-->
+
+		<Image Grid.Row="1"
+			   Name="imagePreview"
+			   HorizontalAlignment="Left"
+			   VerticalAlignment="Top"
+			   Height="160"
+			   Width="160"
+			   Visibility="Visible" />
+
+		<StackPanel HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					Grid.Row="3"
+					Orientation="Horizontal">
+			<AppBarButton Label="Photo"
+						  Icon="Camera"
+						  Name="ButtonCapture"
+						  Click="ButtonCapture_Click"
+						  Height="78"
+						  Width="62" />
+			<AppBarButton Label="Upload"
+						  Icon="Upload"
+						  Name="ButtonSave"
+						  Click="ButtonSave_Click" />
+		</StackPanel>
+
+	</Grid>
 </Page>

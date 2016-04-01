@@ -141,13 +141,13 @@ namespace PayBayService.Controllers
         [ResponseType(typeof(User))]
         public async Task<HttpResponseMessage> PostUser(User user)
         {
-            JObject result = new JObject();     
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest,ModelState);
-            }
+            JObject result = new JObject();                 
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 if (!AccountExists(user.Email))
                 {
                     if (user.Avatar == null)
@@ -167,12 +167,12 @@ namespace PayBayService.Controllers
                 }
                 else
                 {
-                    result = Methods.CustomResponseMessage(0, "Email had exists!");                    
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Email had already exists!");
                 }
             }
             catch (Exception ex)
             {
-                result = Methods.CustomResponseMessage(0, ex.Message.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
             result = JObject.FromObject(user);        
             return Request.CreateResponse(HttpStatusCode.OK, result);

@@ -40,7 +40,7 @@ namespace PayBay.View.TopFunctionGroup
         {            
             if (KiosViewModel.isUpdate)
             {
-                var store = MediateClass.KiotVM.Store;
+                var store = MediateClass.KiotVM.SelectedStore;
                 txtStoreName.Text = store.StoreName;
                 txtKiotNo.Text = store.KiotNo;
                 txtPhone.Text = store.Phone;
@@ -110,10 +110,10 @@ namespace PayBay.View.TopFunctionGroup
                     }
                     else
                     {
-                        temp.StoreId = MediateClass.KiotVM.Store.StoreId;
-                        temp.Image = MediateClass.KiotVM.Store.Image;
-                        temp.SasQuery = MediateClass.KiotVM.Store.SasQuery;
-                        temp.Rate = MediateClass.KiotVM.Store.Rate;
+                        temp.StoreId = MediateClass.KiotVM.SelectedStore.StoreId;
+                        temp.Image = MediateClass.KiotVM.SelectedStore.Image;
+                        temp.SasQuery = MediateClass.KiotVM.SelectedStore.SasQuery;
+                        temp.Rate = MediateClass.KiotVM.SelectedStore.Rate;
 
                         check = await MediateClass.KiotVM.UpdateStore(temp, media);
                     }

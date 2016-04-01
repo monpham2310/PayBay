@@ -5,12 +5,10 @@
 	  xmlns:local="using:PayBay.View.TopFunctionGroup"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:model="using:PayBay.Model"
+      Loaded="Page_Loaded"
 	  mc:Ignorable="d">
-
-	<Page.Resources>
-	</Page.Resources>
-
-	<Grid Grid.Row="4"
+	
+	<!--<Grid Grid.Row="4"
 		  Name="captureGrid"
 		  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 		<Grid.RowDefinitions>
@@ -62,7 +60,7 @@
 					Style="{StaticResource RoundedButtonStyle}"
 					Click="btnLocation_Click" />
 
-			<!--Set Visibility to Visible when access to location is denied -->
+			--><!--Set Visibility to Visible when access to location is denied --><!--
 			<HyperlinkButton Content="Location Setting" 
 							 HorizontalAlignment="Center"
 							 NavigateUri="ms-settings:privacy-location">
@@ -76,7 +74,7 @@
 
 		</StackPanel>
 
-		<!--<CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />-->
+		--><!--<CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />--><!--
 
 		<Image Grid.Row="1"
 			   Name="imagePreview"
@@ -102,5 +100,211 @@
 						  Click="ButtonSave_Click" />
 		</StackPanel>
 
-	</Grid>
+	</Grid>-->
+
+    <Page.Resources>
+        <Style x:Key="ImageButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid x:Name="RootGrid">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="Ellipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <!--<ObjectAnimationUsingKeyFrames  Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+												<DiscreteObjectKeyFrame KeyTime="00:00:00">
+													<DiscreteObjectKeyFrame.Value>
+														<Cursor>Hand</Cursor>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>-->
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="Ellipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <!--<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ButtonBackground">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseLowBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonText">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledTransparentBrush}"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>-->
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse x:Name="Ellipse"
+										 Width="{Binding ElementName=AvatarButton, Path=Width}"
+										 Height="{Binding ElementName=AvatarButton, Path=Height}"
+										 HorizontalAlignment="Left">
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="Image">
+                                        <ImageBrush.ImageSource>
+                                            <BitmapImage DecodePixelHeight="80" 
+															 DecodePixelWidth="80"
+															 />
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Name="gridMarket">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+			  Background="{StaticResource LightBlueBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Name="tblTitle"
+                       Text="Add Market" 
+					   Grid.Column="1"
+					   FontSize="20"
+					   FontWeight="Bold"
+					   VerticalAlignment="Center"
+					   Margin="10,0"
+					   Foreground="{StaticResource WhiteBrush}"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <ScrollViewer>
+                    <StackPanel>
+                        <Grid Margin="10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                        <Rectangle Height="2"
+						   Fill="{StaticResource LightGrayBrush}"/>
+                        <TextBlock Text="Market Name"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtMarketName" BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" />
+
+                        <TextBlock Text="Address"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtAddress"
+						 BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" 
+                         />
+
+                        <TextBlock Text="Phone"
+						       Margin="15,20,15,10"
+						       Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtPhone"
+						     BorderThickness="0,0,0,2"
+						     Margin="15,0"
+						     HorizontalAlignment="Stretch" 
+                             InputScope="Number"
+                             />
+
+                        <TextBlock Text="Latitute"
+						       Margin="15,20,15,10"
+						       Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtLat"
+						     BorderThickness="0,0,0,2"
+						     Margin="15,0"
+						     HorizontalAlignment="Stretch" 
+                             InputScope="Number"
+                             />
+
+                        <TextBlock Text="Longitute"
+						       Margin="15,20,15,10"
+						       Foreground="{StaticResource GrayBrush}"/>
+                        <TextBox x:Name="txtLng"
+						     BorderThickness="0,0,0,2"
+						     Margin="15,0"
+						     HorizontalAlignment="Stretch" 
+                             InputScope="Number"
+                             />
+
+                        <StackPanel Orientation="Horizontal"
+							Margin="15,10">
+                            <TextBlock Text="Choose Image:"
+							   VerticalAlignment="Center"
+							   Foreground="{StaticResource GrayBrush}"/>
+                            <Ellipse Width="100"
+							 Height="100"
+							 HorizontalAlignment="Left"
+							 Margin="10,0"     
+							 Name="AvatarEllipse" >
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="imgbrImage"	
+										ImageSource="/Assets/LockScreenLogo.scale-200.png" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <HyperlinkButton x:Name="AvatarButton"
+									 FontFamily="Segoe MDL2 Assets"
+									 Content="&#xE722;"
+									 FontSize="25"
+                                     Margin="12,0,0,0"
+									 Click="ButtonCapture_Click"/>
+                        </StackPanel>
+                        
+                        <Button x:Name="SummitButton" Content="SUBMIT"
+						Margin="40,0,50,10"
+						FontWeight="Bold"
+						Foreground="{StaticResource WhiteBrush}"
+						Background="{StaticResource LightBlueBrush}"
+						Style="{StaticResource RoundedButtonStyle}"
+                        Click="ButtonSave_Click"
+						HorizontalAlignment="Stretch"/>
+
+                        <Button x:Name="btDel" Content="Delete"
+						Margin="40,0,50,30"
+						FontWeight="Bold"
+						Foreground="{StaticResource WhiteBrush}"
+						Background="{StaticResource GrayBrush}"
+						Style="{StaticResource RoundedButtonStyle}"
+                        Click="btDel_Click"
+						HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <ProgressRing x:Name="pgrMarket"
+					  Width="50"
+					  Height="50"/>
+    </Grid>
+
 </Page>

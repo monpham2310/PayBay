@@ -23,7 +23,6 @@ namespace PayBay.ViewModel.MarketGroup
         private Kios _selectedStore;
         private ObservableCollection<Kios> _kiosList;
         private ObservableCollection<Kios> _storesOfOwner;
-        private Kios _store;
         
         private static bool isResponsed = false;
         
@@ -66,20 +65,7 @@ namespace PayBay.ViewModel.MarketGroup
                 OnPropertyChanged();
             }
         }
-
-        public Kios Store
-        {
-            get
-            {
-                return _store;
-            }
-
-            set
-            {
-                _store = value;
-                OnPropertyChanged();
-            }
-        }
+                
         #endregion
 
         public KiosViewModel()
@@ -238,21 +224,29 @@ namespace PayBay.ViewModel.MarketGroup
         {
             try
             {
-                if (store.Image == null || store.Image == "/Assets/LockScreenLogo.scale-200.png")
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    if (media == null)
-                        store.Image = "/Assets/LockScreenLogo.scale-200.png";
-                    else
-                        store.Image = null;
-                }
-                JToken data = JToken.FromObject(store);
-                JToken result = await App.MobileService.InvokeApiAsync("Stores", data, HttpMethod.Put, null);
-                JObject response = JObject.Parse(result.ToString());
+                    if (store.Image == null || store.Image == "/Assets/LockScreenLogo.scale-200.png")
+                    {
+                        if (media == null)
+                            store.Image = "/Assets/LockScreenLogo.scale-200.png";
+                        else
+                            store.Image = null;
+                    }
+                    JToken data = JToken.FromObject(store);
+                    JToken result = await App.MobileService.InvokeApiAsync("Stores", data, HttpMethod.Put, null);
+                    JObject response = JObject.Parse(result.ToString());
 
-                Store = response.ToObject<Kios>();
-                if(media != null)
+                    SelectedStore = response.ToObject<Kios>();
+                    if (media != null)
+                    {
+                        await Functions.Instance.UploadImageToBlob("stores", SelectedStore.Image, SelectedStore.SasQuery, media);
+                    }
+                }
+                else
                 {
-                    await Functions.Instance.UploadImageToBlob("stores", Store.Image, Store.SasQuery, media);
+                    await new MessageDialog("You have not internet connection!", "Insert Product").ShowAsync();
+                    return false;
                 }
             }
             catch (Exception ex)
@@ -290,19 +284,27 @@ namespace PayBay.ViewModel.MarketGroup
         {
             try
             {
-                JObject result = new JObject();
-                IDictionary<string, string> param = new Dictionary<string, string>
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    {"storeId", Store.StoreId.ToString()}
-                };
-                var response = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Delete, param);
-                result = JObject.Parse(response.ToString());
-                if(result["ErrCode"].ToString() == "0")
+                    JObject result = new JObject();
+                    IDictionary<string, string> param = new Dictionary<string, string>
+                    {
+                        {"storeId", SelectedStore.StoreId.ToString()}
+                    };
+                    var response = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Delete, param);
+                    result = JObject.Parse(response.ToString());
+                    if (result["ErrCode"].ToString() == "0")
+                    {
+                        return false;
+                    }
+                    await Functions.Instance.DeleteImageInBlob("stores", SelectedStore.Image, SelectedStore.SasQuery);
+                    SelectedStore = null;
+                }
+                else
                 {
+                    await new MessageDialog("You have not internet connection!", "Insert Product").ShowAsync();
                     return false;
                 }
-                await Functions.Instance.DeleteImageInBlob("stores", Store.Image, Store.SasQuery);
-                Store = null;
             }
             catch (Exception ex)
             {

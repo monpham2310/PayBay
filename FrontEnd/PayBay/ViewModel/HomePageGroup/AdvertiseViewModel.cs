@@ -402,21 +402,29 @@ namespace PayBay.ViewModel.HomePageGroup
         {
             try
             {
-                if (sale.Image == null || sale.Image == "/Assets/LockScreenLogo.scale-200.png")
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    if (media == null)
-                        sale.Image = "/Assets/LockScreenLogo.scale-200.png";
-                    else
-                        sale.Image = null;
-                }
-                JToken data = JToken.FromObject(sale);
-                JToken result = await App.MobileService.InvokeApiAsync("SaleInfoes", data, HttpMethod.Put, null);
-                JObject response = JObject.Parse(result.ToString());
+                    if (sale.Image == null || sale.Image == "/Assets/LockScreenLogo.scale-200.png")
+                    {
+                        if (media == null)
+                            sale.Image = "/Assets/LockScreenLogo.scale-200.png";
+                        else
+                            sale.Image = null;
+                    }
+                    JToken data = JToken.FromObject(sale);
+                    JToken result = await App.MobileService.InvokeApiAsync("SaleInfoes", data, HttpMethod.Put, null);
+                    JObject response = JObject.Parse(result.ToString());
 
-                SelectedSale = response.ToObject<AdvertiseItem>();
-                if (media != null)
+                    SelectedSale = response.ToObject<AdvertiseItem>();
+                    if (media != null)
+                    {
+                        await Functions.Instance.UploadImageToBlob("sales", SelectedSale.Image, SelectedSale.SasQuery, media);
+                    }
+                }
+                else
                 {
-                    await Functions.Instance.UploadImageToBlob("sales", SelectedSale.Image, SelectedSale.SasQuery, media);
+                    await new MessageDialog("You have not internet connection!", "Insert Product").ShowAsync();
+                    return false;
                 }
             }
             catch (Exception ex)
@@ -431,19 +439,27 @@ namespace PayBay.ViewModel.HomePageGroup
         {
             try
             {
-                JObject result = new JObject();
-                IDictionary<string, string> param = new Dictionary<string, string>
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    {"saleId", SelectedSale.SaleId.ToString()}
-                };
-                var response = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Delete, param);
-                result = JObject.Parse(response.ToString());
-                if (result["ErrCode"].ToString() == "0")
+                    JObject result = new JObject();
+                    IDictionary<string, string> param = new Dictionary<string, string>
+                    {
+                        {"saleId", SelectedSale.SaleId.ToString()}
+                    };
+                    var response = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Delete, param);
+                    result = JObject.Parse(response.ToString());
+                    if (result["ErrCode"].ToString() == "0")
+                    {
+                        return false;
+                    }
+                    await Functions.Instance.DeleteImageInBlob("sales", SelectedSale.Image, SelectedSale.SasQuery);
+                    SelectedSale = null;
+                }
+                else
                 {
+                    await new MessageDialog("You have not internet connection!", "Insert Product").ShowAsync();
                     return false;
                 }
-                await Functions.Instance.DeleteImageInBlob("sales", SelectedSale.Image, SelectedSale.SasQuery);
-                SelectedSale = null;
             }
             catch (Exception ex)
             {

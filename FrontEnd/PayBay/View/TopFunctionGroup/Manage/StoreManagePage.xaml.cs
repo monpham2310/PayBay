@@ -59,7 +59,7 @@ namespace PayBay.View.TopFunctionGroup.Manage
             if(lbStore.SelectedItem != null)
             {
                 KiosViewModel.isUpdate = true;
-                KiotVm.Store = (Kios)lbStore.SelectedItem;
+                KiotVm.SelectedStore = (Kios)lbStore.SelectedItem;
                 Frame.Navigate(typeof(StoreRegisterPage), NavigationMode.Forward);
             }
         }

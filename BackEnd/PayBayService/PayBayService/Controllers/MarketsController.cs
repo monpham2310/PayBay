@@ -92,31 +92,32 @@ namespace PayBayService.Controllers
         public async Task<HttpResponseMessage> PutMarket(Market market)
         {
             JObject result = new JObject();
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
-                        
-            db.Entry(market).State = EntityState.Modified;
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                if (market.Image == null)
+                {
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("markets", market.MarketName, market.MarketId);
+
+                    if (blob != null)
+                    {
+                        market.Image = blob.ImageUri;
+                        market.SasQuery = blob.SasQuery;
+                    }
+                }
+                db.Entry(market).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!MarketExists(market.MarketId))
-                {
-                    result = Methods.CustomResponseMessage(0, "Market isn't exists!");
-                    return Request.CreateResponse(HttpStatusCode.NotFound, result);
-                }
-                else
-                {
-                    throw;
-                }
+                result = Methods.CustomResponseMessage(0, "Update market is not successful!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
             }
 
-            result = Methods.CustomResponseMessage(1, "Update market is successful!");
+            result = JObject.FromObject(market);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -125,38 +126,42 @@ namespace PayBayService.Controllers
         public async Task<HttpResponseMessage> PostMarket(Market market)
         {
             JObject result = new JObject();
-            if (!ModelState.IsValid)
+            try
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                if (market.Image == null)
+                {
+                    var table = new SqlParameter("@table", "viethung_paybayservice.Markets");
+                    int marketId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
+                    ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("markets", market.MarketName, marketId + 1);
 
-            var table = new SqlParameter("@table", "viethung_paybayservice.Markets");
-            int marketId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
-            ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("markets", market.MarketName, marketId + 1);
-
-            if (blob != null)
-            {
-                market.Image = blob.ImageUri;
-                market.SasQuery = blob.SasQuery;
+                    if (blob != null)
+                    {
+                        market.Image = blob.ImageUri;
+                        market.SasQuery = blob.SasQuery;
+                    }
+                }
                 db.Markets.Add(market);
                 await db.SaveChangesAsync();
-
-                result = JObject.FromObject(market);
             }
-            else
+            catch (Exception ex)
             {
-                result = Methods.CustomResponseMessage(0, "Could not retrieve Sas and Uri settings!");
-                return Request.CreateResponse(HttpStatusCode.BadRequest, result);
-            }            
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            result = JObject.FromObject(market);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         // DELETE: api/Markets/5
         [ResponseType(typeof(HttpResponseMessage))]
-        public async Task<HttpResponseMessage> DeleteMarket(int id)
+        public async Task<HttpResponseMessage> DeleteMarket(int marketId)
         {
             JObject result = new JObject();
-            Market market = await db.Markets.FindAsync(id);
+            Market market = await db.Markets.FindAsync(marketId);
             if (market == null)
             {
                 result = Methods.CustomResponseMessage(0, "Market isn't exists!");

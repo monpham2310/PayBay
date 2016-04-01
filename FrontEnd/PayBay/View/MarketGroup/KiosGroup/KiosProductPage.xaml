@@ -38,7 +38,7 @@
 					</Grid.ColumnDefinitions>
 
 					<TextBlock Grid.Column="0" 
-							   Text="ID."
+							   Text="Image"
 							   HorizontalAlignment="Center"/>
 					<TextBlock Grid.Column="1" 
 							   Text="Product"
@@ -74,17 +74,23 @@
 									  BorderThickness="0,1,0,0"
 									  BorderBrush="{StaticResource GrayBrush}">
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="40"/>
+										<ColumnDefinition Width="60"/>
 										<ColumnDefinition Width="1.8*"/>
 										<ColumnDefinition Width="*"/>
 										<ColumnDefinition Width="*"/>
 										<ColumnDefinition Width="40"/>
 									</Grid.ColumnDefinitions>
 
-									<TextBlock Grid.Column="0"
+                                    <Image  Grid.Column="0"
+                                        Source="{Binding Image}"
+					                    Width="63"
+					                    Height="63"
+					                    Stretch="Fill" />
+                                    
+									<!--<TextBlock Grid.Column="0"
 											   Text="{Binding ProductId}"
 											   VerticalAlignment="Center"
-											   HorizontalAlignment="Center"/>
+											   HorizontalAlignment="Center"/>-->
 									<TextBlock Grid.Column="1" 
 											   Text="{Binding ProductName}"
 											   VerticalAlignment="Center"

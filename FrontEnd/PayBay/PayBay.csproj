@@ -229,6 +229,9 @@
     <Compile Include="View\TopFunctionGroup\AddProductPage.xaml.cs">
       <DependentUpon>AddProductPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\Manage\MarketManagePage.xaml.cs">
+      <DependentUpon>MarketManagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\Manage\ProductManagePage.xaml.cs">
       <DependentUpon>ProductManagePage.xaml</DependentUpon>
     </Compile>
@@ -491,6 +494,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TopFunctionGroup\AddProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\Manage\MarketManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

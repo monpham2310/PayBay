@@ -17,6 +17,9 @@ namespace PayBay.ViewModel.ProductGroup
         private ObservableCollection<Product> _newProductList;
         private ObservableCollection<ProductStatistic> _bestProductList;
 
+        private static bool isResponse = false;
+        private static bool isResponseBest = false;
+
         public ObservableCollection<Product> NewProductList
         {
             get
@@ -77,35 +80,43 @@ namespace PayBay.ViewModel.ProductGroup
 
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    var response = await App.MobileService.InvokeApiAsync("ProductStatistics", HttpMethod.Get, param);
-                    result = JArray.Parse(response.ToString());
-                    ObservableCollection<Product> more = result.ToObject<ObservableCollection<Product>>();
-                    if (typeGet == TYPEGET.START)
+                    if (!isResponse)
                     {
-                        NewProductList = more;
-                    }
-                    else
-                    {
-                        if (type == TYPE.OLD)
+                        isResponse = true;
+                        var response = await App.MobileService.InvokeApiAsync("ProductStatistics", HttpMethod.Get, param);
+                        result = JArray.Parse(response.ToString());
+                        ObservableCollection<Product> more = result.ToObject<ObservableCollection<Product>>();
+                        if (typeGet == TYPEGET.START)
                         {
-                            foreach (var item in more)
-                            {
-                                NewProductList.Add(item);
-                            }
+                            NewProductList = more;
                         }
                         else
                         {
-                            for (int i = 0; i < more.Count; i++)
+                            if (type == TYPE.OLD)
                             {
-                                NewProductList.Insert(i, more[i]);
+                                foreach (var item in more)
+                                {
+                                    NewProductList.Add(item);
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < more.Count; i++)
+                                {
+                                    NewProductList.Insert(i, more[i]);
+                                }
                             }
                         }
-                    }
+                    }                    
                 }
             }
             catch (Exception ex)
             {
                 await new MessageDialog(ex.Message.ToString(), "Load Product").ShowAsync();
+            }
+            finally
+            {
+                isResponse = false;
             }
         }
 
@@ -135,27 +146,31 @@ namespace PayBay.ViewModel.ProductGroup
 
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
                 {
-                    var response = await App.MobileService.InvokeApiAsync("ProductStatistics", HttpMethod.Get, param);
-                    result = JArray.Parse(response.ToString());
-                    ObservableCollection<ProductStatistic> more = result.ToObject<ObservableCollection<ProductStatistic>>();
-                    if (typeGet == TYPEGET.START)
+                    if (!isResponseBest)
                     {
-                        BestProductList = more;
-                    }
-                    else
-                    {
-                        if (type == TYPE.OLD)
+                        isResponseBest = true;
+                        var response = await App.MobileService.InvokeApiAsync("ProductStatistics", HttpMethod.Get, param);
+                        result = JArray.Parse(response.ToString());
+                        ObservableCollection<ProductStatistic> more = result.ToObject<ObservableCollection<ProductStatistic>>();
+                        if (typeGet == TYPEGET.START)
                         {
-                            foreach (var item in more)
-                            {
-                                BestProductList.Add(item);
-                            }
+                            BestProductList = more;
                         }
                         else
                         {
-                            for (int i = 0; i < more.Count; i++)
+                            if (type == TYPE.OLD)
                             {
-                                BestProductList.Insert(i, more[i]);
+                                foreach (var item in more)
+                                {
+                                    BestProductList.Add(item);
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < more.Count; i++)
+                                {
+                                    BestProductList.Insert(i, more[i]);
+                                }
                             }
                         }
                     }
@@ -164,6 +179,10 @@ namespace PayBay.ViewModel.ProductGroup
             catch (Exception ex)
             {
                 await new MessageDialog(ex.Message.ToString(), "Load Product").ShowAsync();
+            }
+            finally
+            {
+                isResponseBest = false;
             }
         }
 

@@ -127,7 +127,7 @@ namespace PayBay.View.TopFunctionGroup
                 }
             }
             else
-                await new MessageDialog("Please fill the infomation!", "Product").ShowAsync();
+                await new MessageDialog("Please fill the infomation!", "Sale").ShowAsync();
             ToggleProgressRing();
         }
                 

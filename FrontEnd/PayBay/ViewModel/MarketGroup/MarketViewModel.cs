@@ -9,6 +9,7 @@ using System.Net.Http;
 using System;
 using Windows.UI.Popups;
 using PayBay.Utilities.Common;
+using Windows.Storage;
 
 namespace PayBay.ViewModel.MarketGroup
 {
@@ -17,6 +18,8 @@ namespace PayBay.ViewModel.MarketGroup
 
         private Market _selectedMarket;
         private ObservableCollection<Market> _marketItemList;
+
+        public static bool isUpdate = false;
         private static bool isResponsed = false;
 
         private ObservableCollection<Market> _allMarket;
@@ -185,6 +188,116 @@ namespace PayBay.ViewModel.MarketGroup
                 isResponsed = false;
                 await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
             }
+        }
+
+        public async Task<bool> InsertMarket(Market market, StorageFile media)
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (market.Image == null || market.Image == "/Assets/LockScreenLogo.scale-200.png")
+                    {
+                        if (media == null)
+                            market.Image = "/Assets/LockScreenLogo.scale-200.png";
+                        else
+                            market.Image = null;
+                    }
+                    JToken data = JToken.FromObject(market);
+                    JToken result = await App.MobileService.InvokeApiAsync("Markets", data, HttpMethod.Post, null);
+                    JObject response = JObject.Parse(result.ToString());
+
+                    if (media != null)
+                    {
+                        market.Image = response["Image"].ToString();
+                        market.SasQuery = response["SasQuery"].ToString();
+                        await Functions.Instance.UploadImageToBlob("markets", market.Image, market.SasQuery, media);
+                    }
+
+                }
+                else
+                {
+                    await new MessageDialog("You have not internet connection!", "Add Market").ShowAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> UpdateMarket(Market market, StorageFile media)
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (market.Image == null || market.Image == "/Assets/LockScreenLogo.scale-200.png")
+                    {
+                        if (media == null)
+                            market.Image = "/Assets/LockScreenLogo.scale-200.png";
+                        else
+                            market.Image = null;
+                    }
+                    JToken data = JToken.FromObject(market);
+                    JToken result = await App.MobileService.InvokeApiAsync("Markets", data, HttpMethod.Put, null);
+                    JObject response = JObject.Parse(result.ToString());
+
+                    SelectedMarket = response.ToObject<Market>();
+                    if (media != null)
+                    {
+                        await Functions.Instance.UploadImageToBlob("markets", SelectedMarket.Image, SelectedMarket.SasQuery, media);
+                    }
+                }
+                else
+                {
+                    await new MessageDialog("You have not internet connection!", "Insert Product").ShowAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Notification!").ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> DeleteMarket()
+        {
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    JObject result = new JObject();
+                    IDictionary<string, string> param = new Dictionary<string, string>
+                    {
+                        {"marketId", SelectedMarket.MarketId.ToString()}
+                    };
+                    var response = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Delete, param);
+                    result = JObject.Parse(response.ToString());
+                    if (result["ErrCode"].ToString() == "0")
+                    {
+                        return false;
+                    }
+                    await Functions.Instance.DeleteImageInBlob("markets", SelectedMarket.Image, SelectedMarket.SasQuery);
+                    SelectedMarket = null;
+                }
+                else
+                {
+                    await new MessageDialog("You have not internet connection!", "Insert Product").ShowAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Delete Market").ShowAsync();
+                return false;
+            }
+            return true;
         }
 
     }

@@ -1,0 +1,95 @@
+﻿<Page
+    x:Class="PayBay.View.MarketGroup.MarketListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PayBay.View.MarketGroup"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="marketItemTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0"
+                      Grid.Column="0"
+                      Grid.RowSpan="2">
+                    <Image Source="ms-appx:///Assets/Icon/MarketListPage/lascada.png" />
+                </Grid>
+                <Grid Grid.Row="0"
+                      Grid.Column="1"
+                      Padding="15,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock VerticalAlignment="Top"
+                                   TextWrapping="WrapWholeWords"
+                                   FontSize="10">
+                                <Bold>Address:</Bold> 69 Nguyen Van A Street, Tan Binh Dist, Ho Chi Minh City
+                        </TextBlock>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TextBlock VerticalAlignment="Top"
+                                   FontSize="10">
+                                <Bold>Open Hours:</Bold><LineBreak />
+                                Mon-Fri: 8am - 19pm<LineBreak />
+                                Sat, Sun: 10am - 16pm
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <TextBlock VerticalAlignment="Bottom"
+                                   FontSize="10">
+                                <Bold>Contact:</Bold> 09182837271
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1"
+                      Grid.Column="1"
+                      Background="#009EDB"
+                      Opacity="0.7"
+                      Padding="15,0,0,0"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Bottom"
+                      Height="35">
+                    <TextBlock Text="see more" 
+                               Foreground="White" 
+                               VerticalAlignment="Center"/>
+
+                </Grid>
+                <Grid Grid.Row="1"
+                      Grid.Column="0"
+                      Background="#009EDB"
+                      Opacity="0.7"
+                      Height="35"
+                      Padding="15,0,0,0"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Bottom">
+                    <TextBlock Text="ABC Market" 
+                               Foreground="White" 
+                               VerticalAlignment="Center"/>
+
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ListView ItemsSource="{Binding DummyList}"
+                  ItemTemplate="{StaticResource marketItemTemplate}">
+
+        </ListView>
+    </Grid>
+</Page>

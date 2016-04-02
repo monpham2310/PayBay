@@ -150,6 +150,9 @@
     <Compile Include="View\InboxGroup\InboxListPage.xaml.cs">
       <DependentUpon>InboxListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MarketGroup\MarketListPage.xaml.cs">
+      <DependentUpon>MarketListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OrderGroup\DeliveryPaymentGroup\ConfirmPage.xaml.cs">
       <DependentUpon>ConfirmPage.xaml</DependentUpon>
     </Compile>
@@ -301,6 +304,7 @@
     <Content Include="Assets\Icon\mail_icon.png" />
     <Content Include="Assets\Icon\MarketAndSupermarket.png" />
     <Content Include="Assets\Icon\MarketIcon.PNG" />
+    <Content Include="Assets\Icon\MarketListPage\lascada.png" />
     <Content Include="Assets\Icon\MyPayBay\coupon.png" />
     <Content Include="Assets\Icon\MyPayBay\message.png" />
     <Content Include="Assets\Icon\MyPayBay\order.png" />
@@ -454,6 +458,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MarketGroup\KiosListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MarketGroup\MarketListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

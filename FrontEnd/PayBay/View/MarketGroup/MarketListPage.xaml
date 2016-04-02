@@ -1,95 +1,185 @@
-﻿<Page
-    x:Class="PayBay.View.MarketGroup.MarketListPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PayBay.View.MarketGroup"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    mc:Ignorable="d">
+﻿<Page x:Class="PayBay.View.MarketGroup.MarketListPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:local="using:PayBay.View.MarketGroup"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  DataContext="{Binding RelativeSource={RelativeSource Self}}"
+	  xmlns:control="using:PayBay.Utilities.CustomControl" 
+	  mc:Ignorable="d">
 
-    <Page.Resources>
-        <DataTemplate x:Key="marketItemTemplate">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="35" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Row="0"
-                      Grid.Column="0"
-                      Grid.RowSpan="2">
-                    <Image Source="ms-appx:///Assets/Icon/MarketListPage/lascada.png" />
-                </Grid>
-                <Grid Grid.Row="0"
-                      Grid.Column="1"
-                      Padding="15,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*" />
-                        <RowDefinition Height="2*" />
-                        <RowDefinition Height="1*" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <TextBlock VerticalAlignment="Top"
-                                   TextWrapping="WrapWholeWords"
-                                   FontSize="10">
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+			<ListView ItemsSource="{Binding DummyList}">
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<Setter Property="HorizontalContentAlignment"
+								Value="Stretch" />
+					</Style>
+				</ListView.ItemContainerStyle>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<Grid HorizontalAlignment="Stretch">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="150" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+
+							<!--Image-->
+							<Image Stretch="Fill"
+								   Source="ms-appx:///Assets/Icon/MarketListPage/lascada.png" />
+
+							<!--Info-->
+							<StackPanel Grid.Column="1"
+										Padding="10,0,10,30">
+								<StackPanel.Resources>
+									<Style TargetType="TextBlock">
+										<Setter Property="FontSize"
+												Value="10" />
+									</Style>
+								</StackPanel.Resources>
+								<TextBlock TextWrapping="Wrap"
+										   MaxLines="2">
+								<Run Text="Address: "
+									 FontWeight="Bold" />
+								<Run Text="69 Nguyen Van A Street, Tan Binh Dist, Ho Chi Minh City" />
+								</TextBlock>
+								<TextBlock Margin="0,5">
+								<Run Text="Open Hours:&#x0a;"
+									 FontWeight="Bold" />
+								<Run Text="Mon-Fri: 8am - 19pm&#x0a;" />
+								<Run Text="Sat, Sun: 10am - 16pm" />
+								</TextBlock>
+								<TextBlock>
+								<Run Text="Contract:"
+									 FontWeight="Bold" />
+								<Run Text="09182837271" />
+								</TextBlock>
+							</StackPanel>
+
+							<!--Bottom bar-->
+							<Grid Height="30"
+								  Grid.ColumnSpan="2"
+								  VerticalAlignment="Bottom">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="75" />
+									<ColumnDefinition Width="75" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+
+								<Grid Grid.ColumnSpan="3"
+									  Opacity="0.8"
+									  Background="{StaticResource LightBlueBrush}" />
+								<TextBlock Text="ABC Market"
+										   FontSize="11"
+										   VerticalAlignment="Center"
+										   HorizontalAlignment="Center"
+										   Foreground="{StaticResource WhiteBrush}" />
+								<control:StarRating Grid.Column="1"
+													Maximum="3"
+													Value="2"
+													Height="13"
+													HorizontalAlignment="Center"
+													StarOutlineColor="{StaticResource WhiteBrush}"
+													StarForeground="{StaticResource WhiteBrush}" />
+								<HyperlinkButton Grid.Column="2"
+												 Content="See more"
+												 Padding="0"
+												 Margin="10,0"
+												 FontSize="10"
+												 VerticalAlignment="Center"
+												 Foreground="{StaticResource WhiteBrush}" />
+								<Image Grid.Column="2"
+									   Width="10"
+									   Margin="10,0"
+									   Source="ms-appx:///Assets/Icon/Store/forward.png"
+									   HorizontalAlignment="Right" />
+							</Grid>
+
+						</Grid>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+				<Grid />
+				<Grid />
+				<Grid />
+				<Grid />
+				<Grid />
+				<Grid />
+			</ListView>
+		</Grid>
+	</ScrollViewer>
+</Page>
+
+<!--<Grid>
+	<Grid.RowDefinitions>
+		<RowDefinition Height="35" />
+		<RowDefinition Height="2*" />
+		<RowDefinition Height="*" />
+	</Grid.RowDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="*" />
+		<ColumnDefinition Width="*" />
+	</Grid.ColumnDefinitions>
+	<Grid Grid.Row="0"
+		  Grid.Column="0"
+		  Grid.RowSpan="2">
+		<Image Source="ms-appx:///Assets/Icon/MarketListPage/lascada.png" />
+	</Grid>
+	<Grid Grid.Row="0"
+		  Grid.Column="1"
+		  Padding="15,0,0,0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="2*" />
+			<RowDefinition Height="2*" />
+			<RowDefinition Height="1*" />
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<TextBlock VerticalAlignment="Top"
+					   TextWrapping="WrapWholeWords"
+					   FontSize="10">
                                 <Bold>Address:</Bold> 69 Nguyen Van A Street, Tan Binh Dist, Ho Chi Minh City
-                        </TextBlock>
+			</TextBlock>
 
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <TextBlock VerticalAlignment="Top"
-                                   FontSize="10">
+		</Grid>
+		<Grid Grid.Row="1">
+			<TextBlock VerticalAlignment="Top"
+					   FontSize="10">
                                 <Bold>Open Hours:</Bold><LineBreak />
                                 Mon-Fri: 8am - 19pm<LineBreak />
                                 Sat, Sun: 10am - 16pm
-                        </TextBlock>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <TextBlock VerticalAlignment="Bottom"
-                                   FontSize="10">
+			</TextBlock>
+		</Grid>
+		<Grid Grid.Row="2">
+			<TextBlock VerticalAlignment="Bottom"
+					   FontSize="10">
                                 <Bold>Contact:</Bold> 09182837271
-                        </TextBlock>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="1"
-                      Grid.Column="1"
-                      Background="#009EDB"
-                      Opacity="0.7"
-                      Padding="15,0,0,0"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Bottom"
-                      Height="35">
-                    <TextBlock Text="see more" 
-                               Foreground="White" 
-                               VerticalAlignment="Center"/>
+			</TextBlock>
+		</Grid>
+	</Grid>
+	<Grid Grid.Row="1"
+		  Grid.Column="1"
+		  Background="#009EDB"
+		  Opacity="0.7"
+		  Padding="15,0,0,0"
+		  HorizontalAlignment="Stretch"
+		  VerticalAlignment="Bottom"
+		  Height="35">
+		<TextBlock Text="see more"
+				   Foreground="White"
+				   VerticalAlignment="Center" />
 
-                </Grid>
-                <Grid Grid.Row="1"
-                      Grid.Column="0"
-                      Background="#009EDB"
-                      Opacity="0.7"
-                      Height="35"
-                      Padding="15,0,0,0"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Bottom">
-                    <TextBlock Text="ABC Market" 
-                               Foreground="White" 
-                               VerticalAlignment="Center"/>
+	</Grid>
+	<Grid Grid.Row="1"
+		  Grid.Column="0"
+		  Background="#009EDB"
+		  Opacity="0.7"
+		  Height="35"
+		  Padding="15,0,0,0"
+		  HorizontalAlignment="Stretch"
+		  VerticalAlignment="Bottom">
+		<TextBlock Text="ABC Market"
+				   Foreground="White"
+				   VerticalAlignment="Center" />
 
-                </Grid>
-            </Grid>
-        </DataTemplate>
-    </Page.Resources>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{Binding DummyList}"
-                  ItemTemplate="{StaticResource marketItemTemplate}">
-
-        </ListView>
-    </Grid>
-</Page>
+	</Grid>
+</Grid>-->

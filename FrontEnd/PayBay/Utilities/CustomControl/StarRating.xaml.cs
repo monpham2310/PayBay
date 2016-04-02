@@ -92,7 +92,7 @@ namespace PayBay.Utilities.CustomControl
 		/// </summary>
 		public static readonly DependencyProperty StarOutlineColorProperty =
 			DependencyProperty.Register("StarOutlineColor", typeof(SolidColorBrush), typeof(StarRating),
-				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.Transparent), OnStarForegroundChanged));
+				new PropertyMetadata(new SolidColorBrush(Windows.UI.Colors.Transparent), OnStarOutlineColorChanged));
 
 		/// <summary>
 		/// Gets or sets the StarOutlineColor property.  

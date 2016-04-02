@@ -118,7 +118,7 @@
 	</Page.Resources>
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
-		<Grid Background="{StaticResource LightBlackBrush}">
+		<Grid Background="{StaticResource WhiteBrush}">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="230" />
 				<RowDefinition Height="50" />
@@ -148,7 +148,7 @@
 						   FontSize="25" />
 				<TextBlock x:Name="tbDescription"
 						   Text="Manager at PayBay Coffee"
-						   Foreground="{StaticResource LightGrayBrush}"
+						   Foreground="{StaticResource LightBlackBrush}"
 						   HorizontalAlignment="Center"
 						   FontSize="13" />
 				<Button x:Name="btnMyShop"
@@ -159,7 +159,7 @@
 						Margin="0,10,0,0"
 						HorizontalAlignment="Center"
 						Foreground="{StaticResource WhiteBrush}"
-						Background="{StaticResource LightBlueBrush}"
+						Background="{StaticResource BlueBrush}"
 						Style="{StaticResource RoundedButtonStyle}" />
 			</StackPanel>
 			<Button Grid.Row="1"
@@ -302,8 +302,8 @@
 					VerticalContentAlignment="Stretch"
 					HorizontalContentAlignment="Stretch"
 					Padding="0"
-					Foreground="{StaticResource WhiteBrush}"
-					Background="{StaticResource LightBlackBrush}">
+					Foreground="{StaticResource LightBlackBrush}"
+					Background="{StaticResource WhiteBrush}">
 				<Button.Content>
 					<Grid>
 						<Grid.ColumnDefinitions>

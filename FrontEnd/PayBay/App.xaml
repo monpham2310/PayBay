@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModel="using:PayBay.ViewModel"
-             RequestedTheme="Light">
+             RequestedTheme="Light"
+			 xmlns:converter="using:PayBay.Utilities.Converters">
 	<Application.Resources>
 		<ResourceDictionary>
 
@@ -19,21 +20,30 @@
 				Hyperlink -> link
 				FlipView -> flv
 				StackPanel -> sp
+			FF0099CC
+			006699
+			4FC3F7
             ...
             -->
             
 			<viewModel:ViewModelLocator x:Key="Locator" />
+
+			<converter:BoolToVisibilityConverter x:Name="BoolToVisibilityConverter" />
+			<converter:DateTimeToDateTimeOffsetConverter x:Name="DateTimeToDateTimeOffsetConverter" />
+			<converter:RatingToStarConverter x:Name="RatingToStarConverter" />
+			<converter:StringFormatConverter x:Name="StringFormatConverter" />
+			<converter:PageToNameConverter x:Name="PageToNameConverter" />
 
 			<Color x:Key="DarkTealColor">#FF006666</Color>
 			<Color x:Key="WhiteColor">White</Color>
 			<Color x:Key="BlackColor">Black</Color>
 			<Color x:Key="TealColor">Teal</Color>
 			<Color x:Key="RedColor">Red</Color>
-            <Color x:Key="BlueColor">#FF0099CC</Color>
+            <Color x:Key="BlueColor">#FF006699</Color>
 			<Color x:Key="GrayColor">Gray</Color>
 			<Color x:Key="OrangeColor">Orange</Color>
 			<Color x:Key="LightGrayColor">LightGray</Color>
-			<Color x:Key="LightBlueColor">#FF4FC3F7</Color>
+			<Color x:Key="LightBlueColor">#FF0099CC</Color>
             <Color x:Key="LightBlackColor">#FF333333</Color>
             <Color x:Key="SkyBlueColor">#007BA7</Color>
 			<Color x:Key="PressedWhiteColor">#CCFFFFFF</Color>

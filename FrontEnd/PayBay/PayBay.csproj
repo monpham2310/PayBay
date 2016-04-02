@@ -132,6 +132,7 @@
     <Compile Include="Utilities\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Utilities\Converters\PageToNameConverter.cs" />
     <Compile Include="Utilities\Converters\RatingToStarConverter.cs" />
+    <Compile Include="Utilities\Converters\StringFormatConverter.cs" />
     <Compile Include="Utilities\CustomControl\Blank.xaml.cs">
       <DependentUpon>Blank.xaml</DependentUpon>
     </Compile>
@@ -317,6 +318,12 @@
     <Content Include="Assets\Icon\SellerIcon.PNG" />
     <Content Include="Assets\Icon\setting_icon.png" />
     <Content Include="Assets\Icon\ShopMall.png" />
+    <Content Include="Assets\Icon\Store\background.png" />
+    <Content Include="Assets\Icon\Store\call.png" />
+    <Content Include="Assets\Icon\Store\facebook.png" />
+    <Content Include="Assets\Icon\Store\forward.png" />
+    <Content Include="Assets\Icon\Store\item.png" />
+    <Content Include="Assets\Icon\Store\message.png" />
     <Content Include="Assets\Icon\SupermarketIcon.PNG" />
     <Content Include="Assets\Icon\Topbar\account.png" />
     <Content Include="Assets\Icon\Topbar\cart.png" />
@@ -332,6 +339,7 @@
     <Content Include="Assets\lol1.PNG" />
     <Content Include="Assets\lol2.PNG" />
     <Content Include="Assets\lol3.png" />
+    <Content Include="Assets\lol4.png" />
     <Content Include="Assets\mapposition2.gif" />
     <Content Include="Assets\Rating\emptystar.png" />
     <Content Include="Assets\Rating\fullstar.png" />

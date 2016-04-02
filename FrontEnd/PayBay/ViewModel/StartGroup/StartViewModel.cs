@@ -14,6 +14,8 @@ using PayBay.Utilities.Helpers;
 using PayBay.View.InboxGroup;
 using PayBay.View.TopFunctionGroup.Manage;
 
+using PayBay.View.MarketGroup;
+
 namespace PayBay.ViewModel.StartGroup
 {
     public class StartViewModel : BaseViewModel
@@ -359,14 +361,17 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.MyPayBay:
 				{
-                    if (MediateClass.UserVM.UserInfo != null)
-                    {
-                        frame.Navigate(typeof(MyPayBayPage), NavigationMode.New);
+                        /*
+                        if (MediateClass.UserVM.UserInfo != null)
+                        {
+                            frame.Navigate(typeof(MyPayBayPage), NavigationMode.New);
+                        }
+                        else
+                            await new MessageDialog("Login is required!", "Notification").ShowAsync();
+                        break;*/
+                        frame.Navigate(typeof(MarketListPage), NavigationMode.New);
+                        break;
                     }
-                    else
-                        await new MessageDialog("Login is required!", "Notification").ShowAsync();
-					break;
-				}
 				case MenuFunc.MyFavorites:
 				{
 					frame.Navigate(typeof(MyFavoritesPage), NavigationMode.New);

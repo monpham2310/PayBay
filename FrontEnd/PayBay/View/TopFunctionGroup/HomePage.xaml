@@ -291,6 +291,7 @@
                         </ListView.ItemsPanel>
                     </ListView>
                 </ScrollViewer>
+
             </Grid>
 
             <Grid Grid.Row="5">

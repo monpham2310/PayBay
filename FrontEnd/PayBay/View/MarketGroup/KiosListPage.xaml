@@ -6,7 +6,8 @@
     xmlns:model="using:PayBay.Model"
     xmlns:converters="using:PayBay.Utilities.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"   
+    DataContext="{Binding Source={StaticResource Locator},Path=MessageVm}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 

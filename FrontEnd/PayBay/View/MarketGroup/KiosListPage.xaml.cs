@@ -193,7 +193,7 @@ namespace PayBay.View.MarketGroup
 
         private async void btCallMobile_Click(object sender, RoutedEventArgs e)
         {
-            if (MediateClass.UserVM.UserInfo != null)
+            if (MediateClass.UserVM.UserInfo != null) 
             {
                 Windows.ApplicationModel.Calls.PhoneCallManager.ShowPhoneCallUI(KiosVm.SelectedStore.Phone, KiosVm.SelectedStore.StoreName);
             }

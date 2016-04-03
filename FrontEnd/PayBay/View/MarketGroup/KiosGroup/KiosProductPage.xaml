@@ -55,7 +55,7 @@
 
 								<!--Binding here-->
 								<TextBlock Text="{Binding ProductName}" 
-                                           FontSize="12"/>
+                                           FontSize="15"/>
 								<TextBlock Grid.Row="1"
 										   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" />
 							</Grid>

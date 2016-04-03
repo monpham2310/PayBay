@@ -71,5 +71,13 @@ namespace PayBay.View.MarketGroup.KiosGroup
                 btnToggleHeader.Content = "\uE018";
             }
         }
+
+        private async void btnMessage_Click(object sender, RoutedEventArgs e)
+        {           
+            if (KiosVm.SelectedStore.OwnerId != MediateClass.UserVM.UserInfo.UserId)
+                Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
+            else
+                await new MessageDialog("You can not send message to your store!", "Message").ShowAsync();            
+        }
     }
 }

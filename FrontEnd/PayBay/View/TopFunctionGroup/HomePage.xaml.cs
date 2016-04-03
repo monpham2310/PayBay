@@ -1,4 +1,5 @@
 ﻿using PayBay.Utilities.Common;
+using PayBay.View.MarketGroup;
 using PayBay.ViewModel.HomePageGroup;
 using PayBay.ViewModel.ProductGroup;
 using System;
@@ -70,6 +71,11 @@ namespace PayBay.View.TopFunctionGroup
                 if (ProStatisticVm != null)
                     ProStatisticVm.GetNewProductList(TYPEGET.MORE);
             }
+        }
+
+        private void btnMarket_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MarketListPage), NavigationMode.Forward);
         }
     }
 }

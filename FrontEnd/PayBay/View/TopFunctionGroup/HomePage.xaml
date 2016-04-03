@@ -240,7 +240,9 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Button Padding="0"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            Name="btnMarket"
+                            Click="btnMarket_Click">
                         <Image Source="ms-appx:///Assets/Icon/MarketIcon.png" 
                            Stretch="Fill"/>
                     </Button>

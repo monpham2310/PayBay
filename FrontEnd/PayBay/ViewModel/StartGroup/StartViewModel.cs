@@ -361,16 +361,16 @@ namespace PayBay.ViewModel.StartGroup
 				}
 				case MenuFunc.MyPayBay:
 				{
-                        /*
+
                         if (MediateClass.UserVM.UserInfo != null)
                         {
                             frame.Navigate(typeof(MyPayBayPage), NavigationMode.New);
                         }
                         else
                             await new MessageDialog("Login is required!", "Notification").ShowAsync();
-                        break;*/
-                        frame.Navigate(typeof(MarketListPage), NavigationMode.New);
                         break;
+                        //frame.Navigate(typeof(MarketListPage), NavigationMode.New);
+                        //break;
                     }
 				case MenuFunc.MyFavorites:
 				{

@@ -3,14 +3,17 @@
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:local="using:PayBay.View.MarketGroup"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	  DataContext="{Binding RelativeSource={RelativeSource Self}}"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"	  
 	  xmlns:control="using:PayBay.Utilities.CustomControl" 
+      DataContext="{Binding Source={StaticResource Locator}, Path=MarketVm}"
+      Loaded="Page_Loaded"
 	  mc:Ignorable="d">
 
-	<ScrollViewer VerticalScrollBarVisibility="Auto">
+	<ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Name="svMarket"
+                  ViewChanged="svMarket_ViewChanged">
 		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-			<ListView ItemsSource="{Binding DummyList}">
+			<ListView ItemsSource="{Binding MarketItemList}">
 				<ListView.ItemContainerStyle>
 					<Style TargetType="ListViewItem">
 						<Setter Property="HorizontalContentAlignment"
@@ -27,7 +30,7 @@
 
 							<!--Image-->
 							<Image Stretch="Fill"
-								   Source="ms-appx:///Assets/Icon/MarketListPage/lascada.png" />
+								   Source="{Binding Image}" />
 
 							<!--Info-->
 							<StackPanel Grid.Column="1"
@@ -42,7 +45,7 @@
 										   MaxLines="2">
 								<Run Text="Address: "
 									 FontWeight="Bold" />
-								<Run Text="69 Nguyen Van A Street, Tan Binh Dist, Ho Chi Minh City" />
+								<Run Text="{Binding Address}" />
 								</TextBlock>
 								<TextBlock Margin="0,5">
 								<Run Text="Open Hours:&#x0a;"
@@ -51,15 +54,15 @@
 								<Run Text="Sat, Sun: 10am - 16pm" />
 								</TextBlock>
 								<TextBlock>
-								<Run Text="Contract:"
+								<Run Text="Contact:"
 									 FontWeight="Bold" />
-								<Run Text="09182837271" />
+								<Run Text="{Binding Phone}" />
 								</TextBlock>
 							</StackPanel>
 
 							<!--Bottom bar-->
 							<Grid Height="30"
-								  Grid.ColumnSpan="2"
+								  Grid.ColumnSpan="4"
 								  VerticalAlignment="Bottom">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="75" />
@@ -67,21 +70,23 @@
 									<ColumnDefinition Width="*" />
 								</Grid.ColumnDefinitions>
 
-								<Grid Grid.ColumnSpan="3"
+								<Grid Grid.ColumnSpan="4"
 									  Opacity="0.8"
 									  Background="{StaticResource LightBlueBrush}" />
-								<TextBlock Text="ABC Market"
-										   FontSize="11"
+								<TextBlock Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                            Text="{Binding MarketName}"
+										   FontSize="15"
 										   VerticalAlignment="Center"
 										   HorizontalAlignment="Center"
 										   Foreground="{StaticResource WhiteBrush}" />
-								<control:StarRating Grid.Column="1"
+								<!--<control:StarRating Grid.Column="1"
 													Maximum="3"
 													Value="2"
 													Height="13"
 													HorizontalAlignment="Center"
 													StarOutlineColor="{StaticResource WhiteBrush}"
-													StarForeground="{StaticResource WhiteBrush}" />
+													StarForeground="{StaticResource WhiteBrush}" />-->
 								<HyperlinkButton Grid.Column="2"
 												 Content="See more"
 												 Padding="0"

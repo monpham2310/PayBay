@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
+using PayBay.ViewModel.MarketGroup;
+using PayBay.Utilities.Common;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,31 +25,28 @@ namespace PayBay.View.MarketGroup
     /// </summary>
     public sealed partial class MarketListPage : Page
     {
-        private ObservableCollection<string> _dummyList;
-
-        public ObservableCollection<string> DummyList
-        {
-            get
-            {
-                return _dummyList;
-            }
-
-            set
-            {
-                if (Equals(value, _dummyList)) return;
-                _dummyList = value;
-            }
-        }
+        private MarketViewModel MarketVm => (MarketViewModel)DataContext;
 
         public MarketListPage()
         {
-            this.InitializeComponent();
+            this.InitializeComponent();                        
+        }
 
-            DummyList = new ObservableCollection<string>();
-            for (int i = 0; i < 5; i++)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (MarketVm != null)
+                MarketVm.LoadMoreMarket(TYPEGET.START);
+        }
+
+        private void svMarket_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if(svMarket.VerticalOffset == 0)
             {
-                string haha = "blabla";
-                DummyList.Add(haha);
+                MarketVm.LoadMoreMarket(TYPEGET.MORE, TYPE.NEW);
+            }
+            else if (svMarket.VerticalOffset >= svMarket.ScrollableHeight)
+            {
+                MarketVm.LoadMoreMarket(TYPEGET.MORE);
             }
         }
     }

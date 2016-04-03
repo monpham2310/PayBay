@@ -12,12 +12,17 @@
 		<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 			<GridView HorizontalAlignment="Left"
 					  ItemsSource="{Binding ProductsOfStore}">
+				<GridView.ItemContainerStyle>
+					<Style TargetType="GridViewItem">
+						<Setter Property="Margin"
+								Value="20,20,0,0" />
+					</Style>
+				</GridView.ItemContainerStyle>
 				<GridView.ItemTemplate>
 					<DataTemplate>
 						<Grid Width="150"
-							  Height="100"
-							  Margin="20,20,0,0">
-							<Image Source="ms-appx:///Assets/lol3.png"
+							  Height="100">
+							<Image Source="{Binding Image}"
 								   Stretch="Fill" />
 							<Grid Height="40"
 								  VerticalAlignment="Bottom">
@@ -51,7 +56,7 @@
 								<!--Binding here-->
 								<TextBlock Text="{Binding ProductName}" />
 								<TextBlock Grid.Row="1"
-										   Text="{Binding UnitPrice}" />
+										   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" />
 							</Grid>
 						</Grid>
 					</DataTemplate>
@@ -64,6 +69,7 @@
 				<Grid />
 			</GridView>
 		</Grid>
+        
 	</ScrollViewer>
 </UserControl>
 

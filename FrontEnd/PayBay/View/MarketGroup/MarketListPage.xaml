@@ -13,7 +13,9 @@
                   Name="svMarket"
                   ViewChanged="svMarket_ViewChanged">
 		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-			<ListView ItemsSource="{Binding MarketItemList}">
+			<ListView ItemsSource="{Binding MarketItemList}"
+                      Name="lvMarket"
+                      Tapped="lvMarket_Tapped">
 				<ListView.ItemContainerStyle>
 					<Style TargetType="ListViewItem">
 						<Setter Property="HorizontalContentAlignment"
@@ -50,8 +52,9 @@
 								<TextBlock Margin="0,5">
 								<Run Text="Open Hours:&#x0a;"
 									 FontWeight="Bold" />
-								<Run Text="Mon-Fri: 8am - 19pm&#x0a;" />
-								<Run Text="Sat, Sun: 10am - 16pm" />
+								<Run Text="{Binding OpenTime}" />
+                                <Run Text="-" />
+								<Run Text="{Binding CloseTime}" />
 								</TextBlock>
 								<TextBlock>
 								<Run Text="Contact:"

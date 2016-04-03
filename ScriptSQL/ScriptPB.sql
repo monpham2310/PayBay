@@ -12,6 +12,9 @@ alter table paybayservice.Markets add Latitute float default 0
 alter table paybayservice.Markets change Longitute float default 0
 alter table paybayservice.Markets add Latitute float default 0
 
+alter table viethung_paybayservice.Markets add OpenTime time
+alter table viethung_paybayservice.Markets add CloseTime time
+
 exec sp_rename 'paybayservice.Markets.Latitutes','Latitute','COLUMN'
 exec sp_rename 'paybayservice.Markets.Latitute','Longitute','COLUMN'
 
@@ -183,3 +186,5 @@ select * from viethung_paybayservice.Stores
 alter table viethung_paybayservice.Stores add AcceptDiscount float
 alter table viethung_paybayservice.Stores add OpenTime time
 alter table viethung_paybayservice.Stores add CloseTime time
+
+select UserID from viethung_paybayservice.Users where Username='Admin'

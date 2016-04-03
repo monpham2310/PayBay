@@ -287,7 +287,7 @@
 				<!--Second Column-->
 				<StackPanel Grid.Column="1"
 							HorizontalAlignment="Center">
-					<TextBlock Text="{Binding SelectedStore.StoreName, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0}&#8217;s store'}"
+					<TextBlock Text="{Binding SelectedStore.StoreName}"
 							   Margin="0,5"
 							   Foreground="{StaticResource WhiteBrush}"
 							   HorizontalAlignment="Center"
@@ -301,14 +301,16 @@
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="*" />
+							<!--<ColumnDefinition Width="*" />-->
 						</Grid.ColumnDefinitions>
-						<control:StarRating Maximum="5"
-											Value="2"
+						<control:StarRating Grid.Column="0"
+                                            Maximum="5"                                                   
+											Value="{Binding SelectedStore.Rate}"
 											Margin="10,0"
 											StarForeground="White"
 											StarOutlineColor="White"
 											Height="20"
+                                            IsEnabled="False"
 											HorizontalAlignment="Right" />
 						<!--<Button x:Name="btnLike"
 								Grid.Column="1"

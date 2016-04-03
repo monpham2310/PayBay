@@ -192,7 +192,7 @@
         <Grid x:Name="root" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" x:Name="rowFlipView"/>
+                <RowDefinition Height="200" x:Name="rowFlipView"/>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="11*" />
                 <RowDefinition Height="40" />
@@ -202,8 +202,7 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="13*" />
             </Grid.RowDefinitions>
-
-            <Viewbox Grid.Row="0">
+            
                 <Grid
                   Name="gridImageSale"
                   DataContext="{Binding Source={StaticResource Locator}, Path=AdvertiseVm}">
@@ -213,9 +212,8 @@
                           x:Name="flipViewAdvertise">
                         <FlipView.ItemTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Image}"
-                                       Height="180"
-								   Stretch="Fill" />
+                                <Image Source="{Binding Image}"                                       
+								    Stretch="Fill" />
                             </DataTemplate>
                         </FlipView.ItemTemplate>
                     </FlipView>
@@ -239,8 +237,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
-            </Viewbox>
-
+            
 
             <Grid Grid.Row="1">
                 <TextBlock Text="STORE FINDER" 

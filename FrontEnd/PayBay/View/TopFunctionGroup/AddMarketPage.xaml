@@ -7,101 +7,7 @@
 	  xmlns:model="using:PayBay.Model"
       Loaded="Page_Loaded"
 	  mc:Ignorable="d">
-	
-	<!--<Grid Grid.Row="4"
-		  Name="captureGrid"
-		  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0"
-					Name="captureButtons"
-					Orientation="Vertical">
-			<TextBlock HorizontalAlignment="Left"
-					   VerticalAlignment="Top"
-					   FontSize="10"
-					   Text="Market Name:" />
-			<TextBox Name="txtMarketName"
-					 HorizontalAlignment="Left"
-					 VerticalAlignment="Top"
-					 FontSize="10"
-					 PlaceholderText="Type name..." />
-			<TextBlock HorizontalAlignment="Left"
-					   VerticalAlignment="Top"
-					   FontSize="10"
-					   Text="Phone:" />
-			<TextBox Name="txtPhone"
-					 HorizontalAlignment="Left"
-					 VerticalAlignment="Top"
-					 FontSize="10"
-					 PlaceholderText="..." />
-			<TextBlock HorizontalAlignment="Left"
-					   VerticalAlignment="Top"
-					   FontSize="10"
-					   Text="Address:" />
-			<TextBox Name="txtAddr"
-					 HorizontalAlignment="Left"
-					 VerticalAlignment="Top"
-					 FontSize="10"
-					 PlaceholderText="..." />
-
-			<TextBlock HorizontalAlignment="Left"
-					   VerticalAlignment="Top"
-					   FontSize="10"
-					   Text="Image:" />
-
-			<Button x:Name="btnLocation"
-					Content="GET LOCATION"
-					Margin="50"
-					Foreground="{StaticResource WhiteBrush}"
-					Background="{StaticResource LightBlueBrush}"
-					HorizontalAlignment="Stretch"
-					Style="{StaticResource RoundedButtonStyle}"
-					Click="btnLocation_Click" />
-
-			--><!--Set Visibility to Visible when access to location is denied --><!--
-			<HyperlinkButton Content="Location Setting" 
-							 HorizontalAlignment="Center"
-							 NavigateUri="ms-settings:privacy-location">
-			</HyperlinkButton>
-
-			<TextBlock x:Name="tbLatitude"
-					   HorizontalAlignment="Center" />
-
-			<TextBlock x:Name="tbLongitude"
-					   HorizontalAlignment="Center" />
-
-		</StackPanel>
-
-		--><!--<CaptureElement Grid.Row="1" x:Name="previewElement" Tapped="previewElement_Tapped" Height="180" Width="180" />--><!--
-
-		<Image Grid.Row="1"
-			   Name="imagePreview"
-			   HorizontalAlignment="Left"
-			   VerticalAlignment="Top"
-			   Height="160"
-			   Width="160"
-			   Visibility="Visible" />
-
-		<StackPanel HorizontalAlignment="Right"
-					VerticalAlignment="Bottom"
-					Grid.Row="3"
-					Orientation="Horizontal">
-			<AppBarButton Label="Photo"
-						  Icon="Camera"
-						  Name="ButtonCapture"
-						  Click="ButtonCapture_Click"
-						  Height="78"
-						  Width="62" />
-			<AppBarButton Label="Upload"
-						  Icon="Upload"
-						  Name="ButtonSave"
-						  Click="ButtonSave_Click" />
-		</StackPanel>
-
-	</Grid>-->
-
+		
     <Page.Resources>
         <Style x:Key="ImageButtonStyle" TargetType="Button">
             <Setter Property="Template">
@@ -237,6 +143,26 @@
 						     HorizontalAlignment="Stretch" 
                              InputScope="Number"
                              />
+
+                        <TextBlock Text="Open Time"
+					                Margin="15,20,15,10"
+					                Foreground="{StaticResource GrayBrush}"/>
+
+                        <TimePicker
+                                x:Name="tpOpenTime"
+                                HorizontalAlignment="Stretch"
+                                Margin="10,10,10,10"
+                                />
+
+                        <TextBlock Text="Close Time"
+					                Margin="15,20,15,10"
+					                Foreground="{StaticResource GrayBrush}"/>
+
+                        <TimePicker
+                                x:Name="tpCloseTime"
+                                HorizontalAlignment="Stretch"
+                                Margin="10,10,10,10"
+                                />  
 
                         <TextBlock Text="Latitute"
 						       Margin="15,20,15,10"

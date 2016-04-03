@@ -163,7 +163,7 @@
                     Margin="10,10,10,10"
                     />
                 
-                <TextBlock Text="Accept Price on Bill(%)"
+                <TextBlock Text="Accept Discount Price on Bill(%)"
 					Margin="15,20,15,10"
 					Foreground="{StaticResource GrayBrush}"/>
 

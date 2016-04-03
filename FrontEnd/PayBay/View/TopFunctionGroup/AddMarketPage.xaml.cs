@@ -47,6 +47,8 @@ namespace PayBay.View.TopFunctionGroup
                 txtMarketName.Text = market.MarketName;
                 txtAddress.Text = market.Address;
                 txtPhone.Text = market.Phone;
+                tpOpenTime.Time = market.OpenTime;
+                tpCloseTime.Time = market.CloseTime;
                 txtLat.Text = market.Latitute.ToString();
                 txtLng.Text = market.Longitute.ToString();                
                 if (market.Image != null)
@@ -58,6 +60,11 @@ namespace PayBay.View.TopFunctionGroup
                         imgbrImage.ImageSource = img;
                     }
                 }
+            }
+            else
+            {
+                tpOpenTime.Time = new TimeSpan(7, 0, 0);
+                tpCloseTime.Time = new TimeSpan(20, 0, 0);
             }
         }
 
@@ -94,6 +101,8 @@ namespace PayBay.View.TopFunctionGroup
                 temp.MarketName = txtMarketName.Text;
                 temp.Address = txtAddress.Text;
                 temp.Phone = txtPhone.Text;
+                temp.OpenTime = tpOpenTime.Time;
+                temp.CloseTime = tpCloseTime.Time;
                 temp.Latitute = float.Parse(txtLat.Text);
                 temp.Longitute = float.Parse(txtLng.Text);
 

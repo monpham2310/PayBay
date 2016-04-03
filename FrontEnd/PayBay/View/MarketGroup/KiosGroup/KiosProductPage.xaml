@@ -15,7 +15,7 @@
 				<GridView.ItemContainerStyle>
 					<Style TargetType="GridViewItem">
 						<Setter Property="Margin"
-								Value="20,20,0,0" />
+								Value="10,10,0,0" />
 					</Style>
 				</GridView.ItemContainerStyle>
 				<GridView.ItemTemplate>
@@ -54,7 +54,8 @@
 									   HorizontalAlignment="Right" />
 
 								<!--Binding here-->
-								<TextBlock Text="{Binding ProductName}" />
+								<TextBlock Text="{Binding ProductName}" 
+                                           FontSize="12"/>
 								<TextBlock Grid.Row="1"
 										   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" />
 							</Grid>

@@ -57,11 +57,14 @@ namespace PayBay.View.MarketGroup.KiosGroup
 
 		private async void starrRating_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            double rated = starRating.Value;
-
-            if (RateVm != null)
+            if (starRating.Value != 0)
             {
-                await RateVm.PostRate(rated);
+                double rated = starRating.Value;
+
+                if (RateVm != null)
+                {
+                    await RateVm.PostRate(rated);
+                }
             }
         }
 

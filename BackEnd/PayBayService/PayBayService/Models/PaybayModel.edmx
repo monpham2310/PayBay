@@ -54,6 +54,8 @@
           <Property Name="SasQuery" Type="nvarchar(max)" />
           <Property Name="Latitute" Type="float" />
           <Property Name="Longitute" Type="float" />
+          <Property Name="OpenTime" Type="time" Precision="7" />
+          <Property Name="CloseTime" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="MessageInbox">
           <Key>
@@ -138,6 +140,9 @@
           <Property Name="OwnerID" Type="int" Nullable="false" />
           <Property Name="Rate" Type="float" />
           <Property Name="SasQuery" Type="nvarchar(max)" />
+          <Property Name="AcceptDiscount" Type="float" />
+          <Property Name="OpenTime" Type="time" Precision="7" />
+          <Property Name="CloseTime" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -230,6 +235,8 @@
           <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Latitute" Type="Double" />
           <Property Name="Longitute" Type="Double" />
+          <Property Name="OpenTime" Type="Time" Precision="7" />
+          <Property Name="CloseTime" Type="Time" Precision="7" />
         </EntityType>
         <EntityType Name="MessageInbox">
           <Key>
@@ -314,6 +321,9 @@
           <Property Name="OwnerID" Type="Int32" Nullable="false" />
           <Property Name="Rate" Type="Double" />
           <Property Name="SasQuery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AcceptDiscount" Type="Double" />
+          <Property Name="OpenTime" Type="Time" Precision="7" />
+          <Property Name="CloseTime" Type="Time" Precision="7" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -402,6 +412,8 @@
           <EntitySetMapping Name="Markets">
             <EntityTypeMapping TypeName="Model.Market">
               <MappingFragment StoreEntitySet="Markets">
+                <ScalarProperty Name="CloseTime" ColumnName="CloseTime" />
+                <ScalarProperty Name="OpenTime" ColumnName="OpenTime" />
                 <ScalarProperty Name="MarketId" ColumnName="MarketId" />
                 <ScalarProperty Name="MarketName" ColumnName="MarketName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -492,6 +504,9 @@
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="Model.Store">
               <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="CloseTime" ColumnName="CloseTime" />
+                <ScalarProperty Name="OpenTime" ColumnName="OpenTime" />
+                <ScalarProperty Name="AcceptDiscount" ColumnName="AcceptDiscount" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
                 <ScalarProperty Name="StoreName" ColumnName="StoreName" />
                 <ScalarProperty Name="KiotNo" ColumnName="KiotNo" />

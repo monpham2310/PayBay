@@ -22,5 +22,7 @@ namespace PayBayService.Models
         public string SasQuery { get; set; }
         public Nullable<double> Latitute { get; set; }
         public Nullable<double> Longitute { get; set; }
+        public Nullable<System.TimeSpan> OpenTime { get; set; }
+        public Nullable<System.TimeSpan> CloseTime { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using PayBay.ViewModel.MarketGroup;
 using PayBay.Utilities.Common;
+using PayBay.Model;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -48,6 +49,16 @@ namespace PayBay.View.MarketGroup
             {
                 MarketVm.LoadMoreMarket(TYPEGET.MORE);
             }
+        }
+
+        private void lvMarket_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if(lvMarket.SelectedItem != null)
+            {
+                if (MarketVm != null)
+                    MarketVm.SelectedMarket = (Market)lvMarket.SelectedItem;
+                Frame.Navigate(typeof(MarketPage), NavigationMode.Forward);
+            }  
         }
     }
 }

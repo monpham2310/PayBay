@@ -17,6 +17,8 @@ namespace PayBay.Model
         private string _phone;
         private float _longitute;
         private float _latitute;
+        private TimeSpan _openTime;
+        private TimeSpan _closeTime;
                 
         public string SasQuery
         {
@@ -111,6 +113,34 @@ namespace PayBay.Model
             set
             {
                 _latitute = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan OpenTime
+        {
+            get
+            {
+                return _openTime;
+            }
+
+            set
+            {
+                _openTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan CloseTime
+        {
+            get
+            {
+                return _closeTime;
+            }
+
+            set
+            {
+                _closeTime = value;
                 OnPropertyChanged();
             }
         }

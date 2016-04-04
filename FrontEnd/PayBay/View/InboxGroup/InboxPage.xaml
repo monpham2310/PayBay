@@ -62,11 +62,12 @@
 
 		<Grid Grid.Row="0">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="2*" />
-				<ColumnDefinition Width="3*" />
+				<ColumnDefinition Width="150" />
+				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0">
-				<Image Source="ms-appx:///Assets/Icon/ChatPage/HungGay.png" />
+				<Image Source="ms-appx:///Assets/Icon/ChatPage/HungGay.png" 
+					   Stretch="Fill"/>
 			</Grid>
 			<Grid Grid.Column="1">
 				<Grid.RowDefinitions>
@@ -100,7 +101,7 @@
 				</Grid>
 				<Grid Grid.Row="2">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="30" />
 						<ColumnDefinition Width="6*" />
 					</Grid.ColumnDefinitions>
 					<Grid Grid.Column="0"
@@ -108,18 +109,20 @@
 						  Padding="5">
 						<Image Source="ms-appx:///Assets/Icon/ChatPage/ShopPageIcon.png" />
 					</Grid>
-					<Grid Grid.Column="1"
-						  Background="#44C7F4">
-						<HyperlinkButton HorizontalAlignment="Stretch">
+					<Grid Grid.Column="1">
+						<Button HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Background="#44C7F4"
+								Padding="0">
 							<TextBlock Text="SHOP PAGE"
 									   Foreground="White"
 									   FontSize="13" />
-						</HyperlinkButton>
+						</Button>
 					</Grid>
 				</Grid>
 				<Grid Grid.Row="3">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="30" />
 						<ColumnDefinition Width="6*" />
 					</Grid.ColumnDefinitions>
 					<Grid Grid.Column="0"
@@ -127,13 +130,15 @@
 						  Padding="5">
 						<Image Source="ms-appx:///Assets/Icon/ChatPage/FollowIcon.png" />
 					</Grid>
-					<Grid Grid.Column="1"
-						  Background="#009EDB">
-						<HyperlinkButton HorizontalAlignment="Stretch">
+					<Grid Grid.Column="1">
+						<Button HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Background="#009EDB"
+								Padding="0">
 							<TextBlock Text="FOLLOW"
 									   Foreground="White"
 									   FontSize="13" />
-						</HyperlinkButton>
+						</Button>
 					</Grid>
 				</Grid>
 			</Grid>

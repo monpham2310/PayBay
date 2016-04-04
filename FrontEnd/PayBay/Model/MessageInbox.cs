@@ -127,5 +127,12 @@ namespace PayBay.Model
             UserID = userId;
             OwnerID = ownerId;
         }
+
+        public MessageInbox(int userId, string userName, string avatar)
+        {
+            UserID = userId;
+            UserName = userName;
+            Avatar = avatar;
+        }
     }
 }

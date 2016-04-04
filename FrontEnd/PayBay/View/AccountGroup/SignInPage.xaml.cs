@@ -127,6 +127,7 @@ namespace PayBay.View.AccountGroup
 
 		// Define a method that performs the authentication process
 		// using a Facebook sign-in. 
+
 		private async System.Threading.Tasks.Task<bool> AuthenticateAsync()
         {
             string message;

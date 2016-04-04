@@ -48,16 +48,16 @@ namespace PayBay.View.InboxGroup
 
         private void lvMsgHistory_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            //if (lvMsgHistory.SelectedItem != null)
-            //{
-            //    MessageInbox msg = (MessageInbox)lvMsgHistory.SelectedItem;
+            if (lvMsgHistory.SelectedItem != null)
+            {
+                MessageInbox msg = (MessageInbox)lvMsgHistory.SelectedItem;
 
-            //    if (MessageVm != null)
-            //    {
-            //        MessageInboxViewModel.UserChated = msg.UserID;                    
-            //    }
-            //    Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
-            //}            
+                if (MessageVm != null)
+                {
+                    MessageInboxViewModel.UserChated = msg;
+                }
+                Frame.Navigate(typeof(InboxPage), NavigationMode.Forward);
+            }
         }
     }
 }

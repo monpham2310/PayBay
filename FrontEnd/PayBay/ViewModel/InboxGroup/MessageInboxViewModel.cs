@@ -21,12 +21,10 @@ namespace PayBay.ViewModel.InboxGroup
         private static Socket _socket;        
         private ObservableCollection<MessageInbox> _messageList;       
         private MessageInbox receivedMessage;
-        private static int _userChated;
+        private static MessageInbox _userChated;
 
         private ObservableCollection<MessageInbox> _messageLstHistory;
-
-        private ObservableCollection<string> _dummyData;
-
+                
         private int receiverID = -1;
         private static string HostURL = "http://immense-reef-32079.herokuapp.com/";
         private static bool isResponsed = false;
@@ -45,21 +43,7 @@ namespace PayBay.ViewModel.InboxGroup
                 OnPropertyChanged();
             }
         }
-
-        public ObservableCollection<string> DummyData
-        {
-            get
-            {
-                return _dummyData;
-            }
-
-            set
-            {
-                _dummyData = value;
-                OnPropertyChanged();
-            }
-        }
-
+                
         public ObservableCollection<MessageInbox> MessageLstHistory
         {
             get
@@ -74,7 +58,7 @@ namespace PayBay.ViewModel.InboxGroup
             }
         }
 
-        public static int UserChated
+        public static MessageInbox UserChated
         {
             get
             {
@@ -121,20 +105,9 @@ namespace PayBay.ViewModel.InboxGroup
             MediateClass.MessageVM = this;
             _messageList = new ObservableCollection<MessageInbox>();
             InitSocket();
-            //LoadMessageList();
-
-            InitDummyData();
+            //LoadMessageList();                        
         }
-
-        private void InitDummyData()
-        {
-            DummyData = new ObservableCollection<string>();
-            for(int i=0; i < 5; i++)
-            {
-                DummyData.Add("haha");
-            }
-        }
-
+               
         private void updateMessageListUponReceivingMessage(object sender, object e)
         {
             if (this != null)
@@ -157,7 +130,7 @@ namespace PayBay.ViewModel.InboxGroup
                 if (MediateClass.UserVM != null)
                 {
                     //receiverID = (receiverID == -1 || receiverID == 0 || receiverID == MediateClass.UserVM.UserInfo.UserId) ? UserChated : receiverID;
-                    receiverID = UserChated;
+                    receiverID = UserChated.UserID;
                     int userId = MediateClass.UserVM.UserInfo.UserId;
                     string name = MediateClass.UserVM.UserInfo.Username;
                     string avatar = MediateClass.UserVM.UserInfo.Avatar;
@@ -218,7 +191,7 @@ namespace PayBay.ViewModel.InboxGroup
         public async void LoadInboxHitory(TYPEGET typeGet, TYPE type = TYPE.OLD)
         {          
             int userID = MediateClass.UserVM.UserInfo.UserId;
-            int userChat = UserChated;
+            int userChat = UserChated.UserID;
             int msgId = -1;
             if(typeGet == TYPEGET.MORE)
             {

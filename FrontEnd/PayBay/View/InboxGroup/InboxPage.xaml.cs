@@ -69,12 +69,27 @@ namespace PayBay.View.TopFunctionGroup
             }
             else if(svMessage.VerticalOffset >= svMessage.ScrollableHeight)
             {
-                if (MessageVm != null)
-                {                    
-                    MessageVm.LoadInboxHitory(TYPEGET.MORE, TYPE.NEW);
+                //if (MessageVm != null)
+                //{                    
+                //    MessageVm.LoadInboxHitory(TYPEGET.MORE, TYPE.NEW);
+                //}
+            }
+        }
+
+        private async void Page_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                if (tbxMessage.Text != "" && MessageVm != null)
+                {
+                    bool check = await MessageVm.sendMessage(tbxMessage.Text);
+                    if (check)
+                    {
+                        tbxMessage.Text = "";
+                        ScrollToBottom();
+                    }
                 }
             }
         }
-        
     }
 }

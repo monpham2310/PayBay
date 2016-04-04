@@ -83,8 +83,9 @@ namespace PayBay.View.MarketGroup
                 splitviewKios.IsPaneOpen = !splitviewKios.IsPaneOpen;
                 if (KiosVm != null)
                 {                    
-                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;                    
-                    ViewModel.InboxGroup.MessageInboxViewModel.UserChated = KiosVm.SelectedStore.OwnerId;
+                    KiosVm.SelectedStore = (Kios)gridviewKiosList.SelectedItem;
+                    MessageInbox msg = new MessageInbox(KiosVm.SelectedStore.OwnerId, KiosVm.SelectedStore.Username, KiosVm.SelectedStore.Avatar);                           
+                    MessageInboxViewModel.UserChated = msg;                    
                     ProductVm.GetProductsOfStore(TYPEGET.START);
                     CommentVm.GetCommentOfStore(TYPEGET.START);                    
                 }

@@ -8,6 +8,7 @@
 	xmlns:custom="using:PayBay.Utilities.CustomControl"
     DataContext="{Binding Source={StaticResource Locator}, Path=MessageVm}"
     Loaded="Page_Loaded"
+    KeyUp="Page_KeyUp"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -66,7 +67,7 @@
 				<ColumnDefinition Width="3*" />
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0">
-				<Image Source="ms-appx:///Assets/Icon/ChatPage/HungGay.png" />
+                <Image Source="{Binding UserChated.Avatar}" />
 			</Grid>
 			<Grid Grid.Column="1">
 				<Grid.RowDefinitions>
@@ -81,7 +82,7 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Grid Grid.Column="1">
-						<TextBlock Text="Doan Viet Hung"
+                        <TextBlock Text="{Binding UserChated.UserName}"
 								   Foreground="#009EDB"
 								   FontSize="20"
 								   VerticalAlignment="Center" />

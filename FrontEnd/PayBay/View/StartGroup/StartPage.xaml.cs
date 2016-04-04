@@ -137,7 +137,6 @@ namespace PayBay.View.StartGroup
 		private void HamburgerButton_Click(object sender, RoutedEventArgs e)
 		{
 			MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
-			asbSearch.IsEnabled = true;
 		}
 
 		/// <summary>
@@ -193,7 +192,6 @@ namespace PayBay.View.StartGroup
 
 		private void MainSplitView_PaneClosed(SplitView sender, object args)
 		{
-			asbSearch.IsEnabled = false;
 		}
 
         public void isLoginControl(bool visibility)

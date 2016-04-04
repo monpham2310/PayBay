@@ -278,6 +278,7 @@
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\ForwardIcon.PNG" />
     <Content Include="Assets\Button\Hamburger.png" />
+    <Content Include="Assets\HamburgerBackground.png" />
     <Content Include="Assets\Icon.png" />
     <Content Include="Assets\Icon\about_icon.png" />
     <Content Include="Assets\Icon\AllSaleOff.png" />

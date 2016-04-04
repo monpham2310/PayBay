@@ -1,4 +1,4 @@
-﻿<Page x:Class="PayBay.View.MarketGroup.KiosGroup.OrderPage"
+﻿<Page x:Class="PayBay.View.MarketGroup.KiosGroup.ItemOrderPage"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:local="using:PayBay.View.MarketGroup.KiosGroup"

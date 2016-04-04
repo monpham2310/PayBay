@@ -25,6 +25,8 @@ namespace PayBay.ViewModel.InboxGroup
 
         private ObservableCollection<MessageInbox> _messageLstHistory;
 
+        private ObservableCollection<string> _dummyData;
+
         private int receiverID = -1;
         private static string HostURL = "http://immense-reef-32079.herokuapp.com/";
         private static bool isResponsed = false;
@@ -43,7 +45,21 @@ namespace PayBay.ViewModel.InboxGroup
                 OnPropertyChanged();
             }
         }
-                
+
+        public ObservableCollection<string> DummyData
+        {
+            get
+            {
+                return _dummyData;
+            }
+
+            set
+            {
+                _dummyData = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<MessageInbox> MessageLstHistory
         {
             get
@@ -106,6 +122,17 @@ namespace PayBay.ViewModel.InboxGroup
             _messageList = new ObservableCollection<MessageInbox>();
             InitSocket();
             //LoadMessageList();
+
+            InitDummyData();
+        }
+
+        private void InitDummyData()
+        {
+            DummyData = new ObservableCollection<string>();
+            for(int i=0; i < 5; i++)
+            {
+                DummyData.Add("haha");
+            }
         }
 
         private void updateMessageListUponReceivingMessage(object sender, object e)

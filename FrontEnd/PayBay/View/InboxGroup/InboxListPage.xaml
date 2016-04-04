@@ -11,7 +11,7 @@
 
     <Page.Resources>
         <DataTemplate x:Key="messageItemTemplate">
-            <Grid Width="270">
+            <!--<Grid Width="270">
                 <TextBlock Text="{Binding InboxDate}" 
                            Foreground="White"
                            Margin="0,0,0,0"
@@ -29,19 +29,84 @@
                                    FontSize="14"/>                        
                     </StackPanel>
                 </StackPanel>
-            </Grid>
-        </DataTemplate>
+            </Grid>-->
+			<Grid Height="120"
+				  Width="470"
+				  Margin="0,0,0,20">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="4*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="13*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Grid Grid.Column="0"
+						  Background="#0077A4">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="2*" />
+							<ColumnDefinition Width="7*" />
+						</Grid.ColumnDefinitions>
+						<Grid Grid.Column="0"
+							  Padding="7">
+							<Ellipse>
+								<Ellipse.Fill>
+									<ImageBrush>
+										<ImageBrush.ImageSource>
+											<BitmapImage UriSource="ms-appx:///Assets/Icon/ChatPage/HungGay.png" />
+										</ImageBrush.ImageSource>
+									</ImageBrush>
+								</Ellipse.Fill>
+							</Ellipse>
+						</Grid>
+						<Grid Grid.Column="1"
+							  Margin="10,0,0,0">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="2*" />
+								<RowDefinition Height="3*" />
+							</Grid.RowDefinitions>
+							<Grid Grid.Row="0">
+								<TextBlock Text="Doan Viet Hung"
+										   Foreground="White"
+										   VerticalAlignment="Center" />
+							</Grid>
+							<Grid Grid.Row="1">
+								<TextBlock Text="How are you ?"
+										   Foreground="LightGray"
+										   FontSize="11" />
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid Grid.Column="1"
+						  Background="#CCE4ED">
+						<Image Source="ms-appx:///Assets/Icon/InboxListPage/blueforwardicon.png" />
+					</Grid>
+				</Grid>
+				<Grid Grid.Row="1"
+					  Background="LightGray"
+					  CornerRadius="0,0,0,50">
+					<TextBlock Text="03/25/2016 10:00 am"
+							   FontSize="9"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Right"
+							   Margin="0,0,10,0" />
+
+				</Grid>
+			</Grid>
+		</DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{StaticResource BlueBrush}">
+    <Grid Background="White">
         <ScrollViewer Name="svMessageLst"                      
-                      ViewChanged="svMessageLst_ViewChanged">
-            <ListView ItemTemplate="{StaticResource messageItemTemplate}"
-                      ItemsSource="{Binding MessageLstHistory}"                                  
+                      ViewChanged="svMessageLst_ViewChanged"
+					  HorizontalAlignment="Center">
+            <GridView ItemTemplate="{StaticResource messageItemTemplate}"
+                      ItemsSource="{Binding DummyData}"                                  
                       Margin="0,5,0,0"
                       Name="lvMsgHistory"                      
                       Tapped="lvMsgHistory_Tapped">
-            </ListView>
+            </GridView>
         </ScrollViewer>
     </Grid>
 </Page>

@@ -300,6 +300,7 @@
     <Content Include="Assets\Icon\function_icon.png" />
     <Content Include="Assets\Icon\home_icon.png" />
     <Content Include="Assets\Icon\HotProducts.jpg" />
+    <Content Include="Assets\Icon\InboxListPage\blueforwardicon.png" />
     <Content Include="Assets\Icon\inbox_icon.png" />
     <Content Include="Assets\Icon\location_icon.png" />
     <Content Include="Assets\Icon\logout_icon.png" />

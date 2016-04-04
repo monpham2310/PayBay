@@ -53,43 +53,150 @@
             </Grid>
         </DataTemplate>        
     </Page.Resources>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row ="0">            
-            <ScrollViewer Name="svMessage"
-                          ViewChanged="svMessage_ViewChanged"
-                          Visibility="Visible">
-                <ListView ItemsSource="{Binding MessageList}" 
-                          ItemTemplate="{StaticResource messageItemTemplate}"
-                          Margin="0,5,0,0"
-                          Name="lvMessage"
-                          >
-                </ListView>
-            </ScrollViewer>                        
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="100" />
-            </Grid.ColumnDefinitions>            
-            <TextBox VerticalAlignment="Center" 
-                     Grid.Column="0"
-                     Height="60"
-                     x:Name="tbxMessage"
-                     PlaceholderText="Enter your message here..."/>
-            <Button Background="{StaticResource LightBlueBrush}"
-                    Grid.Column="1"
-                    Height="30"
-                    HorizontalAlignment="Center"
-                    Click="sendBtn_Click">
-                <TextBlock Text="Send" 
-                           Foreground="White"/>
-            </Button>
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="9*" />
+		</Grid.RowDefinitions>
 
-        </Grid>
-    </Grid>
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*" />
+				<ColumnDefinition Width="3*" />
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0">
+				<Image Source="ms-appx:///Assets/Icon/ChatPage/HungGay.png" />
+			</Grid>
+			<Grid Grid.Column="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="3*" />
+					<RowDefinition Height="2*" />
+					<RowDefinition Height="2*" />
+					<RowDefinition Height="2*" />
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Grid Grid.Column="1">
+						<TextBlock Text="Doan Viet Hung"
+								   Foreground="#009EDB"
+								   FontSize="20"
+								   VerticalAlignment="Center" />
+					</Grid>
+				</Grid>
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Grid Grid.Column="1">
+						<TextBlock Text="Manager of PayBay"
+								   FontSize="11"
+								   VerticalAlignment="Top" />
+					</Grid>
+				</Grid>
+				<Grid Grid.Row="2">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="6*" />
+					</Grid.ColumnDefinitions>
+					<Grid Grid.Column="0"
+						  Background="LightGray"
+						  Padding="5">
+						<Image Source="ms-appx:///Assets/Icon/ChatPage/ShopPageIcon.png" />
+					</Grid>
+					<Grid Grid.Column="1"
+						  Background="#44C7F4">
+						<HyperlinkButton HorizontalAlignment="Stretch">
+							<TextBlock Text="SHOP PAGE"
+									   Foreground="White"
+									   FontSize="13" />
+						</HyperlinkButton>
+					</Grid>
+				</Grid>
+				<Grid Grid.Row="3">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="6*" />
+					</Grid.ColumnDefinitions>
+					<Grid Grid.Column="0"
+						  Background="LightGray"
+						  Padding="5">
+						<Image Source="ms-appx:///Assets/Icon/ChatPage/FollowIcon.png" />
+					</Grid>
+					<Grid Grid.Column="1"
+						  Background="#009EDB">
+						<HyperlinkButton HorizontalAlignment="Stretch">
+							<TextBlock Text="FOLLOW"
+									   Foreground="White"
+									   FontSize="13" />
+						</HyperlinkButton>
+					</Grid>
+				</Grid>
+			</Grid>
+		</Grid>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0"
+				  Padding="0,15,15,15">
+				<Image Source="ms-appx:///Assets/Icon/ChatPage/FacebookIcon.png"
+					   HorizontalAlignment="Right" />
+			</Grid>
+			<Grid Grid.Column="1"
+				  Padding="17">
+				<Image Source="ms-appx:///Assets/Icon/ChatPage/TwitterIcon.png" />
+			</Grid>
+			<Grid Grid.Column="2"
+				  Padding="15,15,0,15">
+				<Image Source="ms-appx:///Assets/Icon/ChatPage/CallIcon.png"
+					   HorizontalAlignment="Left" />
+			</Grid>
+		</Grid>
+		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+			  Grid.Row="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="70" />
+			</Grid.RowDefinitions>
+			<Grid Grid.Row="0">
+				<ScrollViewer Name="svMessage"
+							  ViewChanged="svMessage_ViewChanged"
+							  Visibility="Visible">
+					<ListView ItemsSource="{Binding MessageList}"
+							  ItemTemplate="{StaticResource messageItemTemplate}"
+							  Margin="0,5,0,0"
+							  Name="lvMessage">
+					</ListView>
+				</ScrollViewer>
+			</Grid>
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="100" />
+				</Grid.ColumnDefinitions>
+				<TextBox VerticalAlignment="Center"
+						 Grid.Column="0"
+						 Height="60"
+						 x:Name="tbxMessage"
+						 PlaceholderText="Enter your message here..." />
+				<Button Background="{StaticResource LightBlueBrush}"
+						Grid.Column="1"
+						Height="30"
+						HorizontalAlignment="Center"
+						Click="sendBtn_Click">
+					<TextBlock Text="Send"
+							   Foreground="White" />
+				</Button>
+
+			</Grid>
+		</Grid>
+	</Grid>
+
 </Page>

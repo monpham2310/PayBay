@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,5 +28,29 @@ namespace PayBay.View.TopFunctionGroup
 		{
 			this.InitializeComponent();
 		}
-	}
+
+        private async void btnLocation_Click(object sender, RoutedEventArgs e)
+        {
+            var accessStatus = await Geolocator.RequestAccessAsync();
+
+            switch (accessStatus)
+            {
+                case GeolocationAccessStatus.Allowed:
+                    Geolocator geolocator = new Geolocator() { DesiredAccuracyInMeters = 0 };
+                    Geoposition pos = await geolocator.GetGeopositionAsync();
+
+                    tbLatitude.Text = "Latitude: " + pos.Coordinate.Point.Position.Latitude;
+                    tbLongitude.Text = "Longitude: " + pos.Coordinate.Point.Position.Longitude;
+
+                    break;
+                case GeolocationAccessStatus.Denied:
+                    await new MessageDialog("Access to location is denied.", "Notification!").ShowAsync();
+                    break;
+                case GeolocationAccessStatus.Unspecified:
+                    await new MessageDialog("Unspecified error.", "Notification!").ShowAsync();
+                    break;
+            }
+        }
+
+    }
 }

@@ -81,7 +81,7 @@
 						<ColumnDefinition Width="30" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Grid Grid.Column="1">
+					<Grid Grid.Column="0" Grid.ColumnSpan="2">
                         <TextBlock Text="{Binding UserChated.UserName}"
 								   Foreground="#009EDB"
 								   FontSize="20"
@@ -89,7 +89,7 @@
 					</Grid>
 				</Grid>
 				<Grid Grid.Row="1">
-					<Grid.ColumnDefinitions>
+					<!--<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="30" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
@@ -97,7 +97,7 @@
 						<TextBlock Text="Manager of PayBay"
 								   FontSize="11"
 								   VerticalAlignment="Top" />
-					</Grid>
+					</Grid>-->
 				</Grid>
 				<Grid Grid.Row="2">
 					<Grid.ColumnDefinitions>

@@ -6,7 +6,9 @@
     xmlns:model="using:PayBay.Model"
     xmlns:converters="using:PayBay.Utilities.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"   
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+    xmlns:control="using:PayBay.Utilities.CustomControl"
+    xmlns:converter="using:PayBay.Utilities.Converters"
     DataContext="{Binding Source={StaticResource Locator},Path=MessageVm}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
@@ -27,13 +29,14 @@
                 <TextBlock Text="{Binding KiotNo}" 
                            Foreground="{StaticResource LightBlueBrush}"
                            HorizontalAlignment="Center"/>
-                <StackPanel Orientation="Horizontal" 
-                            Margin="1,0,0,0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="1,0,0,0">                    
                     <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="14" Width="14"></Image>
                     <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="14" Width="14"></Image>
                     <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="14" Width="14"></Image>
                     <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="14" Width="14"></Image>
                     <Image Source="{Binding Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="14" Width="14"></Image>
+                                      
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -169,13 +172,14 @@
                                 </Button>
                             </StackPanel>-->
                             <StackPanel Orientation="Horizontal" 
-                                        HorizontalAlignment="Center"                                                                                
+                                        HorizontalAlignment="Center"                                                                         
                                         Margin="1,0,0,0">
-                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="30" Width="30"></Image>
-                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="30" Width="30"></Image>
-                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="30" Width="30"></Image>
-                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="30" Width="30"></Image>
-                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="30" Width="30"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=1}" Height="25" Width="25"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=2}" Height="25" Width="25"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=3}" Height="25" Width="25"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=4}" Height="25" Width="25"></Image>
+                                <Image Source="{Binding Path=SelectedStore.Rate, Converter={StaticResource RatingToStarConverter}, ConverterParameter=5}" Height="25" Width="25"></Image>
+                                
                             </StackPanel>
                         </Grid>
                     <Grid Grid.Row="1">

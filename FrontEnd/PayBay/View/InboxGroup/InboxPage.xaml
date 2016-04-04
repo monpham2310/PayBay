@@ -12,31 +12,43 @@
 
     <Page.Resources>
         <DataTemplate x:Key="messageItemTemplate">
-            <Grid Width="270">
+            <Grid Width="270">                
                 <TextBlock Text="{Binding InboxDate}" 
                            Foreground="Black"
                            Margin="0,0,10,0"
                            HorizontalAlignment="Right"
                            FontSize="8"/>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">                    
                     <Ellipse Height="40" Width="40">
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding Avatar}"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <StackPanel Margin="5,0,0,0">
-                        <TextBlock Text="{Binding UserName}" 
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding UserName}" 
                                    Foreground="Black"
                                    FontSize="11"/>
-                        
-                        <TextBlock Text="{Binding Content}"
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Text="{Binding Content}"
+                                       Width="270"
                                    Foreground="Black"
                                    TextWrapping="Wrap"                                   
                                    FontSize="11" 
                                    Margin="0,5,0,0"
-                                   FontStyle="Italic">                            
-                        </TextBlock>
-                    </StackPanel>
+                                   FontStyle="Italic">
+                            </TextBlock>
+                        </Grid>
+                    </StackPanel>                    
                 </StackPanel>
             </Grid>
         </DataTemplate>        

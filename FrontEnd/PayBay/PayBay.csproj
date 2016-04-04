@@ -151,6 +151,9 @@
     <Compile Include="View\InboxGroup\InboxListPage.xaml.cs">
       <DependentUpon>InboxListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MarketGroup\KiosGroup\OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MarketGroup\MarketListPage.xaml.cs">
       <DependentUpon>MarketListPage.xaml</DependentUpon>
     </Compile>
@@ -463,6 +466,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MarketGroup\KiosGroup\KiosProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MarketGroup\KiosGroup\OrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

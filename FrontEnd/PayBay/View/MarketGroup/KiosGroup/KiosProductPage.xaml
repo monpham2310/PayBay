@@ -10,8 +10,9 @@
 
 	<ScrollViewer VerticalScrollBarVisibility="Auto">
 		<Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-			<GridView HorizontalAlignment="Left"
-					  ItemsSource="{Binding ProductsOfStore}">
+			<GridView x:Name="gvProducts" HorizontalAlignment="Left"
+					  ItemsSource="{Binding ProductsOfStore}"
+					  SelectionChanged="gvProducts_SelectionChanged">
 				<GridView.ItemContainerStyle>
 					<Style TargetType="GridViewItem">
 						<Setter Property="Margin"
@@ -21,7 +22,7 @@
 				<GridView.ItemTemplate>
 					<DataTemplate>
 						<Grid Width="150"
-							  Height="100">
+							  Height="140">
 							<Image Source="{Binding Image}"
 								   Stretch="Fill" />
 							<Grid Height="40"

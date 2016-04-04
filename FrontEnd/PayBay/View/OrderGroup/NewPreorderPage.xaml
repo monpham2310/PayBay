@@ -1,0 +1,235 @@
+﻿<UserControl
+    x:Class="PayBay.View.OrderGroup.NewPreorderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PayBay.View.OrderGroup"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+			 DataContext="{Binding RelativeSource={RelativeSource Self}}"
+			 d:DesignHeight="800"
+    d:DesignWidth="400">
+
+	<ScrollViewer>
+		<Grid Background="White">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="3*" />
+				<RowDefinition Height="2*" />
+				<RowDefinition Height="3*" />
+			</Grid.RowDefinitions>
+			<Grid Grid.Row="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="3*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0">
+					<Image Source="ms-appx:///Assets/Icon/NewPreorderPage/FishDummyPicture.png" />
+				</Grid>
+				<StackPanel Orientation="Vertical"
+							Background="#0077A4"
+							Margin="10"
+							Grid.Row="1">
+					<TextBlock Text="Fish"
+							   FontSize="30"
+							   Foreground="White" 
+							   HorizontalAlignment="Center"/>
+					<TextBlock Text="11e/kg"
+							   FontSize="15"
+							   Foreground="#44C7F4"
+							   HorizontalAlignment="Center" />
+				</StackPanel>
+			</Grid>
+			<Grid Grid.Row="1"				  
+				  BorderBrush="#0077A4"
+				  BorderThickness="0,2,0,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="2*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<TextBlock Text="NUMBER OF ORDERS"
+						   Foreground="#009EDB"
+						   HorizontalAlignment="Center" 
+						   VerticalAlignment="Center"
+						   Grid.Row="0"/>
+				<Grid Grid.Row="1"
+					  Padding="50,0">
+					<Button Width="50"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							Background="White"
+							Padding="0">
+						<Grid Background="#0077A4"
+							  Padding="10,5"
+							  CornerRadius="20">
+							<TextBlock FontFamily="Segoe MDL2 Assets"
+									   Text="&#xE710;"
+									   FontSize="23"
+									   Foreground="#44C7F4" />
+						</Grid>
+
+					</Button>
+					<Button Width="50"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Center"
+							Background="White"
+							Padding="0">
+						<Grid Background="#0077A4"
+							  Padding="10,5"
+							  CornerRadius="20">
+							<TextBlock FontFamily="Segoe MDL2 Assets"
+									   Text="&#xE738;"
+									   FontSize="23"
+									   Foreground="#44C7F4" />
+						</Grid>
+
+					</Button>
+					<Grid HorizontalAlignment="Center"
+						  VerticalAlignment="Center"
+						  CornerRadius="20"
+						  BorderThickness="2"
+						  BorderBrush="#0077A4">
+						<TextBox BorderThickness="0"
+								 Margin="3"/>
+					</Grid>
+				</Grid>
+				<TextBlock Text="NUMBER IN STOCK"
+						   Foreground="#009EDB"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Grid.Row="2" />
+				<TextBlock Text="50"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Grid.Row="3" />
+
+			</Grid>
+			<Grid Grid.Row="2"
+				  BorderBrush="#0077A4"
+				  BorderThickness="0,2,0,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="3*" />
+					<RowDefinition Height="2*" />
+				</Grid.RowDefinitions>
+				<TextBlock Text="CHECK LIST"
+						   Foreground="#009EDB" 
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Grid.Row="0"/>
+				<Grid Grid.Row="1">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="40" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<Grid x:Name="ListViewHeaders"
+						  Grid.Row="0"
+						  BorderThickness="1"
+						  BorderBrush="#0077A4">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0"
+								   Text="Code"
+								   HorizontalAlignment="Center" 
+								   VerticalAlignment="Center"/>
+						<TextBlock Grid.Column="1"
+								   Text="Product"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center" />
+						<TextBlock Grid.Column="2"
+								   Text="Quantity"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center" />
+						<TextBlock Grid.Column="3"
+								   Text="Price"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center" />
+					</Grid>
+					<ScrollViewer Grid.Row="1"
+								  HorizontalContentAlignment="Stretch">
+						<ListView x:Name="listViewPreorder"
+								  ItemsSource="{Binding DummyList}"
+								  HorizontalContentAlignment="Stretch">
+							<ListView.ItemContainerStyle>
+								<Style TargetType="ListViewItem">
+									<Setter Property="HorizontalContentAlignment"
+											Value="Stretch" />
+									<Setter Property="HorizontalAlignment"
+											Value="Stretch" />
+								</Style>
+							</ListView.ItemContainerStyle>
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
+											<ColumnDefinition />
+										</Grid.ColumnDefinitions>
+										<TextBlock Grid.Column="0"
+												   Text="000001"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Center"
+												   Margin="0,0,10,0" />
+										<TextBlock Grid.Column="1"
+												   Text="Fish"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Center" />
+										<TextBlock Grid.Column="2"
+												   Text="2"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Center" />
+										<TextBlock Grid.Column="3"
+												   Text="50000"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Center"
+												   Margin="20,0,0,0" />
+
+									</Grid>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+					</ScrollViewer>
+				</Grid>
+				<Grid Grid.Row="2">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Grid Grid.Column="1">
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<Button Grid.Row="0"
+										 Background="#0077A4"
+										 HorizontalAlignment="Stretch"
+								Margin="0,0,0,10">
+							<TextBlock Text="Pay Securely Now"
+									   HorizontalAlignment="Center"
+									   Foreground="White" />
+						</Button>
+						<Button Grid.Row="1"
+								Background="White"
+										 BorderThickness="1"
+										 BorderBrush="#009EDB"
+										 HorizontalAlignment="Stretch">
+							<TextBlock Text="Continue Shopping"
+									   HorizontalAlignment="Center"
+									   Foreground="#009EDB" />
+						</Button>
+					</Grid>
+
+				</Grid>
+			</Grid>
+		</Grid>
+	</ScrollViewer>
+
+</UserControl>

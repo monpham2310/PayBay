@@ -151,6 +151,9 @@
     <Compile Include="View\InboxGroup\InboxListPage.xaml.cs">
       <DependentUpon>InboxListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MarketGroup\KiosGroup\OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MarketGroup\MarketListPage.xaml.cs">
       <DependentUpon>MarketListPage.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,9 @@
     </Compile>
     <Compile Include="View\MiddleFunctionGroup\FreeCallPage.xaml.cs">
       <DependentUpon>FreeCallPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OrderGroup\NewPreorderPage.xaml.cs">
+      <DependentUpon>NewPreorderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OrderGroup\OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
@@ -317,6 +323,9 @@
     <Content Include="Assets\Icon\MyPayBay\suggestion.png" />
     <Content Include="Assets\Icon\MyPayBay\survey.png" />
     <Content Include="Assets\Icon\mypaybay_icon.png" />
+    <Content Include="Assets\Icon\NewPreorderPage\FishDummyPicture.png" />
+    <Content Include="Assets\Icon\NewPreorderPage\PlusIconpng.png" />
+    <Content Include="Assets\Icon\NewPreorderPage\SubtractIcon.png" />
     <Content Include="Assets\Icon\NewProducts.jpg" />
     <Content Include="Assets\Icon\phone_icon.png" />
     <Content Include="Assets\Icon\phone_icon_blue.png" />
@@ -467,6 +476,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MarketGroup\KiosGroup\OrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MarketGroup\KiosListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -496,6 +509,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderGroup\DeliveryPaymentGroup\DeliveryPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderGroup\NewPreorderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

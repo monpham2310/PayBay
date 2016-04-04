@@ -221,6 +221,9 @@
     <Compile Include="View\MiddleFunctionGroup\FreeCallPage.xaml.cs">
       <DependentUpon>FreeCallPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OrderGroup\NewPreorderPage.xaml.cs">
+      <DependentUpon>NewPreorderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OrderGroup\OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,9 @@
     <Content Include="Assets\Icon\MyPayBay\suggestion.png" />
     <Content Include="Assets\Icon\MyPayBay\survey.png" />
     <Content Include="Assets\Icon\mypaybay_icon.png" />
+    <Content Include="Assets\Icon\NewPreorderPage\FishDummyPicture.png" />
+    <Content Include="Assets\Icon\NewPreorderPage\PlusIconpng.png" />
+    <Content Include="Assets\Icon\NewPreorderPage\SubtractIcon.png" />
     <Content Include="Assets\Icon\NewProducts.jpg" />
     <Content Include="Assets\Icon\phone_icon.png" />
     <Content Include="Assets\Icon\phone_icon_blue.png" />
@@ -496,6 +502,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderGroup\DeliveryPaymentGroup\DeliveryPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderGroup\NewPreorderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

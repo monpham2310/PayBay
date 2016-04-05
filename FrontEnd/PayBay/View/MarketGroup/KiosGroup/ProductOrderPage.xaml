@@ -140,9 +140,9 @@
 							<Grid.ColumnDefinitions>
 								<!--<ColumnDefinition Width="*" />-->
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.4*" />
+								<ColumnDefinition Width="0.5*" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.35*" />
+								<ColumnDefinition Width="0.45*" />
 							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">
@@ -172,9 +172,9 @@
 							<Grid.ColumnDefinitions>
 								<!--<ColumnDefinition Width="*" />-->
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.4*" />
+								<ColumnDefinition Width="0.5*" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.35*" />
+								<ColumnDefinition Width="0.45*" />
 							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">

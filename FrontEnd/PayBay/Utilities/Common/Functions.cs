@@ -9,8 +9,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Email;
+using Windows.Devices.Geolocation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace PayBay.Utilities.Common
@@ -207,6 +209,27 @@ namespace PayBay.Utilities.Common
                 return false;
 
             return true;
+        }
+
+        public static async void TrackLocationOfUser()
+        {
+            var accessStatus = await Geolocator.RequestAccessAsync();
+
+            switch (accessStatus)
+            {
+                case GeolocationAccessStatus.Allowed:
+                    Geolocator geolocator = new Geolocator() { DesiredAccuracyInMeters = 0 };
+                    Geoposition pos = await geolocator.GetGeopositionAsync(
+                                            maximumAge: TimeSpan.FromMinutes(5),
+                                            timeout: TimeSpan.FromSeconds(10));
+                    break;
+                case GeolocationAccessStatus.Denied:
+                    await new MessageDialog("Access to location is denied.", "Notification!").ShowAsync();
+                    break;
+                case GeolocationAccessStatus.Unspecified:
+                    await new MessageDialog("Unspecified error.", "Notification!").ShowAsync();
+                    break;
+            }
         }
                 
     }

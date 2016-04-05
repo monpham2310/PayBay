@@ -272,6 +272,9 @@
     <Compile Include="View\TopFunctionGroup\StoreRegisterPage.xaml.cs">
       <DependentUpon>StoreRegisterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TopFunctionGroup\SuggestionGroup\SuggestForThisWeek.xaml.cs">
+      <DependentUpon>SuggestForThisWeek.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\SuggestionGroup\SuggestionPage.xaml.cs">
       <DependentUpon>SuggestionPage.xaml</DependentUpon>
     </Compile>
@@ -576,6 +579,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TopFunctionGroup\StoreRegisterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\SuggestionGroup\SuggestForThisWeek.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

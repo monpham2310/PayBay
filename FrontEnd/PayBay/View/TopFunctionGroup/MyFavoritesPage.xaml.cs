@@ -28,31 +28,6 @@ namespace PayBay.View.TopFunctionGroup
 		{
 			this.InitializeComponent();
 		}
-
-        private async void btnLocation_Click(object sender, RoutedEventArgs e)
-        {
-            var accessStatus = await Geolocator.RequestAccessAsync();
-
-            switch (accessStatus)
-            {
-                case GeolocationAccessStatus.Allowed:
-                    Geolocator geolocator = new Geolocator() { DesiredAccuracyInMeters = 0 };
-                    Geoposition pos = await geolocator.GetGeopositionAsync(
-                                            maximumAge: TimeSpan.FromMinutes(5),
-                                            timeout: TimeSpan.FromSeconds(10));
-
-                    tbLatitude.Text = "Latitude: " + pos.Coordinate.Point.Position.Latitude;
-                    tbLongitude.Text = "Longitude: " + pos.Coordinate.Point.Position.Longitude;
-
-                    break;
-                case GeolocationAccessStatus.Denied:
-                    await new MessageDialog("Access to location is denied.", "Notification!").ShowAsync();
-                    break;
-                case GeolocationAccessStatus.Unspecified:
-                    await new MessageDialog("Unspecified error.", "Notification!").ShowAsync();
-                    break;
-            }
-        }
-
+                
     }
 }

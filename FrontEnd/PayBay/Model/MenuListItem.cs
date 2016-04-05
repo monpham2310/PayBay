@@ -17,7 +17,9 @@ namespace PayBay.Model
 		Logout,
 		FeedbackAndApps,
         Settings,
-        Suggestion
+        Suggestion,
+        ManageOrder,
+        BeginPage
     };
 
     public class MenuListItem : BaseViewModel

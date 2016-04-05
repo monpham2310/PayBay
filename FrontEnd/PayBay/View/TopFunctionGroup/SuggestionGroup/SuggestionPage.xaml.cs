@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PayBay.Utilities.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace PayBay.View.TopFunctionGroup.SuggestionGroup
         public SuggestionPage()
         {
             this.InitializeComponent();
+            MediateClass.SuggestPage = this;
         }
     }
 }

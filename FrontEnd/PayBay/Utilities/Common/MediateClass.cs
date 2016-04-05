@@ -2,6 +2,7 @@
 using PayBay.View.OrderGroup;
 using PayBay.View.StartGroup;
 using PayBay.View.TopFunctionGroup;
+using PayBay.View.TopFunctionGroup.SuggestionGroup;
 using PayBay.ViewModel.AccountGroup;
 using PayBay.ViewModel.CommentGroup;
 using PayBay.ViewModel.HomePageGroup;
@@ -23,6 +24,7 @@ namespace PayBay.Utilities.Common
     {
         public static StartPage StartPage;
         public static InboxPage InboxPage;
+        public static SuggestionPage SuggestPage;
 
         public static UserInfoViewModel UserVM;
         public static StartViewModel StartVM;

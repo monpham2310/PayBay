@@ -1155,3 +1155,28 @@ as
 	select Username,Avatar,(select OwnerID from viethung_paybayservice.Stores where StoreID = @StoreID) as OwnerID
 	from viethung_paybayservice.Users
 	where UserID = @UserID
+
+alter proc viethung_paybayservice.sp_GetNearbyMarketList --10.846483,106.682361
+@Latitute float,
+@Longitute float
+as	
+	declare @marketId int,@marketName nvarchar(100),@address nvarchar(200),@phone varchar(12),@image nvarchar(max),@sasquery nvarchar(max),@lat float,@long float,@opentime time,@closetime time
+	declare @table table (MarketId int,MarketName nvarchar(100),Address nvarchar(200), Phone varchar(12),Image nvarchar(max),SasQuery nvarchar(max),Latitute float,Longitute float,OpenTime time,CloseTime time,Distance float)
+	declare cCursor cursor for select MarketId,MarketName,Address,Phone,Image,SasQuery,Latitute,Longitute,OpenTime,CloseTime
+							   from viethung_paybayservice.Markets	
+	open cCursor 
+	fetch next from cCursor into @marketId,@marketName,@address,@phone,@image,@sasquery,@lat,@long,@opentime,@closetime
+	while @@fetch_status = 0
+	begin
+		declare @distance float
+		set @distance = viethung_paybayservice.fnCalcDistanceKM(@Latitute,@lat,@Longitute,@long)
+						
+		insert into @table select @marketId,@marketName,@address,@phone,@image,@sasquery,@lat,@long,@opentime,@closetime,@distance
+
+		fetch next from cCursor into @marketId,@marketName,@address,@phone,@image,@sasquery,@lat,@long,@opentime,@closetime
+	end
+	close cCursor
+	deallocate cCursor
+	select MarketId,MarketName,Address,Phone,Image,SasQuery,Latitute,Longitute,OpenTime,CloseTime,Distance
+	from @table as tbl
+	order by Distance

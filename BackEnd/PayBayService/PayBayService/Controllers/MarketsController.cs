@@ -73,6 +73,24 @@ namespace PayBayService.Controllers
 
         // GET: api/Markets/BenThanh
         [ResponseType(typeof(Market))]
+        public HttpResponseMessage GetSuggestMarket(double latitute, double longitute)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var lat = new SqlParameter("@Latitute", latitute);
+                var lng = new SqlParameter("@Longitute", longitute);                
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetNearbyMarketList", CommandType.StoredProcedure, ref Methods.err, lat, lng);                
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // GET: api/Markets/BenThanh
+        [ResponseType(typeof(Market))]
         public HttpResponseMessage GetAllMarket()
         {
             JArray result = new JArray();

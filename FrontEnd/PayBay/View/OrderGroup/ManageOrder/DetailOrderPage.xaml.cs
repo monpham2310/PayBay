@@ -1,5 +1,4 @@
-﻿using PayBay.Model;
-using PayBay.ViewModel.OrderGroupViewModel;
+﻿using PayBay.ViewModel.OrderGroupViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,30 +21,19 @@ namespace PayBay.View.OrderGroup.ManageOrder
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ManageOrderPage : Page
+    public sealed partial class DetailOrderPage : Page
     {
         private OrderViewModel OrderVm => (OrderViewModel)DataContext;
 
-        public ManageOrderPage()
+        public DetailOrderPage()
         {
             this.InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if(OrderVm != null)
-            {
-                OrderVm.LoadBillOfStoreOwner();
-            }
-        }
-
-        private void gvOrder_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if(gvOrder.SelectedItem != null)
-            {
-                OrderVm.SelectedBill = (Bill)gvOrder.SelectedItem;
-                Frame.Navigate(typeof(DetailOrderPage));
-            }
+            if (OrderVm != null)
+                OrderVm.LoadDetailBillOfBill();
         }
     }
 }

@@ -32,12 +32,11 @@ namespace PayBay.Utilities.Common
     public class Functions
     {                
         private static Functions m_Instance = null;
+
+        public static bool isDiscover = false;
         
         static Regex ValidEmailRegex = CreateValidEmailRegex();
-
-        public static double Latitute = 0;
-        public static double Longitute = 0;
-
+               
         public static Functions Instance
         {
             get
@@ -214,19 +213,19 @@ namespace PayBay.Utilities.Common
             return true;
         }
 
-        public static async void TrackLocationOfUser()
+        public static async Task<Coordinate> TrackLocationOfUser()
         {
             var accessStatus = await Geolocator.RequestAccessAsync();
-
+            Coordinate coor = new Coordinate();
             switch (accessStatus)
             {
-                case GeolocationAccessStatus.Allowed:
+                case GeolocationAccessStatus.Allowed:                    
                     Geolocator geolocator = new Geolocator() { DesiredAccuracyInMeters = 0 };
                     Geoposition pos = await geolocator.GetGeopositionAsync(
                                             maximumAge: TimeSpan.FromMinutes(5),
                                             timeout: TimeSpan.FromSeconds(10));
-                    Latitute = pos.Coordinate.Point.Position.Latitude;
-                    Longitute = pos.Coordinate.Point.Position.Longitude;
+                    coor.Latitute = pos.Coordinate.Point.Position.Latitude;
+                    coor.Longitute = pos.Coordinate.Point.Position.Longitude;                    
                     break;
                 case GeolocationAccessStatus.Denied:
                     await new MessageDialog("Access to location is denied.", "Notification!").ShowAsync();
@@ -235,6 +234,7 @@ namespace PayBay.Utilities.Common
                     await new MessageDialog("Unspecified error.", "Notification!").ShowAsync();
                     break;
             }
+            return coor;
         }
                 
     }

@@ -40,23 +40,23 @@ namespace PayBay.View.MarketGroup.KiosGroup
             }
         }
 
-        //private void scrollvProductLst_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        //{            
-        //    if(scrollvProductLst.VerticalOffset >= scrollvProductLst.ScrollableHeight)
-        //    {
-        //        if(ProductVm != null)
-        //        {
-        //            ProductVm.GetProductsOfStore(TYPEGET.MORE);
-        //        }
-        //    }
-        //    else if (scrollvProductLst.VerticalOffset == 0)
-        //    {
-        //        if (ProductVm != null)
-        //        {
-        //            ProductVm.GetProductsOfStore(TYPEGET.MORE, TYPE.NEW);
-        //        }
-        //    }
-        //}
+        private void scrollvProductLst_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (scrollvProductLst.VerticalOffset >= scrollvProductLst.ScrollableHeight)
+            {
+                if (ProductVm != null)
+                {
+                    ProductVm.GetProductsOfStore(TYPEGET.MORE);
+                }
+            }
+            else if (scrollvProductLst.VerticalOffset == 0)
+            {
+                if (ProductVm != null)
+                {
+                    ProductVm.GetProductsOfStore(TYPEGET.MORE, TYPE.NEW);
+                }
+            }
+        }
 
         public T FindDescendant<T>(DependencyObject obj) where T : DependencyObject
         {

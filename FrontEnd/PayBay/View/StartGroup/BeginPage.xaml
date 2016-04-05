@@ -195,6 +195,7 @@
 				Height="200"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Center"
+                Click="btnDiscover_Click"
 				Background="{StaticResource WhiteBrush}"
 				Style="{StaticResource CircleButtonStyle}">
 			<StackPanel>

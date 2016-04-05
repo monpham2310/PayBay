@@ -369,7 +369,7 @@ namespace PayBayService.Common
         {
             int startIndex = sasQuery.LastIndexOf("&se=");
             int length = 10;
-            string expireDate = sasQuery.Substring(startIndex, length);
+            string expireDate = sasQuery.Substring(startIndex + 4, length);
             DateTime expiredDate = Convert.ToDateTime(expireDate);
             if (expiredDate >= DateTime.UtcNow)
                 return false;

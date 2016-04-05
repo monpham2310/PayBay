@@ -1,0 +1,119 @@
+﻿<Page
+    x:Class="PayBay.View.TopFunctionGroup.SuggestionGroup.NearbyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PayBay.View.TopFunctionGroup.SuggestionGroup"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding Source={StaticResource Locator}, Path=MarketVm}"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  Name="svMarket"
+                  >
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <ListView ItemsSource="{Binding MarketItemList}"
+                      Name="lvMarket"
+                      Tapped="lvMarket_Tapped">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+								Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--Image-->
+                            <Image Stretch="Fill"
+								   Source="{Binding Image}" />
+
+                            <!--Info-->
+                            <StackPanel Grid.Column="1"
+										Padding="10,0,10,30">
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontSize"
+												Value="10" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock TextWrapping="Wrap"
+										   MaxLines="2">
+								<Run Text="Address: "
+									 FontWeight="Bold" />
+								<Run Text="{Binding Address}" />
+                                </TextBlock>
+                                <TextBlock Margin="0,5">
+								<Run Text="Open Hours:&#x0a;"
+									 FontWeight="Bold" />
+								<Run Text="{Binding OpenTime}" />
+                                <Run Text="-" />
+								<Run Text="{Binding CloseTime}" />
+                                </TextBlock>
+                                <TextBlock>
+								<Run Text="Contact:"
+									 FontWeight="Bold" />
+								<Run Text="{Binding Phone}" />
+                                </TextBlock>
+                            </StackPanel>
+
+                            <!--Bottom bar-->
+                            <Grid Height="30"
+								  Grid.ColumnSpan="4"
+								  VerticalAlignment="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="75" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.ColumnSpan="4"
+									  Opacity="0.8"
+									  Background="{StaticResource LightBlueBrush}" />
+                                <TextBlock Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                            Text="{Binding MarketName}"
+										   FontSize="15"
+										   VerticalAlignment="Center"
+										   HorizontalAlignment="Center"
+										   Foreground="{StaticResource WhiteBrush}" />
+                                <!--<control:StarRating Grid.Column="1"
+													Maximum="3"
+													Value="2"
+													Height="13"
+													HorizontalAlignment="Center"
+													StarOutlineColor="{StaticResource WhiteBrush}"
+													StarForeground="{StaticResource WhiteBrush}" />-->
+                                <HyperlinkButton Grid.Column="2"
+												 Content="See more"
+												 Padding="0"
+												 Margin="10,0"
+												 FontSize="10"
+												 VerticalAlignment="Center"
+												 Foreground="{StaticResource WhiteBrush}" />
+                                <Image Grid.Column="2"
+									   Width="10"
+									   Margin="10,0"
+									   Source="ms-appx:///Assets/Icon/Store/forward.png"
+									   HorizontalAlignment="Right" />
+                            </Grid>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <Grid />
+                <Grid />
+                <Grid />
+                <Grid />
+                <Grid />
+                <Grid />
+            </ListView>
+        </Grid>
+    </ScrollViewer>
+</Page>

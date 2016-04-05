@@ -12,6 +12,8 @@ namespace PayBay.Model
         private int _id;
         private int _billId;
         private int _productId;
+        private string _productName;
+        private string _image;
         private int _numberOf;
         private double _unitPrice;
         private string _unit;
@@ -96,6 +98,34 @@ namespace PayBay.Model
             set
             {
                 _unit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ProductName
+        {
+            get
+            {
+                return _productName;
+            }
+
+            set
+            {
+                _productName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Image
+        {
+            get
+            {
+                return _image;
+            }
+
+            set
+            {
+                _image = value;
                 OnPropertyChanged();
             }
         }

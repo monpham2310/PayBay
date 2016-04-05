@@ -49,6 +49,28 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [ResponseType(typeof(DetailBill))]
+        public HttpResponseMessage GetDetailBill(int billId, bool isManage)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var bill = new SqlParameter("@BillId", billId);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetDetailBillOfBill", CommandType.StoredProcedure, ref Methods.err, bill);
+                if (result == null)
+                {
+                    var error = Methods.CustomResponseMessage(0, "Data not found!");
+                    result.Add(error);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // PUT: api/DetailBills/5
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutDetailBill(DetailBill detailBill)

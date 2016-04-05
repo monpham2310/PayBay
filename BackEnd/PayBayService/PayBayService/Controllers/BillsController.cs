@@ -73,6 +73,24 @@ namespace PayBayService.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        // GET: api/Bills/UserID
+        [ResponseType(typeof(Bill))]
+        public HttpResponseMessage GetBillOfUser(int ownerId, bool isStoreOwner)
+        {
+            JArray result = new JArray();
+            try
+            {
+                var owner = new SqlParameter("@OwnerId", ownerId);
+                result = Methods.GetInstance().ExecQueryWithResult("viethung_paybayservice.sp_GetBillOfStoreOwner", CommandType.StoredProcedure, ref Methods.err, owner);                
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         // PUT: api/Bills/5
         [ResponseType(typeof(HttpResponseMessage))]
         public async Task<HttpResponseMessage> PutBill(Bill bill)

@@ -21,6 +21,7 @@ namespace PayBay.ViewModel.MarketGroup
 
         public static bool isUpdate = false;
         private static bool isResponsed = false;
+        private static bool isSuggested = false;
 
         private ObservableCollection<Market> _allMarket;
 
@@ -296,6 +297,41 @@ namespace PayBay.ViewModel.MarketGroup
                 return false;
             }
             return true;
+        }
+
+        public async void SuggestedMarketList()
+        {
+            Coordinate coor = await Functions.TrackLocationOfUser();
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    if (coor.Latitute != 0 && coor.Longitute != 0)
+                    {
+                        if (!isSuggested)
+                        {
+                            isSuggested = true;
+                            IDictionary<string, string> param = new Dictionary<string, string>
+                            {
+                                {"latitute" , coor.Latitute.ToString()},
+                                {"longitute" , coor.Longitute.ToString()},
+                            };
+
+                            var result = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Get, param);
+                            JArray responed = JArray.Parse(result.ToString());
+                            MarketItemList = responed.ToObject<ObservableCollection<Market>>();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Suggest Market").ShowAsync();
+            }
+            finally
+            {
+                isSuggested = false;
+            }
         }
 
     }

@@ -122,7 +122,6 @@
 							 FontSize="16"
 							 Foreground="{StaticResource LightBlueBrush}" />
                         <Run x:Name="tblTotalPrice"
-<<<<<<< HEAD
                              Text="{Binding BillOfUser.TotalPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" 
                              FontSize="20" 
                              Foreground="#FFF45454"/>
@@ -146,50 +145,15 @@
                             <TextBlock Text="VNĐ"/>
                             </StackPanel>
                         </Border>
-                    </StackPanel>
+                    </StackPanel>            
                 </StackPanel>
-                <!--<Button Content="Call"
-=======
-							 Text="{Binding BillOfUser.TotalPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"
-							 FontSize="20"
-							 Foreground="#FFF45454" />
-			</TextBlock>
-			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Right"
-						Margin="0,10,10,0">
-				<TextBlock Text="Negotiate Price: "
-						   Margin="0,0,10,0"
-						   VerticalAlignment="Center"
-						   Foreground="{StaticResource LightBlueBrush}" />
-				<Border BorderThickness="1"
-						BorderBrush="Gray"
-						CornerRadius="8">
-					<StackPanel Orientation="Horizontal">
-						<TextBox BorderThickness="0"
-								 x:Name="tbxDiscount"
-								 LostFocus="tbxDiscount_LostFocus"
-								 Text="{Binding BillOfUser.ReducedPrice, Mode=TwoWay}" />
-						<TextBlock Text="VNĐ"
-								   Margin="5,0"
-								   VerticalAlignment="Center" />
-					</StackPanel>
-				</Border>
-			</StackPanel>
-		</StackPanel>
-		<!--<Button Content="Call"
->>>>>>> 5486f2ebc11f774276789f529b0df778450d6d10
-                        Name="btCallNegotiation"
-                        Background="{StaticResource LightBlueBrush}"
-                        HorizontalAlignment="Right"
-                        Foreground="White" 
-                        Click="btCallNegotiation_Click"
-                        Margin="0,10,10,0"/>-->
 
-		<TextBlock Text="(Negotiate Price is place you can type a price you want to reduce comparision with total price.)"
+        <TextBlock Text="(Negotiate Price is place you can type a price you want to reduce comparision with total price.)"
 				   Margin="0,0,10,0"
 				   TextWrapping="Wrap"
 				   FontSize="10"
 				   VerticalAlignment="Center" />
+        		
 	</StackPanel>
 
 </UserControl>

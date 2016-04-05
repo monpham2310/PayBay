@@ -227,7 +227,7 @@
         
             <Pivot>
                 <PivotItem Header="Nearby">                    
-                    <market:MarketListPage />
+                    <local:NearbyPage />
                 </PivotItem>
                 <PivotItem Header="Weekly Suggest">
                     <local:SuggestForThisWeek />

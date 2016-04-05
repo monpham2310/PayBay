@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PayBay.Utilities.Common;
+using PayBay.View.TopFunctionGroup;
+using PayBay.View.TopFunctionGroup.SuggestionGroup;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,6 +32,12 @@ namespace PayBay.View.StartGroup
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
+            Frame.Navigate(typeof(StartPage));
+        }
+
+        private void btnDiscover_Click(object sender, RoutedEventArgs e)
+        {
+            Functions.isDiscover = true;
             Frame.Navigate(typeof(StartPage));
         }
     }

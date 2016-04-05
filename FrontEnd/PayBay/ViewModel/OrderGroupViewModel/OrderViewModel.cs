@@ -15,7 +15,11 @@ namespace PayBay.ViewModel.OrderGroupViewModel
     public class OrderViewModel : BaseViewModel
     {
         private Bill _billOfUser;
+        private Bill _selectedBill;
+
+        private ObservableCollection<DetailBill> _detailBillList;
         private ObservableCollection<DetailBill> _detailList;
+        private ObservableCollection<Bill> _billOfStoreOwner;
 
         #region
         public Bill BillOfUser
@@ -45,6 +49,48 @@ namespace PayBay.ViewModel.OrderGroupViewModel
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<Bill> BillOfStoreOwner
+        {
+            get
+            {
+                return _billOfStoreOwner;
+            }
+
+            set
+            {
+                _billOfStoreOwner = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Bill SelectedBill
+        {
+            get
+            {
+                return _selectedBill;
+            }
+
+            set
+            {
+                _selectedBill = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<DetailBill> DetailBillList
+        {
+            get
+            {
+                return _detailBillList;
+            }
+
+            set
+            {
+                _detailBillList = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         public OrderViewModel()
@@ -52,7 +98,9 @@ namespace PayBay.ViewModel.OrderGroupViewModel
             MediateClass.OrderVM = this;
             BillOfUser = new Bill();
             DetailList = new ObservableCollection<DetailBill>();
-            InitializeBill();
+            SelectedBill = new Bill();
+            DetailBillList = new ObservableCollection<DetailBill>();
+            //InitializeBill();
         }
 
         public void InitializeBill()
@@ -107,6 +155,53 @@ namespace PayBay.ViewModel.OrderGroupViewModel
                 await new MessageDialog(ex.Message.ToString(),"Order Page").ShowAsync();
             }
 
+        }
+
+        public async void LoadBillOfStoreOwner()
+        {
+            int ownerId = MediateClass.UserVM.UserInfo.UserId;
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"ownerId" , ownerId.ToString()},
+                {"isStoreOwner" , "true"}
+            };
+
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    var result = await App.MobileService.InvokeApiAsync("Bills", HttpMethod.Get, param);
+                    JArray response = JArray.Parse(result.ToString());
+                    BillOfStoreOwner = response.ToObject<ObservableCollection<Bill>>();
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Order Page").ShowAsync();
+            }
+        }
+
+        public async void LoadDetailBillOfBill()
+        {
+            int bill = SelectedBill.BillId;
+            IDictionary<string, string> param = new Dictionary<string, string>
+            {
+                {"billId" , bill.ToString()},
+                {"isManage" , "true"}
+            };
+            try
+            {
+                if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
+                {
+                    var result = await App.MobileService.InvokeApiAsync("DetailBills", HttpMethod.Get, param);
+                    JArray response = JArray.Parse(result.ToString());
+                    DetailBillList = response.ToObject<ObservableCollection<DetailBill>>();
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message.ToString(), "Order Page").ShowAsync();
+            }
         }
 
     }

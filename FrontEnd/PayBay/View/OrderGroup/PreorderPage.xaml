@@ -1,177 +1,154 @@
-﻿<UserControl
-    x:Class="PayBay.View.OrderGroup.PreorderPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PayBay.View.OrderGroup"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Loaded="UserControl_Loaded">
+﻿<UserControl x:Class="PayBay.View.OrderGroup.PreorderPage"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="using:PayBay.View.OrderGroup"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d"
+			 Loaded="UserControl_Loaded">
 
-    <UserControl.Resources>
-    </UserControl.Resources>
-    
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid x:Name="ListViewHeaders" Grid.Row="0" >
-            <Grid.ColumnDefinitions>
-                <!--<ColumnDefinition  />-->
-                <ColumnDefinition  />
-                <ColumnDefinition  />
-                <ColumnDefinition  />
-                <ColumnDefinition  />
-            </Grid.ColumnDefinitions>
-            <!--<TextBlock Grid.Column="0" 
-                       Text="Image" 
-                       HorizontalAlignment="Center"/>-->
-            <TextBlock Grid.Column="0" 
-                       Text="Product" 
-                       HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="1" 
-                       Text="Price"
-                       HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="2" 
-                       Text="Amount"
-                       HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="3" 
-                       Text="Unit"
-                       HorizontalAlignment="Center"/>
-        </Grid>
-        <Grid Grid.Row="1">
-            <StackPanel Padding="10,0">
-				<ListView BorderThickness="0,0,0,1"
-						  BorderBrush="{StaticResource LightBlueBrush}"
-						  ItemsSource="{Binding ProductOrderList}"
-                          DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
-                          x:Name="listViewPreorder">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+	<StackPanel Padding="10,0"
+				Background="White"
+				HorizontalAlignment="Stretch">
+		<ListView HorizontalAlignment="Stretch"
+				  ItemsSource="{Binding ProductOrderList}"
+				  DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+				  x:Name="listViewPreorder">
+			<ListView.ItemContainerStyle>
+				<Style TargetType="ListViewItem">
+					<Setter Property="HorizontalContentAlignment"
+							Value="Stretch" />
+					<Setter Property="HorizontalAlignment"
+							Value="Stretch" />
+					<Setter Property="Margin"
+							Value="-11,-3" />
+				</Style>
+			</ListView.ItemContainerStyle>
 
-					<!--Header-->
-					<ListView.HeaderTemplate>
-						<DataTemplate>
-							<Grid Padding="0,5"
-								  BorderThickness="2"
-								  BorderBrush="{StaticResource BlueBrush}">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="2*" />
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
+			<!--Header-->
+			<ListView.HeaderTemplate>
+				<DataTemplate>
+					<Grid Padding="0,5"
+						  BorderThickness="2"
+						  BorderBrush="{StaticResource BlueBrush}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="0.55*" />
+							<ColumnDefinition Width="0.35*" />
+						</Grid.ColumnDefinitions>
 
-								<Grid.Resources>
-									<Style TargetType="TextBlock">
-										<Setter Property="HorizontalAlignment"
-												Value="Center" />
-									</Style>
-								</Grid.Resources>
+						<Grid.Resources>
+							<Style TargetType="TextBlock">
+								<Setter Property="HorizontalAlignment"
+										Value="Center" />
+								<Setter Property="Foreground"
+										Value="{StaticResource LightBlueBrush}" />
+							</Style>
+						</Grid.Resources>
 
-								<TextBlock Grid.Column="0"
-										   Text="Product" />
-								<TextBlock Grid.Column="1"
-										   Text="Price" />
-								<TextBlock Grid.Column="2"
-										   Text="Amount" />
-								<TextBlock Grid.Column="3"
-										   Text="Unit" />
-							</Grid>
-						</DataTemplate>
-					</ListView.HeaderTemplate>
-					
-					<!--Body-->
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="-10,0"
-									  BorderThickness="0,1,0,0"
-									  BorderBrush="{StaticResource GrayBrush}">
-                                <Grid.ColumnDefinitions>
-                                    <!--<ColumnDefinition Width="60"/>-->
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0"
+								   Text="Product" />
+						<TextBlock Grid.Column="1"
+								   Text="Price" />
+						<TextBlock Grid.Column="2"
+								   Text="Quantity" />
+						<TextBlock Grid.Column="3"
+								   Text="Unit" />
+					</Grid>
+				</DataTemplate>
+			</ListView.HeaderTemplate>
 
-                                <!--<Image  Grid.Column="0"
+			<!--Body-->
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<Grid BorderThickness="1,0,1,1"
+						  BorderBrush="{StaticResource LightBlueBrush}">
+						<Grid.ColumnDefinitions>
+							<!--<ColumnDefinition Width="60"/>-->
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="0.55*" />
+							<ColumnDefinition Width="0.35*" />
+						</Grid.ColumnDefinitions>
+
+						<!--<Image  Grid.Column="0"
                                         Source="{Binding Image}"
 					                    Width="63"
 					                    Height="63"
 					                    Stretch="Fill" />-->
 
-                                <!--TextBlock Grid.Column="0"
+						<!--TextBlock Grid.Column="0"
 											   Text="{Binding ProductId}"
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>-->
-                                    
-                                <TextBlock Grid.Column="0" 
-											   Text="{Binding ProductName}"
-											   VerticalAlignment="Center"
-											   HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" 
-											   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"
-											   VerticalAlignment="Center"
-                                           FontSize="12"
-											   HorizontalAlignment="Center"/>                                
-                                <TextBlock Grid.Column="2" 
-											 Text="{Binding OrderUnit}"
-											 TextAlignment="Center"
-											 HorizontalAlignment="Center" 
-											 VerticalAlignment="Center" 
-											 MinWidth="40"
-											 MinHeight="20"
-											 Margin="0,6,0,0"
-											 Height="30"/>
-                                <TextBlock Grid.Column="3" 
-										    Text="{Binding Unit}"
-										    VerticalAlignment="Center"
-										    HorizontalAlignment="Center"/>
 
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <StackPanel Name="spnPrice"
-							Margin="0,20"
-                            DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}">
-                    <TextBlock HorizontalAlignment="Right"
-                               Margin="0,0,10,0"
-                               >
-                        <Run Text="Total product price: " 
-                             FontSize="16"/>
+						<TextBlock Grid.Column="0"
+								   Text="{Binding ProductName}"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center" />
+						<TextBlock Grid.Column="1"
+								   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"
+								   VerticalAlignment="Center"
+								   FontSize="12"
+								   HorizontalAlignment="Center" />
+						<TextBlock Grid.Column="2"
+								   Text="{Binding OrderUnit}"
+								   TextAlignment="Center"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Center"
+								   MinWidth="40"
+								   MinHeight="20"
+								   Margin="0,6,0,0"
+								   Height="30" />
+						<TextBlock Grid.Column="3"
+								   Text="{Binding Unit}"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center" />
+
+					</Grid>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+			<Grid />
+			<Grid />
+			<Grid />
+		</ListView>
+		<StackPanel Name="spnPrice"
+					Margin="0,20"
+					DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}">
+			<TextBlock HorizontalAlignment="Right"
+					   Margin="0,0,10,0">
+                        <Run Text="Total product price: "
+							 FontSize="16"
+							 Foreground="{StaticResource LightBlueBrush}" />
                         <Run x:Name="tblTotalPrice"
-                             Text="{Binding BillOfUser.TotalPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" 
-                             FontSize="20" 
-                             Foreground="#FFF45454"/>
-                    </TextBlock>
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Right"
-                                Margin="0,10,10,0"
-                                >
-                        <TextBlock Text="Negotiate Price: " 
-                                   Margin="0,0,10,0"
-                                   VerticalAlignment="Center"/>
-                        <Border BorderThickness="1" 
-                                BorderBrush="Gray" 
-                                CornerRadius="8">
-                            <StackPanel Orientation="Horizontal">
-                            <TextBox BorderThickness="0"
-                                     x:Name="tbxDiscount"
-                                     LostFocus="tbxDiscount_LostFocus"
-                                     Text="{Binding BillOfUser.ReducedPrice, Mode=TwoWay}"/>
-                            <TextBlock Text="VNĐ"/>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
-                <!--<Button Content="Call"
+							 Text="{Binding BillOfUser.TotalPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"
+							 FontSize="20"
+							 Foreground="#FFF45454" />
+			</TextBlock>
+			<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Right"
+						Margin="0,10,10,0">
+				<TextBlock Text="Negotiate Price: "
+						   Margin="0,0,10,0"
+						   VerticalAlignment="Center"
+						   Foreground="{StaticResource LightBlueBrush}" />
+				<Border BorderThickness="1"
+						BorderBrush="Gray"
+						CornerRadius="8">
+					<StackPanel Orientation="Horizontal">
+						<TextBox BorderThickness="0"
+								 x:Name="tbxDiscount"
+								 LostFocus="tbxDiscount_LostFocus"
+								 Text="{Binding BillOfUser.ReducedPrice, Mode=TwoWay}" />
+						<TextBlock Text="VNĐ"
+								   Margin="5,0"
+								   VerticalAlignment="Center" />
+					</StackPanel>
+				</Border>
+			</StackPanel>
+		</StackPanel>
+		<!--<Button Content="Call"
                         Name="btCallNegotiation"
                         Background="{StaticResource LightBlueBrush}"
                         HorizontalAlignment="Right"
@@ -179,14 +156,11 @@
                         Click="btCallNegotiation_Click"
                         Margin="0,10,10,0"/>-->
 
-                <TextBlock Text="(Negotiate Price is place you can type a price you want to reduce comparision with total price.)" 
-                           Margin="0,0,10,0"
-                           TextWrapping="Wrap"
-                           FontSize="10"
-                           VerticalAlignment="Center"/>
-            </StackPanel>
+		<TextBlock Text="(Negotiate Price is place you can type a price you want to reduce comparision with total price.)"
+				   Margin="0,0,10,0"
+				   TextWrapping="Wrap"
+				   FontSize="10"
+				   VerticalAlignment="Center" />
+	</StackPanel>
 
-        </Grid>
-
-    </Grid>
 </UserControl>

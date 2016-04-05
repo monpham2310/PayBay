@@ -6,9 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    Loaded="UserControl_Loaded"
-    d:DesignWidth="400">
+    Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
     </UserControl.Resources>
@@ -43,8 +41,10 @@
                        HorizontalAlignment="Center"/>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel>                
-                <ListView ItemsSource="{Binding ProductOrderList}"
+            <StackPanel Padding="10,0">
+				<ListView BorderThickness="0,0,0,1"
+						  BorderBrush="{StaticResource LightBlueBrush}"
+						  ItemsSource="{Binding ProductOrderList}"
                           DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
                           x:Name="listViewPreorder">
                     <ListView.ItemContainerStyle>
@@ -54,6 +54,39 @@
                         </Style>
                     </ListView.ItemContainerStyle>
 
+					<!--Header-->
+					<ListView.HeaderTemplate>
+						<DataTemplate>
+							<Grid Padding="0,5"
+								  BorderThickness="2"
+								  BorderBrush="{StaticResource BlueBrush}">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="2*" />
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+
+								<Grid.Resources>
+									<Style TargetType="TextBlock">
+										<Setter Property="HorizontalAlignment"
+												Value="Center" />
+									</Style>
+								</Grid.Resources>
+
+								<TextBlock Grid.Column="0"
+										   Text="Product" />
+								<TextBlock Grid.Column="1"
+										   Text="Price" />
+								<TextBlock Grid.Column="2"
+										   Text="Amount" />
+								<TextBlock Grid.Column="3"
+										   Text="Unit" />
+							</Grid>
+						</DataTemplate>
+					</ListView.HeaderTemplate>
+					
+					<!--Body-->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="-10,0"
@@ -106,6 +139,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <StackPanel Name="spnPrice"
+							Margin="0,20"
                             DataContext="{Binding Source={StaticResource Locator}, Path=OrderVm}">
                     <TextBlock HorizontalAlignment="Right"
                                Margin="0,0,10,0"

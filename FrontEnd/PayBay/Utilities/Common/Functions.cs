@@ -35,6 +35,9 @@ namespace PayBay.Utilities.Common
         
         static Regex ValidEmailRegex = CreateValidEmailRegex();
 
+        public static double Latitute = 0;
+        public static double Longitute = 0;
+
         public static Functions Instance
         {
             get
@@ -222,6 +225,8 @@ namespace PayBay.Utilities.Common
                     Geoposition pos = await geolocator.GetGeopositionAsync(
                                             maximumAge: TimeSpan.FromMinutes(5),
                                             timeout: TimeSpan.FromSeconds(10));
+                    Latitute = pos.Coordinate.Point.Position.Latitude;
+                    Longitute = pos.Coordinate.Point.Position.Longitude;
                     break;
                 case GeolocationAccessStatus.Denied:
                     await new MessageDialog("Access to location is denied.", "Notification!").ShowAsync();

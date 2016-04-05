@@ -26,5 +26,10 @@ namespace PayBay.View.StartGroup
         {
             this.InitializeComponent();
         }
+
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(StartPage));
+        }
     }
 }

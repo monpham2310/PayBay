@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Services.Maps;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -40,9 +41,16 @@ namespace PayBay.View.MarketGroup
             SetUpMap();
         }
 
-        private void ShopNowButton_Click(object sender, RoutedEventArgs e)
-        {            
-            Frame.Navigate(typeof(KiosListPage), NavigationMode.Forward);
+        private async void ShopNowButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MediateClass.UserVM.UserInfo != null)
+            {
+                Frame.Navigate(typeof(KiosListPage), NavigationMode.Forward);
+            }
+            else
+            {
+                await new MessageDialog("You are not login!", "Notification").ShowAsync();
+            }
         }
 
         private void BackHyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -85,7 +93,7 @@ namespace PayBay.View.MarketGroup
                 // Add an icon for the market address, temporarily use fullstar2.png
                 MapIcon mapIcon = new MapIcon();
                 mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
-                  new Uri("ms-appx:///Assets/TransitionEffect/WindowsMarketplace.png"));
+                  new Uri("ms-appx:///Assets/Rating/fullstar2.png"));
                 mapIcon.NormalizedAnchorPoint = new Point(0.5, 0.5);
                 mapIcon.Location = point;
                 mapIcon.Title = "Market Here !!!";

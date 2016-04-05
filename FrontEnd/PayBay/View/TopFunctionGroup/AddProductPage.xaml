@@ -154,6 +154,16 @@
 						 HorizontalAlignment="Stretch" 
                          InputScope="Number" />
 
+                        <TextBlock Text="About"
+						   Margin="15,20,15,10"
+						   Foreground="{StaticResource GrayBrush}"/>
+
+                        <TextBox x:Name="txtAbout"
+						 BorderThickness="0,0,0,2"
+						 Margin="15,0"
+						 HorizontalAlignment="Stretch" 
+                         />
+
                         <TextBlock Text="Sale Price"
 						   Margin="15,20,15,10"
 						   Foreground="{StaticResource GrayBrush}"/>

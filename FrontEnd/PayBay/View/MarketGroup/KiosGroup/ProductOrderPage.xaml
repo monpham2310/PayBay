@@ -4,6 +4,7 @@
 	  xmlns:local="using:PayBay.View.MarketGroup.KiosGroup"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
 	  mc:Ignorable="d">
 
 	<ScrollViewer x:Name="root" 
@@ -20,20 +21,29 @@
 				</Style>
 			</StackPanel.Resources>
 
-			<Image Source="ms-appx:///Assets/Icon/Store/item.png"
+            <Image Source="{Binding SelectedProduct.Image}"
 				   Stretch="Fill"
 				   Height="230"
 				   Margin="-10,0"/>
 
-			<StackPanel Background="{StaticResource BlueBrush}"
+			<StackPanel Background="{StaticResource BlueBrush}"                        
 						Margin="0,8">
-				<TextBlock Text="Fish"
+                <TextBlock Text="{Binding SelectedProduct.ProductName}"
 						   FontSize="25"
 						   Foreground="{StaticResource WhiteBrush}" />
-				<TextBlock Text="11e/kg"
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                <TextBlock Text="{Binding SelectedProduct.UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"                           
 						   Margin="0,0,0,15"
 						   Foreground="{StaticResource BrightBlueBrush}" />
-			</StackPanel>
+                <TextBlock Text="/"
+						   Margin="0,0,0,15"
+						   Foreground="{StaticResource BrightBlueBrush}" />
+                <TextBlock Text="{Binding SelectedProduct.Unit}"                           
+						   Margin="0,0,0,15"
+						   Foreground="{StaticResource BrightBlueBrush}" />
+                </StackPanel>
+            </StackPanel>
 
 			<StackPanel Grid.Row="1"
 						Padding="0,10"
@@ -41,14 +51,14 @@
 						BorderThickness="0,2,0,1">
 				<TextBlock Text="PRODUCT CODE"
 						   Foreground="{StaticResource LightBlueBrush}" />
-				<TextBlock Text="000001" />
+				<TextBlock Text="{Binding SelectedProduct.ProductId}" />
 				<TextBlock Text="ABOUT"
 						   Foreground="{StaticResource LightBlueBrush}" />
-				<TextBlock Text="Totally fresh fish imported from Japan" />
+				<TextBlock Text="{Binding SelectedProduct.About}" />
 				<TextBlock Text="NUMBER IN STOCK"
 						   Foreground="{StaticResource LightBlueBrush}" />
 				<TextBlock x:Name="tblStock" 
-						   Text="50" />
+						   Text="{Binding SelectedProduct.NumberOf}" />
 			</StackPanel>
 
 			<TextBlock Text="Number of orders"
@@ -57,7 +67,7 @@
 			<Grid>
 				<TextBox x:Name="tbOrderNum" 
 						 Width="90"
-						 Text="1"
+						 Text="{Binding SelectedProduct.OrderUnit, Mode=TwoWay}"
 						 HorizontalAlignment="Center"
 						 TextAlignment="Center"
 						 BorderBrush="{StaticResource BlueBrush}"
@@ -93,21 +103,24 @@
 						Click="btnAdd_Click" />
 			</Grid>
 
-			<TextBlock Text="22e"
+			<!--<TextBlock Text="22e"
 					   Margin="0,10"
 					   FontSize="20"
-					   Foreground="{StaticResource LightBlueBrush}" />
+					   Foreground="{StaticResource LightBlueBrush}" />-->
 
 			<Button Content="ADD TO BAG"
 					Margin="0,10"
 					HorizontalAlignment="Stretch"
+                    Click="Button_Click"
 					Foreground="{StaticResource WhiteBrush}"
 					Background="{StaticResource BlueBrush}" />
 
 			<TextBlock Text="CHECK LIST"
 					   HorizontalAlignment="Center"
 					   Foreground="{StaticResource LightBlueBrush}" />
-			<ListView Margin="0,30">
+			<ListView Margin="0,30"
+                      Name="lvProductOrder"
+                      ItemsSource="{Binding ProductOrderList}">
 				<ListView.ItemContainerStyle>
 					<Style TargetType="ListViewItem">
 						<Setter Property="Margin"
@@ -123,25 +136,29 @@
 							  BorderThickness="2"
 							  BorderBrush="{StaticResource BlueBrush}">
 							<Grid.ColumnDefinitions>
+								<!--<ColumnDefinition Width="*" />-->
+								<ColumnDefinition Width="3*" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
+								<ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">
 									<Setter Property="HorizontalAlignment"
 											Value="Center" />
 								</Style>
 							</Grid.Resources>
+							<!--<TextBlock Grid.Column="0"
+									   Text="Image" />-->
 							<TextBlock Grid.Column="0"
-									   Text="Code" />
-							<TextBlock Grid.Column="1"
 									   Text="Product" />
-							<TextBlock Grid.Column="2"
+							<TextBlock Grid.Column="1"
 									   Text="Quantity" />
-							<TextBlock Grid.Column="3"
+							<TextBlock Grid.Column="2"
 									   Text="Price" />
+                            <TextBlock Grid.Column="3">
+                                Cancel
+                            </TextBlock>
 						</Grid>
 					</DataTemplate>
 				</ListView.HeaderTemplate>
@@ -152,10 +169,11 @@
 							  BorderThickness="1,0,1,1"
 							  BorderBrush="{StaticResource LightBlueBrush}">
 							<Grid.ColumnDefinitions>
+								<!--<ColumnDefinition Width="*" />-->
 								<ColumnDefinition Width="*" />
 								<ColumnDefinition Width="*" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
 							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">
@@ -163,15 +181,23 @@
 											Value="Center" />
 								</Style>
 							</Grid.Resources>
+							<!--<Image Grid.Column="0"
+									   Source="{Binding Image}" />-->
 							<TextBlock Grid.Column="0"
-									   Text="000001" />
+									   Text="{Binding ProductName}" />
 							<TextBlock Grid.Column="1"
-									   Text="Cabbage" />
+									   Text="{Binding OrderUnit}" />
 							<TextBlock Grid.Column="2"
-									   Text="2" />
-							<TextBlock Grid.Column="3"
-									   Text="22e" />
-						</Grid>
+                                       FontSize="12"
+									   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" 
+                                       />
+                            <TextBlock Grid.Column="3"
+                                    Name="tblCancel"                                               
+                                    Tapped="tblCancel_Tapped"
+                                       Text="X"
+                                    />
+
+                        </Grid>
 					</DataTemplate>
 				</ListView.ItemTemplate>
 				<Grid />
@@ -184,6 +210,8 @@
 					Margin="0,10"
 					Padding="0,10"
 					Width="200"
+                    Name="btnPayNow"
+                    Click="btnPayNow_Click"
 					HorizontalAlignment="Center"
 					Foreground="{StaticResource WhiteBrush}"
 					Background="{StaticResource BlueBrush}" />
@@ -191,6 +219,8 @@
 					Margin="0,10"
 					Padding="0,10"
 					Width="200"
+                    Name="btnBackToShop"
+                    Click="btnBackToShop_Click"
 					HorizontalAlignment="Center"
 					BorderBrush="{StaticResource BlueBrush}"
 					Foreground="{StaticResource BlueBrush}"

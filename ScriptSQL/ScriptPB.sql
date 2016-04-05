@@ -188,3 +188,5 @@ alter table viethung_paybayservice.Stores add OpenTime time
 alter table viethung_paybayservice.Stores add CloseTime time
 
 select UserID from viethung_paybayservice.Users where Username='Admin'
+
+alter table viethung_paybayservice.Products add About nvarchar(255)

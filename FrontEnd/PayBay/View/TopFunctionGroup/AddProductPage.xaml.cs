@@ -56,6 +56,7 @@ namespace PayBay.View.TopFunctionGroup
                 txtUnit.Text = product.Unit;
                 txtAmount.Text = product.NumberOf.ToString();
                 txtSalePrice.Text = product.SalePrice.ToString();
+                txtAbout.Text = product.About;
                 cbStore.SelectedValue = product.StoreId;
                 if (product.Image != null)
                 {
@@ -106,6 +107,7 @@ namespace PayBay.View.TopFunctionGroup
                 temp.SalePrice = float.Parse(txtSalePrice.Text);
                 temp.StoreId = Convert.ToInt32(cbStore.SelectedValue);
                 temp.ImportDate = DateTime.UtcNow;
+                temp.About = txtAbout.Text;
                 
                 if (!ProductViewModel.isUpdate)
                 {

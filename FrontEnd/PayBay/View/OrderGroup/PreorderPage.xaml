@@ -20,25 +20,25 @@
         </Grid.RowDefinitions>
         <Grid x:Name="ListViewHeaders" Grid.Row="0" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition  />
+                <!--<ColumnDefinition  />-->
                 <ColumnDefinition  />
                 <ColumnDefinition  />
                 <ColumnDefinition  />
                 <ColumnDefinition  />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" 
+            <!--<TextBlock Grid.Column="0" 
                        Text="Image" 
-                       HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="1" 
+                       HorizontalAlignment="Center"/>-->
+            <TextBlock Grid.Column="0" 
                        Text="Product" 
                        HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="2" 
+            <TextBlock Grid.Column="1" 
                        Text="Price"
                        HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="3" 
+            <TextBlock Grid.Column="2" 
                        Text="Amount"
                        HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="4" 
+            <TextBlock Grid.Column="3" 
                        Text="Unit"
                        HorizontalAlignment="Center"/>
         </Grid>
@@ -60,33 +60,34 @@
 									  BorderThickness="0,1,0,0"
 									  BorderBrush="{StaticResource GrayBrush}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="1.8*"/>
+                                    <!--<ColumnDefinition Width="60"/>-->
+                                    <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image  Grid.Column="0"
+                                <!--<Image  Grid.Column="0"
                                         Source="{Binding Image}"
 					                    Width="63"
 					                    Height="63"
-					                    Stretch="Fill" />
+					                    Stretch="Fill" />-->
 
                                 <!--TextBlock Grid.Column="0"
 											   Text="{Binding ProductId}"
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>-->
                                     
-                                <TextBlock Grid.Column="1" 
+                                <TextBlock Grid.Column="0" 
 											   Text="{Binding ProductName}"
 											   VerticalAlignment="Center"
 											   HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" 
-											   Text="{Binding UnitPrice}"
+                                <TextBlock Grid.Column="1" 
+											   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"
 											   VerticalAlignment="Center"
+                                           FontSize="12"
 											   HorizontalAlignment="Center"/>                                
-                                <TextBlock Grid.Column="3" 
+                                <TextBlock Grid.Column="2" 
 											 Text="{Binding OrderUnit}"
 											 TextAlignment="Center"
 											 HorizontalAlignment="Center" 
@@ -95,7 +96,7 @@
 											 MinHeight="20"
 											 Margin="0,6,0,0"
 											 Height="30"/>
-                                <TextBlock Grid.Column="4" 
+                                <TextBlock Grid.Column="3" 
 										    Text="{Binding Unit}"
 										    VerticalAlignment="Center"
 										    HorizontalAlignment="Center"/>
@@ -112,7 +113,7 @@
                         <Run Text="Total product price: " 
                              FontSize="16"/>
                         <Run x:Name="tblTotalPrice"
-                             Text="{Binding BillOfUser.TotalPrice}" 
+                             Text="{Binding BillOfUser.TotalPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" 
                              FontSize="20" 
                              Foreground="#FFF45454"/>
                     </TextBlock>
@@ -126,10 +127,13 @@
                         <Border BorderThickness="1" 
                                 BorderBrush="Gray" 
                                 CornerRadius="8">
+                            <StackPanel Orientation="Horizontal">
                             <TextBox BorderThickness="0"
                                      x:Name="tbxDiscount"
                                      LostFocus="tbxDiscount_LostFocus"
                                      Text="{Binding BillOfUser.ReducedPrice, Mode=TwoWay}"/>
+                            <TextBlock Text="VNĐ"/>
+                            </StackPanel>
                         </Border>
                     </StackPanel>
                 </StackPanel>

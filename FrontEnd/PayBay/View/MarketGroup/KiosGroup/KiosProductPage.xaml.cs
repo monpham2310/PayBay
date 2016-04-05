@@ -90,7 +90,11 @@ namespace PayBay.View.MarketGroup.KiosGroup
 
         private void gvProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ((Page)((Grid)((Grid)((Pivot)((PivotItem)Parent).Parent).Parent).Parent).Parent).Frame.Navigate(typeof(ProductOrderPage));
+            if (gvProducts.SelectedItem != null)
+            {
+                MediateClass.ProductVM.SelectedProduct = (Product)gvProducts.SelectedItem;
+                ((Page)((Grid)((Grid)((Pivot)((PivotItem)Parent).Parent).Parent).Parent).Parent).Frame.Navigate(typeof(ProductOrderPage));
+            }
         }
 
         //private async void checkBtn_Click(object sender, RoutedEventArgs e)

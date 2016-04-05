@@ -21,7 +21,8 @@ namespace PayBay.Model
         private float _salePrice;
         private string _sasQuery;
         private string _storeName;
-        private int _orderUnit = 0;
+        private string _about;
+        private int _orderUnit = 1;
 
         public int OrderUnit
         {
@@ -177,6 +178,20 @@ namespace PayBay.Model
             set
             {
                 _stt = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string About
+        {
+            get
+            {
+                return _about;
+            }
+
+            set
+            {
+                _about = value;
                 OnPropertyChanged();
             }
         }

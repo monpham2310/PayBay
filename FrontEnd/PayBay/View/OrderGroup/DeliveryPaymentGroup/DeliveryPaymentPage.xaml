@@ -100,7 +100,7 @@
                     <Grid>
                         <TextBox BorderThickness="0,0,0,1.5"
                                  BorderBrush="Gray"
-                                 Text="{Binding BillOfUser.TotalPrice}"
+                                 Text="{Binding BillOfUser.TotalPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0}'}"
                                  IsEnabled="False"
                                  x:Name="tbxInitPay"
                                  GotFocus="tbxInitPay_GotFocus"
@@ -120,7 +120,7 @@
                     <Grid>
                         <TextBox BorderThickness="0,0,0,1.5"
                                  BorderBrush="Gray"
-                                 Text="{Binding BillOfUser.ReducedPrice}"
+                                 Text="{Binding BillOfUser.ReducedPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0}'}"
                                  IsEnabled="False"
                                  x:Name="tbxBalPay"
                                  GotFocus="tbxBalPay_GotFocus"

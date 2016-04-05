@@ -88,6 +88,11 @@ namespace PayBay.View.MarketGroup.KiosGroup
             return null;
         }
 
+        private void gvProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ((Page)((Grid)((Grid)((Pivot)((PivotItem)Parent).Parent).Parent).Parent).Parent).Frame.Navigate(typeof(ProductOrderPage));
+        }
+
         //private async void checkBtn_Click(object sender, RoutedEventArgs e)
         //{            
         //    ProductVm.ProductOrderList.Clear();
@@ -121,6 +126,6 @@ namespace PayBay.View.MarketGroup.KiosGroup
         //    if (ProductVm.ProductOrderList.Count > 0)
         //        MediateClass.KiosPage.Frame.Navigate(typeof(OrderPage));
         //}
-                
+
     }
 }

@@ -104,9 +104,8 @@ namespace PayBay.View.MarketGroup.KiosGroup
         {
             Frame.GoBack();
         }
-              
-        
-        private void tblCancel_Tapped(object sender, TappedRoutedEventArgs e)
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             if (lvProductOrder.SelectedItem != null)
             {

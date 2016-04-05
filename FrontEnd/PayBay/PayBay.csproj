@@ -233,6 +233,9 @@
     <Compile Include="View\OrderGroup\PreorderPage.xaml.cs">
       <DependentUpon>PreorderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\StartGroup\BeginPage.xaml.cs">
+      <DependentUpon>BeginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TopFunctionGroup\AddMarketPage.xaml.cs">
       <DependentUpon>AddMarketPage.xaml</DependentUpon>
     </Compile>
@@ -521,6 +524,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderGroup\PreorderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartGroup\BeginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

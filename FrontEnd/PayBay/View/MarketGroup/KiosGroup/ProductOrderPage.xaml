@@ -4,10 +4,10 @@
 	  xmlns:local="using:PayBay.View.MarketGroup.KiosGroup"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
+	  DataContext="{Binding Source={StaticResource Locator}, Path=ProductVm}"
 	  mc:Ignorable="d">
 
-	<ScrollViewer x:Name="root" 
+	<ScrollViewer x:Name="root"
 				  VerticalScrollBarVisibility="Auto">
 		<StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 					Padding="10,0">
@@ -21,29 +21,29 @@
 				</Style>
 			</StackPanel.Resources>
 
-            <Image Source="{Binding SelectedProduct.Image}"
+			<Image Source="{Binding SelectedProduct.Image}"
 				   Stretch="Fill"
 				   Height="230"
-				   Margin="-10,0"/>
+				   Margin="-10,0" />
 
-			<StackPanel Background="{StaticResource BlueBrush}"                        
+			<StackPanel Background="{StaticResource BlueBrush}"
 						Margin="0,8">
-                <TextBlock Text="{Binding SelectedProduct.ProductName}"
+				<TextBlock Text="{Binding SelectedProduct.ProductName}"
 						   FontSize="25"
 						   Foreground="{StaticResource WhiteBrush}" />
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center">
-                <TextBlock Text="{Binding SelectedProduct.UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"                           
-						   Margin="0,0,0,15"
-						   Foreground="{StaticResource BrightBlueBrush}" />
-                <TextBlock Text="/"
-						   Margin="0,0,0,15"
-						   Foreground="{StaticResource BrightBlueBrush}" />
-                <TextBlock Text="{Binding SelectedProduct.Unit}"                           
-						   Margin="0,0,0,15"
-						   Foreground="{StaticResource BrightBlueBrush}" />
-                </StackPanel>
-            </StackPanel>
+				<StackPanel Orientation="Horizontal"
+							HorizontalAlignment="Center">
+					<TextBlock Text="{Binding SelectedProduct.UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"
+							   Margin="0,0,0,15"
+							   Foreground="{StaticResource BrightBlueBrush}" />
+					<TextBlock Text="/"
+							   Margin="0,0,0,15"
+							   Foreground="{StaticResource BrightBlueBrush}" />
+					<TextBlock Text="{Binding SelectedProduct.Unit}"
+							   Margin="0,0,0,15"
+							   Foreground="{StaticResource BrightBlueBrush}" />
+				</StackPanel>
+			</StackPanel>
 
 			<StackPanel Grid.Row="1"
 						Padding="0,10"
@@ -57,7 +57,7 @@
 				<TextBlock Text="{Binding SelectedProduct.About}" />
 				<TextBlock Text="NUMBER IN STOCK"
 						   Foreground="{StaticResource LightBlueBrush}" />
-				<TextBlock x:Name="tblStock" 
+				<TextBlock x:Name="tblStock"
 						   Text="{Binding SelectedProduct.NumberOf}" />
 			</StackPanel>
 
@@ -65,7 +65,7 @@
 					   Margin="0,10"
 					   Foreground="{StaticResource LightBlueBrush}" />
 			<Grid>
-				<TextBox x:Name="tbOrderNum" 
+				<TextBox x:Name="tbOrderNum"
 						 Width="90"
 						 Text="{Binding SelectedProduct.OrderUnit, Mode=TwoWay}"
 						 HorizontalAlignment="Center"
@@ -74,7 +74,7 @@
 						 Style="{StaticResource RoundTextBoxStyle}"
 						 LostFocus="tbOrderNum_LostFocus" />
 
-				<Button x:Name="btnSub" 
+				<Button x:Name="btnSub"
 						Content="-"
 						Width="50"
 						Height="30"
@@ -88,7 +88,7 @@
 						Style="{StaticResource RoundedButtonStyle}"
 						Click="btnSub_Click" />
 
-				<Button x:Name="btnAdd" 
+				<Button x:Name="btnAdd"
 						Content="+"
 						Width="50"
 						Height="30"
@@ -111,7 +111,7 @@
 			<Button Content="ADD TO BAG"
 					Margin="0,10"
 					HorizontalAlignment="Stretch"
-                    Click="Button_Click"
+					Click="Button_Click"
 					Foreground="{StaticResource WhiteBrush}"
 					Background="{StaticResource BlueBrush}" />
 
@@ -119,8 +119,10 @@
 					   HorizontalAlignment="Center"
 					   Foreground="{StaticResource LightBlueBrush}" />
 			<ListView Margin="0,30"
-                      Name="lvProductOrder"
-                      ItemsSource="{Binding ProductOrderList}">
+					  Name="lvProductOrder"
+					  BorderThickness="0,0,0,1"
+					  BorderBrush="{StaticResource LightBlueBrush}"
+					  ItemsSource="{Binding ProductOrderList}">
 				<ListView.ItemContainerStyle>
 					<Style TargetType="ListViewItem">
 						<Setter Property="Margin"
@@ -137,11 +139,11 @@
 							  BorderBrush="{StaticResource BlueBrush}">
 							<Grid.ColumnDefinitions>
 								<!--<ColumnDefinition Width="*" />-->
-								<ColumnDefinition Width="3*" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="30" />
-                            </Grid.ColumnDefinitions>
+								<ColumnDefinition Width="0.3*" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="0.3*" />
+							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">
 									<Setter Property="HorizontalAlignment"
@@ -156,9 +158,8 @@
 									   Text="Quantity" />
 							<TextBlock Grid.Column="2"
 									   Text="Price" />
-                            <TextBlock Grid.Column="3">
-                                Cancel
-                            </TextBlock>
+							<TextBlock Text="Cancel"
+									   Grid.Column="3" />
 						</Grid>
 					</DataTemplate>
 				</ListView.HeaderTemplate>
@@ -171,9 +172,9 @@
 							<Grid.ColumnDefinitions>
 								<!--<ColumnDefinition Width="*" />-->
 								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="0.3" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="30" />
+								<ColumnDefinition Width="0.3*" />
 							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">
@@ -188,20 +189,24 @@
 							<TextBlock Grid.Column="1"
 									   Text="{Binding OrderUnit}" />
 							<TextBlock Grid.Column="2"
-                                       FontSize="12"
-									   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" 
-                                       />
-                            <TextBlock Grid.Column="3"
-                                    Name="tblCancel"                                               
-                                    Tapped="tblCancel_Tapped"
-                                       Text="X"
-                                    />
+									   FontSize="12"
+									   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" />
+							<HyperlinkButton Grid.Column="3"
+											 x:Name="btnCancel"
+											 Content="&#xE711;"
+											 Padding="0"
+											 FontFamily="Segoe MDL2 Assets"
+											 Click="btnCancel_Click"
+											 VerticalAlignment="Top"
+											 HorizontalAlignment="Center" />
+							<!--<TextBlock Grid.Column="3"
+									   Name="tblCancel"
+									   Tapped="tblCancel_Tapped"
+									   Text="X" />-->
 
-                        </Grid>
+						</Grid>
 					</DataTemplate>
 				</ListView.ItemTemplate>
-				<Grid />
-				<Grid />
 				<Grid />
 				<Grid />
 			</ListView>
@@ -210,8 +215,8 @@
 					Margin="0,10"
 					Padding="0,10"
 					Width="200"
-                    Name="btnPayNow"
-                    Click="btnPayNow_Click"
+					Name="btnPayNow"
+					Click="btnPayNow_Click"
 					HorizontalAlignment="Center"
 					Foreground="{StaticResource WhiteBrush}"
 					Background="{StaticResource BlueBrush}" />
@@ -219,8 +224,8 @@
 					Margin="0,10"
 					Padding="0,10"
 					Width="200"
-                    Name="btnBackToShop"
-                    Click="btnBackToShop_Click"
+					Name="btnBackToShop"
+					Click="btnBackToShop_Click"
 					HorizontalAlignment="Center"
 					BorderBrush="{StaticResource BlueBrush}"
 					Foreground="{StaticResource BlueBrush}"

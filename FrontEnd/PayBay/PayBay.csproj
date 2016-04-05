@@ -283,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\background.jpg" />
     <Content Include="Assets\BlankPage.png" />
     <Content Include="Assets\Button\Account.png" />
     <Content Include="Assets\Button\ForwardIcon.PNG" />
@@ -291,6 +292,8 @@
     <Content Include="Assets\Icon.png" />
     <Content Include="Assets\Icon\about_icon.png" />
     <Content Include="Assets\Icon\AllSaleOff.png" />
+    <Content Include="Assets\Icon\BeginPage\cart.png" />
+    <Content Include="Assets\Icon\BeginPage\logo.png" />
     <Content Include="Assets\Icon\BestchoiceIcon.PNG" />
     <Content Include="Assets\Icon\call_icon.png" />
     <Content Include="Assets\Icon\ChatPage\CallIcon.png" />

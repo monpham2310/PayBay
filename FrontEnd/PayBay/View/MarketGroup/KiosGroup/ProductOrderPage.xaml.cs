@@ -107,13 +107,13 @@ namespace PayBay.View.MarketGroup.KiosGroup
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (lvProductOrder.SelectedItem != null)
-            {
-                Product product = (Product)lvProductOrder.SelectedItem;
-                if (ProductVm.ProductOrderList.IndexOf(product) != -1)
+            var item = (sender as FrameworkElement).DataContext;
+            if (item != null)
+            {                                        
+                if (ProductVm.ProductOrderList.IndexOf((Product)item) != -1)
                 {
-                    ProductVm.ProductOrderList.Remove(product);
-                }
+                    ProductVm.ProductOrderList.Remove((Product)item);
+                }                
             }
         }
     }

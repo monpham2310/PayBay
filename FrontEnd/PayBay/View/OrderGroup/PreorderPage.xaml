@@ -131,6 +131,7 @@
                             <TextBox BorderThickness="0"
                                      x:Name="tbxDiscount"
                                      LostFocus="tbxDiscount_LostFocus"
+                                     InputScope="Number"
                                      Text="{Binding BillOfUser.ReducedPrice, Mode=TwoWay}"/>
                             <TextBlock Text="VNĐ"/>
                             </StackPanel>

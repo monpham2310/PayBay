@@ -224,17 +224,14 @@
     <Compile Include="View\MiddleFunctionGroup\FreeCallPage.xaml.cs">
       <DependentUpon>FreeCallPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\OrderGroup\NewPreorderPage.xaml.cs">
-      <DependentUpon>NewPreorderPage.xaml</DependentUpon>
+    <Compile Include="View\OrderGroup\ManageOrder\ManageOrderPage.xaml.cs">
+      <DependentUpon>ManageOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OrderGroup\OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OrderGroup\PreorderPage.xaml.cs">
       <DependentUpon>PreorderPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\StartGroup\BeginPage.xaml.cs">
-      <DependentUpon>BeginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TopFunctionGroup\AddMarketPage.xaml.cs">
       <DependentUpon>AddMarketPage.xaml</DependentUpon>
@@ -274,6 +271,9 @@
     </Compile>
     <Compile Include="View\TopFunctionGroup\StoreRegisterPage.xaml.cs">
       <DependentUpon>StoreRegisterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TopFunctionGroup\SuggestionGroup\SuggestionPage.xaml.cs">
+      <DependentUpon>SuggestionPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -515,7 +515,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\OrderGroup\NewPreorderPage.xaml">
+    <Page Include="View\OrderGroup\ManageOrder\ManageOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -524,10 +524,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderGroup\PreorderPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\StartGroup\BeginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -580,6 +576,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TopFunctionGroup\StoreRegisterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TopFunctionGroup\SuggestionGroup\SuggestionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

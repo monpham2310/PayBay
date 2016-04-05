@@ -365,7 +365,7 @@ namespace PayBay.ViewModel.HomePageGroup
             try
             {
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
-                {
+                {                    
                     if (sale.Image == null || sale.Image == "/Assets/LockScreenLogo.scale-200.png")
                     {
                         if (media == null)
@@ -403,7 +403,7 @@ namespace PayBay.ViewModel.HomePageGroup
             try
             {
                 if (Utilities.Helpers.NetworkHelper.Instance.HasInternetConnection)
-                {
+                {                    
                     if (sale.Image == null || sale.Image == "/Assets/LockScreenLogo.scale-200.png")
                     {
                         if (media == null)
@@ -448,11 +448,9 @@ namespace PayBay.ViewModel.HomePageGroup
                     };
                     var response = await App.MobileService.InvokeApiAsync("SaleInfoes", HttpMethod.Delete, param);
                     result = JObject.Parse(response.ToString());
-                    if (result["ErrCode"].ToString() == "0")
-                    {
-                        return false;
-                    }
-                    await Functions.Instance.DeleteImageInBlob("sales", SelectedSale.Image, SelectedSale.SasQuery);
+                    AdvertiseItem saleDel = result.ToObject<AdvertiseItem>();
+                    if(saleDel.Image != null && saleDel.SasQuery != null)
+                        await Functions.Instance.DeleteImageInBlob("sales", saleDel.Image, saleDel.SasQuery);
                     SelectedSale = null;
                 }
                 else

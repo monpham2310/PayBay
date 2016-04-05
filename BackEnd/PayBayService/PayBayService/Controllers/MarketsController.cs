@@ -98,7 +98,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (market.Image == null)
+                if (market.Image == null || Methods.CheckExpiredDateOfSasQuery(market.SasQuery))
                 {
                     ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("markets", market.MarketName, market.MarketId);
 
@@ -132,7 +132,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (market.Image == null)
+                if (market.Image == null || Methods.CheckExpiredDateOfSasQuery(market.SasQuery))
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.Markets");
                     int marketId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
@@ -168,10 +168,22 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
+            if (market.Image != null && Methods.CheckExpiredDateOfSasQuery(market.SasQuery))
+            {
+                ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("markets", market.MarketName, market.MarketId);
+
+                if (blob != null)
+                {
+                    market.Image = blob.ImageUri;
+                    market.SasQuery = blob.SasQuery;
+                }
+            }
+
             db.Markets.Remove(market);
             await db.SaveChangesAsync();
 
-            result = Methods.CustomResponseMessage(1, "Delete market is successful!");
+            //result = Methods.CustomResponseMessage(1, "Delete market is successful!");
+            result = JObject.FromObject(market);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

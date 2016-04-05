@@ -99,7 +99,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (store.Image == null)
+                if (store.Image == null || Methods.CheckExpiredDateOfSasQuery(store.SasQuery))
                 {                    
                     ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("stores", store.StoreName, store.StoreId);
 
@@ -133,7 +133,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (store.Image == null)
+                if (store.Image == null || Methods.CheckExpiredDateOfSasQuery(store.SasQuery))
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.Stores");
                     int storeId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
@@ -188,10 +188,22 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
+            if (store.Image != null && Methods.CheckExpiredDateOfSasQuery(store.SasQuery))
+            {
+                ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("stores", store.StoreName, store.StoreId);
+
+                if (blob != null)
+                {
+                    store.Image = blob.ImageUri;
+                    store.SasQuery = blob.SasQuery;
+                }
+            }
+
             db.Stores.Remove(store);
             await db.SaveChangesAsync();
 
-            result = Methods.CustomResponseMessage(1, "Delete store is successful!");
+            //result = Methods.CustomResponseMessage(1, "Delete store is successful!");
+            result = JObject.FromObject(store);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

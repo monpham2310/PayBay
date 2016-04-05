@@ -293,11 +293,9 @@ namespace PayBay.ViewModel.MarketGroup
                     };
                     var response = await App.MobileService.InvokeApiAsync("Stores", HttpMethod.Delete, param);
                     result = JObject.Parse(response.ToString());
-                    if (result["ErrCode"].ToString() == "0")
-                    {
-                        return false;
-                    }
-                    await Functions.Instance.DeleteImageInBlob("stores", SelectedStore.Image, SelectedStore.SasQuery);
+                    Kios store = result.ToObject<Kios>();
+                    if (store.Image != null && store.SasQuery != null)
+                        await Functions.Instance.DeleteImageInBlob("stores", store.Image, store.SasQuery);
                     SelectedStore = null;
                 }
                 else

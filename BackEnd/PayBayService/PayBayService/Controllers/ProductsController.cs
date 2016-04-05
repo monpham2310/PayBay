@@ -154,7 +154,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (product.Image == null)
+                if (product.Image == null || Methods.CheckExpiredDateOfSasQuery(product.SasQuery))
                 {
                     ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, product.ProductId);
 
@@ -209,7 +209,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (product.Image == null)
+                if (product.Image == null || Methods.CheckExpiredDateOfSasQuery(product.SasQuery))
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.Products");
                     int productId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
@@ -245,10 +245,22 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
+            if (product.Image != null && Methods.CheckExpiredDateOfSasQuery(product.SasQuery))
+            {
+                ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("products", product.ProductName, product.ProductId);
+
+                if (blob != null)
+                {
+                    product.Image = blob.ImageUri;
+                    product.SasQuery = blob.SasQuery;
+                }
+            }
+
             db.Products.Remove(product);
             await db.SaveChangesAsync();
 
-            result = Methods.CustomResponseMessage(1, "Delete product is successful!");
+            //result = Methods.CustomResponseMessage(1, "Delete product is successful!");
+            result = JObject.FromObject(product);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

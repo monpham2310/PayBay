@@ -81,7 +81,7 @@ namespace PayBayService.Controllers
                 string email = Convert.ToString(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetEmailOfUser", CommandType.StoredProcedure, ref Methods.err, userId));
                 if (email == user.Email || !AccountExists(user.Email))
                 {
-                    if (user.Avatar == null)
+                    if (user.Avatar == null || Methods.CheckExpiredDateOfSasQuery(user.SasQuery))
                     {
                         ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, user.UserId);
                         if (blob != null)
@@ -150,7 +150,7 @@ namespace PayBayService.Controllers
                 }
                 if (!AccountExists(user.Email))
                 {
-                    if (user.Avatar == null)
+                    if (user.Avatar == null || Methods.CheckExpiredDateOfSasQuery(user.SasQuery))
                     {
                         var table = new SqlParameter("@table", "viethung_paybayservice.Users");
                         int userId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
@@ -190,10 +190,22 @@ namespace PayBayService.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            if (user.Avatar != null && Methods.CheckExpiredDateOfSasQuery(user.SasQuery))
+            {
+                ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("users", user.Username, user.UserId);
+
+                if (blob != null)
+                {
+                    user.Avatar = blob.ImageUri;
+                    user.SasQuery = blob.SasQuery;
+                }
+            }
+
             db.Users.Remove(user);
             await db.SaveChangesAsync();
 
-            result = Methods.CustomResponseMessage(1, "Delete user is successful!");
+            //result = Methods.CustomResponseMessage(1, "Delete user is successful!");
+            result = JObject.FromObject(user);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

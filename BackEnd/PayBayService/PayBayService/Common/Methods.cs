@@ -365,5 +365,17 @@ namespace PayBayService.Common
             return true;
         }
 
+        public static bool CheckExpiredDateOfSasQuery(string sasQuery)
+        {
+            int startIndex = sasQuery.LastIndexOf("&se=");
+            int length = 10;
+            string expireDate = sasQuery.Substring(startIndex, length);
+            DateTime expiredDate = Convert.ToDateTime(expireDate);
+            if (expiredDate >= DateTime.UtcNow)
+                return false;
+
+            return true;
+        }
+
     }
 }

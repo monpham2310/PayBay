@@ -406,11 +406,9 @@ namespace PayBay.ViewModel.ProductGroup
                     };
                     var response = await App.MobileService.InvokeApiAsync("Products", HttpMethod.Delete, param);
                     result = JObject.Parse(response.ToString());
-                    if (result["ErrCode"].ToString() == "0")
-                    {
-                        return false;
-                    }
-                    await Functions.Instance.DeleteImageInBlob("products", SelectedProduct.Image, SelectedProduct.SasQuery);
+                    Product product = result.ToObject<Product>();
+                    if (product.Image != null && product.SasQuery != null)
+                        await Functions.Instance.DeleteImageInBlob("products", product.Image, product.SasQuery);                    
                     SelectedProduct = null;
                 }
                 else

@@ -101,6 +101,7 @@ namespace PayBay.View.TopFunctionGroup
                     temp.StartDate = dpStartDate.Date.DateTime;
                     temp.EndDate = dpEndDate.Date.DateTime;
                     temp.StoreId = Convert.ToInt32(cbStore.SelectedValue);
+                    temp.IsRequired = MediateClass.AdvertiseVM.SelectedSale.IsRequired;
                     if (!AdvertiseViewModel.isUpdate)
                     {
                         check = await MediateClass.AdvertiseVM.InsertSale(temp, media);

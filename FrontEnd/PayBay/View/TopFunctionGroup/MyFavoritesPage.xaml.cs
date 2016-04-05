@@ -37,7 +37,9 @@ namespace PayBay.View.TopFunctionGroup
             {
                 case GeolocationAccessStatus.Allowed:
                     Geolocator geolocator = new Geolocator() { DesiredAccuracyInMeters = 0 };
-                    Geoposition pos = await geolocator.GetGeopositionAsync();
+                    Geoposition pos = await geolocator.GetGeopositionAsync(
+                                            maximumAge: TimeSpan.FromMinutes(5),
+                                            timeout: TimeSpan.FromSeconds(10));
 
                     tbLatitude.Text = "Latitude: " + pos.Coordinate.Point.Position.Latitude;
                     tbLongitude.Text = "Longitude: " + pos.Coordinate.Point.Position.Longitude;

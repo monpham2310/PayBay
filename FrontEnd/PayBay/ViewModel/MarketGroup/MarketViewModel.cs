@@ -279,11 +279,9 @@ namespace PayBay.ViewModel.MarketGroup
                     };
                     var response = await App.MobileService.InvokeApiAsync("Markets", HttpMethod.Delete, param);
                     result = JObject.Parse(response.ToString());
-                    if (result["ErrCode"].ToString() == "0")
-                    {
-                        return false;
-                    }
-                    await Functions.Instance.DeleteImageInBlob("markets", SelectedMarket.Image, SelectedMarket.SasQuery);
+                    Market market = result.ToObject<Market>();
+                    if (market.Image != null && market.SasQuery != null)
+                        await Functions.Instance.DeleteImageInBlob("markets", market.Image, market.SasQuery);
                     SelectedMarket = null;
                 }
                 else

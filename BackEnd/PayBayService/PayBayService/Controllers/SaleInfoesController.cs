@@ -160,7 +160,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (sale.Image == null)
+                if (sale.Image == null || Methods.CheckExpiredDateOfSasQuery(sale.SasQuery))
                 {
                     ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", sale.Title, sale.SaleId);
 
@@ -212,7 +212,7 @@ namespace PayBayService.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-                if (sale.Image == null)
+                if (sale.Image == null || Methods.CheckExpiredDateOfSasQuery(sale.SasQuery))
                 {
                     var table = new SqlParameter("@table", "viethung_paybayservice.SaleInfo");
                     int saleId = Convert.ToInt32(Methods.GetInstance().GetValue("viethung_paybayservice.sp_GetMaxId", CommandType.StoredProcedure, ref Methods.err, table));
@@ -241,17 +241,29 @@ namespace PayBayService.Controllers
         public async Task<HttpResponseMessage> DeleteSaleInfo(int saleId)
         {
             JObject result = new JObject();
-            SaleInfo saleInfo = await db.SaleInfoes.FindAsync(saleId);
+            SaleInfo saleInfo = await db.SaleInfoes.FindAsync(saleId);            
             if (saleInfo == null)
             {
                 result = Methods.CustomResponseMessage(0, "Sale info isn't exists!");
                 return Request.CreateResponse(HttpStatusCode.NotFound, result);
             }
 
+            if (saleInfo.Image != null && Methods.CheckExpiredDateOfSasQuery(saleInfo.SasQuery))
+            {
+                ModelBlob blob = await Methods.GetInstance().GetSasAndImageUriFromBlob("sales", saleInfo.Title, saleInfo.SaleId);
+
+                if (blob != null)
+                {
+                    saleInfo.Image = blob.ImageUri;
+                    saleInfo.SasQuery = blob.SasQuery;
+                }
+            }
+
             db.SaleInfoes.Remove(saleInfo);
             await db.SaveChangesAsync();
 
-            result = Methods.CustomResponseMessage(1, "Delete sale info is successful!");
+            //result = Methods.CustomResponseMessage(1, "Delete sale info is successful!");
+            result = JObject.FromObject(saleInfo);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

@@ -85,7 +85,7 @@ namespace PayBay.View.MarketGroup
                 // Add an icon for the market address, temporarily use fullstar2.png
                 MapIcon mapIcon = new MapIcon();
                 mapIcon.Image = RandomAccessStreamReference.CreateFromUri(
-                  new Uri("ms-appx:///Assets/Rating/fullstar2.png"));
+                  new Uri("ms-appx:///Assets/TransitionEffect/WindowsMarketplace.png"));
                 mapIcon.NormalizedAnchorPoint = new Point(0.5, 0.5);
                 mapIcon.Location = point;
                 mapIcon.Title = "Market Here !!!";

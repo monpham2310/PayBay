@@ -61,6 +61,7 @@ namespace PayBay.View.StartGroup
             if (Functions.isDiscover)
             {
                 Vm.NavigateToFunction(MainFrame, MenuFunc.Suggestion);
+                Functions.isDiscover = false;
             }
             else
             {

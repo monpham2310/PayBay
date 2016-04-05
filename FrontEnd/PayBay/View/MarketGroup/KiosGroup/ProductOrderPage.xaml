@@ -140,9 +140,9 @@
 							<Grid.ColumnDefinitions>
 								<!--<ColumnDefinition Width="*" />-->
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.3*" />
+								<ColumnDefinition Width="0.4*" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.3*" />
+								<ColumnDefinition Width="0.35*" />
 							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">
@@ -172,9 +172,9 @@
 							<Grid.ColumnDefinitions>
 								<!--<ColumnDefinition Width="*" />-->
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.3" />
+								<ColumnDefinition Width="0.4*" />
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="0.3*" />
+								<ColumnDefinition Width="0.35*" />
 							</Grid.ColumnDefinitions>
 							<Grid.Resources>
 								<Style TargetType="TextBlock">
@@ -189,8 +189,7 @@
 							<TextBlock Grid.Column="1"
 									   Text="{Binding OrderUnit}" />
 							<TextBlock Grid.Column="2"
-									   FontSize="12"
-									   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}" />
+									   Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"/>
 							<HyperlinkButton Grid.Column="3"
 											 x:Name="btnCancel"
 											 Content="&#xE711;"
@@ -234,3 +233,7 @@
 		</StackPanel>
 	</ScrollViewer>
 </Page>
+<!--ItemsSource="{Binding ProductOrderList}"-->
+<!--Text="{Binding ProductName}"-->
+<!--Text="{Binding OrderUnit}"-->
+<!--Text="{Binding UnitPrice, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:n0} VNĐ'}"-->
